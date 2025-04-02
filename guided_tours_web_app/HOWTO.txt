@@ -1,0 +1,60 @@
+# How to Set Up and Run the Guided Tours Web App
+
+This guide provides instructions for setting up the database and running the PHP web application.
+
+## Prerequisites
+
+1.  **Web Server with PHP:** You need a web server (like Apache or Nginx) with PHP installed and configured. A local development environment like XAMPP, MAMP, WAMP, or Laragon is recommended. Ensure the PHP PDO extension and the MySQL driver (pdo_mysql) are enabled.
+2.  **MySQL Database:** A running MySQL or MariaDB database server.
+
+## Database Setup
+
+1.  **Create Database:**
+    *   Connect to your MySQL server (e.g., using the `mysql` command-line client, phpMyAdmin, or another database tool).
+    *   Create the database specified in the configuration (`guided_tours_db`):
+        ```sql
+        CREATE DATABASE guided_tours_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+        ```
+
+2.  **Create Database User:**
+    *   Create the database user specified in the configuration (`guided_tours_user`) and grant privileges. Replace `'guided_tours_password'` with the actual password defined in `config/database.php`.
+        ```sql
+        CREATE USER 'guided_tours_user'@'localhost' IDENTIFIED BY 'guided_tours_password';
+        GRANT ALL PRIVILEGES ON guided_tours_db.* TO 'guided_tours_user'@'localhost';
+        FLUSH PRIVILEGES;
+        ```
+        *(Note: Adjust `'localhost'` if your web server connects from a different host).*
+
+3.  **Create Database Schema:**
+    *   Import the table structure using the `database_schema.sql` file. From your terminal, navigate to the `guided_tours_web_app` directory and run:
+        ```bash
+        mysql -u guided_tours_user -p guided_tours_db < database_schema.sql
+        ```
+    *   Enter the password (`guided_tours_password`) when prompted.
+
+4.  **Seed Database Data:**
+    *   Import the initial data using the `database_seed.sql` file. From the `guided_tours_web_app` directory, run:
+        ```bash
+        mysql -u guided_tours_user -p guided_tours_db < database_seed.sql
+        ```
+    *   Enter the password again when prompted.
+
+## Running the Web Application
+
+1.  **Configure Web Server:**
+    *   Ensure your web server's document root (or a virtual host) points to the `guided_tours_web_app` directory.
+    *   For example, if using Apache, you might configure a VirtualHost where `DocumentRoot` is `/path/to/your/project/guided_tours_web_app`.
+
+2.  **Access the App:**
+    *   Open your web browser and navigate to the URL configured for your web server (e.g., `http://localhost/`, `http://guided-tours.test/`, etc., depending on your setup).
+    *   You should see the home page of the Guided Tours Web App.
+
+## Development Notes
+
+*   **Database Credentials:** If you need to change the database name, username, or password, update the `config/database.php` file accordingly.
+*   **Password Hashes:** The `database_seed.sql` file contains pre-hashed passwords ('password123') for the sample users. You can generate new hashes using the `generate_hashes.php` script (run it via PHP CLI: `php generate_hashes.php`) if needed.
+*   **PHP Built-in Server (for quick testing):**
+    *   Navigate to the `guided_tours_web_app` directory in your terminal.
+    *   Run the command: `php -S localhost:8000`
+    *   Access the app in your browser at `http://localhost:8000`.
+    *   *Note: This is suitable for development/testing but not recommended for production.*
