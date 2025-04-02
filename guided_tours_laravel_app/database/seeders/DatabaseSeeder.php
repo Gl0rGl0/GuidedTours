@@ -13,11 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // User::factory(10)->create(); // Keep default factory calls commented/removed
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            SettingsSeeder::class,
+            UsersSeeder::class, // Users must exist before being referenced
+            PlacesSeeder::class, // Places must exist before VisitTypes
+            VisitTypesSeeder::class, // VisitTypes must exist before Visits/Pivot
+            VolunteersVisitTypesSeeder::class, // Pivot table links Users and VisitTypes
+            VisitsSeeder::class, // Visits reference Users and VisitTypes
+            RegistrationsSeeder::class, // Registrations reference Users and Visits
         ]);
     }
 }
