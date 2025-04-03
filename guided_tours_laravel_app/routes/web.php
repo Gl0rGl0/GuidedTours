@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\VolunteerController; // Import VolunteerController
 
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
@@ -57,6 +58,12 @@ Route::middleware('auth')->group(function () {
         // Add other admin routes here (e.g., settings, visit planning)
     });
 
-    // Add Volunteer routes here if needed
+    // --- Volunteer Routes ---
+    Route::middleware('can:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
+        Route::get('/availability', [VolunteerController::class, 'showAvailabilityForm'])->name('availability.form');
+        Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
+        // Add other volunteer routes here (e.g., view assigned visits)
+    });
+
     // Add Fruitore specific routes here if needed (e.g., view my registrations)
 });

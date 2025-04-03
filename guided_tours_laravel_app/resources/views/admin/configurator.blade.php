@@ -83,42 +83,15 @@
         padding-top: 0; /* Remove padding */
         flex-shrink: 0; /* Prevent buttons from shrinking */
     }
-    .action-button { /* Common button styles */
-        color: white;
-        border: none;
-        padding: 3px 8px;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 12px;
-        line-height: 1;
-        white-space: nowrap;
-    }
-    .edit-button {
-        background-color: #007bff; /* Blue for edit */
-    }
-    .edit-button:hover {
-        background-color: #0056b3;
-        color: white;
-        text-decoration: none;
-    }
-    .remove-button, /* Style for Places/Visits remove */
-    .remove-user-button { /* Style for User remove */
-        background-color: #dc3545; /* Red background */
-        color: white;
-        border: none;
-        padding: 3px 8px;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 12px;
-        line-height: 1;
-        /* margin-left: 10px; */ /* Removed fixed margin */
-        white-space: nowrap;
-    }
-     .remove-button:hover,
-     .remove-user-button:hover {
-        background-color: #c82333; /* Darker red on hover */
+    /* Remove custom button styles - rely on Bootstrap classes */
+    /* .action-button { ... } */
+    /* .edit-button { ... } */
+    /* .edit-button:hover { ... } */
+    /* .remove-button, .remove-user-button { ... } */
+    /* .remove-button:hover, .remove-user-button:hover { ... } */
+
+
+    #add-user-form { background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 20px; max-width: 400px;}
         color: white;
         text-decoration: none;
     }
@@ -291,13 +264,12 @@
                             <li class="list-item-with-actions"> <!-- Changed class -->
                                 <span class="item-name">{{ $place->name }}</span>
                                 <div class="action-buttons">
-                                    {{-- Link to edit route --}}
-                                    <a href="{{ route('admin.places.edit', $place) }}" class="edit-button action-button">Edit</a>
+                                    {{-- Use Bootstrap button classes --}}
+                                    <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-sm btn-primary">Edit</a>
                                     {{-- Use POST route for remove --}}
                                     <form action="{{ route('admin.places.remove', $place) }}" method="POST" style="display:inline;">
                                         @csrf
-                                        {{-- @method('DELETE') Removed --}}
-                                        <button type="submit" class="remove-button action-button">Remove</button> {{-- Removed onclick --}}
+                                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
                                 </div>
                             </li>
@@ -317,13 +289,12 @@
                              <li class="list-item-with-actions"> <!-- Changed class -->
                                 <span class="item-name">{{ $visit_type->title }}</span>
                                 <div class="action-buttons">
-                                    {{-- Link to edit route --}}
-                                    <a href="{{ route('admin.visit-types.edit', $visit_type) }}" class="edit-button action-button">Edit</a>
+                                     {{-- Use Bootstrap button classes --}}
+                                    <a href="{{ route('admin.visit-types.edit', $visit_type) }}" class="btn btn-sm btn-primary">Edit</a>
                                      {{-- Use POST route for remove --}}
                                     <form action="{{ route('admin.visit-types.remove', $visit_type) }}" method="POST" style="display:inline;">
                                         @csrf
-                                        {{-- @method('DELETE') Removed --}}
-                                        <button type="submit" class="remove-button action-button">Remove</button> {{-- Removed onclick --}}
+                                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
                                 </div>
                             </li>
@@ -394,17 +365,15 @@
                                     <div class="action-buttons">
                                         {{-- Add Edit button for Volunteers (Placeholder) --}}
                                         @if ($role === 'volunteer')
-                                             <a href="#" class="edit-button action-button">Edit</a>
+                                             <a href="#" class="btn btn-sm btn-primary">Edit</a> {{-- Use Bootstrap classes --}}
                                         @endif
 
                                         {{-- Only show remove button for non-configurators and not the current user --}}
                                         @if ($role !== 'configurator' && $user->user_id !== Auth::id())
-                                            {{-- Point to the new POST route and remove @method('DELETE') --}}
+                                            {{-- Point to the new POST route --}}
                                             <form action="{{ route('admin.users.remove', $user) }}" method="POST" style="display:inline;">
                                                 @csrf
-                                                {{-- @method('DELETE') Removed --}}
-                                                <button type="submit"
-                                                       class="remove-user-button action-button">
+                                                <button type="submit" class="btn btn-sm btn-danger"> {{-- Use Bootstrap classes --}}
                                                     Remove
                                                 </button>
                                             </form>

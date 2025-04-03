@@ -25,9 +25,13 @@
                         <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                     </li>
                     @auth {{-- Check if user is logged in --}}
-                        @if (Auth::user()->role === 'configurator') {{-- Check user role --}}
+                        @if (Auth::user()->role === 'configurator')
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin Panel</a>
+                            </li>
+                        @elseif (Auth::user()->role === 'volunteer')
+                             <li class="nav-item">
+                                <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
                             </li>
                         @endif
                         {{-- User Dropdown --}}
