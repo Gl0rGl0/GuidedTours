@@ -1,11 +1,4 @@
-@import 'tailwindcss';
+/* Import Bootstrap's Sass entry point using relative path */
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-}
+/* You can add custom styles below or in separate files */

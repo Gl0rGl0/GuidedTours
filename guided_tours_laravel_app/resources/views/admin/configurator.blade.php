@@ -291,8 +291,8 @@
                             <li class="list-item-with-actions"> <!-- Changed class -->
                                 <span class="item-name">{{ $place->name }}</span>
                                 <div class="action-buttons">
-                                    {{-- Placeholder for edit route --}}
-                                    <a href="#" class="edit-button action-button">Edit</a>
+                                    {{-- Link to edit route --}}
+                                    <a href="{{ route('admin.places.edit', $place) }}" class="edit-button action-button">Edit</a>
                                     {{-- Use POST route for remove --}}
                                     <form action="{{ route('admin.places.remove', $place) }}" method="POST" style="display:inline;">
                                         @csrf
@@ -306,8 +306,8 @@
                 @else
                     <p>No places found.</p>
                 @endif
-                 {{-- Placeholder for add route --}}
-                 <button class="add-item-button" onclick="location.href='#'">+ Add Place</button>
+                 {{-- Link to create route --}}
+                 <a href="{{ route('admin.places.create') }}" class="btn btn-primary btn-sm mt-3 add-item-button" style="text-decoration: none;">+ Add Place</a> {{-- Use link styled as button --}}
             </div>
             <div class="admin-list admin-list-box"> <!-- Added common class -->
                 <h4>Registered Visit Types</h4>
@@ -317,8 +317,8 @@
                              <li class="list-item-with-actions"> <!-- Changed class -->
                                 <span class="item-name">{{ $visit_type->title }}</span>
                                 <div class="action-buttons">
-                                    {{-- Placeholder for edit route --}}
-                                    <a href="#" class="edit-button action-button">Edit</a>
+                                    {{-- Link to edit route --}}
+                                    <a href="{{ route('admin.visit-types.edit', $visit_type) }}" class="edit-button action-button">Edit</a>
                                      {{-- Use POST route for remove --}}
                                     <form action="{{ route('admin.visit-types.remove', $visit_type) }}" method="POST" style="display:inline;">
                                         @csrf
@@ -332,8 +332,8 @@
                 @else
                     <p>No visit types found.</p>
                 @endif
-                 {{-- Placeholder for add route --}}
-                 <button class="add-item-button" onclick="location.href='#'">+ Add Visit Type</button>
+                 {{-- Link to create route --}}
+                 <a href="{{ route('admin.visit-types.create') }}" class="btn btn-primary btn-sm mt-3 add-item-button" style="text-decoration: none;">+ Add Visit Type</a> {{-- Use link styled as button --}}
             </div>
         </div>
     </section>

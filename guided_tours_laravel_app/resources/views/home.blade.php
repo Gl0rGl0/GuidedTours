@@ -17,40 +17,45 @@
         <p>There are currently no available tours scheduled. Please check back later!</p>
     @else
         <p>Here are the upcoming guided tours available for registration or viewing:</p>
-        {{-- Basic styling for the tour list - consider moving to style.css --}}
-        <style>
-            .tour-list { list-style: none; padding: 0; }
-            .tour-item { background: #f9f9f9; border: 1px solid #ddd; margin-bottom: 15px; padding: 15px; border-radius: 5px; }
-            .tour-item h4 { margin-top: 0; color: #0779e4; } /* Changed to h4 for hierarchy */
-            .tour-item strong { color: #333; }
-            .tour-status { font-weight: bold; padding: 3px 8px; border-radius: 3px; color: #fff; display: inline-block; margin-bottom: 5px;}
-            .status-proposed { background-color: #ffc107; color: #333; } /* Yellow */
-            .status-confirmed { background-color: #28a745; } /* Green */
-        </style>
-        <ul class="tour-list">
+        {{-- Remove inline style block --}}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"> {{-- Bootstrap grid --}}
             @foreach ($available_tours as $tour)
-                <li class="tour-item">
-                    <h4>{{ $tour->visit_type_title }}</h4>
-                     <span class="tour-status status-{{ $tour->status }}">
-                         {{ ucfirst($tour->status) }}
-                     </span>
-                    <p><strong>Place:</strong> {{ $tour->place_name }} ({{ $tour->place_location }})</p>
-                    {{-- Use Carbon for date/time formatting --}}
-                    <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($tour->visit_date)->format('D, M j, Y') }}</p>
-                    <p><strong>Time:</strong> {{ \Carbon\Carbon::parse($tour->start_time)->format('g:i A') }} (Duration: {{ $tour->duration_minutes }} mins)</p>
-                    <p><strong>Meeting Point:</strong> {{ $tour->meeting_point }}</p>
-                    <p>{!! nl2br(e($tour->visit_type_description)) !!}</p> {{-- Use e() for escaping and nl2br --}}
-                    @if ($tour->requires_ticket)
-                        <p><em>Note: An entrance ticket purchase may be required at the venue.</em></p>
-                    @endif
-                    {{-- Registration link logic (using placeholder route for now) --}}
-                    @if ($tour->status === 'proposed')
-                         <p><a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}">Register Interest</a></p>
-                         {{-- TODO: Implement registration page/logic --}}
-                    @endif
-                </li>
+                <div class="col">
+                    <div class="card h-100"> {{-- Bootstrap card --}}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $tour->visit_type_title }}</h5>
+                            <h6 class="card-subtitle mb-2">
+                                <span class="badge {{ $tour->status === 'proposed' ? 'bg-warning text-dark' : 'bg-success' }}">
+                                    {{ ucfirst($tour->status) }}
+                                </span>
+                            </h6>
+                            <p class="card-text">
+                                <strong>Place:</strong> {{ $tour->place_name }}<br>
+                                <small class="text-muted">{{ $tour->place_location }}</small>
+                            </p>
+                            <p class="card-text">
+                                <strong>Date:</strong> {{ \Carbon\Carbon::parse($tour->visit_date)->format('D, M j, Y') }}<br>
+                                <strong>Time:</strong> {{ \Carbon\Carbon::parse($tour->start_time)->format('g:i A') }} ({{ $tour->duration_minutes }} mins)<br>
+                                <strong>Meeting:</strong> {{ $tour->meeting_point }}
+                            </p>
+                            <p class="card-text"><small>{!! nl2br(e($tour->visit_type_description)) !!}</small></p>
+                            @if ($tour->requires_ticket)
+                                <p class="card-text"><small><em>Note: An entrance ticket purchase may be required.</em></small></p>
+                            @endif
+                        </div>
+                        <div class="card-footer text-center">
+                             {{-- Registration link logic (using placeholder route for now) --}}
+                            @if ($tour->status === 'proposed')
+                                 <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">Register Interest</a>
+                                 {{-- TODO: Implement registration page/logic --}}
+                            @else
+                                <span class="text-muted">Registration Closed</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             @endforeach
-        </ul>
+        </div>
     @endif
 
 @endsection

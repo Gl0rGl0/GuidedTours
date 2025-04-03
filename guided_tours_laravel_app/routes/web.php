@@ -42,27 +42,21 @@ Route::middleware('auth')->group(function () {
         Route::post('/places/{place}/delete', [AdminController::class, 'removePlace'])->name('places.remove');
         Route::post('/visit-types/{visit_type}/delete', [AdminController::class, 'removeVisitType'])->name('visit-types.remove');
 
-        // Add other admin routes here (e.g., settings, visit planning, add/edit place/visit_type)
+        // Add routes for Place CRUD
+        Route::get('/places/create', [AdminController::class, 'createPlace'])->name('places.create');
+        Route::post('/places', [AdminController::class, 'storePlace'])->name('places.store');
+        Route::get('/places/{place}/edit', [AdminController::class, 'editPlace'])->name('places.edit');
+        Route::put('/places/{place}', [AdminController::class, 'updatePlace'])->name('places.update');
+
+        // Add routes for Visit Type CRUD
+        Route::get('/visit-types/create', [AdminController::class, 'createVisitType'])->name('visit-types.create');
+        Route::post('/visit-types', [AdminController::class, 'storeVisitType'])->name('visit-types.store');
+        Route::get('/visit-types/{visit_type}/edit', [AdminController::class, 'editVisitType'])->name('visit-types.edit');
+        Route::put('/visit-types/{visit_type}', [AdminController::class, 'updateVisitType'])->name('visit-types.update');
+
+        // Add other admin routes here (e.g., settings, visit planning)
     });
 
     // Add Volunteer routes here if needed
     // Add Fruitore specific routes here if needed (e.g., view my registrations)
 });
-
-// Fallback route for old ?page= style URLs (optional, can cause issues if not careful)
-// Route::get('/index.php', function (Illuminate\Http\Request $request) {
-//     $page = $request->input('page', 'home');
-//     // Basic mapping - might need more complex logic
-//     $routeMapping = [
-//         'home' => 'home',
-//         'login' => 'login',
-//         'register' => 'register',
-//         'profile' => 'profile',
-//         'change_password' => 'change-password.form',
-//         'admin_configurator' => 'admin.configurator',
-//     ];
-//     if (array_key_exists($page, $routeMapping)) {
-//         return redirect()->route($routeMapping[$page]);
-//     }
-//     return redirect()->route('home'); // Default redirect
-// });
