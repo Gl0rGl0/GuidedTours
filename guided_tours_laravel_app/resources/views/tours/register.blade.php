@@ -8,28 +8,39 @@
         <div class="card">
             <div class="card-header">{{ __('Register Interest for Tour') }}</div>
             <div class="card-body">
+                @if ($visit)
+                    <h4>{{ $visit->visitType->title }}</h4>
+                    <p><strong>Place:</strong> {{ $visit->visitType->place->name }}</p>
+                    <p><small class="text-muted">{{ $visit->visitType->place->location }}</small></p>
+                    <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($visit->visit_date)->format('D, M j, Y') }}</p>
+                    <p><strong>Time:</strong> {{ \Carbon\Carbon::parse($visit->visitType->start_time)->format('g:i A') }} ({{ $visit->visitType->duration_minutes }} mins)</p>
+                    <p><strong>Meeting Point:</strong> {{ $visit->visitType->meeting_point }}</p>
+                    <p><strong>Description:</strong> {!! nl2br(e($visit->visitType->description)) !!}</p>
 
-                {{-- TODO: Fetch and display details about the specific visit --}}
-                <p><strong>Visit ID:</strong> {{ $visit_id ?? 'Not specified' }}</p> {{-- Example: Get visit ID from route --}}
-                {{-- Display Visit Title, Place, Date etc. here once fetched in controller --}}
+                    <p><strong>Current Subscribers:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
 
-                <p class="mt-3">This form will allow users (fruitori) to register their interest or book a spot for this tour visit.</p>
+                    @if ($visit->visitType->requires_ticket)
+                        <p class="card-text"><small><em>Note: An entrance ticket purchase may be required.</em></small></p>
+                    @endif
 
-                <p><em>(Functionality to be implemented)</em></p>
+                    <hr>
 
-                {{-- TODO: Add registration form here --}}
-                {{-- Example form structure --}}
-                {{--
-                <form action="{{ route('register-tour.submit') }}" method="POST" class="mt-4">
-                    @csrf
-                    <input type="hidden" name="visit_id" value="{{ $visit_id ?? '' }}">
-                    <div class="mb-3">
-                        <label for="num_participants" class="form-label">Number of Participants:</label>
-                        <input type="number" id="num_participants" name="num_participants" class="form-control" style="width: 100px;" min="1" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit Registration</button>
-                </form>
-                --}}
+                    <p>Please enter the number of participants for your registration.</p>
+
+                    {{-- TODO: Add validation error display here --}}
+
+                    <form action="{{ route('register-tour.submit') }}" method="POST" class="mt-4">
+                        @csrf
+                        <input type="hidden" name="visit_id" value="{{ $visit->visit_id }}">
+                        <div class="mb-3">
+                            <label for="num_participants" class="form-label">Number of Participants:</label>
+                            <input type="number" id="num_participants" name="num_participants" class="form-control" style="width: 100px;" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Registration</button>
+                    </form>
+                @else
+                    <p>Tour visit details could not be loaded.</p>
+                @endif
             </div>
         </div>
     </div>

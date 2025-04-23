@@ -323,7 +323,6 @@
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username" value="{{ old('username') }}" required>
                     </div>
-                    {{-- Email removed --}}
                     <div>
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="password" required minlength="6">
@@ -336,7 +335,6 @@
                         <label for="role">Role:</label>
                         <select id="role" name="role" required>
                             <option value="">-- Select Role --</option>
-                            {{-- Removed Fruitore option as admins should not add this role --}}
                             <option value="volunteer" {{ old('role') == 'volunteer' ? 'selected' : '' }}>Volunteer</option>
                             <option value="configurator" {{ old('role') == 'configurator' ? 'selected' : '' }}>Configurator</option>
                         </select>

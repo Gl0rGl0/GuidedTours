@@ -37,6 +37,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
+            // Re-fetch the user after successful authentication to ensure the model is fresh
+            $user = Auth::user();
+            Auth::login($user, $request->filled('remember'));
+
             // Redirect to intended page or home
             return Redirect::intended(route('home'));
         }

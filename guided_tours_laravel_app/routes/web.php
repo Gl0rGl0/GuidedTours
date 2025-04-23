@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PlaceController; // Import Admin\PlaceController
 use App\Http\Controllers\Admin\VisitTypeController; // Import Admin\VisitTypeController
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VolunteerController; // Import VolunteerController
+use App\Http\Controllers\FruitoreController; // Import FruitoreController
 
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
@@ -63,5 +64,11 @@ Route::middleware('auth')->group(function () {
         // Add other volunteer routes here (e.g., view assigned visits)
     });
 
-    // Add Fruitore specific routes here if needed (e.g., view my registrations)
+    // Add Fruitore specific routes here
+    Route::middleware('can:fruitore')->prefix('user')->name('user.')->group(function () {
+        Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
+        // Route for cancelling a booking
+        Route::delete('/bookings/{booking}', [FruitoreController::class, 'cancelBooking'])->name('bookings.cancel');
+        // Add other fruitore routes here
+    });
 });

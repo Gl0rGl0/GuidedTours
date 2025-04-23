@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; // Import DB facade for the query
 use Illuminate\View\View; // Import View
 use Carbon\Carbon; // Import Carbon
+use App\Models\Visit; // Import Visit model
+use Illuminate\Support\Facades\Log; // Import Log facade
 
 class HomeController extends Controller
 {
@@ -18,33 +19,17 @@ class HomeController extends Controller
         $error_message = null;
 
         try {
-            // Fetch proposed and confirmed visits using Query Builder
-            // Replicating the original SQL logic
-            $available_tours = DB::table('visits as v')
-                ->join('visit_types as vt', 'v.visit_type_id', '=', 'vt.visit_type_id')
-                ->join('places as p', 'vt.place_id', '=', 'p.place_id')
-                ->select(
-                    'v.visit_id',
-                    'v.visit_date',
-                    'v.status',
-                    'vt.title as visit_type_title',
-                    'vt.description as visit_type_description',
-                    'vt.meeting_point',
-                    'vt.start_time',
-                    'vt.duration_minutes',
-                    'vt.requires_ticket',
-                    'p.name as place_name',
-                    'p.location as place_location'
-                )
-                ->whereIn('v.status', ['proposed', 'confirmed'])
-                ->whereDate('v.visit_date', '>=', Carbon::today()) // Use Carbon for today's date
-                ->orderBy('v.visit_date')
-                ->orderBy('vt.start_time')
+            // Fetch proposed and confirmed visits using Eloquent with eager loading
+            $available_tours = Visit::with(['visitType.place', 'registrations']) // Eager load visitType (with place) and registrations
+                ->whereIn('status', ['proposed', 'confirmed'])
+                ->whereDate('visit_date', '>=', Carbon::today()) // Use Carbon for today's date
+                ->orderBy('visit_date')
+                // Removed orderBy('visitType.start_time') due to potential issues
                 ->get();
 
         } catch (\Exception $e) {
             // Log error
-            // Log::error("Error fetching available tours on home page: " . $e->getMessage());
+            Log::error("Error fetching available tours on home page: " . $e->getMessage());
             $error_message = "Sorry, we couldn't retrieve the tour list at this time.";
         }
 

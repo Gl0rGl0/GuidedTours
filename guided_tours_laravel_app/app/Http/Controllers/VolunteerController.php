@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\VolunteerAvailability;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB; // Import DB facade
+use Illuminate\Support\Facades\Log; // Import Log facade
 
 class VolunteerController extends Controller
 {
@@ -49,6 +50,7 @@ class VolunteerController extends Controller
         $user = Auth::user();
         $nextMonth = Carbon::now()->addMonth();
         $nextMonthYear = $nextMonth->format('Y-m');
+        $daysInNextMonth = $nextMonth->daysInMonth; // Fetch daysInNextMonth here
 
         $request->validate([
             'available_days' => ['nullable', 'array'],
@@ -56,62 +58,39 @@ class VolunteerController extends Controller
             'available_days.*' => ['integer', 'min:1', 'max:31'],
         ]);
 
-        // 1. Get submitted day numbers as a collection
+        // Get submitted day numbers as a collection
         $submitted_days = collect($request->input('available_days', []))->map(fn($day) => (int)$day);
 
-        // 2. Get currently stored date strings for the month/user
-        $currentDateStrings = VolunteerAvailability::where('user_id', $user->user_id)
-                                ->where('month_year', $nextMonthYear)
-                                ->pluck('available_date'); // Collection of 'YYYY-MM-DD' strings
+        $datesToInsert = [];
 
-        // 3. Get currently stored availability records (needed for IDs to delete)
-         $currentAvailabilityRecords = VolunteerAvailability::where('user_id', $user->user_id)
-                                    ->where('month_year', $nextMonthYear)
-                                    ->get();
-
-
-        $daysToInsertData = [];
-        $idsToDelete = [];
-
-        // 4. Determine Days to Insert
+        // Determine Dates to Insert
         foreach ($submitted_days as $day) {
-            $dateStrToInsert = $nextMonthYear . '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
-            // Check if this date string is NOT already in the database for this user/month
-            if (!$currentDateStrings->contains($dateStrToInsert)) {
-                 // Check if date is valid for the month (e.g., not Feb 30th)
-                 try {
-                    $dateObj = Carbon::createFromFormat('Y-m-d', $dateStrToInsert);
-                    if ($dateObj && $dateObj->format('Y-m') === $nextMonthYear) {
-                        $daysToInsertData[] = [
-                            'user_id' => $user->user_id,
-                            'available_date' => $dateStrToInsert,
-                            'month_year' => $nextMonthYear,
-                            'declared_at' => now(),
-                        ];
-                    }
-                 } catch (\Exception $e) { /* Ignore invalid dates */ }
-            }
-        }
-
-        // 5. Determine IDs to Delete
-        foreach ($currentAvailabilityRecords as $record) {
-            $dayNumberInDb = (int)Carbon::parse($record->available_date)->format('j');
-            // If a day stored in the DB is NOT in the submitted days, mark it for deletion
-            if (!$submitted_days->contains($dayNumberInDb)) {
-                $idsToDelete[] = $record->availability_id;
-            }
+            $dateStr = $nextMonthYear . '-' . str_pad($day, 2, '0', STR_PAD_LEFT);
+            // Basic check for valid date within the month (optional, validation rule helps)
+             try {
+                $dateObj = Carbon::createFromFormat('Y-m-d', $dateStr);
+                if ($dateObj && $dateObj->format('Y-m') === $nextMonthYear) {
+                    $datesToInsert[] = [
+                        'user_id' => $user->user_id,
+                        'available_date' => $dateStr,
+                        'month_year' => $nextMonthYear,
+                        'declared_at' => now(),
+                    ];
+                }
+             } catch (\Exception $e) { /* Ignore invalid dates */ }
         }
 
          // Start transaction
         DB::beginTransaction();
         try {
-            // Perform database operations
-            if (!empty($idsToDelete)) {
-                VolunteerAvailability::whereIn('availability_id', $idsToDelete)->delete();
-            }
-            if (!empty($daysToInsert)) {
-                // Ensure the structure is correct for bulk insert
-                VolunteerAvailability::insert($daysToInsert);
+            // 1. Delete all existing availability for this user and month
+            VolunteerAvailability::where('user_id', $user->user_id)
+                ->where('month_year', $nextMonthYear)
+                ->delete();
+
+            // 2. Insert the newly submitted availability dates
+            if (!empty($datesToInsert)) {
+                VolunteerAvailability::insert($datesToInsert);
             }
 
             // Commit transaction
@@ -123,7 +102,7 @@ class VolunteerController extends Controller
             // Rollback transaction on error
             DB::rollBack();
             // Log the actual error for debugging
-            // Log::error("Failed to update availability for user {$user->user_id}: " . $e->getMessage(), ['exception' => $e]);
+            Log::error("Failed to update availability for user {$user->user_id}: " . $e->getMessage(), ['exception' => $e]);
             return back()->withErrors(['general' => 'Failed to update availability. Please try again. Error: ' . $e->getMessage()]); // Temporarily show error message
         }
     }

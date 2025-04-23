@@ -25,6 +25,12 @@
                         <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                     </li>
                     @auth {{-- Check if user is logged in --}}
+                        {{-- Add link to Fruitore Dashboard if user is a fruitore --}}
+                        @if (Auth::user()->role === 'fruitore')
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">My Bookings</a>
+                            </li>
+                        @endif
                         @if (Auth::user()->role === 'configurator')
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin Panel</a>
