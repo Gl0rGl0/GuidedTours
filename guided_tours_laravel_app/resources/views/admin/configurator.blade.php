@@ -90,17 +90,13 @@
     /* .remove-button, .remove-user-button { ... } */
     /* .remove-button:hover, .remove-user-button:hover { ... } */
 
-
-    #add-user-form { background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 20px; max-width: 400px;}
-        color: white;
-        text-decoration: none;
+    /* Styling for the Add User Modal Form */
+    #modal-add-user-form {
+        /* Apply common box style if desired, or define specific styles */
     }
-
-
-    #add-user-form { background-color: #f9f9f9; padding: 15px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 20px; max-width: 400px;}
-    #add-user-form div { margin-bottom: 10px; }
-    #add-user-form label { display: block; margin-bottom: 3px; font-weight: bold; }
-    #add-user-form input[type="text"],
+    #modal-add-user-form div { margin-bottom: 10px; }
+    #modal-add-user-form label { display: block; margin-bottom: 3px; font-weight: bold; }
+    #modal-add-user-form input[type="text"],
     #modal-add-user-form input[type="text"],
     /* #modal-add-user-form input[type="email"], */ /* Email removed */
     #modal-add-user-form input[type="password"],
@@ -266,9 +262,10 @@
                                 <div class="action-buttons">
                                     {{-- Use Bootstrap button classes --}}
                                     <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    {{-- Use POST route for remove --}}
-                                    <form action="{{ route('admin.places.remove', $place) }}" method="POST" style="display:inline;">
+                                    {{-- Use DELETE route for remove --}}
+                                    <form action="{{ route('admin.places.destroy', $place) }}" method="POST" style="display:inline;">
                                         @csrf
+                                        @method('DELETE') {{-- Method spoofing for DELETE request --}}
                                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
                                 </div>
@@ -291,9 +288,10 @@
                                 <div class="action-buttons">
                                      {{-- Use Bootstrap button classes --}}
                                     <a href="{{ route('admin.visit-types.edit', $visit_type) }}" class="btn btn-sm btn-primary">Edit</a>
-                                     {{-- Use POST route for remove --}}
-                                    <form action="{{ route('admin.visit-types.remove', $visit_type) }}" method="POST" style="display:inline;">
+                                     {{-- Use DELETE route for remove --}}
+                                    <form action="{{ route('admin.visit-types.destroy', $visit_type) }}" method="POST" style="display:inline;">
                                         @csrf
+                                        @method('DELETE') {{-- Method spoofing for DELETE request --}}
                                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
                                 </div>
@@ -338,7 +336,7 @@
                         <label for="role">Role:</label>
                         <select id="role" name="role" required>
                             <option value="">-- Select Role --</option>
-                            <option value="fruitore" {{ old('role') == 'fruitore' ? 'selected' : '' }}>Fruitore (User)</option>
+                            {{-- Removed Fruitore option as admins should not add this role --}}
                             <option value="volunteer" {{ old('role') == 'volunteer' ? 'selected' : '' }}>Volunteer</option>
                             <option value="configurator" {{ old('role') == 'configurator' ? 'selected' : '' }}>Configurator</option>
                         </select>
@@ -370,9 +368,10 @@
 
                                         {{-- Only show remove button for non-configurators and not the current user --}}
                                         @if ($role !== 'configurator' && $user->user_id !== Auth::id())
-                                            {{-- Point to the new POST route --}}
-                                            <form action="{{ route('admin.users.remove', $user) }}" method="POST" style="display:inline;">
+                                            {{-- Point to the new DELETE route --}}
+                                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display:inline;">
                                                 @csrf
+                                                @method('DELETE') {{-- Method spoofing for DELETE request --}}
                                                 <button type="submit" class="btn btn-sm btn-danger"> {{-- Use Bootstrap classes --}}
                                                     Remove
                                                 </button>
@@ -385,7 +384,10 @@
                     @else
                         <p>No users found for this role.</p>
                     @endif
-                    <button class="add-user-button" data-role="{{ $role }}">+ Add {{ ucfirst($role) }}</button>
+                    {{-- Only show Add button for roles other than Fruitore --}}
+                    @if ($role !== 'fruitore')
+                        <button class="add-user-button" data-role="{{ $role }}">+ Add {{ ucfirst($role) }}</button>
+                    @endif
                 </div>
             @endforeach
              @if(empty($users_by_role)) {{-- Check if the main array is empty (e.g., fetch error) --}}
@@ -454,9 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Trigger reflow to enable transition
         requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                 toast.classList.add('show');
-            });
+            toast.classList.add('show');
         });
 
 

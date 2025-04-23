@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth; // Import Auth facade
 use Illuminate\Support\Facades\Hash; // Import Hash facade
 use Illuminate\Validation\Rules\Password; // Import Password rule
 use Illuminate\View\View; // Import View
+use Illuminate\Support\Facades\Log; // Import Log facade
 use Illuminate\Http\RedirectResponse; // Import RedirectResponse
 
 class UserController extends Controller
@@ -36,6 +37,7 @@ class UserController extends Controller
      */
     public function changePassword(Request $request): RedirectResponse
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Validate input
@@ -61,7 +63,7 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
             // Log error
-            // Log::error("Password change failed for user {$user->user_id}: " . $e->getMessage());
+            Log::error("Password change failed for user {$user->user_id}: " . $e->getMessage());
             return back()->withErrors(['current_password' => 'Failed to update password. Please try again.']);
         }
     }

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Add this use statement
+use Illuminate\Database\Eloquent\Relations\HasMany; // Import HasMany
+use Illuminate\Database\Eloquent\Relations\BelongsTo; // Import BelongsTo
 
 class User extends Authenticatable
 {
@@ -66,6 +68,27 @@ class User extends Authenticatable
                     ->where('role', 'volunteer'); // Redundant check, but good practice
     }
 
-    // Add other relationships as needed later (e.g., availability, assigned visits, registrations)
+    /**
+     * Get the volunteer availabilities for the user.
+     */
+    public function volunteerAvailabilities(): HasMany
+    {
+        return $this->hasMany(VolunteerAvailability::class, 'user_id', 'user_id');
+    }
 
+    /**
+     * Get the visits assigned to the user (volunteer).
+     */
+    public function assignedVisits(): HasMany
+    {
+        return $this->hasMany(Visit::class, 'assigned_volunteer_id', 'user_id');
+    }
+
+    /**
+     * Get the registrations made by the user (fruitore).
+     */
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(Registration::class, 'user_id', 'user_id');
+    }
 }

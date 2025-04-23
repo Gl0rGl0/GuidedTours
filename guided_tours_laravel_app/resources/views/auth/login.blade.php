@@ -36,20 +36,21 @@
 
                 <form action="{{ route('login') }}" method="post">
                     @csrf {{-- Add CSRF token --}}
-                    <div class="mb-3">
-                        <label for="username" class="form-label">{{ __('Username') }}</label>
-                        {{-- Use old() helper to retain input on error --}}
-                        <input type="text" id="username" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" required autofocus>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">{{ __('Password') }}</label>
-                        <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
-                         @error('password') {{-- Display password specific errors if needed --}}
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                    <x-form-input
+                        name="username"
+                        label="{{ __('Username') }}"
+                        type="text"
+                        id="username"
+                        required
+                        autofocus
+                    />
+                    <x-form-input
+                        name="password"
+                        label="{{ __('Password') }}"
+                        type="password"
+                        id="password"
+                        required
+                    />
                     {{-- Optional: Remember Me Checkbox --}}
                     {{-- <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

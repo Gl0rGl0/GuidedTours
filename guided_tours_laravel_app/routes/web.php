@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\PlaceController; // Import Admin\PlaceController
+use App\Http\Controllers\Admin\VisitTypeController; // Import Admin\VisitTypeController
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VolunteerController; // Import VolunteerController
 
@@ -36,24 +38,20 @@ Route::middleware('auth')->group(function () {
 
         // User Management (mimicking action=add_user / action=remove_user)
         Route::post('/users', [AdminController::class, 'addUser'])->name('users.add');
-        // Change DELETE to POST as a workaround for the MethodNotAllowed issue
-        Route::post('/users/{user}/delete', [AdminController::class, 'removeUser'])->name('users.remove');
+        Route::delete('/users/{user}', [AdminController::class, 'removeUser'])->name('users.destroy');
 
-        // Add POST routes for Place and VisitType deletion
-        Route::post('/places/{place}/delete', [AdminController::class, 'removePlace'])->name('places.remove');
-        Route::post('/visit-types/{visit_type}/delete', [AdminController::class, 'removeVisitType'])->name('visit-types.remove');
+        Route::delete('/places/{place}', [PlaceController::class, 'removePlace'])->name('places.destroy');
+        Route::delete('/visit-types/{visit_type}', [VisitTypeController::class, 'removeVisitType'])->name('visit-types.destroy');
 
         // Add routes for Place CRUD
-        Route::get('/places/create', [AdminController::class, 'createPlace'])->name('places.create');
-        Route::post('/places', [AdminController::class, 'storePlace'])->name('places.store');
-        Route::get('/places/{place}/edit', [AdminController::class, 'editPlace'])->name('places.edit');
-        Route::put('/places/{place}', [AdminController::class, 'updatePlace'])->name('places.update');
+        Route::resource('places', PlaceController::class)->except([
+            'index', 'show', 'destroy' // Define destroy separately for clarity/consistency with users/visit-types
+        ]);
 
         // Add routes for Visit Type CRUD
-        Route::get('/visit-types/create', [AdminController::class, 'createVisitType'])->name('visit-types.create');
-        Route::post('/visit-types', [AdminController::class, 'storeVisitType'])->name('visit-types.store');
-        Route::get('/visit-types/{visit_type}/edit', [AdminController::class, 'editVisitType'])->name('visit-types.edit');
-        Route::put('/visit-types/{visit_type}', [AdminController::class, 'updateVisitType'])->name('visit-types.update');
+         Route::resource('visit-types', VisitTypeController::class)->except([
+            'index', 'show', 'destroy' // Define destroy separately
+        ]);
 
         // Add other admin routes here (e.g., settings, visit planning)
     });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest; // Import StoreUserRequest
 use App\Models\User; // Import User model
 use Illuminate\Support\Facades\Auth; // Import Auth facade
 use Illuminate\Support\Facades\Hash; // Import Hash facade
@@ -10,11 +11,15 @@ use Illuminate\Validation\Rules\Password; // Import Password rule
 use Illuminate\Validation\Rule; // Import Rule for role validation
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log; // Import Log facade
 use App\Models\Place; // Import Place model
 use App\Models\VisitType; // Import VisitType model
+use App\Http\Controllers\Traits\HandlesAdminOperations; // Import the trait
 
 class AdminController extends Controller
 {
+    use HandlesAdminOperations;
+
     /**
      * Show the main admin configurator page.
      */
@@ -38,7 +43,7 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
             // Log error
-            // Log::error("Admin Configurator Fetch Error: " . $e->getMessage());
+            Log::error("Admin Configurator Fetch Error: " . $e->getMessage());
             $fetch_error = "An error occurred while fetching data for the admin panel.";
             // Flash error to session to display in view
             session()->flash('error', $fetch_error);
@@ -55,33 +60,25 @@ class AdminController extends Controller
     /**
      * Handle the request to add a new user (by admin).
      */
-    public function addUser(Request $request): RedirectResponse
+    public function addUser(StoreUserRequest $request): RedirectResponse
     {
-        // Authorization check (already handled by middleware in routes/web.php)
+        // Authorization check (handled by middleware and Form Request authorize method)
 
-        $allowed_roles = ['configurator', 'volunteer', 'fruitore'];
+        // Validation is handled by StoreUserRequest
 
-        $request->validate([
-            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
-            'password' => ['required', 'confirmed', Password::min(6)],
-            'role' => ['required', Rule::in($allowed_roles)],
-        ]);
-
-        try {
-            User::create([
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
-                'role' => $request->role,
-                'first_login' => false, // Or true if they should change password
-            ]);
-
-            return redirect()->route('admin.configurator')->with('status', 'User added successfully!');
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error("Admin add user failed: " . $e->getMessage());
-            return back()->withInput()->withErrors(['username' => 'Failed to add user. Please try again.']);
-        }
+        return $this->handleAdminOperation(
+            function () use ($request) {
+                User::create([
+                    'username' => $request->username,
+                    'password' => Hash::make($request->password),
+                    'role' => $request->role,
+                    'first_login' => false, // Or true if they should change password
+                ]);
+            },
+            'User added successfully!',
+            'Failed to add user.',
+            'admin.configurator'
+        );
     }
 
     /**
@@ -100,193 +97,13 @@ class AdminController extends Controller
              return back()->withErrors(['general' => 'Configurator users cannot be removed.']);
         }
 
-        try {
-            $user->delete();
-            return redirect()->route('admin.configurator')->with('status', 'User removed successfully!');
-
-        } catch (\Exception $e) {
-            // Log error
-            Log::error("Admin remove user failed for user {$user->user_id}: " . $e->getMessage());
-            return back()->withErrors(['general' => 'Failed to remove user. Please try again.']);
-        }
+        return $this->handleAdminOperation(
+            function () use ($user) {
+                $user->delete();
+            },
+            'User removed successfully!',
+            'Failed to remove user.',
+            'admin.configurator'
+        );
     }
-
-    /**
-     * Handle the request to remove a place (by admin).
-     */
-    public function removePlace(Place $place): RedirectResponse
-    {
-        // Authorization check (already handled by middleware)
-        try {
-            $place->delete(); // Deleting a place will cascade delete related visit types due to DB constraint
-            return redirect()->route('admin.configurator')->with('status', 'Place and associated visit types removed successfully!');
-        } catch (\Exception $e) {
-            // Log error
-            Log::error("Admin remove place failed for place {$place->place_id}: " . $e->getMessage());
-            return back()->withErrors(['general' => 'Failed to remove place. Please try again.']);
-        }
-    }
-
-    /**
-     * Handle the request to remove a visit type (by admin).
-     */
-    public function removeVisitType(VisitType $visit_type): RedirectResponse
-    {
-        // Authorization check (already handled by middleware)
-        try {
-            $visit_type->delete();
-            return redirect()->route('admin.configurator')->with('status', 'Visit type removed successfully!');
-        } catch (\Exception $e) {
-            // Log error
-            Log::error("Admin remove visit type failed for visit type {$visit_type->visit_type_id}: " . $e->getMessage());
-            return back()->withErrors(['general' => 'Failed to remove visit type. Please try again.']);
-        }
-    }
-
-    // --- Place Management ---
-
-    /**
-     * Show the form for creating a new place.
-     */
-    public function createPlace(): View
-    {
-        // We'll create this view next
-        return view('admin.places.create');
-    }
-
-    /**
-     * Store a newly created place in storage.
-     */
-    public function storePlace(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:places,name'],
-            'description' => ['nullable', 'string'],
-            'location' => ['required', 'string', 'max:255'],
-        ]);
-
-        try {
-            Place::create($validated);
-            return redirect()->route('admin.configurator')->with('status', 'Place created successfully!');
-        } catch (\Exception $e) {
-            // Log::error("Admin store place failed: " . $e->getMessage());
-            return back()->withInput()->withErrors(['general' => 'Failed to create place. Please try again.']);
-        }
-    }
-
-     /**
-     * Show the form for editing the specified place.
-     */
-    public function editPlace(Place $place): View
-    {
-         // We'll create this view next
-        return view('admin.places.edit', ['place' => $place]);
-    }
-
-    /**
-     * Update the specified place in storage.
-     */
-    public function updatePlace(Request $request, Place $place): RedirectResponse
-    {
-        $validated = $request->validate([
-            // Unique rule needs to ignore the current place's name
-            'name' => ['required', 'string', 'max:255', Rule::unique('places', 'name')->ignore($place->place_id, 'place_id')],
-            'description' => ['nullable', 'string'],
-            'location' => ['required', 'string', 'max:255'],
-        ]);
-
-         try {
-            $place->update($validated);
-            return redirect()->route('admin.configurator')->with('status', 'Place updated successfully!');
-        } catch (\Exception $e) {
-            // Log::error("Admin update place failed for place {$place->place_id}: " . $e->getMessage());
-            return back()->withInput()->withErrors(['general' => 'Failed to update place. Please try again.']);
-        }
-    }
-
-    // removePlace method already exists
-
-
-    // --- Visit Type Management ---
-
-    /**
-     * Show the form for creating a new visit type.
-     */
-    public function createVisitType(): View
-    {
-        $places = Place::orderBy('name')->pluck('name', 'place_id'); // Get places for dropdown
-        // We'll create this view next
-        return view('admin.visit-types.create', ['places' => $places]);
-    }
-
-    /**
-     * Store a newly created visit type in storage.
-     */
-    public function storeVisitType(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'place_id' => ['required', 'integer', 'exists:places,place_id'],
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'meeting_point' => ['required', 'string', 'max:255'],
-            'period_start' => ['required', 'date'],
-            'period_end' => ['required', 'date', 'after_or_equal:period_start'],
-            'start_time' => ['required', 'date_format:H:i'], // Validate time format
-            'duration_minutes' => ['required', 'integer', 'min:1'],
-            'requires_ticket' => ['required', 'boolean'],
-            'min_participants' => ['required', 'integer', 'min:1'],
-            'max_participants' => ['required', 'integer', 'min:1', 'gte:min_participants'], // Max >= Min
-        ]);
-
-        try {
-            VisitType::create($validated);
-            return redirect()->route('admin.configurator')->with('status', 'Visit Type created successfully!');
-        } catch (\Exception $e) {
-            // Log::error("Admin store visit type failed: " . $e->getMessage());
-            return back()->withInput()->withErrors(['general' => 'Failed to create visit type. Please try again.']);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified visit type.
-     */
-    public function editVisitType(VisitType $visit_type): View
-    {
-        $places = Place::orderBy('name')->pluck('name', 'place_id'); // Get places for dropdown
-        // We'll create this view next
-        return view('admin.visit-types.edit', [
-            'visit_type' => $visit_type,
-            'places' => $places
-        ]);
-    }
-
-    /**
-     * Update the specified visit type in storage.
-     */
-    public function updateVisitType(Request $request, VisitType $visit_type): RedirectResponse
-    {
-         $validated = $request->validate([
-            'place_id' => ['required', 'integer', 'exists:places,place_id'],
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'meeting_point' => ['required', 'string', 'max:255'],
-            'period_start' => ['required', 'date'],
-            'period_end' => ['required', 'date', 'after_or_equal:period_start'],
-            'start_time' => ['required', 'date_format:H:i'],
-            'duration_minutes' => ['required', 'integer', 'min:1'],
-            'requires_ticket' => ['required', 'boolean'],
-            'min_participants' => ['required', 'integer', 'min:1'],
-            'max_participants' => ['required', 'integer', 'min:1', 'gte:min_participants'],
-        ]);
-
-         try {
-            $visit_type->update($validated);
-            return redirect()->route('admin.configurator')->with('status', 'Visit Type updated successfully!');
-        } catch (\Exception $e) {
-            // Log::error("Admin update visit type failed for visit type {$visit_type->visit_type_id}: " . $e->getMessage());
-            return back()->withInput()->withErrors(['general' => 'Failed to update visit type. Please try again.']);
-        }
-    }
-
-     // removeVisitType method already exists
 }
