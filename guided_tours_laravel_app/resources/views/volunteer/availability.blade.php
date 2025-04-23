@@ -122,9 +122,6 @@
 @endsection
 
 @push('scripts')
-{{-- Add Toast Container --}}
-<div id="toast-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 1050;"></div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const calendarGrid = document.querySelector('.calendar-grid');
@@ -143,70 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-
-    // Toast Notification Logic (Copied from admin page)
-    const toastContainer = document.getElementById('toast-container');
-
-    function showToast(text, type = 'info') { // type can be 'success', 'error', 'info'
-        if (!text || !toastContainer) return;
-
-        const toast = document.createElement('div');
-        // Basic toast styling (can be enhanced with Bootstrap classes if needed)
-        toast.style.backgroundColor = type === 'success' ? '#28a745' : (type === 'error' ? '#dc3545' : '#333');
-        toast.style.color = '#fff';
-        toast.style.padding = '15px 20px';
-        toast.style.marginBottom = '10px';
-        toast.style.borderRadius = '5px';
-        toast.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-        toast.style.opacity = '0';
-        toast.style.visibility = 'hidden';
-        toast.style.transition = 'opacity 0.5s, visibility 0.5s, transform 0.5s';
-        toast.style.transform = 'translateX(100%)';
-        toast.style.minWidth = '250px';
-        toast.style.maxWidth = '400px';
-
-        toast.textContent = text;
-        toastContainer.appendChild(toast);
-
-        // Trigger reflow to enable transition
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                 toast.style.opacity = '1';
-                 toast.style.visibility = 'visible';
-                 toast.style.transform = 'translateX(0)';
-            });
-        });
-
-        // Set timeout to hide and remove toast
-        const hideTimeout = setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.visibility = 'hidden';
-            toast.style.transform = 'translateX(100%)';
-            // Remove the element after the transition completes
-            toast.addEventListener('transitionend', () => {
-                 if (toast.parentNode === toastContainer) {
-                    toastContainer.removeChild(toast);
-                 }
-            }, { once: true });
-             // Fallback removal
-             setTimeout(() => {
-                 if (toast.parentNode === toastContainer) {
-                    toastContainer.removeChild(toast);
-                 }
-             }, 600);
-
-        }, 5000); // 5 seconds display time
-    }
-
-    // Show toasts based on Laravel Session Flash Data
-    @if (session('status'))
-        showToast("{{ session('status') }}", 'success');
-    @endif
-
-    // Show first validation error in a toast
-    @if ($errors->any())
-        showToast("{{ $errors->first() }}", 'error');
-    @endif
 
 });
 </script>

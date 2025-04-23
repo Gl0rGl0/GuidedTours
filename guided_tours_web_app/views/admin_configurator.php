@@ -65,12 +65,7 @@ if (isset($_GET['error'])) {
 if (!empty($admin_message) && !$admin_success) {
     $error = $admin_message; // Display the specific error from the add user attempt
 }
-
-
 ?>
-
-<!-- Toast Notification Container -->
-<div id="toast-container"></div>
 
 <h2>Admin Configurator Panel</h2>
 
@@ -436,43 +431,6 @@ if (!empty($admin_message) && !$admin_success) {
     }
     /* Style form inside modal */
     #modal-add-user-form h4 { margin-top: 0; }
-
-    /* Toast Notification Styling */
-    #toast-container {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1050; /* Ensure it's above most elements */
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-    }
-    .toast {
-        background-color: #333;
-        color: #fff;
-        padding: 15px 20px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
-        transform: translateX(100%); /* Start off-screen */
-        min-width: 250px;
-        max-width: 400px;
-    }
-    .toast.show {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(0); /* Slide in */
-    }
-    .toast.success {
-        background-color: #28a745; /* Green for success */
-    }
-    .toast.error {
-        background-color: #dc3545; /* Red for error */
-    }
-
 </style>
 
 <script>
@@ -516,56 +474,5 @@ document.addEventListener('DOMContentLoaded', function() {
             closeModal();
         }
     });
-
-    // Toast Notification Logic
-    const toastContainer = document.getElementById('toast-container');
-    // Read messages passed from PHP. Use json_encode for safety.
-    const phpMessage = <?php echo json_encode($message ?? ''); ?>;
-    const phpError = <?php echo json_encode($error ?? ''); ?>;
-
-    function showToast(text, type = 'info') { // type can be 'success', 'error', 'info'
-        if (!text || !toastContainer) return;
-
-        const toast = document.createElement('div');
-        toast.className = `toast ${type}`; // Add type class for styling
-        toast.textContent = text;
-
-        toastContainer.appendChild(toast);
-
-        // Trigger reflow to enable transition
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                 toast.classList.add('show');
-            });
-        });
-
-
-        // Set timeout to hide and remove toast
-        const hideTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            // Remove the element after the transition completes
-            toast.addEventListener('transitionend', () => {
-                 if (toast.parentNode === toastContainer) { // Check if still attached
-                    toastContainer.removeChild(toast);
-                 }
-            }, { once: true }); // Ensure listener runs only once
-             // Fallback removal if transitionend doesn't fire (e.g., element removed early)
-             setTimeout(() => {
-                 if (toast.parentNode === toastContainer) {
-                    toastContainer.removeChild(toast);
-                 }
-             }, 600); // 600ms should be enough for the 0.5s transition
-
-        }, 5000); // 5 seconds display time
-    }
-
-    // Show toasts based on PHP messages passed from URL parameters or failed POST
-    if (phpMessage) {
-        showToast(phpMessage, 'success');
-    }
-    if (phpError) {
-        showToast(phpError, 'error');
-    }
-
 });
 </script>
