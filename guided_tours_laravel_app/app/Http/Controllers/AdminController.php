@@ -28,7 +28,12 @@ class AdminController extends Controller
         $fetch_error = null;
         $places = collect();
         $visit_types = collect();
-        $users_by_role = ['configurator' => collect(), 'volunteer' => collect(), 'fruitore' => collect()];
+        // Initialize collections for users grouped by Spatie roles
+        $users_by_role = [
+            'configurator' => collect(),
+            'volunteer' => collect(),
+            'fruitore' => collect(),
+        ];
 
         try {
             // Fetch Places
@@ -37,9 +42,24 @@ class AdminController extends Controller
             // Fetch Visit Types
             $visit_types = VisitType::orderBy('title')->get(['visit_type_id', 'title']);
 
-            // Fetch Users and group by role
-            $all_users = User::orderBy('role')->orderBy('username')->get(['user_id', 'username', 'role']);
-            $users_by_role = $all_users->groupBy('role'); // Group the collection by role
+            // Fetch Users and group by Spatie roles
+            // Fetch all users without the old role column
+            $all_users = User::orderBy('username')->get(['user_id', 'username']);
+
+            // Group users by their Spatie roles
+            foreach ($all_users as $user) {
+                // Assign user to the collection of their primary role for display
+                if ($user->hasRole('admin')) {
+                    $users_by_role['admin']->push($user);
+                } elseif ($user->hasRole('configurator')) {
+                     $users_by_role['configurator']->push($user);
+                } elseif ($user->hasRole('volunteer')) {
+                    $users_by_role['volunteer']->push($user);
+                } elseif ($user->hasRole('fruitore')) {
+                    $users_by_role['fruitore']->push($user);
+                }
+                // Users with no assigned role will not appear in these lists
+            }
 
         } catch (\Exception $e) {
             // Log error
@@ -47,6 +67,14 @@ class AdminController extends Controller
             $fetch_error = "An error occurred while fetching data for the admin panel.";
             // Flash error to session to display in view
             session()->flash('error', $fetch_error);
+
+            // Initialize empty collections on error to prevent view errors
+            $users_by_role = [
+                'admin' => collect(),
+                'configurator' => collect(),
+                'volunteer' => collect(),
+                'fruitore' => collect(),
+            ];
         }
 
         // Pass all fetched data (or empty collections on error) to the view
@@ -64,16 +92,22 @@ class AdminController extends Controller
     {
         // Authorization check (handled by middleware and Form Request authorize method)
 
-        // Validation is handled by StoreUserRequest
+        // Validation for username and password handled by StoreUserRequest.
+        // Add validation for the role field here.
+        $request->validate([
+            'role' => ['required', \Illuminate\Validation\Rule::in(['configurator', 'volunteer'])],
+        ]);
 
         return $this->handleAdminOperation(
             function () use ($request) {
-                User::create([
+                $user = User::create([
                     'username' => $request->username,
                     'password' => Hash::make($request->password),
-                    'role' => $request->role,
                     'first_login' => false, // Or true if they should change password
                 ]);
+
+                // Assign the validated role using Spatie
+                $user->assignRole($request->role);
             },
             'User added successfully!',
             'Failed to add user.',
@@ -93,7 +127,8 @@ class AdminController extends Controller
         if ($user->user_id === Auth::id()) {
              return back()->withErrors(['general' => 'You cannot remove yourself.']);
         }
-        if ($user->role === 'configurator') {
+        // Prevent removing other configurators using Spatie's hasRole()
+        if ($user->hasRole('configurator')) {
              return back()->withErrors(['general' => 'Configurator users cannot be removed.']);
         }
 

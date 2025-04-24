@@ -51,7 +51,7 @@
                             @if ($tour->status === 'proposed')
                                 {{-- Only show registration link for 'fruitore' users --}}
                                 @auth
-                                    @if (Auth::user()->role === 'fruitore')
+                                    @if (Auth::user()->hasRole('fruitore'))
                                         <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">Register Interest</a>
                                         {{-- TODO: Implement registration page/logic --}}
                                     @else

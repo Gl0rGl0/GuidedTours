@@ -88,9 +88,12 @@ class AuthController extends Controller
             $user = User::create([
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                'role' => 'fruitore', // Default role for self-registration
+                // Removed 'role' as roles are managed by Spatie
                 'first_login' => false, // Assuming they don't need to change password immediately
             ]);
+
+            // Assign the 'fruitore' role using Spatie
+            $user->assignRole('fruitore');
 
             // Optionally log the user in after registration
             // Auth::login($user);

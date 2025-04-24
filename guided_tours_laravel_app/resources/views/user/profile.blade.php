@@ -15,7 +15,8 @@
                 <hr>
 
                 {{-- Example: Display user role --}}
-                <p><strong>Your current role:</strong> <span class="badge bg-secondary">{{ ucfirst($user->role) }}</span></p>
+                {{-- Display role using Spatie's getRoleNames() --}}
+                <p><strong>Your current role:</strong> <span class="badge bg-secondary">{{ ucfirst($user->getRoleNames()->first()) }}</span></p>
 
                 {{-- TODO: Add form to edit profile details if required --}}
                 {{-- TODO: Display user's registrations or volunteer schedule if applicable --}}

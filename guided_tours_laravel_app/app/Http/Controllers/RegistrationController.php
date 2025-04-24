@@ -20,7 +20,8 @@ class RegistrationController extends Controller
     public function showTourRegistrationForm(Request $request): View|RedirectResponse
     {
         // Ensure only authenticated 'fruitori' can access this page
-        if (Auth::guest() || Auth::user()->role !== 'fruitore') {
+        // Using Spatie's hasRole() method
+        if (Auth::guest() || !Auth::user()->hasRole('fruitore')) {
             return redirect()->route('home')->with('error_message', 'You must be logged in as a User to register for tours.');
         }
 
@@ -53,7 +54,8 @@ class RegistrationController extends Controller
     public function registerForTour(Request $request): RedirectResponse
     {
         // Ensure only authenticated 'fruitori' can submit this form
-        if (Auth::guest() || Auth::user()->role !== 'fruitore') {
+        // Using Spatie's hasRole() method
+        if (Auth::guest() || !Auth::user()->hasRole('fruitore')) {
             return redirect()->route('home')->with('error_message', 'You must be logged in as a User to register for tours.');
         }
 

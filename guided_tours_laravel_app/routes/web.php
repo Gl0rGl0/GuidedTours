@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/register-tour', [RegistrationController::class, 'registerForTour'])->name('register-tour.submit'); // Placeholder
 
     // --- Admin (Configurator) Routes ---
-    Route::middleware('can:configurator')->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware('role:configurator')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/configurator', [AdminController::class, 'showConfigurator'])->name('configurator'); // Map ?page=admin_configurator
 
         // User Management (mimicking action=add_user / action=remove_user)
@@ -58,17 +58,22 @@ Route::middleware('auth')->group(function () {
     });
 
     // --- Volunteer Routes ---
-    Route::middleware('can:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
+    Route::middleware('role:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
         Route::get('/availability', [VolunteerController::class, 'showAvailabilityForm'])->name('availability.form');
         Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
         // Add other volunteer routes here (e.g., view assigned visits)
     });
 
     // Add Fruitore specific routes here
-    Route::middleware('can:fruitore')->prefix('user')->name('user.')->group(function () {
+    Route::middleware('role:fruitore')->prefix('user')->name('user.')->group(function () {
         Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
         // Route for cancelling a booking
         Route::delete('/bookings/{booking}', [FruitoreController::class, 'cancelBooking'])->name('bookings.cancel');
         // Add other fruitore routes here
     });
+
+    // Route to set custom time for testing
+    Route::post('/set-custom-time', [HomeController::class, 'setCustomTime'])->name('set-custom-time');
+    // Route to reset custom time
+    Route::post('/reset-custom-time', [HomeController::class, 'resetCustomTime'])->name('reset-custom-time');
 });

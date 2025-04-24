@@ -9,11 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Add this use statement
 use Illuminate\Database\Eloquent\Relations\HasMany; // Import HasMany
 use Illuminate\Database\Eloquent\Relations\BelongsTo; // Import BelongsTo
+use Spatie\Permission\Traits\HasRoles; // Add Spatie HasRoles trait
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles; // Add HasRoles trait here
 
     /**
      * The primary key associated with the table.
@@ -30,7 +31,7 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password', // Hashing is handled by the 'hashed' cast below
-        'role',
+        // Removed 'role' as roles are managed by Spatie
         'first_login',
     ];
 
@@ -61,11 +62,16 @@ class User extends Authenticatable
     /**
      * The visit types that the user (volunteer) can guide.
      */
-    public function visitTypes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany // Use the fully qualified name here or just BelongsToMany if use statement is added
+    public function visitTypes(): BelongsToMany // Use the fully qualified name here or just BelongsToMany if use statement is added
     {
-        // Ensure this relationship is only relevant for volunteers
-        return $this->belongsToMany(VisitType::class, 'volunteers_visit_types', 'user_id', 'visit_type_id')
-                    ->where('role', 'volunteer'); // Redundant check, but good practice
+        // This relationship links users to visit types they can guide.
+        // The 'volunteer' role check is now handled by Spatie.
+        return $this->belongsToMany(VisitType::class, 'volunteers_visit_types', 'user_id', 'visit_type_id');
+                    // Removed where('role', 'volunteer') as roles are managed by Spatie
+                    // Filter using Spatie's role scope when querying the relationship if needed:
+                    // $user->visitTypes()->whereHas('volunteers', function ($query) {
+                    //     $query->role('volunteer');
+                    // })->get(); // Example of filtering VisitTypes by related volunteers' roles
     }
 
     /**

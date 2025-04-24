@@ -16,38 +16,49 @@ class UsersSeeder extends Seeder
     {
         $password = Hash::make('password123'); // Hash the common password once
 
-        // Configurators
-        User::updateOrCreate(
+        // Configurators (Mapped to 'configurator' role)
+        $configAdmin = User::updateOrCreate(
             ['username' => 'config_admin'],
-            ['password' => $password, 'role' => 'configurator', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
-        User::updateOrCreate(
+        $configAdmin->assignRole('configurator');
+
+        $configManager = User::updateOrCreate(
             ['username' => 'config_manager'],
-            ['password' => $password, 'role' => 'configurator', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
+        $configManager->assignRole('configurator');
 
         // Volunteers
-        User::updateOrCreate(
+        $volunteerAnna = User::updateOrCreate(
             ['username' => 'volunteer_anna'],
-            ['password' => $password, 'role' => 'volunteer', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
-        User::updateOrCreate(
+        $volunteerAnna->assignRole('volunteer');
+
+        $volunteerMarco = User::updateOrCreate(
             ['username' => 'volunteer_marco'],
-            ['password' => $password, 'role' => 'volunteer', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
+        $volunteerMarco->assignRole('volunteer');
 
         // Fruitori (Users)
-        User::updateOrCreate(
+        $userPaolo = User::updateOrCreate(
             ['username' => 'user_paolo'],
-            ['password' => $password, 'role' => 'fruitore', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
-        User::updateOrCreate(
+        $userPaolo->assignRole('fruitore');
+
+        $userElena = User::updateOrCreate(
             ['username' => 'user_elena'],
-            ['password' => $password, 'role' => 'fruitore', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
-        User::updateOrCreate(
+        $userElena->assignRole('fruitore');
+
+        $userLuca = User::updateOrCreate(
             ['username' => 'user_luca'],
-            ['password' => $password, 'role' => 'fruitore', 'first_login' => false]
+            ['password' => $password, 'first_login' => false] // Removed 'role'
         );
+        $userLuca->assignRole('fruitore');
     }
 }

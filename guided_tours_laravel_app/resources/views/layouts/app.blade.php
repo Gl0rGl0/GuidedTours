@@ -78,16 +78,16 @@
                     </li>
                     @auth {{-- Check if user is logged in --}}
                         {{-- Add link to Fruitore Dashboard if user is a fruitore --}}
-                        @if (Auth::user()->role === 'fruitore')
+                        @if (Auth::user()->hasRole('fruitore'))
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">My Bookings</a>
                             </li>
                         @endif
-                        @if (Auth::user()->role === 'configurator')
+                        @if (Auth::user()->hasRole('configurator'))
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin Panel</a>
                             </li>
-                        @elseif (Auth::user()->role === 'volunteer')
+                        @elseif (Auth::user()->hasRole('volunteer'))
                              <li class="nav-item">
                                 <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
                             </li>
@@ -140,6 +140,19 @@
              <p class="text-muted mb-0">Guided Tours Org © {{ date('Y') }}</p> {{-- mb-0 removes default bottom margin --}}
         </div>
     </footer>
+
+    {{-- Time Changer for Testing --}}
+    <div class="container text-center mt-3">
+        <form id="time-changer-form" class="form-inline justify-content-center" method="POST" action="{{ route('set-custom-time') }}">
+            @csrf
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="custom_time" class="sr-only">Set Custom Time (YYYY-MM-DD HH:MM:SS)</label>
+                <input type="text" class="form-control form-control-sm" id="custom_time" name="custom_time" placeholder="YYYY-MM-DD HH:MM:SS" value="{{ session('custom_time') }}">
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mb-2">Set Time</button>
+            <button type="button" class="btn btn-secondary btn-sm mb-2 ml-2" id="reset-time-button">Reset</button>
+        </form>
+    </div>
 
     {{-- @vite directive includes Bootstrap JS which handles dropdowns etc. --}}
     {{-- It's generally better to put scripts at the end --}}
@@ -224,6 +237,43 @@
         });
     </script>
     {{-- === END: Centralized Toast JavaScript === --}}
+
+    {{-- JavaScript for Time Changer Reset Button --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const resetTimeButton = document.getElementById('reset-time-button');
+
+            if (resetTimeButton) {
+                resetTimeButton.addEventListener('click', function() {
+                    // Create a hidden form dynamically
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "{{ route('reset-custom-time') }}";
+                    form.style.display = 'none'; // Hide the form
+
+                    // Add CSRF token
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+
+                    // Add method spoofing for POST request (Laravel requires this for non-GET requests)
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'POST'; // Use POST as the route is POST
+                    form.appendChild(methodInput);
+
+
+                    // Append the form to the body and submit it
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            }
+        });
+    </script>
 
     @stack('scripts') {{-- Placeholder for page-specific scripts --}}
 </body>

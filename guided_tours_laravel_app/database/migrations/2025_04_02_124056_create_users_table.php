@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('user_id'); // Use 'user_id' as the primary key name
             $table->string('username', 50)->unique();
             $table->string('password'); // Laravel handles hashing; original name was password_hash
-            $table->enum('role', ['configurator', 'volunteer', 'fruitore']);
+            $table->enum('role', ['configurator', 'volunteer', 'fruitore'])->nullable(); // Make role nullable
             $table->boolean('first_login')->default(true);
             $table->timestamps(); // Handles created_at and updated_at
         });

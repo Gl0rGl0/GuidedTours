@@ -22,13 +22,15 @@ class StoreUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Admins should only be able to add 'configurator' or 'volunteer' roles
-        $allowed_roles = ['configurator', 'volunteer'];
+        // Role assignment is now handled by Spatie after user creation,
+        // so the 'role' validation is removed.
+        // The logic for which roles an admin can assign should be handled
+        // in the controller or a dedicated action class.
 
         return [
             'username' => ['required', 'string', 'max:50', 'unique:users,username'],
             'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::min(6)],
-            'role' => ['required', \Illuminate\Validation\Rule::in($allowed_roles)],
+            // Removed 'role' validation
         ];
     }
 }
