@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\VisitTypeController; // Import Admin\VisitTypeCon
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VolunteerController; // Import VolunteerController
 use App\Http\Controllers\FruitoreController; // Import FruitoreController
+use App\Http\Controllers\VisitPlanningController; // Import VisitPlanningController
 
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
         ]);
 
         // Add other admin routes here (e.g., settings, visit planning)
+        Route::get('/visit-planning', [VisitPlanningController::class, 'index'])->name('visit-planning.index');
     });
 
     // --- Volunteer Routes ---

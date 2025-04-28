@@ -87,6 +87,10 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin Panel</a>
                             </li>
+                            {{-- Add link to Visit Planning for Configurators --}}
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}" href="{{ route('admin.visit-planning.index') }}">Visit Planning</a>
+                            </li>
                         @elseif (Auth::user()->hasRole('volunteer'))
                              <li class="nav-item">
                                 <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
