@@ -7,7 +7,8 @@ use Illuminate\Database\Seeder;
 use App\Models\User;        // Import User model
 use App\Models\Visit;       // Import Visit model
 use App\Models\Registration; // Import Registration model
-use Carbon\Carbon;          // Import Carbon for date comparison
+// Remove Carbon import if no longer needed for date calculation
+// use Carbon\Carbon;
 
 class RegistrationsSeeder extends Seeder
 {
@@ -16,35 +17,34 @@ class RegistrationsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get Users
-        $user1 = User::where('username', 'user_paolo')->first();
-        $user2 = User::where('username', 'user_elena')->first();
-        $user3 = User::where('username', 'user_luca')->first();
+        // Get some users with the 'fruitore' role
+        $fruitori = User::role('fruitore')->take(3)->get(); // Get up to 3 users with the role
 
-        // Get Visits (find based on status and relative date)
-        $now = Carbon::now();
-        $visit_prop1 = Visit::where('status', 'proposed')
-                            ->where('visit_date', $now->copy()->addDays(10)->toDateString())
-                            ->first();
-        $visit_conf1 = Visit::where('status', 'confirmed')
-                            ->where('visit_date', $now->copy()->addDays(4)->toDateString())
-                            ->first();
-        $visit_conf2 = Visit::where('status', 'confirmed')
-                            ->where('visit_date', $now->copy()->addDays(5)->toDateString())
-                            ->first();
+        // Get some proposed and confirmed visits
+        $proposedVisits = Visit::where('status', 'proposed')->take(1)->get();
+        $confirmedVisits = Visit::where('status', 'confirmed')->take(2)->get();
 
-
-        if (!$user1 || !$user2 || !$user3 || !$visit_prop1 || !$visit_conf1 || !$visit_conf2) {
-            $this->command->error('Required Users or Visits not found. Run UsersSeeder and VisitsSeeder first.');
-            return;
+        // Check if we found enough data
+        if ($fruitori->count() < 1 || $proposedVisits->count() < 1 || $confirmedVisits->count() < 1) {
+            $this->command->warn('Could not find enough Users (role: fruitore) or Visits (proposed/confirmed) to seed registrations. Skipping.');
+            return; // Exit gracefully if not enough data
         }
 
-        // Helper function to generate booking code (mimics SQL logic)
+        // Assign users and visits for seeding
+        $user1 = $fruitori->get(0); // First fruitore
+        $user2 = $fruitori->get(1) ?? $user1; // Second fruitore, or fallback to first
+        $user3 = $fruitori->get(2) ?? $user1; // Third fruitore, or fallback to first
+
+        $visit_prop1 = $proposedVisits->first();
+        $visit_conf1 = $confirmedVisits->get(0);
+        $visit_conf2 = $confirmedVisits->get(1) ?? $visit_conf1; // Second confirmed, or fallback to first
+
+        // Helper function to generate booking code
         $generateBookingCode = function($visitId, $userId) {
             return 'BK' . str_pad($visitId, 4, '0', STR_PAD_LEFT) . 'U' . str_pad($userId, 3, '0', STR_PAD_LEFT);
         };
 
-        // Paolo books 2 for proposed visit 1
+        // User 1 books 2 for proposed visit 1
         Registration::updateOrCreate(
             [
                 'visit_id' => $visit_prop1->visit_id,
@@ -56,7 +56,7 @@ class RegistrationsSeeder extends Seeder
             ]
         );
 
-        // Elena books 3 for confirmed visit 1
+        // User 2 books 3 for confirmed visit 1
         Registration::updateOrCreate(
             [
                 'visit_id' => $visit_conf1->visit_id,
@@ -68,19 +68,21 @@ class RegistrationsSeeder extends Seeder
             ]
         );
 
-        // Luca books 1 for confirmed visit 1
-        Registration::updateOrCreate(
-            [
-                'visit_id' => $visit_conf1->visit_id,
-                'user_id' => $user3->user_id
-            ],
-            [
-                'num_participants' => 1,
-                'booking_code' => $generateBookingCode($visit_conf1->visit_id, $user3->user_id)
-            ]
-        );
+        // User 3 books 1 for confirmed visit 1 (if different from user 2)
+        if ($user3->user_id !== $user2->user_id) {
+            Registration::updateOrCreate(
+                [
+                    'visit_id' => $visit_conf1->visit_id,
+                    'user_id' => $user3->user_id
+                ],
+                [
+                    'num_participants' => 1,
+                    'booking_code' => $generateBookingCode($visit_conf1->visit_id, $user3->user_id)
+                ]
+            );
+        }
 
-        // Elena books 4 for confirmed visit 2
+        // User 2 books 4 for confirmed visit 2
         Registration::updateOrCreate(
             [
                 'visit_id' => $visit_conf2->visit_id,
@@ -91,5 +93,7 @@ class RegistrationsSeeder extends Seeder
                 'booking_code' => $generateBookingCode($visit_conf2->visit_id, $user2->user_id)
             ]
         );
+
+        $this->command->info('RegistrationsSeeder completed successfully.');
     }
 }
