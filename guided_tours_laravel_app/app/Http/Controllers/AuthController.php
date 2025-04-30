@@ -18,7 +18,6 @@ class AuthController extends Controller
      */
     public function showLoginForm(): View
     {
-        // We'll create this view later in Phase 2, Step 8
         return view('auth.login');
     }
 
@@ -69,7 +68,6 @@ class AuthController extends Controller
      */
     public function showRegistrationForm(): View
     {
-        // We'll create this view later in Phase 2, Step 8
         return view('auth.register');
     }
 
@@ -88,7 +86,6 @@ class AuthController extends Controller
             $user = User::create([
                 'username' => $request->username,
                 'password' => Hash::make($request->password),
-                // Removed 'role' as roles are managed by Spatie
                 'first_login' => false, // Assuming they don't need to change password immediately
             ]);
 
@@ -107,6 +104,4 @@ class AuthController extends Controller
             return back()->withInput()->withErrors(['username' => 'Registration failed. Please try again.']);
         }
     }
-
-    // Redundant logout method removed. The first one (lines 48-58) is kept.
 }

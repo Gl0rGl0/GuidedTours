@@ -14,21 +14,21 @@
     <style>
         #toast-container {
             position: fixed;
-            top: 1.5rem; /* Adjust spacing as needed */
-            right: 1.5rem; /* Adjust spacing as needed */
+            top: 1.5rem;
+            right: 1.5rem;
             z-index: 1055; /* Ensure it's above Bootstrap modals (usually 1050) */
             display: flex;
             flex-direction: column;
             align-items: flex-end;
             pointer-events: none; /* Allow clicks to pass through the container */
         }
-        .toast-notification { /* Renamed class slightly for clarity */
-            background-color: var(--bs-dark, #212529); /* Default info style using BS variable */
+        .toast-notification {
+            background-color: var(--bs-dark, #212529);
             color: var(--bs-light, #f8f9fa);
-            padding: 0.75rem 1.25rem; /* Use BS padding variables if desired */
+            padding: 0.75rem 1.25rem;
             margin-bottom: 0.75rem;
-            border-radius: var(--bs-border-radius, 0.25rem); /* Use BS border-radius */
-            box-shadow: var(--bs-box-shadow, 0 .5rem 1rem rgba(0, 0, 0, .15)); /* Use BS shadow */
+            border-radius: var(--bs-border-radius, 0.25rem);
+            box-shadow: var(--bs-box-shadow, 0 .5rem 1rem rgba(0, 0, 0, .15));
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
@@ -44,19 +44,19 @@
         }
         .toast-notification.success {
             background-color: var(--bs-success, #198754);
-             color: #fff; /* Ensure contrast */
+            color: #fff;
         }
         .toast-notification.error {
             background-color: var(--bs-danger, #dc3545);
-             color: #fff; /* Ensure contrast */
+            color: #fff;
         }
         .toast-notification.warning {
             background-color: var(--bs-warning, #ffc107);
-             color: #000; /* Better contrast for warning */
+            color: #000;
         }
-         .toast-notification.info { /* Explicit style for info */
+         .toast-notification.info {
             background-color: var(--bs-info, #0dcaf0);
-             color: #000; /* Better contrast for info */
+            color: #000;
         }
     </style>
     {{-- === END: Centralized Toast Styles === --}}
@@ -72,7 +72,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto"> {{-- Align items to the right --}}
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                     </li>
@@ -126,13 +126,9 @@
         </div>
     </nav>
 
-    <main class="container py-4 flex-grow-1"> {{-- Use main tag, add padding, allow grow --}}
-        {{-- Removed static alert boxes for session status/errors --}}
-
-        {{-- Main page content goes here --}}
+    <main class="container py-4 flex-grow-1">
         @yield('content')
-
-    </main> <!-- End main container -->
+    </main> 
 
     {{-- === START: Toast Container HTML === --}}
     <div id="toast-container"></div>
@@ -141,12 +137,89 @@
 
     <footer class="mt-auto py-3 bg-light"> {{-- Bootstrap footer classes --}}
         <div class="container text-center">
-             <p class="text-muted mb-0">Guided Tours Org © {{ date('Y') }}</p> {{-- mb-0 removes default bottom margin --}}
+             <p class="text-muted mb-0">Guided Tours Org © {{ date('Y') }}</p>
         </div>
     </footer>
+    {{-- === START: Centralized Toast JavaScript === --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toastContainer = document.getElementById('toast-container');
 
-    {{-- @vite directive includes Bootstrap JS which handles dropdowns etc. --}}
-    {{-- It's generally better to put scripts at the end --}}
+            // Make showToast globally accessible
+            window.showToast = function(text, type = 'info', duration = 5000) { // type can be 'success', 'error', 'warning', 'info'
+                if (!text || !toastContainer) {
+                    console.warn('Toast container not found or no text provided.');
+                    return;
+                };
+
+                const toast = document.createElement('div');
+                // Use the specific class and add type-specific class
+                toast.className = `toast-notification ${type}`;
+                toast.textContent = text;
+                toast.setAttribute('role', 'alert'); // Accessibility
+                toast.setAttribute('aria-live', 'assertive'); // Accessibility: changes announced immediately
+
+                toastContainer.appendChild(toast);
+
+                // Trigger reflow/styles application before adding 'show' class for transition
+                requestAnimationFrame(() => {
+                    // Force calculation (read property) - helps ensure transition works
+                    void toast.offsetWidth;
+                    requestAnimationFrame(() => {
+                        toast.classList.add('show');
+                    });
+                });
+
+
+                // Set timeout to hide and remove toast
+                const hideTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                    // Remove the element after the transition completes
+                    toast.addEventListener('transitionend', () => {
+                         // Double check it's still a child before removing
+                         if (toast.parentNode === toastContainer) {
+                            toastContainer.removeChild(toast);
+                         }
+                    }, { once: true }); // Ensure listener runs only once
+
+                     // Fallback removal if transitionend doesn't fire (e.g., interrupted)
+                     // Use duration + transition time + buffer
+                     setTimeout(() => {
+                         if (toast.parentNode === toastContainer) {
+                            console.warn('Toast fallback removal triggered for:', text);
+                            toastContainer.removeChild(toast);
+                         }
+                     }, 600); // Should be slightly longer than CSS transition duration (0.5s)
+
+                }, duration); // Use configurable duration
+            }
+
+            // Automatically show toasts based on Laravel Session Flash Data on page load
+            // Check for multiple common keys
+            @if (session('status'))
+                window.showToast("{{ session('status') }}", 'success'); // Often used for general success
+            @endif
+            @if (session('success'))
+                window.showToast("{{ session('success') }}", 'success');
+            @endif
+            @if (session('error'))
+                window.showToast("{{ session('error') }}", 'error');
+            @endif
+             @if (session('warning'))
+                window.showToast("{{ session('warning') }}", 'warning');
+            @endif
+            @if (session('info'))
+                window.showToast("{{ session('info') }}", 'info');
+            @endif
+
+            // Show first validation error in a toast (consider if this is too intrusive)
+            @if ($errors->any())
+                window.showToast("{{ $errors->first() }}", 'error');
+            @endif
+
+        });
+    </script>
+    {{-- === END: Centralized Toast JavaScript === --}}
 
     @stack('scripts') {{-- Placeholder for page-specific scripts --}}
 </body>

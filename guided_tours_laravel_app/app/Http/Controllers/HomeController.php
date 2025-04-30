@@ -24,7 +24,6 @@ class HomeController extends Controller
             // Fetch proposed and confirmed visits using Eloquent with eager loading
             $available_tours = Visit::with(['visitType.place', 'registrations']) // Eager load visitType (with place) and registrations
                 ->whereIn('status', ['proposed', 'confirmed'])
-                // Use the custom time if set, otherwise use Carbon::today()
                 ->whereDate('visit_date', '>=', Carbon::today())
                 ->orderBy('visit_date')
                 // ->orderBy('visitType.start_time')

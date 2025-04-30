@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Import Auth facade
-use Illuminate\View\View; // Import View
-use App\Models\Registration; // Import Registration model
-use Illuminate\Support\Facades\Log; // Import Log facade
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View; 
+use App\Models\Registration;
+use Illuminate\Support\Facades\Log;
 
 class FruitoreController extends Controller
 {
