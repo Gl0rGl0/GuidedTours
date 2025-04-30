@@ -19,7 +19,7 @@ class FormInput extends Component
     public string $label;
 
     /**
-     * The input field's type (e.g., text, password, email, textarea).
+     * The input field's type (e.g., text, password, textarea).
      */
     public string $type;
 

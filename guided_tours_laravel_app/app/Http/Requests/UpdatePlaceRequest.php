@@ -4,21 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePlaceRequest extends FormRequest
+class UpdatePlaceRequest extends BaseFormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        // Authorization is handled by middleware
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -27,6 +18,7 @@ class UpdatePlaceRequest extends FormRequest
 
         return [
             // Unique rule needs to ignore the current place's name
+            //Rule::unique(...)->ignore(...) applica l’unicità escludendo il record che stai aggiornando, permettendoti di non cambiare il nome senza incorrere in errore di duplicato.
             'name' => ['required', 'string', 'max:255', \Illuminate\Validation\Rule::unique('places', 'name')->ignore($placeId, 'place_id')],
             'description' => ['nullable', 'string'],
             'location' => ['required', 'string', 'max:255'],

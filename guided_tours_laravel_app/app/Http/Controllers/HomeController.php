@@ -25,9 +25,9 @@ class HomeController extends Controller
             $available_tours = Visit::with(['visitType.place', 'registrations']) // Eager load visitType (with place) and registrations
                 ->whereIn('status', ['proposed', 'confirmed'])
                 // Use the custom time if set, otherwise use Carbon::today()
-                ->whereDate('visit_date', '>=', $this->getCurrentTime()->startOfDay())
+                ->whereDate('visit_date', '>=', Carbon::today())
                 ->orderBy('visit_date')
-                // Removed orderBy('visitType.start_time') due to potential issues
+                // ->orderBy('visitType.start_time')
                 ->get();
 
         } catch (\Exception $e) {
@@ -41,39 +41,5 @@ class HomeController extends Controller
             'available_tours' => $available_tours,
             'error_message' => $error_message // Pass error message if any
         ]);
-    }
-
-    /**
-     * Set a custom time in the session for testing.
-     */
-    public function setCustomTime(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'custom_time' => ['required', 'date_format:Y-m-d H:i:s'],
-        ]);
-
-        Session::put('custom_time', $request->input('custom_time'));
-
-        return back()->with('status', 'Custom time set successfully!');
-    }
-
-    /**
-     * Remove the custom time from the session.
-     */
-    public function resetCustomTime(): RedirectResponse
-    {
-        Session::forget('custom_time');
-
-        return back()->with('status', 'Custom time reset successfully!');
-    }
-
-    /**
-     * Get the current time, considering the custom time in the session.
-     */
-    protected function getCurrentTime(): Carbon
-    {
-        return Session::has('custom_time')
-            ? Carbon::parse(Session::get('custom_time'))
-            : Carbon::now();
     }
 }

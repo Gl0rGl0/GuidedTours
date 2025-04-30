@@ -98,7 +98,6 @@
     #modal-add-user-form label { display: block; margin-bottom: 3px; font-weight: bold; }
     #modal-add-user-form input[type="text"],
     #modal-add-user-form input[type="text"],
-    /* #modal-add-user-form input[type="email"], */ /* Email removed */
     #modal-add-user-form input[type="password"],
     #modal-add-user-form select {
         width: 100%;
@@ -110,7 +109,6 @@
     }
     /* Center text within input fields */
     #modal-add-user-form input[type="text"],
-    /* #modal-add-user-form input[type="email"], */ /* Email removed */
     #modal-add-user-form input[type="password"] {
         text-align: center;
     }

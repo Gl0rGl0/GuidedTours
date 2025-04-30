@@ -75,7 +75,4 @@ Route::middleware('auth')->group(function () {
     });
 
     // Route to set custom time for testing
-    Route::post('/set-custom-time', [HomeController::class, 'setCustomTime'])->name('set-custom-time');
-    // Route to reset custom time
-    Route::post('/reset-custom-time', [HomeController::class, 'resetCustomTime'])->name('reset-custom-time');
 });

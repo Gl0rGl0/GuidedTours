@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,7 +30,6 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password', // Hashing is handled by the 'hashed' cast below
-        // Removed 'role' as roles are managed by Spatie
         'first_login',
     ];
 
@@ -53,7 +51,6 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            // 'email_verified_at' => 'datetime', // Removed as per schema
             'password' => 'hashed',
             'first_login' => 'boolean', // Cast first_login to boolean
         ];

@@ -136,7 +136,6 @@ if (!empty($admin_message) && !$admin_success) {
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
             </div>
-             <!-- Removed Email Field -->
             <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required minlength="6">
@@ -329,7 +328,6 @@ if (!empty($admin_message) && !$admin_success) {
     #add-user-form label { display: block; margin-bottom: 3px; font-weight: bold; }
     #add-user-form input[type="text"],
     #modal-add-user-form input[type="text"],
-    #modal-add-user-form input[type="email"],
     #modal-add-user-form input[type="password"],
     #modal-add-user-form select {
         width: 100%;
@@ -341,7 +339,6 @@ if (!empty($admin_message) && !$admin_success) {
     }
     /* Center text within input fields */
     #modal-add-user-form input[type="text"],
-    #modal-add-user-form input[type="email"],
     #modal-add-user-form input[type="password"] {
         text-align: center;
     }

@@ -43,7 +43,6 @@ class AdminController extends Controller
             $visit_types = VisitType::orderBy('title')->get(['visit_type_id', 'title']);
 
             // Fetch Users and group by Spatie roles
-            // Fetch all users without the old role column
             $all_users = User::orderBy('username')->get(['user_id', 'username']);
 
             // Group users by their Spatie roles

@@ -109,17 +109,14 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_user') {
     }
 
     $new_username = trim($_POST['username'] ?? '');
-    $new_email = trim($_POST['email'] ?? ''); // Assuming email is collected
     $new_password = trim($_POST['password'] ?? '');
     $new_password_confirm = trim($_POST['password_confirm'] ?? '');
     $new_role = trim($_POST['role'] ?? '');
     $allowed_roles = ['configurator', 'volunteer', 'fruitore'];
 
     // Basic Validation
-    if (empty($new_username) || empty($new_email) || empty($new_password) || empty($new_password_confirm) || empty($new_role)) {
+    if (empty($new_username) || empty($new_password) || empty($new_password_confirm) || empty($new_role)) {
         $admin_message = 'All fields are required for adding a user.';
-    } elseif (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) {
-         $admin_message = 'Invalid email format.';
     } elseif ($new_password !== $new_password_confirm) {
         $admin_message = 'Passwords do not match.';
     } elseif (strlen($new_password) < 6) {
@@ -127,7 +124,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_user') {
     } elseif (!in_array($new_role, $allowed_roles)) {
         $admin_message = 'Invalid role selected.';
     } else {
-        // Check if username already exists (Removed email check)
         try {
             $sql_check = "SELECT user_id FROM users WHERE username = :username";
             $stmt_check = $pdo->prepare($sql_check);
@@ -138,7 +134,6 @@ if (isset($_POST['action']) && $_POST['action'] === 'add_user') {
                 // Hash the password
                 $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
 
-                // Insert new user (Removed email field)
                 $sql_insert = "INSERT INTO users (username, password_hash, role, first_login) VALUES (:username, :password_hash, :role, false)";
                 $stmt_insert = $pdo->prepare($sql_insert);
                 $stmt_insert->execute([
