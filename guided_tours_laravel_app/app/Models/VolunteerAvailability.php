@@ -56,7 +56,7 @@ class VolunteerAvailability extends Model
     /**
      * Get the user (volunteer) that this availability belongs to.
      */
-    public function user(): BelongsTo
+    public function volunteer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }

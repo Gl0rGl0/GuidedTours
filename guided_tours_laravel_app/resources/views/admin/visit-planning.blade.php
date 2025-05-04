@@ -15,7 +15,8 @@
             <ul>
                 @foreach ($visitsOnDate as $visit)
                     <li>
-                        {{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }} {{ $visit->visitType->title }} at {{ $visit->visitType->place->name }}
+                        {{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }} {{ $visit->visitType->title }} at
+                        {{ $visit->visitType->place->name }}
                         (Volunteer: {{ $visit->assignedVolunteer->username ?? 'Unassigned' }})
                     </li>
                 @endforeach
@@ -32,12 +33,7 @@
             <ul>
                 @foreach ($availabilitiesOnDate as $availability)
                     <li>
-                        {{ $availability->volunteer->username }}:
-                        @if ($availability->is_available)
-                            Available
-                        @else
-                            Not Available
-                        @endif
+                        {{ $availability->volunteer->username }}
                     </li>
                 @endforeach
             </ul>
