@@ -47,9 +47,9 @@
                             </p>
                         </div>
                         <div class="card-footer text-center">
-                             {{-- Registration link logic (using placeholder route for now) --}}
-                            @if ($tour->status === 'proposed')
-                                {{-- Only show registration link for 'fruitore' users --}}
+                             {{-- Registration link logic --}}
+                             {{-- Show button if status is 'proposed' or 'confirmed'. Controller will handle actual eligibility. --}}
+                            @if ($tour->status === \App\Models\Visit::STATUS_PROPOSED || $tour->status === \App\Models\Visit::STATUS_CONFIRMED)
                                 @auth
                                     @if (Auth::user()->hasRole('fruitore'))
                                         <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">Register Interest</a>
@@ -59,10 +59,14 @@
                                     @endif
                                 @else
                                      {{-- Show link for guests, they will be prompted to login/register --}}
-                                     <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">Register Interest</a>
+                                     <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">
+                                        {{ $tour->status === \App\Models\Visit::STATUS_PROPOSED ? 'Register Interest' : 'View Details / Register' }}
+                                     </a>
                                 @endauth
+                            @elseif (in_array($tour->status, [\App\Models\Visit::STATUS_CANCELLED, \App\Models\Visit::STATUS_COMPLETE, \App\Models\Visit::STATUS_EFFECTED]))
+                                <span class="text-muted">This visit is {{ $tour->status }}.</span>
                             @else
-                                <span class="text-muted">Registration Closed</span>
+                                <span class="text-muted">Registration Closed</span> {{-- Fallback for other statuses if any --}}
                             @endif
                         </div>
                     </div>

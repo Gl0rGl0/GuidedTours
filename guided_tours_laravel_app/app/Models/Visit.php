@@ -11,6 +11,12 @@ class Visit extends Model
 {
     use HasFactory;
 
+    const STATUS_PROPOSED = 'proposed';
+    const STATUS_COMPLETE = 'complete';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_EFFECTED = 'effected'; // Or map this to 'completed' if they are synonymous
+
     /**
      * The table associated with the model.
      *

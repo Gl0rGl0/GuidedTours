@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/change-password', [UserController::class, 'showChangePasswordForm'])->name('change-password.form');
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('change-password.update');
 
+    // Past Visits Page
+    Route::get('/past-visits', [VisitPlanningController::class, 'showPastVisits'])->name('visits.past');
+
     // Tour Registration (Placeholder - mimicking ?page=register_tour)
     // This will likely need more specific routes like /visits/{visit}/register
     Route::get('/register-tour', [RegistrationController::class, 'showTourRegistrationForm'])->name('register-tour.form'); // Placeholder

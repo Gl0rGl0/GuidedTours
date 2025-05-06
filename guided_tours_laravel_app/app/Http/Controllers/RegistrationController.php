@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth; // Import Auth facade
 use Illuminate\Support\Facades\Validator; // Import Validator facade
 use App\Models\Visit; // Import Visit model
 use App\Models\Registration; // Import Registration model
+use Carbon\Carbon; // Import Carbon
 use Illuminate\Support\Str; // Import Str facade for booking code
 use Illuminate\Support\Facades\Log; // Import Log facade
 
@@ -32,6 +33,19 @@ class RegistrationController extends Controller
         // Fetch visit details and eager load relationships
         $visit = Visit::with(['visitType', 'registrations'])
                       ->findOrFail($visit_id); // Use findOrFail to show 404 if visit not found
+
+        // Check visit status and date for form display
+        if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_COMPLETE, Visit::STATUS_EFFECTED])) {
+            return redirect()->route('home')->with('error_message', 'This visit is no longer available for registration.');
+        }
+
+        // Registration closes 3 days before the visit date.
+        // Registration closes 3 days before the visit date.
+        // If visit_date is less than 3 days from today (i.e. visit is today, tomorrow, or day after), registration is closed.
+        if (Carbon::parse($visit->visit_date)->lt(Carbon::today()->addDays(3))) {
+            return redirect()->route('home')->with('error_message', 'Registration for this visit is closed as the deadline has passed.');
+        }
+
 
         // Check if the user has already registered for this visit
         $existingRegistration = Registration::where('user_id', Auth::user()->user_id) // Use user_id
@@ -75,11 +89,25 @@ class RegistrationController extends Controller
         $num_participants = $request->input('num_participants');
 
         // Fetch the visit again to check capacity and status
-        $visit = Visit::with('registrations')->findOrFail($visit_id);
+        $visit = Visit::with(['visitType','registrations'])->findOrFail($visit_id); // Eager load visitType for max_participants
 
-        // Check if registration is open
-        if ($visit->status !== 'proposed') {
-             return back()->withErrors(['general' => 'Registration is not open for this visit.'])->withInput();
+        // Registration eligibility checks
+        if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_COMPLETE, Visit::STATUS_EFFECTED])) {
+            return back()->withErrors(['general' => 'Registration is closed for this visit as it is cancelled or has already occurred.'])->withInput();
+        }
+
+        // Registration closes 3 days before the visit date.
+        // This means if the visit is on D, D+1, or D+2, registration is closed.
+        // Carbon::parse($visit->visit_date) gives the start of that day.
+        // Carbon::today()->addDays(3) gives the start of the day 3 days from now.
+        // If visit_date is strictly less than today + 3 days, it's too late.
+        if (Carbon::parse($visit->visit_date)->lt(Carbon::today()->addDays(3))) {
+            return back()->withErrors(['general' => 'The registration deadline for this visit has passed.'])->withInput();
+        }
+
+        // If status is not 'proposed' or 'confirmed', it's not open (e.g. if a new status is added later)
+        if (!in_array($visit->status, [Visit::STATUS_PROPOSED, Visit::STATUS_CONFIRMED])) {
+            return back()->withErrors(['general' => 'Registration is not currently open for this visit status.'])->withInput();
         }
 
         // Check if the user has already registered for this visit

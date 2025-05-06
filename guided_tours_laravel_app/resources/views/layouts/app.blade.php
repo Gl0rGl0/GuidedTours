@@ -96,6 +96,12 @@
                                 <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
                             </li>
                         @endif
+
+                        {{-- Past Visits Link for all authenticated users --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::is('visits.past') ? 'active' : '' }}" href="{{ route('visits.past') }}">Past Visits</a>
+                        </li>
+
                         {{-- User Dropdown --}}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
