@@ -85,8 +85,7 @@ class AuthController extends Controller
         try {
             $user = User::create([
                 'username' => $request->username,
-                'password' => Hash::make($request->password),
-                'first_login' => false, // Assuming they don't need to change password immediately
+                'password' => Hash::make($request->password)
             ]);
 
             // Assign the 'fruitore' role using Spatie

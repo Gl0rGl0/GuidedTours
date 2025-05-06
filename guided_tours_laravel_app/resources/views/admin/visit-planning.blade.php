@@ -41,7 +41,4 @@
     @else
         <p>No volunteer availability recorded for this period.</p>
     @endif
-
-    {{-- TODO: Add interface for creating/updating visits --}}
-
 @endsection

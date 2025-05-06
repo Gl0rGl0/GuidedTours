@@ -19,7 +19,6 @@ class UserController extends Controller
     public function showProfile(): View
     {
         $user = Auth::user();
-        // We'll create this view later
         return view('user.profile', ['user' => $user]);
     }
 
@@ -28,7 +27,6 @@ class UserController extends Controller
      */
     public function showChangePasswordForm(): View
     {
-        // We'll create this view later
         return view('user.change-password');
     }
 
@@ -53,16 +51,11 @@ class UserController extends Controller
         // Update the password
         try {
             $user->password = Hash::make($request->new_password);
-            // Optionally mark first_login as false if applicable
-            // if ($user->first_login) {
-            //     $user->first_login = false;
-            // }
             $user->save();
 
             return back()->with('status', 'Password updated successfully!');
 
         } catch (\Exception $e) {
-            // Log error
             Log::error("Password change failed for user {$user->user_id}: " . $e->getMessage());
             return back()->withErrors(['current_password' => 'Failed to update password. Please try again.']);
         }

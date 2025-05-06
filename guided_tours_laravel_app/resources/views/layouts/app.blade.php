@@ -200,11 +200,9 @@
                 }, duration); // Use configurable duration
             }
 
-            // Automatically show toasts based on Laravel Session Flash Data on page load
-            // Check for multiple common keys
             @if (session('status'))
-                window.showToast("{{ session('status') }}", 'success'); // Often used for general success
-            @endif
+                window.showToast("{{ session('status') }}", 'success');
+            @endif //success substitution
             @if (session('success'))
                 window.showToast("{{ session('success') }}", 'success');
             @endif
@@ -218,7 +216,6 @@
                 window.showToast("{{ session('info') }}", 'info');
             @endif
 
-            // Show first validation error in a toast (consider if this is too intrusive)
             @if ($errors->any())
                 window.showToast("{{ $errors->first() }}", 'error');
             @endif

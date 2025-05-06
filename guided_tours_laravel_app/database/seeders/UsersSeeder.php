@@ -18,45 +18,45 @@ class UsersSeeder extends Seeder
 
         $configAdmin = User::updateOrCreate(
             ['username' => 'config_admin'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $configAdmin->assignRole('configurator');
 
         $configManager = User::updateOrCreate(
             ['username' => 'config_manager'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $configManager->assignRole('configurator');
 
         // Volunteers
         $volunteerAnna = User::updateOrCreate(
             ['username' => 'volunteer_anna'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $volunteerAnna->assignRole('volunteer');
 
         $volunteerMarco = User::updateOrCreate(
             ['username' => 'volunteer_marco'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $volunteerMarco->assignRole('volunteer');
 
         // Fruitori (Users)
         $userPaolo = User::updateOrCreate(
             ['username' => 'user_paolo'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $userPaolo->assignRole('fruitore');
 
         $userElena = User::updateOrCreate(
             ['username' => 'user_elena'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $userElena->assignRole('fruitore');
 
         $userLuca = User::updateOrCreate(
             ['username' => 'user_luca'],
-            ['password' => $password, 'first_login' => false] 
+            ['password' => $password] 
         );
         $userLuca->assignRole('fruitore');
     }

@@ -101,8 +101,7 @@ class AdminController extends Controller
             function () use ($request) {
                 $user = User::create([
                     'username' => $request->username,
-                    'password' => Hash::make($request->password),
-                    'first_login' => false, // Or true if they should change password
+                    'password' => Hash::make($request->password)
                 ]);
 
                 // Assign the validated role using Spatie

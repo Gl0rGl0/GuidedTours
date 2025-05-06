@@ -30,7 +30,6 @@ class User extends Authenticatable
     protected $fillable = [
         'username',
         'password', // Hashing is handled by the 'hashed' cast below
-        'first_login',
     ];
 
     /**
@@ -51,24 +50,16 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'password' => 'hashed',
-            'first_login' => 'boolean', // Cast first_login to boolean
+            'password' => 'hashed'
         ];
     }
 
     /**
      * The visit types that the user (volunteer) can guide.
      */
-    public function visitTypes(): BelongsToMany // Use the fully qualified name here or just BelongsToMany if use statement is added
+    public function visitTypes(): BelongsToMany
     {
-        // This relationship links users to visit types they can guide.
-        // The 'volunteer' role check is now handled by Spatie.
         return $this->belongsToMany(VisitType::class, 'volunteers_visit_types', 'user_id', 'visit_type_id');
-                    // Removed where('role', 'volunteer') as roles are managed by Spatie
-                    // Filter using Spatie's role scope when querying the relationship if needed:
-                    // $user->visitTypes()->whereHas('volunteers', function ($query) {
-                    //     $query->role('volunteer');
-                    // })->get(); // Example of filtering VisitTypes by related volunteers' roles
     }
 
     /**

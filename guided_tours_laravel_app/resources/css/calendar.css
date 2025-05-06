@@ -3,7 +3,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 5px;
-    max-width: 700px; /* Adjusted width slightly */
+    max-width: 700px;
     margin: 20px auto;
 }
 .calendar-day {
@@ -13,14 +13,14 @@
     min-height: 80px;
     background-color: #f9f9f9;
     position: relative;
-    cursor: pointer; /* Make it look clickable */
+    cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 }
 .calendar-day:hover {
     background-color: #e9ecef;
 }
 .calendar-day.selected {
-    background-color: #cfe2ff; /* Bootstrap primary light */
+    background-color: #cfe2ff;
     border-color: #9ec5fe;
 }
 .calendar-day .day-number {
