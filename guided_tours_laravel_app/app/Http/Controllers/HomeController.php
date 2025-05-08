@@ -17,27 +17,35 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        $available_tours = collect(); // Default to empty collection
+        $proposed_visits = collect(); // Default to empty collection
+        $confirmed_visits = collect(); // Default to empty collection
         $error_message = null;
 
         try {
-            // Fetch proposed and confirmed visits using Eloquent with eager loading
-            $available_tours = Visit::with(['visitType.place', 'registrations']) // Eager load visitType (with place) and registrations
-                ->whereIn('status', ['proposed', 'confirmed'])
+            // Fetch proposed visits
+            $proposed_visits = Visit::with(['visitType.place', 'registrations'])
+                ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
                 ->whereDate('visit_date', '>=', Carbon::today())
                 ->orderBy('visit_date')
-                // ->orderBy('visitType.start_time')
+                ->get();
+
+            // Fetch confirmed visits
+            $confirmed_visits = Visit::with(['visitType.place', 'registrations'])
+                ->where('status', Visit::STATUS_CONFIRMED)
+                ->whereDate('visit_date', '>=', Carbon::today())
+                ->orderBy('visit_date')
                 ->get();
 
         } catch (\Exception $e) {
             // Log error
-            Log::error("Error fetching available tours on home page: " . $e->getMessage());
+            Log::error("Error fetching visits for home page: " . $e->getMessage());
             $error_message = "Sorry, we couldn't retrieve the tour list at this time.";
         }
 
         // Pass data to the view
         return view('home', [
-            'available_tours' => $available_tours,
+            'proposed_visits' => $proposed_visits,
+            'confirmed_visits' => $confirmed_visits,
             'error_message' => $error_message // Pass error message if any
         ]);
     }

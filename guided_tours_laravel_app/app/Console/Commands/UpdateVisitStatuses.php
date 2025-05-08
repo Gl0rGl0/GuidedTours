@@ -37,7 +37,7 @@ class UpdateVisitStatuses extends Command
         // 1. Process visits that are 3 days away from today
         $this->info("Processing visits for date: {$threeDaysFromNow}");
         $upcomingVisits = Visit::with(['registrations', 'visitType'])
-            ->where('status', Visit::STATUS_PROPOSED)
+            ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
             ->whereDate('visit_date', $threeDaysFromNow)
             ->get();
 
@@ -61,14 +61,14 @@ class UpdateVisitStatuses extends Command
         // 2. Process past confirmed visits to mark them as complete
         $this->info("Processing past confirmed visits to mark as complete (before {$today->toDateString()})...");
         $pastConfirmedVisits = Visit::where('status', Visit::STATUS_CONFIRMED)
-            ->whereDate('visit_date', '<', $today)
+            ->whereDate('visit_date', '<=', $today)
             ->get();
 
         foreach ($pastConfirmedVisits as $visit) {
-            $visit->status = Visit::STATUS_COMPLETE; // Using 'complete' as per enum
+            $visit->status = Visit::STATUS_EFFECTED;
             $visit->save();
-            $this->line("Visit ID {$visit->visit_id} marked as complete.");
-            Log::info("Visit ID {$visit->visit_id} marked as complete.");
+            $this->line("Visit ID {$visit->visit_id} marked as effected.");
+            Log::info("Visit ID {$visit->visit_id} marked as effected.");
         }
         $this->info(count($pastConfirmedVisits) . " past confirmed visits marked as complete.");
 

@@ -53,18 +53,12 @@ class VisitPlanningController extends Controller
     public function showPastVisits(): View
     {
         $pastVisits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
-            ->whereIn('status', [Visit::STATUS_COMPLETE, Visit::STATUS_CANCELLED, Visit::STATUS_EFFECTED]) // Including 'effected' for now
+            ->whereIn('status', [Visit::STATUS_CANCELLED, Visit::STATUS_EFFECTED])
             ->orderBy('visit_date', 'desc')
-            // ->orderBy('visitType.start_time', 'desc') // Consider if start_time is available and needed for sorting
             ->get();
-
-        // You might want to group them by status or year/month for better presentation
-        // For example:
-        // $groupedPastVisits = $pastVisits->groupBy('status');
 
         return view('tours.past_visits', [ // Assuming the view will be at resources/views/tours/past_visits.blade.php
             'pastVisits' => $pastVisits,
-            // 'groupedPastVisits' => $groupedPastVisits,
         ]);
     }
 }

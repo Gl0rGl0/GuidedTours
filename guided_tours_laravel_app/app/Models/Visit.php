@@ -15,7 +15,7 @@ class Visit extends Model
     const STATUS_COMPLETE = 'complete';
     const STATUS_CONFIRMED = 'confirmed';
     const STATUS_CANCELLED = 'cancelled';
-    const STATUS_EFFECTED = 'effected'; // Or map this to 'completed' if they are synonymous
+    const STATUS_EFFECTED = 'effected';
 
     /**
      * The table associated with the model.

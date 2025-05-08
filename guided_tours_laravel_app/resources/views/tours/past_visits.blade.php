@@ -12,20 +12,15 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($pastVisits as $visit)
                 @php
-                    $borderClass = match($visit->status) {
-                        App\Models\Visit::STATUS_COMPLETE, App\Models\Visit::STATUS_EFFECTED => 'border-start border-4 border-success',
-                        App\Models\Visit::STATUS_CANCELLED => 'border-start border-4 border-danger',
-                        default => 'border-start border-4 border-secondary',
-                    };
                     $badgeClass = match($visit->status) {
-                        App\Models\Visit::STATUS_COMPLETE, App\Models\Visit::STATUS_EFFECTED => 'bg-success text-white',
+                        App\Models\Visit::STATUS_EFFECTED => 'bg-success text-white',
                         App\Models\Visit::STATUS_CANCELLED => 'bg-danger text-white',
                         default => 'bg-secondary text-white',
                     };
                 @endphp
 
                 <div class="col">
-                    <div class="card h-100 {{ $borderClass }}">
+                    <div class="card h-100">
                         <div class="card-body d-flex flex-column">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <div>

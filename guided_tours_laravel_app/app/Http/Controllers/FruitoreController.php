@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View; 
+use Illuminate\View\View;
 use App\Models\Registration;
+use App\Models\Visit; // Import the Visit model
 use Illuminate\Support\Facades\Log;
 
 class FruitoreController extends Controller
@@ -18,8 +19,14 @@ class FruitoreController extends Controller
         $user = Auth::user();
 
         // Fetch the authenticated user's registrations, eager loading visit and visitType with place
-        $bookings = Registration::where('user_id', $user->user_id) // Use user_id
-                                ->with(['visit.visitType.place']) // Eager load nested relationships
+        $bookings = Registration::where('user_id', $user->user_id)
+                                ->with(['visit.visitType.place'])
+                                ->whereHas('visit', function($q) {
+                                    $q->whereIn('status', [
+                                        Visit::STATUS_PROPOSED,
+                                        Visit::STATUS_COMPLETE,
+                                    ]);
+                                })
                                 ->get();
 
         // Log the user ID and the number of bookings retrieved
@@ -40,9 +47,26 @@ class FruitoreController extends Controller
         }
 
         try {
-            $booking->delete(); // Delete the booking
+            $visit = $booking->visit()->with('visitType', 'registrations')->first(); // Load visit with relations
 
-            // TODO: Implement logic to update visit status if needed (e.g., if it becomes 'proposed' again)
+            if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED])) {
+                //return redirect()->route('home')->with('error_message', 'This visit is no longer available for cancellation.');
+                return back()->withErrors(['general' => 'This visit is no longer available for cancellation.'])->withInput();
+            }
+            $booking->delete(); // Delete the booking
+            
+            if ($visit) {
+                // Reload visit data after deleting the registration
+                $visit->refresh();
+                $currentSubscribers = $visit->registrations()->sum('num_participants');
+
+                // If the visit was confirmed (full) and now has space, revert to proposed
+                if ($visit->status === Visit::STATUS_COMPLETE && $visit->visitType && $currentSubscribers < $visit->visitType->max_participants) {
+                    $visit->status = Visit::STATUS_PROPOSED;
+                    $visit->save();
+                    Log::info("Visit ID {$visit->visit_id} status updated to PROPOSED due to cancellation, making space available.");
+                }
+            }
 
             return redirect()->route('user.dashboard')->with('status', 'Booking cancelled successfully.');
         } catch (\Exception $e) {
