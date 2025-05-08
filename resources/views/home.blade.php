@@ -52,6 +52,7 @@
                              {{-- Show button if status is 'proposed' or 'complete'. Controller will handle actual eligibility. --}}
                             @if ($tour->status === \App\Models\Visit::STATUS_PROPOSED || $tour->status === \App\Models\Visit::STATUS_COMPLETE )
                                 @auth
+                                    {{-- Show link for guests, they will be prompted to login/register --}}
                                     @if (Auth::user()->hasRole('fruitore'))
                                         @if($tour->status === \App\Models\Visit::STATUS_PROPOSED)
                                             <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
@@ -63,9 +64,11 @@
                                     @endif
                                 @else
                                      {{-- Show link for guests, they will be prompted to login/register --}}
-                                     <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">
-                                        {{ $tour->status === \App\Models\Visit::STATUS_PROPOSED ? 'Register Interest' : 'View Details / Register' }}
-                                     </a>
+                                     @if($tour->status === \App\Models\Visit::STATUS_PROPOSED)
+                                        <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
+                                    @else
+                                        <a class="btn btn-primary btn-sm disabled">Max capacity reached</a>
+                                    @endif
                                 @endauth
                             @else
                                 <span class="text-muted">Registration Closed</span> {{-- Fallback for other statuses if any --}}
