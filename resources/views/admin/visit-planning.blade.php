@@ -3,8 +3,12 @@
 @section('title', 'Visit Planning')
 
 @section('content')
-    <h2>Visit Planning</h2>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="mb-0">Visit Planning</h2>
+        <a href="{{ route('admin.visits.create') }}" class="btn btn-primary">+ Add New Visit</a>
+    </div>
     <hr>
+
 
     <p>Planning period: {{ $startDate->format('Y-m-d') }} to {{ $endDate->format('Y-m-d') }}</p>
 

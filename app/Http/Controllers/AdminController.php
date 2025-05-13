@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest; // Import StoreUserRequest
 use App\Models\User; // Import User model
 use Illuminate\Support\Facades\Auth; // Import Auth facade
 use Illuminate\Support\Facades\Hash; // Import Hash facade
-use Illuminate\Validation\Rules\Password; // Import Password rule
-use Illuminate\Validation\Rule; // Import Rule for role validation
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log; // Import Log facade

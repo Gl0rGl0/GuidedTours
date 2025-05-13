@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\VisitController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
@@ -58,8 +59,14 @@ Route::middleware('auth')->group(function () {
             'index', 'show', 'destroy' // Define destroy separately
         ]);
 
+        // Add routes for Visits CRUD
+        Route::resource('visits', VisitController::class);
+
+
         // Add other admin routes here (e.g., settings, visit planning)
         Route::get('/visit-planning', [VisitPlanningController::class, 'index'])->name('visit-planning.index');
+
+        Route::get('/volunteers/available', [VisitController::class, 'getAvailableVolunteers'])->name('admin.volunteers.available');
     });
 
     // --- Volunteer Routes ---
@@ -68,6 +75,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
         // Add other volunteer routes here (e.g., view assigned visits)
     });
+
 
     // Add Fruitore specific routes here
     Route::middleware('role:fruitore')->prefix('user')->name('user.')->group(function () {
