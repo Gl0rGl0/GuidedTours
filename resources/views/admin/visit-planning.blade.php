@@ -16,44 +16,52 @@
 
     @if ($plannedVisits->isNotEmpty())
         @php
-            // Organizza le date in 4 settimane
-            $weeks = [[], [], [], []];
+            // Organizza per mese e poi in 4 settimane ciascuno
+            $months = [];
             foreach ($plannedVisits as $date => $visitsOnDate) {
+                $monthName = \Carbon\Carbon::parse($date)->format('F Y');
                 $day = (int) \Carbon\Carbon::parse($date)->day;
-                if ($day <= 7)      $weeks[0][$date] = $visitsOnDate;
-                elseif ($day <= 14) $weeks[1][$date] = $visitsOnDate;
-                elseif ($day <= 21) $weeks[2][$date] = $visitsOnDate;
-                else                 $weeks[3][$date] = $visitsOnDate;
+                $weekIndex = $day <= 7 ? 0 : ($day <= 14 ? 1 : ($day <= 21 ? 2 : 3));
+                $months[$monthName][$weekIndex][$date] = $visitsOnDate;
             }
         @endphp
 
-        <div class="row">
-            @foreach ($weeks as $i => $week)
-                <div class="col-6 col-md-3 mb-4">
-                    <h5>Week {{ $i + 1 }}</h5>
-
-                    @if (!empty($week))
-                        @foreach ($week as $date => $visits)
-                            <div class="mb-2">
-                                <strong>{{ \Carbon\Carbon::parse($date)->format('M d') }}</strong>
-                                <ul class="list-unstyled ps-3 mb-0">
-                                    @foreach ($visits as $visit)
-                                        <li>
-                                            {{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }}
-                                            {{ $visit->visitType->title }} at {{ $visit->visitType->place->name }}
-                                            (Volunteer: {{ $visit->assignedVolunteer->username ?? 'Unassigned' }})
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endforeach
-                    @else
-                        <p class="text-muted">No entries</p>
-                    @endif
-
+        @foreach ($months as $month => $weeks)
+            <div class="month-section mb-4">
+                <div class="d-flex align-items-center">
+                    <hr class="flex-grow-1 me-2" />
+                    <span class="text-muted fw-bold">{{ $month }}</span>
+                    <hr class="flex-grow-1 ms-2" />
                 </div>
-            @endforeach
-        </div>
+                <div class="row mt-2">
+                    @foreach ($weeks as $i => $week)
+                        <div class="col-6 col-md-3 mb-4">
+                            <h5>Week {{ $i + 1 }}</h5>
+
+                            @if (!empty($week))
+                                @foreach ($week as $date => $visits)
+                                    <div class="mb-2">
+                                        <strong>{{ \Carbon\Carbon::parse($date)->format('M d') }}</strong>
+                                        <ul class="list-unstyled ps-3 mb-0">
+                                            @foreach ($visits as $visit)
+                                                <li>
+                                                    {{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }}
+                                                    {{ $visit->visitType->title }} at {{ $visit->visitType->place->name }}
+                                                    (Volunteer: {{ $visit->assignedVolunteer->username ?? 'Unassigned' }})
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-muted">No entries</p>
+                            @endif
+
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
     @else
         <p class="text-muted">No visits planned in this period.</p>
     @endif
@@ -63,40 +71,48 @@
 
     @if ($volunteerAvailabilities->isNotEmpty())
         @php
-            // Organizza le date in 4 “settimane”
-            $weeks = [[], [], [], []];
-            foreach ($volunteerAvailabilities as $date => $availabilitiesOnDate) {
+            // Organizza per mese e poi in 4 settimane ciascuno
+            $monthsAvail = [];
+            foreach ($volunteerAvailabilities as $date => $availOnDate) {
+                $monthName = \Carbon\Carbon::parse($date)->format('F Y');
                 $day = (int) \Carbon\Carbon::parse($date)->day;
-                if ($day <= 7)      $weeks[0][$date] = $availabilitiesOnDate;
-                elseif ($day <= 14) $weeks[1][$date] = $availabilitiesOnDate;
-                elseif ($day <= 21) $weeks[2][$date] = $availabilitiesOnDate;
-                else                 $weeks[3][$date] = $availabilitiesOnDate;
+                $weekIndex = $day <= 7 ? 0 : ($day <= 14 ? 1 : ($day <= 21 ? 2 : 3));
+                $monthsAvail[$monthName][$weekIndex][$date] = $availOnDate;
             }
         @endphp
 
-        <div class="row">
-            @foreach ($weeks as $i => $week)
-                <div class="col-6 col-md-3 mb-4">
-                    <h5>Week {{ $i + 1 }}</h5>
-
-                    @if (!empty($week))
-                        @foreach ($week as $date => $availabilities)
-                            <div class="mb-2">
-                                <strong>{{ \Carbon\Carbon::parse($date)->format('M d') }}</strong>
-                                <ul class="list-unstyled ps-3 mb-0">
-                                    @foreach ($availabilities as $availability)
-                                        <li>{{ $availability->volunteer->username }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endforeach
-                    @else
-                        <p class="text-muted">No entries</p>
-                    @endif
-
+        @foreach ($monthsAvail as $month => $weeks)
+            <div class="month-section mb-4">
+                <div class="d-flex align-items-center">
+                    <hr class="flex-grow-1 me-2" />
+                    <span class="text-muted fw-bold">{{ $month }}</span>
+                    <hr class="flex-grow-1 ms-2" />
                 </div>
-            @endforeach
-        </div>
+                <div class="row mt-2">
+                    @foreach ($weeks as $i => $week)
+                        <div class="col-6 col-md-3 mb-4">
+                            <h5>Week {{ $i + 1 }}</h5>
+
+                            @if (!empty($week))
+                                @foreach ($week as $date => $availabilities)
+                                    <div class="mb-2">
+                                        <strong>{{ \Carbon\Carbon::parse($date)->format('M d') }}</strong>
+                                        <ul class="list-unstyled ps-3 mb-0">
+                                            @foreach ($availabilities as $availability)
+                                                <li>{{ $availability->volunteer->username }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-muted">No entries</p>
+                            @endif
+
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endforeach
     @else
         <p class="text-muted">No volunteer availability recorded for this period.</p>
     @endif
