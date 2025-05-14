@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest; // Import StoreUserRequest
-use App\Models\User; // Import User model
-use Illuminate\Support\Facades\Auth; // Import Auth facade
-use Illuminate\Support\Facades\Hash; // Import Hash facade
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log; // Import Log facade
-use App\Models\Place; // Import Place model
-use App\Models\VisitType; // Import VisitType model
-use App\Http\Controllers\Traits\HandlesAdminOperations; // Import the trait
+use Illuminate\Support\Facades\Log; 
+use App\Models\Place; 
+use App\Models\VisitType; 
+use App\Http\Controllers\Traits\HandlesAdminOperations; 
 
 class AdminController extends Controller
 {
@@ -25,7 +25,6 @@ class AdminController extends Controller
         $fetch_error = null;
         $places = collect();
         $visit_types = collect();
-        // Initialize collections for users grouped by Spatie roles
         $users_by_role = [
             'configurator' => collect(),
             'volunteer' => collect(),
@@ -39,15 +38,13 @@ class AdminController extends Controller
             // Fetch Visit Types
             $visit_types = VisitType::orderBy('title')->get(['visit_type_id', 'title']);
 
-            // Fetch Users and group by Spatie roles
+            // Fetch Users
             $all_users = User::orderBy('username')->get(['user_id', 'username']);
 
-            // Group users by their Spatie roles
+            // Group users by their roles
             foreach ($all_users as $user) {
                 // Assign user to the collection of their primary role for display
-                if ($user->hasRole('admin')) {
-                    $users_by_role['admin']->push($user);
-                } elseif ($user->hasRole('configurator')) {
+                if ($user->hasRole('configurator')) {
                      $users_by_role['configurator']->push($user);
                 } elseif ($user->hasRole('volunteer')) {
                     $users_by_role['volunteer']->push($user);
@@ -64,9 +61,8 @@ class AdminController extends Controller
             // Flash error to session to display in view
             session()->flash('error', $fetch_error);
 
-            // Initialize empty collections on error to prevent view errors
+            // ReInitialize empty collections on error to prevent view errors
             $users_by_role = [
-                'admin' => collect(),
                 'configurator' => collect(),
                 'volunteer' => collect(),
                 'fruitore' => collect(),
@@ -116,8 +112,6 @@ class AdminController extends Controller
      */
     public function removeUser(User $user): RedirectResponse
     {
-        // Authorization check (already handled by middleware in routes/web.php)
-
         // Prevent removing self or other configurators
         if ($user->user_id === Auth::id()) {
              return back()->withErrors(['general' => 'You cannot remove yourself.']);

@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log; // Import Log facade
-use App\Models\Place; // Import Place model
-use App\Models\VisitType; // Import VisitType model
-use App\Http\Requests\StoreVisitTypeRequest; // Import StoreVisitTypeRequest
-use App\Http\Requests\UpdateVisitTypeRequest; // Import UpdateVisitTypeRequest
-use App\Http\Controllers\Traits\HandlesAdminOperations; // Import the trait
+use Illuminate\Support\Facades\Log;
+use App\Models\Place;
+use App\Models\VisitType;
+use App\Http\Requests\StoreVisitTypeRequest; 
+use App\Http\Requests\UpdateVisitTypeRequest; 
+use App\Http\Controllers\Traits\HandlesAdminOperations;
 
 class VisitTypeController extends Controller
 {
@@ -22,7 +22,6 @@ class VisitTypeController extends Controller
      */
     public function removeVisitType(VisitType $visit_type): RedirectResponse
     {
-        // Authorization check (already handled by middleware)
         return $this->handleAdminOperation(
             function () use ($visit_type) {
                 $visit_type->delete();
@@ -38,8 +37,7 @@ class VisitTypeController extends Controller
      */
     public function create(): View
     {
-        $places = Place::orderBy('name')->pluck('name', 'place_id'); // Get places for dropdown
-        // We'll create this view next
+        $places = Place::orderBy('name')->pluck('name', 'place_id');
         return view('admin.visit-types.create', ['places' => $places]);
     }
 
@@ -48,8 +46,6 @@ class VisitTypeController extends Controller
      */
     public function store(StoreVisitTypeRequest $request): RedirectResponse
     {
-        // Validation is handled by StoreVisitTypeRequest
-
         return $this->handleAdminOperation(
             function () use ($request) {
                 VisitType::create($request->validated());
@@ -65,8 +61,7 @@ class VisitTypeController extends Controller
      */
     public function edit(VisitType $visit_type): View
     {
-        $places = Place::orderBy('name')->pluck('name', 'place_id'); // Get places for dropdown
-        // We'll create this view next
+        $places = Place::orderBy('name')->pluck('name', 'place_id');
         return view('admin.visit-types.edit', [
             'visit_type' => $visit_type,
             'places' => $places
@@ -78,8 +73,6 @@ class VisitTypeController extends Controller
      */
     public function update(UpdateVisitTypeRequest $request, VisitType $visit_type): RedirectResponse
     {
-        // Validation is handled by UpdateVisitTypeRequest
-
          return $this->handleAdminOperation(
             function () use ($request, $visit_type) {
                 $visit_type->update($request->validated());

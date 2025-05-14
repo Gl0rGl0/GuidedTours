@@ -75,10 +75,21 @@ class VisitsSeeder extends Seeder
 
         // Cancelled
         Visit::updateOrCreate(
-            ['visit_type_id' => $vt2->visit_type_id, 'visit_date' => $now->copy()->addDays(6)->toDateString()],
+            ['visit_type_id' => $vt2->visit_type_id, 'visit_date' => $now->copy()->subDays(6)->toDateString()],
             [
                 'assigned_volunteer_id' => $vol2->user_id,
                 'status' => 'cancelled',
+                'status_updated_at' => $now->copy()->subDays(3) // Set status update time
+            ]
+        );
+
+        // Effected
+        // Cancelled
+        Visit::updateOrCreate(
+            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->subDays(7)->toDateString()],
+            [
+                'assigned_volunteer_id' => $vol1->user_id,
+                'status' => 'effected',
                 'status_updated_at' => $now->copy()->subDays(3) // Set status update time
             ]
         );

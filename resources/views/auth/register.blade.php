@@ -6,21 +6,8 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">{{ __('Register as a New User (Fruitore)') }}</div>
+            <div class="card-header">Register as a New User (Fruitore)</div>
             <div class="card-body">
-                <p class="card-text text-center mb-4">Create an account to register for guided tours.</p>
-
-                {{-- Display Validation Errors --}}
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('register') }}" method="post">
                     @csrf
                     <div class="mb-3">

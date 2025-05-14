@@ -95,5 +95,28 @@ class RegistrationsSeeder extends Seeder
         );
 
         $this->command->info('RegistrationsSeeder completed successfully.');
+
+        $effectedVisit = Visit::where('status', 'confirmed')->first();
+        
+        if (!$effectedVisit) {
+            $this->command->warn('No confirmed visits available for registration.');
+            return;
+        }
+        
+        $visitType = $effectedVisit->visitType;
+
+        // User 2 books 4 for confirmed visit 2
+        Registration::updateOrCreate(
+            [
+                'visit_id' => $effectedVisit->visit_id,
+                'user_id' => $user2->user_id
+            ],
+            [
+                'num_participants' => $visitType->max_participants,
+                'booking_code' => $generateBookingCode($effectedVisit->visit_id, $user2->user_id)
+            ]
+        );
+
+        $this->command->info('RegistrationsSeeder for effected visit completed successfully.');
     }
 }

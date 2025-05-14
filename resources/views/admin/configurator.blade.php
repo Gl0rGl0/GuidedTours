@@ -218,12 +218,10 @@
                             <li class="list-item-with-actions"> <!-- Changed class -->
                                 <span class="item-name">{{ $place->name }}</span>
                                 <div class="action-buttons">
-                                    {{-- Use Bootstrap button classes --}}
                                     <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    {{-- Use DELETE route for remove --}}
                                     <form action="{{ route('admin.places.destroy', $place) }}" method="POST" style="display:inline;">
                                         @csrf
-                                        @method('DELETE') {{-- Method spoofing for DELETE request --}}
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form>
                                 </div>

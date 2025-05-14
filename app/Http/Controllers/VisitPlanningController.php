@@ -26,6 +26,7 @@ class VisitPlanningController extends Controller
 
 
         $plannedVisits = Visit::with(['visitType.place', 'assignedVolunteer'])
+            ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
             ->whereBetween('visit_date', [$startDate, $endDate])
             ->orderBy('visit_date')
             ->orderBy('start_time')
@@ -57,7 +58,7 @@ class VisitPlanningController extends Controller
             ->orderBy('visit_date', 'desc')
             ->get();
 
-        return view('tours.past_visits', [ // Assuming the view will be at resources/views/tours/past_visits.blade.php
+        return view('tours.past_visits', [
             'pastVisits' => $pastVisits,
         ]);
     }

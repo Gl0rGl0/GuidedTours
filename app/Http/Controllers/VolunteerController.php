@@ -50,7 +50,7 @@ class VolunteerController extends Controller
         $user = Auth::user();
         $nextMonth = Carbon::now()->addMonth();
         $nextMonthYear = $nextMonth->format('Y-m');
-        $daysInNextMonth = $nextMonth->daysInMonth; // Fetch daysInNextMonth here
+        $daysInNextMonth = $nextMonth->daysInMonth;
 
         $request->validate([
             'available_days' => ['nullable', 'array'],

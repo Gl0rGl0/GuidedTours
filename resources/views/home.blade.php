@@ -55,7 +55,7 @@
                                     {{-- Show link for guests, they will be prompted to login/register --}}
                                     @if (Auth::user()->hasRole('fruitore'))
                                         @if($tour->status === \App\Models\Visit::STATUS_PROPOSED)
-                                            <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
+                                            <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
                                         @else
                                             <a class="btn btn-primary btn-sm disabled">Max capacity reached</a>
                                         @endif
@@ -65,7 +65,7 @@
                                 @else
                                      {{-- Show link for guests, they will be prompted to login/register --}}
                                      @if($tour->status === \App\Models\Visit::STATUS_PROPOSED)
-                                        <a href="{{ route('register-tour.form', ['visit_id' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
+                                     <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}" class="btn btn-primary btn-sm">View Details</a>
                                     @else
                                         <a class="btn btn-primary btn-sm disabled">Max capacity reached</a>
                                     @endif

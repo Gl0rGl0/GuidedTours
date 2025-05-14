@@ -21,12 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Define Gate for 'configurator' role
+        // Define Gate roles
         Gate::define('configurator', function (User $user) {
             return $user->hasRole('configurator');
         });
 
-        // Define other Gates if needed (e.g., 'volunteer', 'fruitore')
         Gate::define('volunteer', function (User $user) {
             return $user->hasRole('volunteer');
         });

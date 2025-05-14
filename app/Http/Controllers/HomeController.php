@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\View\View; // Import View
-use Carbon\Carbon; // Import Carbon
-use App\Models\Visit; // Import Visit model
-use Illuminate\Support\Facades\Log; // Import Log facade
-use Illuminate\Support\Facades\Session; // Import Session facade
-use Illuminate\Http\RedirectResponse; // Import RedirectResponse
+use Illuminate\View\View; 
+use Carbon\Carbon; 
+use App\Models\Visit; 
+use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Session;  
+use Illuminate\Http\RedirectResponse; 
 
 class HomeController extends Controller
 {
@@ -17,8 +17,8 @@ class HomeController extends Controller
      */
     public function index(): View
     {
-        $proposed_visits = collect(); // Default to empty collection
-        $confirmed_visits = collect(); // Default to empty collection
+        $proposed_visits = collect();
+        $confirmed_visits = collect();
         $error_message = null;
 
         try {

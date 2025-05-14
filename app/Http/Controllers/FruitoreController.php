@@ -30,7 +30,7 @@ class FruitoreController extends Controller
                                 ->get();
 
         // Log the user ID and the number of bookings retrieved
-        Log::info("Fetching bookings for user ID: " . $user->user_id); // Log user_id
+        Log::info("Fetching bookings for user ID: " . $user->user_id);
         Log::info("Number of bookings retrieved: " . $bookings->count());
 
         return view('user.dashboard', ['bookings' => $bookings]);
@@ -47,13 +47,13 @@ class FruitoreController extends Controller
         }
 
         try {
-            $visit = $booking->visit()->with('visitType', 'registrations')->first(); // Load visit with relations
+            $visit = $booking->visit()->with('visitType', 'registrations')->first();
 
             if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED])) {
                 //return redirect()->route('home')->with('error_message', 'This visit is no longer available for cancellation.');
                 return back()->withErrors(['general' => 'This visit is no longer available for cancellation.'])->withInput();
             }
-            $booking->delete(); // Delete the booking
+            $booking->delete();
             
             if ($visit) {
                 // Reload visit data after deleting the registration
@@ -61,7 +61,9 @@ class FruitoreController extends Controller
                 $currentSubscribers = $visit->registrations()->sum('num_participants');
 
                 // If the visit was confirmed (full) and now has space, revert to proposed
-                if ($visit->status === Visit::STATUS_COMPLETE && $visit->visitType && $currentSubscribers < $visit->visitType->max_participants) {
+                if ($visit->status === Visit::STATUS_COMPLETE && 
+                    $visit->visitType && 
+                    $currentSubscribers < $visit->visitType->max_participants) {
                     $visit->status = Visit::STATUS_PROPOSED;
                     $visit->save();
                     Log::info("Visit ID {$visit->visit_id} status updated to PROPOSED due to cancellation, making space available.");

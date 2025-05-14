@@ -4,28 +4,66 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">{{ __('User Profile') }}</div>
-            <div class="card-body">
-                <p>Welcome, <strong>{{ $user->username }}</strong>!</p>
-                <p>This page will allow you to view and potentially edit your profile information.</p>
-                <p><em>(Functionality to be implemented)</em></p>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <span>{{ __('User Profile') }}</span>
+        <button id="edit-btn" class="btn btn-sm btn-primary">Modifica</button>
+      </div>
+      <div class="card-body">
+        <form id="profile-form" method="POST" action="{{ route('profile.update') }}">
+          @csrf
+          @method('PUT')
 
-                <hr>
+          <div class="mb-3">
+            <label for="first_name" class="form-label">Nome</label>
+            <input type="text"
+                   id="first_name"
+                   name="first_name"
+                   value="{{ old('first_name', $user->first_name) }}"
+                   class="form-control"
+                   disabled>
+          </div>
 
-                {{-- Example: Display user role --}}
-                {{-- Display role using Spatie's getRoleNames() --}}
-                <p><strong>Your current role:</strong> <span class="badge bg-secondary">{{ ucfirst($user->getRoleNames()->first()) }}</span></p>
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Cognome</label>
+            <input type="text"
+                   id="last_name"
+                   name="last_name"
+                   value="{{ old('last_name', $user->last_name) }}"
+                   class="form-control"
+                   disabled>
+          </div>
 
-                {{-- TODO: Add form to edit profile details if required --}}
-                {{-- TODO: Display user's registrations or volunteer schedule if applicable --}}
+          <div class="mb-3">
+            <label for="birth_date" class="form-label">Data di nascita</label>
+            <input type="date"
+                   id="birth_date"
+                   name="birth_date"
+                   value="{{ old('birth_date', optional($user->birth_date)->format('Y-m-d')) }}"
+                   class="form-control"
+                   disabled>
+          </div>
 
-                <div class="mt-4">
-                     <a href="{{ route('change-password.form') }}" class="btn btn-secondary">Change Password</a>
-                </div>
-            </div>
-        </div>
+          <div class="mt-3">
+            <button type="submit" id="save-btn" class="btn btn-success" disabled>Salva</button>
+            <a href="{{ route('change-password.form') }}" class="btn btn-secondary">Cambia Password</a>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+
+{{-- JS inline per abilitare/disabilitare i campi --}}
+@push('scripts')
+<script>
+  document.getElementById('edit-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelectorAll('#profile-form input').forEach(i => i.disabled = false);
+    document.getElementById('save-btn').disabled = false;
+    this.disabled = true;
+  });
+</script>
+@endpush
 @endsection

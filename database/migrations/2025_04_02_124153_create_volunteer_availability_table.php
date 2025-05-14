@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('availability_id');
             $table->foreignId('user_id')->constrained('users', 'user_id')->cascadeOnDelete();
             $table->date('available_date');
-            $table->char('month_year', 7)->index(); // Add index directly
-            $table->timestamp('declared_at')->useCurrent(); // Only need declared_at
+            $table->char('month_year', 7)->index();
+            $table->timestamp('declared_at')->useCurrent();
 
             // Define unique constraint
             $table->unique(['user_id', 'available_date'], 'unique_availability');

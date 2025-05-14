@@ -42,7 +42,7 @@ class UpdateVisitStatuses extends Command
             ->get();
 
         foreach ($upcomingVisits as $visit) {
-            $registrationsCount = $visit->registrations->count();
+            $registrationsCount = $visit->registrations->sum('num_participants');
             $minParticipants = $visit->visitType->min_participants;
 
             if ($registrationsCount >= $minParticipants) {
@@ -52,7 +52,7 @@ class UpdateVisitStatuses extends Command
             } else {
                 $visit->status = Visit::STATUS_CANCELLED;
                 $this->line("Visit ID {$visit->visit_id} cancelled. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
-                Log::info("Visit ID {$visit->visit_id} cancelled due to insufficient registrations.");
+                Log::info("Visit ID {$visit->visit_id} cancelled due to insufficient registrations. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
             }
             $visit->save();
         }
@@ -61,7 +61,7 @@ class UpdateVisitStatuses extends Command
         // 2. Process past confirmed visits to mark them as complete
         $this->info("Processing past confirmed visits to mark as complete (before {$today->toDateString()})...");
         $pastConfirmedVisits = Visit::where('status', Visit::STATUS_CONFIRMED)
-            ->whereDate('visit_date', '<=', $today)
+            ->whereDate('visit_date', '>=', $today)
             ->get();
 
         foreach ($pastConfirmedVisits as $visit) {

@@ -71,9 +71,6 @@ class VisitType extends Model
     public function volunteers(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'volunteers_visit_types', 'visit_type_id', 'user_id');
-                    // Removed wherePivot('role', 'volunteer') as roles are now managed by Spatie
-                    // Filter using Spatie's role scope when querying the relationship if needed:
-                    // $visitType->volunteers()->role('volunteer')->get()
     }
 
     /**

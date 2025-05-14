@@ -12,7 +12,6 @@ use Spatie\Permission\Traits\HasRoles; // Add Spatie HasRoles trait
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles; // Add HasRoles trait here
 
     /**
@@ -29,8 +28,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'password', // Hashing is handled by the 'hashed' cast below
-    ];
+        'password',
+        'first_name',
+        'last_name',
+        'birth_date',
+    ];    
 
     /**
      * The attributes that should be hidden for serialization.

@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             VolunteersVisitTypesSeeder::class, // Pivot table links Users and VisitTypes
             VisitsSeeder::class, // Visits reference Users and VisitTypes
             RegistrationsSeeder::class, // Registrations reference Users and Visits
+            VolunteerAvailabilitySeeder::class,
         ]);
     }
 }

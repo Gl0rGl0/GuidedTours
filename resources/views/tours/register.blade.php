@@ -29,9 +29,8 @@
 
                     {{-- TODO: Add validation error display here --}}
 
-                    <form action="{{ route('register-tour.submit') }}" method="POST" class="mt-4">
+                    <form action="{{ route('visits.register.submit', ['visit' => $visit->visit_id]) }}" method="POST" class="mt-4">
                         @csrf
-                        <input type="hidden" name="visit_id" value="{{ $visit->visit_id }}">
                         <div class="mb-3">
                             <label for="num_participants" class="form-label">Number of Participants:</label>
                             <input type="number" id="num_participants" name="num_participants" class="form-control" style="width: 100px;" min="1" required>

@@ -23,6 +23,21 @@ class UserController extends Controller
     }
 
     /**
+     * Update the user informations
+     */
+    public function update(Request $request)
+    {
+        $data = $request->validate([
+            'first_name' => 'nullable|string|max:50',
+            'last_name'  => 'nullable|string|max:50',
+            'birth_date' => 'nullable|date|before:today',
+        ]);
+
+        Auth::user()->update($data);
+        return redirect()->back()->with('success', 'Profile updated correctly.');
+    }
+
+    /**
      * Show the form for changing the password.
      */
     public function showChangePasswordForm(): View
@@ -35,7 +50,6 @@ class UserController extends Controller
      */
     public function changePassword(Request $request): RedirectResponse
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Validate input

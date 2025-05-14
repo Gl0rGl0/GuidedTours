@@ -8,25 +8,6 @@
         <div class="card">
             <div class="card-header">{{ __('Change Password') }}</div>
             <div class="card-body">
-
-                {{-- Display Success Message --}}
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                {{-- Display Validation Errors --}}
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
                 <form action="{{ route('change-password.update') }}" method="POST">
                     @csrf
                     <div class="mb-3">

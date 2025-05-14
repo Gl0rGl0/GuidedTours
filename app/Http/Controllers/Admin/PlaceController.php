@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log; // Import Log facade
-use App\Models\Place; // Import Place model
-use App\Http\Requests\StorePlaceRequest; // Import StorePlaceRequest
-use App\Http\Requests\UpdatePlaceRequest; // Import UpdatePlaceRequest
-use Illuminate\Validation\Rule; // Import Rule for unique ignore
-use App\Http\Controllers\Traits\HandlesAdminOperations; // Import the trait
+use Illuminate\Support\Facades\Log;
+use App\Models\Place;
+use App\Http\Requests\StorePlaceRequest; 
+use App\Http\Requests\UpdatePlaceRequest; 
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Traits\HandlesAdminOperations;
 
 class PlaceController extends Controller
 {
@@ -22,7 +22,6 @@ class PlaceController extends Controller
      */
     public function removePlace(Place $place): RedirectResponse
     {
-        // Authorization check (already handled by middleware)
         return $this->handleAdminOperation(
             function () use ($place) {
                 $place->delete(); // Deleting a place will cascade delete related visit types due to DB constraint
@@ -47,8 +46,6 @@ class PlaceController extends Controller
      */
     public function store(StorePlaceRequest $request): RedirectResponse
     {
-        // Validation is handled by StorePlaceRequest
-
         return $this->handleAdminOperation(
             function () use ($request) {
                 Place::create($request->validated());
@@ -64,7 +61,6 @@ class PlaceController extends Controller
      */
     public function edit(Place $place): View
     {
-         // We'll create this view next
         return view('admin.places.edit', ['place' => $place]);
     }
 
@@ -73,8 +69,6 @@ class PlaceController extends Controller
      */
     public function update(UpdatePlaceRequest $request, Place $place): RedirectResponse
     {
-        // Validation is handled by UpdatePlaceRequest
-
          return $this->handleAdminOperation(
             function () use ($request, $place) {
                 $place->update($request->validated());

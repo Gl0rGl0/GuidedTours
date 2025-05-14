@@ -14,8 +14,6 @@ class RegisterTourRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Authorization is handled by middleware in the controller for role 'fruitore'
-        // and general auth. Here we can assume if middleware passed, user is authorized.
         return Auth::check();
     }
 
@@ -27,11 +25,10 @@ class RegisterTourRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'visit_id' => ['required', 'exists:visits,visit_id'],
             'num_participants' => ['required', 'integer', 'min:1'],
         ];
     }
-
+    
     /**
      * Get custom messages for validator errors.
      *

@@ -12,7 +12,7 @@ class StoreUserRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'username' => ['required', 'string', 'max:50', 'unique:users,username'],
+            'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users,username'],
             'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::min(6)],
         ];
     }

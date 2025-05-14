@@ -12,6 +12,7 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 use App\Http\Controllers\Traits\HandlesAdminOperations;
+use Illuminate\Support\Facades\Log;
 
 class VisitController extends Controller
 {
@@ -49,16 +50,18 @@ class VisitController extends Controller
     public function getAvailableVolunteers(Request $request)
     {
         $request->validate([
-            'visit_date' => 'required|date',
+            'visit_date' => ['required', 'date'],
         ]);
 
+        $visitDate = \Carbon\Carbon::parse($request->visit_date)->toDateString();
+
         $volunteers = User::role('volunteer')
-            ->whereHas('volunteerAvailabilities', function ($query) use ($request) {
-                $query->where('available_date', $request->visit_date);
+            ->whereHas('volunteerAvailabilities', function ($query) use ($visitDate) {
+                $query->whereDate('available_date', $visitDate);
             })
             ->select('user_id', 'username')
             ->get();
-
+            
         return response()->json($volunteers);
     }
 }

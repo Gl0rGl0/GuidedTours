@@ -3,55 +3,7 @@
 @section('title', 'Declare Availability')
 
 @push('styles')
-<style>
-    .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 5px;
-        max-width: 700px; /* Adjusted width slightly */
-        margin: 20px auto;
-    }
-    .calendar-day {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
-        min-height: 80px;
-        background-color: #f9f9f9;
-        position: relative;
-        cursor: pointer; /* Make it look clickable */
-        transition: background-color 0.2s ease-in-out;
-    }
-    .calendar-day:hover {
-        background-color: #e9ecef;
-    }
-    .calendar-day.selected {
-        background-color: #cfe2ff; /* Bootstrap primary light */
-        border-color: #9ec5fe;
-    }
-    .calendar-day .day-number {
-        font-weight: bold;
-        margin-bottom: 5px;
-        display: block;
-    }
-    /* Hide the actual checkbox */
-    .calendar-day .form-check-input {
-       display: none;
-    }
-    .calendar-header {
-        font-weight: bold;
-        text-align: center;
-        padding: 5px;
-        background-color: #eee;
-    }
-    .calendar-day.other-month {
-        background-color: #e9ecef;
-        color: #adb5bd;
-        cursor: default; /* Not clickable */
-    }
-    .calendar-day.other-month:hover {
-        background-color: #e9ecef; /* No hover effect */
-    }
-</style>
+    <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')

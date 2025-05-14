@@ -92,4 +92,12 @@ class Visit extends Model
     {
         return $this->hasMany(Registration::class, 'visit_id', 'visit_id');
     }
+
+    /**
+     * Use `visit_id` for route-model binding.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'visit_id';
+    }
 }
