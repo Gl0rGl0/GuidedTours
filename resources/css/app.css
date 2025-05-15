@@ -2,3 +2,5 @@
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 /* You can add custom styles below or in separate files */
+/* in resources/css/app.css */
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons.css";

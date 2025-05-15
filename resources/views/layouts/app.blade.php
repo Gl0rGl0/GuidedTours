@@ -141,11 +141,66 @@
     {{-- === END: Toast Container HTML === --}}
 
 
-    <footer class="mt-auto py-3 bg-light"> {{-- Bootstrap footer classes --}}
-        <div class="container text-center">
-             <p class="text-muted mb-0">Guided Tours Org © {{ date('Y') }}</p>
+    <!-- START: Footer -->
+    <footer class="bg-dark text-white mt-auto py-4">
+        <div class="container">
+            <div class="row">
+                <!-- Company Info -->
+                <div class="col-md-3">
+                    <p>Lorem ipsum dolor sit amet.</p>
+                </div>
+
+                <!-- Products -->
+                <div class="col-md-2">
+                    <h6 class="text-uppercase mb-3 font-weight-bold">Structure</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="https://laravel.com/" class="text-white">Laravel</a></li>
+                        <li><a href="https://getbootstrap.com/" class="text-white">Bootstrap</a></li>
+                        <li><a href="https://vite.dev/" class="text-white">Vite</a></li>
+                    </ul>
+                </div>
+
+                <!-- Useful Links -->
+                <div class="col-md-2">
+                    <h6 class="text-uppercase mb-3 font-weight-bold">Useful Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">About us</a></li>
+                        <li><a href="#" class="text-white">Careers</a></li>
+                        <li><a href="#" class="text-white">Terms and Condition</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-3">
+                    <h6 class="text-uppercase mb-3 font-weight-bold">Contact</h6>
+                    <p><i class="bi bi-house-door me-2"></i>Via Branze 38, Brescia BS 25123, IT</p>
+                    <p><i class="bi bi-envelope me-2"></i>d.barbetti@unibs.studenti.it</p>
+                    <p><i class="bi bi-envelope me-2"></i>g.felappi004@unibs.studenti.it</p>
+                    <p><i class="bi bi-envelope me-2"></i>l.folgoni@unibs.studenti.it</p>
+                </div>
+
+                <!-- Social Media -->
+                <div class="col-md-2">
+                    <h6 class="text-uppercase mb-3 font-weight-bold">Follow Us</h6>
+                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-facebook"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+
+            <hr class="bg-secondary my-4">
+
+            <!-- Copyright -->
+            <div class="row">
+                <div class="col text-center">
+                    <p class="mb-0">&copy; {{ date('Y') }} Guided Tours Org. All rights reserved.</p>
+                </div>
+            </div>
         </div>
     </footer>
+    <!-- END: Footer -->
+
+
     {{-- === START: Centralized Toast JavaScript === --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
