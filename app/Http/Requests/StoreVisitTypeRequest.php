@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Carbon\Carbon;
 
 class StoreVisitTypeRequest extends BaseFormRequest
 {
@@ -9,15 +10,28 @@ class StoreVisitTypeRequest extends BaseFormRequest
      *
      * @return array<string,\Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
+        $maxStart = Carbon::today()
+            ->copy()
+            ->addYears(config('app.max_year_tv'))
+            ->toDateString();
+
+        // se serve il periodo end relativo al start inviato:
+        $periodStart = $this->input('period_start');
+        $maxEnd = Carbon::parse($periodStart)
+                ->copy()
+                ->addYears(config('app.max_duration_tv'))
+                ->toDateString();
+
         return [
             'place_id' => ['required', 'integer', 'exists:places,place_id'],
-            'title' => ['required', 'string', 'max:255', 'min:3'],
+            'title' => ['required', 'string', 'max:255', 'min:3', 'unique:visit_types,title'],
             'description' => ['nullable', 'string'],
             'meeting_point' => ['required', 'string', 'max:255'],
-            'period_start' => ['required', 'date', $this->validatePeriodStart()],
-            'period_end' => ['required', 'date', $this->validatePeriodEnd()],
+            'period_start' => ['required', 'date', 'after_or_equal:today', "before_or_equal:{$maxStart}"],
+            'period_end'   => ['required', 'date', 'after_or_equal:period_start', "before_or_equal:{$maxEnd}"],
             'start_time' => ['required', 'date_format:H:i'],
             'duration_minutes' => ['required', 'integer', 'min:1', 'max:600'],
             'requires_ticket' => ['required', 'boolean'],
@@ -25,41 +39,4 @@ class StoreVisitTypeRequest extends BaseFormRequest
             'max_participants' => ['required', 'integer', 'min:1', 'gte:min_participants', 'max:100'],
         ];
     }
-
-    private function validatePeriodStart(): \Closure
-    {
-        return function ($attribute, $value, $fail) {
-            $startDate = \Carbon\Carbon::parse($value);
-            $today = \Carbon\Carbon::today();
-
-            if ($startDate->gt($today->copy()->addYears(2))) {
-                $fail('Period of availability must start no later than two years from today.');
-            }
-
-            if ($startDate->lt($today)) {
-                $fail('Period of availability cannot begin on a past date.');
-            }
-        };
-    }
-
-    private function validatePeriodEnd(): \Closure
-    {
-        return function ($attribute, $value, $fail) {
-            $start = $this->input('period_start');
-
-            if ($start) {
-                $startDate = \Carbon\Carbon::parse($start);
-                $endDate = \Carbon\Carbon::parse($value);
-
-                if ($endDate->gt($startDate->copy()->addYears(1))) {
-                    $fail('Period of availability must not be longer than one year.');
-                }
-
-                if ($endDate->lt($startDate)) {
-                    $fail('This date cannot be set before the start date.');
-                }
-            }
-        };
-    }
-
 }

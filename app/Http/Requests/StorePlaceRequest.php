@@ -12,7 +12,7 @@ class StorePlaceRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'name'        => ['required', 'string', 'max:255', 'unique:places,name'],
+            'name'        => ['required', 'string', 'min:3', 'max:255', 'unique:places,name'],
             'description' => ['nullable', 'string'],
             'location'    => ['required', 'string', 'max:255'],
         ];

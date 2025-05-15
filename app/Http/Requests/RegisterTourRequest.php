@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class RegisterTourRequest extends FormRequest
+class RegisterTourRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -40,7 +39,6 @@ class RegisterTourRequest extends FormRequest
             'visit_id.required' => 'The visit ID is required.',
             'visit_id.exists' => 'The selected visit does not exist.',
             'num_participants.required' => 'The number of participants is required.',
-            'num_participants.integer' => 'The number of participants must be a whole number.',
             'num_participants.min' => 'You must register at least one participant.',
         ];
     }

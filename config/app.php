@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Europe/Rome',
 
     /*
     |--------------------------------------------------------------------------
@@ -123,4 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // CUSTOM
+    // After this number of year its not possible place a visit type 
+    'max_year_tv' => (int) env('MAX_YEAR', 2),
+    'max_duration_tv' => (int) env('MAX_DURATION', 1),
 ];
