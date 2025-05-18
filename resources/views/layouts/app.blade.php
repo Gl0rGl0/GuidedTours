@@ -82,6 +82,9 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">My Bookings</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}" href="{{ route('user.visits.past') }}">My Past Visits</a>
+                            </li>
                         @endif
                         @if (Auth::user()->hasRole('configurator'))
                             <li class="nav-item">
@@ -91,16 +94,17 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}" href="{{ route('admin.visit-planning.index') }}">Visit Planning</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('admin.visits.past') ? 'active' : '' }}" href="{{ route('admin.visits.past') }}">Past Visits</a>
+                            </li>
                         @elseif (Auth::user()->hasRole('volunteer'))
                              <li class="nav-item">
                                 <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}" href="{{ route('volunteer.visits.past') }}">Assigned Visits</a>
+                            </li>
                         @endif
-
-                        {{-- Past Visits Link for all authenticated users --}}
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::is('visits.past') ? 'active' : '' }}" href="{{ route('visits.past') }}">Past Visits</a>
-                        </li>
 
                         {{-- User Dropdown --}}
                         <li class="nav-item dropdown">
@@ -279,6 +283,6 @@
     </script>
     {{-- === END: Centralized Toast JavaScript === --}}
 
-    @stack('scripts') {{-- Placeholder for page-specific scripts --}}
+    @stack('scripts')
 </body>
 </html>

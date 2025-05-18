@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\VisitTypeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\VolunteerController;
 use App\Http\Controllers\FruitoreController;
-use App\Http\Controllers\VisitPlanningController;
 
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
@@ -37,14 +36,11 @@ Route::middleware('auth')->group(function () {
 
     // Edit profile
     Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
-
-    // Past Visits Page
-    Route::get('/past-visits', [VisitPlanningController::class, 'showPastVisits'])->name('visits.past');
-
+    
     // Tour Registration
     Route::get('/visits/{visit}/register', [RegistrationController::class, 'showTourRegistrationForm'])->name('visits.register.form');
     Route::post('/visits/{visit}/register', [RegistrationController::class, 'registerForTour'])->name('visits.register.submit');
-
+    
     // --- Admin (Configurator) Routes ---
     Route::middleware('role:configurator')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/configurator', [AdminController::class, 'showConfigurator'])->name('configurator'); // Map ?page=admin_configurator
@@ -69,9 +65,11 @@ Route::middleware('auth')->group(function () {
         // Add routes for Visits CRUD
         Route::resource('visits', VisitController::class);
 
+        // Past Visits Page (configurator)
+        Route::get('/past-visits', [VisitController::class, 'showPastVisits'])->name('visits.past');
 
         // Add other admin routes here (e.g., settings, visit planning)
-        Route::get('/visit-planning', [VisitPlanningController::class, 'index'])->name('visit-planning.index');
+        Route::get('/visit-planning', [VisitController::class, 'index'])->name('visit-planning.index');
 
         Route::get('/volunteers/available', [VisitController::class, 'getAvailableVolunteers'])->name('volunteers.available');
     });
@@ -80,6 +78,9 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
         Route::get('/availability', [VolunteerController::class, 'showAvailabilityForm'])->name('availability.form');
         Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
+
+        // Past Visits Page (volunteer)
+        Route::get('/past-visits', [VisitController::class, 'showAssignedVisits'])->name('visits.past');
     });
 
 
@@ -88,6 +89,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
         // Route for cancelling a booking
         Route::delete('/bookings/{booking}', [FruitoreController::class, 'cancelBooking'])->name('bookings.cancel');
-        // Add other fruitore routes here
+        // Past Visits Page (fruitore)
+        Route::get('/past-visits', [VisitController::class, 'showMyPastVisits'])->name('visits.past');
     });
 });

@@ -12,7 +12,8 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 use App\Http\Controllers\Traits\HandlesAdminOperations;
-use Illuminate\Support\Facades\Log;
+use App\Models\VolunteerAvailability;
+use Illuminate\Support\Facades\Auth;
 
 class VisitController extends Controller
 {
@@ -63,5 +64,92 @@ class VisitController extends Controller
             ->get();
             
         return response()->json($volunteers);
+    }
+
+    public function index(): View
+    {
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->addMonth()->endOfMonth();
+
+
+        $volunteerAvailabilities = VolunteerAvailability::with('volunteer')
+            ->whereBetween('available_date', [$startDate, $endDate])
+            ->orderBy('available_date')
+            ->get()
+            ->groupBy('available_date');
+
+
+        $plannedVisits = Visit::with(['visitType.place', 'assignedVolunteer'])
+            ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
+            ->whereBetween('visit_date', [$startDate, $endDate])
+            ->orderBy('visit_date')
+            ->orderBy('start_time')
+            ->get()
+            ->groupBy('visit_date');
+
+        $volunteers = User::role('volunteer')->orderBy('username')->get();
+
+        $visitTypes = VisitType::orderBy('title')->get();
+
+
+        return view('admin.visit-planning', [
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'volunteerAvailabilities' => $volunteerAvailabilities,
+            'plannedVisits' => $plannedVisits,
+            'volunteers' => $volunteers,
+            'visitTypes' => $visitTypes,
+        ]);
+    }
+
+    /**
+     * Display a listing of past (effected or cancelled) visits.
+     */
+    public function showvisits(): View
+    {
+        $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
+            ->whereIn('status', [Visit::STATUS_CANCELLED, Visit::STATUS_EFFECTED])
+            ->orderBy('visit_date', 'desc')
+            ->get();
+
+        return view('tours.customized_visits', [
+            'visits' => $visits,
+        ]);
+    }
+
+    /**
+     * Display a listing of assigned visit (proposed or completed) visits based on actual volunteer.
+     */
+    public function showAssignedVisits(): View
+    {
+        $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
+            ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
+            ->where('assigned_volunteer_id', Auth::user()->user_id)
+            ->orderBy('visit_date', 'desc')
+            ->get();
+
+        return view('tours.customized_visits', [
+            'visits' => $visits,
+        ]);
+    }
+
+    /**
+     * Display a listing of past (effected or cancelled) visits of the user.
+     */
+    public function showMyPastVisits(): View
+    {
+        $userId = Auth::user()->user_id;
+
+        $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
+            ->whereIn('status', [Visit::STATUS_CANCELLED, Visit::STATUS_EFFECTED])
+            ->whereHas('registrations', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })
+            ->orderBy('visit_date', 'desc')
+            ->get();
+
+        return view('tours.customized_visits', [
+            'visits' => $visits,
+        ]);
     }
 }

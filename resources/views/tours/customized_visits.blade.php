@@ -1,19 +1,42 @@
 @extends('layouts.app')
 
-@section('title', 'Past Visits')
+@section('title', 'Custom Visits')
 
 @section('content')
 <div class="container my-5">
-    <h1 class="mb-4">Past Visits</h1>
+    @php
+        $user = Auth::user();
+    @endphp
 
-    @if($pastVisits->isEmpty())
-        <p>There are no past visits to display at the moment.</p>
+    @if ($user->hasRole('configurator'))
+        <h1 class="mb-4">Past Visits</h1>
+    @endif
+    @if ($user->hasRole('volunteer'))
+        <h1 class="mb-4">Assigned Visits</h1>
+    @endif
+    @if ($user->hasRole('fruitore'))
+        <h1 class="mb-4">My Past Visits</h1>
+    @endif
+
+    @if($visits->isEmpty())
+        @if ($user->hasRole('configurator'))
+            <p>There are no past visits to display at the moment.</p>
+        @endif
+        @if ($user->hasRole('volunteer'))
+            <p>You haven't been assigned to any visits in the past.</p>
+        @endif
+        @if ($user->hasRole('fruitore'))
+            <p>You haven't booked any visits in the past.</p>
+        @endif
     @else
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            @foreach($pastVisits as $visit)
+            @foreach($visits as $visit)
                 @php
                     $badgeClass = match($visit->status) {
                         App\Models\Visit::STATUS_EFFECTED => 'bg-success text-white',
+                        App\Models\Visit::STATUS_PROPOSED => 'bg-primary text-white',
+                        App\Models\Visit::STATUS_CONFIRMED => 'bg-success text-white',
+                        App\Models\Visit::STATUS_COMPLETE => 'bg-success-subtle text-white',
                         App\Models\Visit::STATUS_CANCELLED => 'bg-danger text-white',
                         default => 'bg-secondary text-white',
                     };
@@ -42,7 +65,7 @@
                             </ul>
 
                             <div class="mt-auto">
-                                <p class="mb-0"><strong>Registrations:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
+                                <p class="mb-0"><strong>{{ $visit->registrations }} Registrations:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
                             </div>
                         </div>
                     </div>

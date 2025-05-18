@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Import Auth facade
-use Illuminate\Support\Facades\Hash; // Import Hash facade
-use Illuminate\Validation\Rules\Password; // Import Password rule
-use Illuminate\View\View; // Import View
-use Illuminate\Support\Facades\Log; // Import Log facade
-use Illuminate\Http\RedirectResponse; // Import RedirectResponse
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View; 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse; 
 
 class UserController extends Controller
 {

@@ -6,8 +6,6 @@
 <div class="container">
     <h2>My Booked Tours</h2>
 
-    {{-- Removed Bootstrap alerts, messages will be shown as toasts via layout --}}
-
     @if ($bookings->isEmpty())
         <p>You have not booked any tours yet.</p>
     @else

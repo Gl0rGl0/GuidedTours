@@ -3,14 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 use App\Models\Place;
 use App\Http\Requests\StorePlaceRequest; 
 use App\Http\Requests\UpdatePlaceRequest; 
-use Illuminate\Validation\Rule;
 use App\Http\Controllers\Traits\HandlesAdminOperations;
 
 class PlaceController extends Controller

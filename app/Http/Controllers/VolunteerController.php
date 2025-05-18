@@ -8,8 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Models\VolunteerAvailability;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB; // Import DB facade
-use Illuminate\Support\Facades\Log; // Import Log facade
+use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\Log; 
 
 class VolunteerController extends Controller
 {

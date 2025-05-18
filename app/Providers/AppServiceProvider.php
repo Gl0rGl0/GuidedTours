@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate; // Import Gate facade
-use App\Models\User; // Import User model
+use Illuminate\Support\Facades\Gate; 
+use App\Models\User; 
 
 class AppServiceProvider extends ServiceProvider
 {
