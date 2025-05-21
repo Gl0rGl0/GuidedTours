@@ -44,7 +44,7 @@
                                 <p class="card-text"><small><em>Note: An entrance ticket purchase may be required.</em></small></p>
                             @endif
                              <p class="card-text">
-                                <strong>Subscribers:</strong> {{ $tour-> assignedVolunteer }} {{ $tour->registrations->sum('num_participants') }} / {{ $tour->visitType->max_participants }} {{-- Calculate and display subscriber count --}}
+                                <strong>Subscribers:</strong> {{ $tour->registrations->sum('num_participants') }} / {{ $tour->visitType->max_participants }} {{-- Calculate and display subscriber count --}}
                             </p>
                         </div>
                         <div class="card-footer text-center">
