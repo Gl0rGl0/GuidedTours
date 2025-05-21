@@ -66,7 +66,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('visits', VisitController::class);
 
         // Past Visits Page (configurator)
-        Route::get('/past-visits', [VisitController::class, 'showPastVisits'])->name('visits.past');
+        Route::get('/past-visits', [VisitController::class, 'showvisits'])->name('visits.past');
 
         // Add other admin routes here (e.g., settings, visit planning)
         Route::get('/visit-planning', [VisitController::class, 'index'])->name('visit-planning.index');

@@ -45,15 +45,22 @@ class UpdateVisitStatuses extends Command
             $registrationsCount = $visit->registrations->sum('num_participants');
             $minParticipants = $visit->visitType->min_participants;
 
-            if ($registrationsCount >= $minParticipants) {
-                $visit->status = Visit::STATUS_CONFIRMED;
-                $this->line("Visit ID {$visit->visit_id} confirmed. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
-                Log::info("Visit ID {$visit->visit_id} confirmed.");
-            } else {
+            if($visit->assignedVolunteer()){
+                if ($registrationsCount >= $minParticipants) {
+                    $visit->status = Visit::STATUS_CONFIRMED;
+                    $this->line("Visit ID {$visit->visit_id} confirmed. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
+                    Log::info("Visit ID {$visit->visit_id} confirmed.");
+                } else {
+                    $visit->status = Visit::STATUS_CANCELLED;
+                    $this->line("Visit ID {$visit->visit_id} cancelled. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
+                    Log::info("Visit ID {$visit->visit_id} cancelled due to insufficient registrations. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
+                }
+            }else{
                 $visit->status = Visit::STATUS_CANCELLED;
-                $this->line("Visit ID {$visit->visit_id} cancelled. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
-                Log::info("Visit ID {$visit->visit_id} cancelled due to insufficient registrations. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
+                $this->line("Visit ID {$visit->visit_id} cancelled. No volunteer assigned");
+                Log::info("Visit ID {$visit->visit_id} cancelled due to unassigned volunteer.");
             }
+
             $visit->save();
         }
         $this->info(count($upcomingVisits) . " upcoming visits processed.");

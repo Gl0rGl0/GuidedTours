@@ -65,7 +65,7 @@
                             </ul>
 
                             <div class="mt-auto">
-                                <p class="mb-0"><strong>{{ $visit->registrations }} Registrations:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
+                                <p class="mb-0"><strong>Registrations:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
                             </div>
                         </div>
                     </div>
