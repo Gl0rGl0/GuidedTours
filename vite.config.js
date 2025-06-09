@@ -11,7 +11,6 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        // Remove Tailwind plugin: tailwindcss(),
     ],
     // Add resolve alias for bootstrap
     resolve: {
