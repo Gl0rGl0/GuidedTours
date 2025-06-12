@@ -23,6 +23,7 @@ class RegistrationsSeeder extends Seeder
         // Get some proposed and confirmed visits
         $proposedVisits = Visit::where('status', 'proposed')->take(1)->get();
         $confirmedVisits = Visit::where('status', 'confirmed')->take(2)->get();
+        $cancelledVisits = Visit::where('status', 'cancelled')->take(1)->get();
 
         // Check if we found enough data
         if ($fruitori->count() < 1 || $proposedVisits->count() < 1 || $confirmedVisits->count() < 1) {
@@ -38,6 +39,7 @@ class RegistrationsSeeder extends Seeder
         $visit_prop1 = $proposedVisits->first();
         $visit_conf1 = $confirmedVisits->get(0);
         $visit_conf2 = $confirmedVisits->get(1) ?? $visit_conf1; // Second confirmed, or fallback to first
+        $visit_canc1 = $cancelledVisits->first();
 
         // Helper function to generate booking code
         $generateBookingCode = function($visitId, $userId) {
@@ -63,60 +65,35 @@ class RegistrationsSeeder extends Seeder
                 'user_id' => $user2->user_id
             ],
             [
-                'num_participants' => 3,
+                'num_participants' => $visit_conf1->visitType->max_participants,
                 'booking_code' => $generateBookingCode($visit_conf1->visit_id, $user2->user_id)
             ]
         );
 
-        // User 3 books 1 for confirmed visit 1 (if different from user 2)
-        if ($user3->user_id !== $user2->user_id) {
-            Registration::updateOrCreate(
-                [
-                    'visit_id' => $visit_conf1->visit_id,
-                    'user_id' => $user3->user_id
-                ],
-                [
-                    'num_participants' => 1,
-                    'booking_code' => $generateBookingCode($visit_conf1->visit_id, $user3->user_id)
-                ]
-            );
-        }
-
-        // User 2 books 4 for confirmed visit 2
+        // User 2 books min for confirmed visit 2
         Registration::updateOrCreate(
             [
                 'visit_id' => $visit_conf2->visit_id,
                 'user_id' => $user2->user_id
             ],
             [
-                'num_participants' => 4,
+                'num_participants' => $visit_conf2->visitType->min_participants,
                 'booking_code' => $generateBookingCode($visit_conf2->visit_id, $user2->user_id)
             ]
         );
 
-        $this->command->info('RegistrationsSeeder completed successfully.');
-
-        $effectedVisit = Visit::where('status', 'confirmed')->first();
-        
-        if (!$effectedVisit) {
-            $this->command->warn('No confirmed visits available for registration.');
-            return;
-        }
-        
-        $visitType = $effectedVisit->visitType;
-
-        // User 2 books 4 for confirmed visit 2
+        // User 2 books min - 1 for cancelled visit 1
         Registration::updateOrCreate(
             [
-                'visit_id' => $effectedVisit->visit_id,
+                'visit_id' => $visit_canc1->visit_id,
                 'user_id' => $user2->user_id
             ],
             [
-                'num_participants' => $visitType->max_participants,
-                'booking_code' => $generateBookingCode($effectedVisit->visit_id, $user2->user_id)
+                'num_participants' => $visit_canc1->visitType->min_participants - 1,
+                'booking_code' => $generateBookingCode($visit_canc1->visit_id, $user2->user_id)
             ]
         );
 
-        $this->command->info('RegistrationsSeeder for effected visit completed successfully.');
+        $this->command->info('RegistrationsSeeder completed successfully.');
     }
 }

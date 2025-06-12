@@ -41,18 +41,18 @@ class VisitsSeeder extends Seeder
             ['visit_type_id' => $vt2->visit_type_id, 'visit_date' => $now->copy()->addDays(12)->toDateString()],
             ['assigned_volunteer_id' => $vol2->user_id, 'status' => 'proposed']
         );
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(14)->toDateString()],
-            ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
-        );
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(17)->toDateString()],
-            ['assigned_volunteer_id' => $vol2->user_id, 'status' => 'proposed']
-        );
-         Visit::updateOrCreate(
-            ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(20)->toDateString()],
-            ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
-        );
+        // Visit::updateOrCreate(
+        //     ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(14)->toDateString()],
+        //     ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
+        // );
+        // Visit::updateOrCreate(
+        //     ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(17)->toDateString()],
+        //     ['assigned_volunteer_id' => $vol2->user_id, 'status' => 'proposed']
+        // );
+        //  Visit::updateOrCreate(
+        //     ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(20)->toDateString()],
+        //     ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
+        // );
 
 
         // Confirmed

@@ -40,7 +40,7 @@
             <input type="date"
                    id="birth_date"
                    name="birth_date"
-                   value="{{ old('birth_date', optional($user->birth_date)->format('Y-m-d')) }}"
+                   value="{{ old('birth_date', $user->birth_date) }}"
                    class="form-control"
                    disabled>
           </div>
