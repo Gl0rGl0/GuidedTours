@@ -168,9 +168,9 @@
                 <div class="col-md-2">
                     <h6 class="text-uppercase mb-3 font-weight-bold">Useful Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">About us</a></li>
-                        <li><a href="#" class="text-white">Careers</a></li>
-                        <li><a href="#" class="text-white">Terms and Condition</a></li>
+                        <li><a href=" {{ route('about-us') }} " class="text-white">About us</a></li>
+                        <li><a href=" {{ route('careers') }} " class="text-white">Careers</a></li>
+                        <li><a href=" {{ route('terms') }} " class="text-white">Terms and Condition</a></li>
                     </ul>
                 </div>
 

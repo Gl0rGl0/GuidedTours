@@ -46,4 +46,19 @@ class HomeController extends Controller
             'error_message' => $error_message // Pass error message if any
         ]);
     }
+
+    public function terms(): View
+    {
+        return view('footer.terms');
+    }
+    
+    public function careers(): View
+    {
+        return view('footer.careers');
+    }
+    
+    public function aboutUs(): View
+    {
+        return view('footer.about-us');
+    }
 }

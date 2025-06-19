@@ -15,6 +15,10 @@ use App\Http\Controllers\FruitoreController;
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
 
+Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
+Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
+
 // Authentication Routes (mimicking ?page=login/register & action=login/register)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
