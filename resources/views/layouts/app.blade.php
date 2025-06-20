@@ -58,6 +58,18 @@
             background-color: var(--bs-info, #0dcaf0);
             color: #000;
         }
+        .logo-btn .unibs-logo {
+            height: 16px;
+            width: auto;
+            max-width: 100%;
+            align-items: center;
+            justify-content: center;
+            content: url('/images/unibslogo-white.png');
+        }
+
+        .logo-btn:hover .unibs-logo {
+            content: url('/images/unibslogo-black.png');
+        }
     </style>
     {{-- === END: Centralized Toast Styles === --}}
 
@@ -186,9 +198,10 @@
                 <!-- Social Media -->
                 <div class="col-md-2">
                     <h6 class="text-uppercase mb-3 font-weight-bold">Follow Us</h6>
-                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-facebook"></i></a>
-                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-twitter"></i></a>
-                    <a class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.unibs.it/it" class="btn btn-outline-light btn-floating m-1 logo-btn" role="button">
+                        <i alt="UniBS" class="unibs-logo"></i></a>
+                    <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-twitter"></i></a>
+                    <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-instagram"></i></a>
                 </div>
             </div>
 
