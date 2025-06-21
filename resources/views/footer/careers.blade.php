@@ -21,13 +21,13 @@
 
     <h4>Chi siamo?</h4>
     <ul>
-        <li><strong>Giorgio Felappi</strong> – Backend Developer, architettura e gestione stato<br>
+        <li><strong>Giorgio Felappi</strong> – Fullstack developer<br>
             GitHub: <a href="https://github.com/Gl0rGl0" target="_blank">github.com/Gl0rGl0</a>
         </li>
-        <li><strong>Daniel Barbetti</strong> – Frontend Designer & UI/UX<br>
+        <li><strong>Daniel Barbetti</strong> – Fullstack developer<br>
             GitHub: <a href="https://github.com/barbetti3" target="_blank">github.com/barbetti3</a>
         </li>
-        <li><strong>Leonardo Folgoni</strong> – Data Integration & Testing Automation<br>
+        <li><strong>Leonardo Folgoni</strong> – Fullstack developer<br>
             GitHub: <a href="https://github.com/f0lg0" target="_blank">github.com/f0lg0</a>
         </li>
     </ul>

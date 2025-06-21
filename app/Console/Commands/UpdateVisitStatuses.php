@@ -38,7 +38,7 @@ class UpdateVisitStatuses extends Command
         $this->info("Processing visits for date: {$threeDaysFromNow}");
         $upcomingVisits = Visit::with(['registrations', 'visitType'])
             ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
-            ->whereDate('visit_date', $threeDaysFromNow)
+            ->whereDate('visit_date', '<=', $threeDaysFromNow)
             ->get();
 
         foreach ($upcomingVisits as $visit) {
