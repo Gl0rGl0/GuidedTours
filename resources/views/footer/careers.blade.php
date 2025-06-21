@@ -6,28 +6,28 @@
 <div class="container py-4" style="max-width: 800px;">
     <h1 class="text-center"><i>Lavora con noi</i></h1>
 
-    <h3 class="text-center"><i>"L’innovazione nasce dove la passione incontra la competenza."</i></h3>
+    <h3 class="text-center"><i>"L'innovazione nasce dove la passione incontra la competenza."</i></h3>
 
     <p>
         Sebbene il nostro team sia nato come gruppo di progetto universitario per il corso di Programmazione Web presso
-        l’<strong>Università degli Studi di Brescia</strong>, il percorso che abbiamo intrapreso ha fatto emergere una forte sinergia e interesse condiviso
+        l'<strong>Università degli Studi di Brescia</strong>, il percorso che abbiamo intrapreso ha fatto emergere una forte sinergia e interesse condiviso
         verso lo sviluppo software moderno, la progettazione pulita e la collaborazione su progetti open source.
     </p>
 
     <p>
         Il nostro obiettivo con <strong>GuidedTours</strong> non era solo quello di rispettare i requisiti didattici, ma anche di costruire
-        un’applicazione modulare, accessibile e realmente utilizzabile, che potesse adattarsi a contesti reali di gestione eventi e visite guidate.
+        un'applicazione modulare, accessibile e realmente utilizzabile, che potesse adattarsi a contesti reali di gestione eventi e visite guidate.
     </p>
 
     <h4>Chi siamo?</h4>
     <ul>
-        <li><strong>Giorgio Felappi</strong> – Fullstack developer<br>
+        <li><strong>Giorgio Felappi</strong> - Fullstack developer<br>
             GitHub: <a href="https://github.com/Gl0rGl0" target="_blank">github.com/Gl0rGl0</a>
         </li>
-        <li><strong>Daniel Barbetti</strong> – Fullstack developer<br>
+        <li><strong>Daniel Barbetti</strong> - Fullstack developer<br>
             GitHub: <a href="https://github.com/barbetti3" target="_blank">github.com/barbetti3</a>
         </li>
-        <li><strong>Leonardo Folgoni</strong> – Fullstack developer<br>
+        <li><strong>Leonardo Folgoni</strong> - Fullstack developer<br>
             GitHub: <a href="https://github.com/f0lg0" target="_blank">github.com/f0lg0</a>
         </li>
     </ul>

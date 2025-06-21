@@ -101,7 +101,6 @@
                          <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="requires_ticket" name="requires_ticket" value="1" {{ old('requires_ticket', 0) == 1 ? 'checked' : '' }}>
                             <label class="form-check-label" for="requires_ticket">Requires Venue Ticket?</label>
-                            {{-- Hidden input for unchecked state --}}
                             <input type="hidden" name="requires_ticket" value="0">
                         </div>
                          @error('requires_ticket')

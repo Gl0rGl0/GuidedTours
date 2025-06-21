@@ -10,7 +10,7 @@
             <div class="card-body">
                 <p class="card-text text-center mb-4">Please enter your credentials to access your dashboard.</p>
                 <form action="{{ route('login') }}" method="post">
-                    @csrf {{-- Add CSRF token --}}
+                    @csrf
                     <x-form-input
                         name="username"
                         label="{{ __('Username') }}"

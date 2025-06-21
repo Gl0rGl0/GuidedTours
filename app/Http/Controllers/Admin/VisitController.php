@@ -102,9 +102,6 @@ class VisitController extends Controller
         ]);
     }
 
-    /**
-     * Display a listing of past (effected or cancelled) visits.
-     */
     public function showvisits(): View
     {
         $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
@@ -117,9 +114,6 @@ class VisitController extends Controller
         ]);
     }
 
-    /**
-     * Display a listing of assigned visit (proposed or completed) visits based on actual volunteer.
-     */
     public function showAssignedVisits(): View
     {
         $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
@@ -133,9 +127,6 @@ class VisitController extends Controller
         ]);
     }
 
-    /**
-     * Display a listing of past (effected or cancelled) visits of the user.
-     */
     public function showMyPastVisits(): View
     {
         $userId = Auth::user()->user_id;

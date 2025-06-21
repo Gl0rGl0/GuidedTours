@@ -1,6 +1,4 @@
-/* Import Bootstrap's Sass entry point using relative path */
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
-/* You can add custom styles below or in separate files */
-/* in resources/css/app.css */
+/* Custom styles in resources/css/app.css */
 @import "bootstrap-icons/font/bootstrap-icons.css";

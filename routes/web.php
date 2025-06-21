@@ -13,18 +13,18 @@ use App\Http\Controllers\VolunteerController;
 use App\Http\Controllers\FruitoreController;
 
 // --- Public Routes ---
-Route::get('/', [HomeController::class, 'index'])->name('home'); // Map '/' and '?page=home'
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 
-// Authentication Routes (mimicking ?page=login/register & action=login/register)
+// Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // Map ?action=logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Default route, error and back to the home
 Route::fallback(function () {
@@ -33,11 +33,11 @@ Route::fallback(function () {
 
 // --- Authenticated Routes ---
 Route::middleware('auth')->group(function () {
-    // Profile & Password Change (mimicking ?page=profile/change_password)
+    // Profile & Password Change
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
     Route::get('/change-password', [UserController::class, 'showChangePasswordForm'])->name('change-password.form');
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('change-password.update');
-
+    
     // Edit profile
     Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
     
@@ -47,47 +47,47 @@ Route::middleware('auth')->group(function () {
     
     // --- Admin (Configurator) Routes ---
     Route::middleware('role:configurator')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/configurator', [AdminController::class, 'showConfigurator'])->name('configurator'); // Map ?page=admin_configurator
-
+        Route::get('/configurator', [AdminController::class, 'showConfigurator'])->name('configurator');
+        
         // User Management
         Route::post('/users', [AdminController::class, 'addUser'])->name('users.add');      
         Route::delete('/users/{user}', [AdminController::class, 'removeUser'])->name('users.destroy');
-
+        
         Route::delete('/places/{place}', [PlaceController::class, 'removePlace'])->name('places.destroy');
         Route::delete('/visit-types/{visit_type}', [VisitTypeController::class, 'removeVisitType'])->name('visit-types.destroy');
-
+        
         // Add routes for Place CRUD
         Route::resource('places', PlaceController::class)->except([
             'destroy' // Define destroy separately
         ]);
-
+        
         // Add routes for Visit Type CRUD
-         Route::resource('visit-types', VisitTypeController::class)->except([
+        Route::resource('visit-types', VisitTypeController::class)->except([
             'destroy' // Define destroy separately
         ]);
-
+        
         // Add routes for Visits CRUD
         Route::resource('visits', VisitController::class);
-
+        
         // Past Visits Page (configurator)
         Route::get('/past-visits', [VisitController::class, 'showvisits'])->name('visits.past');
-
+        
         // Add other admin routes here (e.g., settings, visit planning)
         Route::get('/visit-planning', [VisitController::class, 'index'])->name('visit-planning.index');
-
+        
         Route::get('/volunteers/available', [VisitController::class, 'getAvailableVolunteers'])->name('volunteers.available');
     });
-
+    
     // --- Volunteer Routes ---
     Route::middleware('role:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
         Route::get('/availability', [VolunteerController::class, 'showAvailabilityForm'])->name('availability.form');
         Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
-
+        
         // Past Visits Page (volunteer)
         Route::get('/past-visits', [VisitController::class, 'showAssignedVisits'])->name('visits.past');
     });
-
-
+    
+    
     // --- Fruitore Routes ---
     Route::middleware('role:fruitore')->prefix('user')->name('user.')->group(function () {
         Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
@@ -97,3 +97,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/past-visits', [VisitController::class, 'showMyPastVisits'])->name('visits.past');
     });
 });
+
+
+// Route::get('/test-error', function () {
+//     throw new \Exception('Errore di test!');
+// });

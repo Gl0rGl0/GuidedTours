@@ -17,9 +17,6 @@ class AdminController extends Controller
 {
     use HandlesAdminOperations;
 
-    /**
-     * Show the main admin configurator page.
-     */
     public function showConfigurator(): View
     {
         $fetch_error = null;
@@ -32,18 +29,14 @@ class AdminController extends Controller
         ];
 
         try {
-            // Fetch Places
             $places = Place::orderBy('name')->get(['place_id', 'name']);
 
-            // Fetch Visit Types
             $visit_types = VisitType::orderBy('title')->get(['visit_type_id', 'title']);
 
             // Fetch Users
             $all_users = User::orderBy('username')->get(['user_id', 'username']);
 
-            // Group users by their roles
             foreach ($all_users as $user) {
-                // Assign user to the collection of their primary role for display
                 if ($user->hasRole('configurator')) {
                      $users_by_role['configurator']->push($user);
                 } elseif ($user->hasRole('volunteer')) {
@@ -51,17 +44,13 @@ class AdminController extends Controller
                 } elseif ($user->hasRole('fruitore')) {
                     $users_by_role['fruitore']->push($user);
                 }
-                // Users with no assigned role will not appear in these lists
             }
 
         } catch (\Exception $e) {
-            // Log error
             Log::error("Admin Configurator Fetch Error: " . $e->getMessage());
             $fetch_error = "An error occurred while fetching data for the admin panel.";
-            // Flash error to session to display in view
             session()->flash('error', $fetch_error);
 
-            // ReInitialize empty collections on error to prevent view errors
             $users_by_role = [
                 'configurator' => collect(),
                 'volunteer' => collect(),
@@ -69,7 +58,6 @@ class AdminController extends Controller
             ];
         }
 
-        // Pass all fetched data (or empty collections on error) to the view
         return view('admin.configurator', [
             'places' => $places,
             'visit_types' => $visit_types,
@@ -77,15 +65,8 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Handle the request to add a new user (by admin).
-     */
     public function addUser(StoreUserRequest $request): RedirectResponse
     {
-        // Authorization check (handled by middleware and Form Request authorize method)
-
-        // Validation for username and password handled by StoreUserRequest.
-        // Add validation for the role field here.
         $request->validate([
             'role' => ['required', \Illuminate\Validation\Rule::in(['configurator', 'volunteer'])],
         ]);
@@ -106,10 +87,6 @@ class AdminController extends Controller
         );
     }
 
-    /**
-     * Handle the request to remove a user (by admin).
-     * Uses Route Model Binding for the $user parameter.
-     */
     public function removeUser(User $user): RedirectResponse
     {
         // Prevent removing self or other configurators

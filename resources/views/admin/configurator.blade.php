@@ -7,7 +7,6 @@
     <div class="container py-4">
         <h2 class="mb-4">Admin Configurator Panel</h2>
 
-        <!-- Places & Visit Types Row -->
         <div class="row mb-5" id="places-visits">
             <div class="col-md-6 mb-4">
                 <div class="card h-100">
@@ -76,13 +75,11 @@
             </div>
         </div>
 
-        <!-- People Management Row -->
         <div class="row" id="people-management">
             <div class="col-12 mb-3">
                 <h3>People Management</h3>
             </div>
 
-            <!-- Manage Users by Role -->
             @foreach ($users_by_role as $role => $users)
                 <div class="col-md-4 mb-4">
                     <div class="card h-100">
@@ -123,7 +120,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap Add User Modal -->
     <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

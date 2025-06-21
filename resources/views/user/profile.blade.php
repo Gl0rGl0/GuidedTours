@@ -55,7 +55,6 @@
   </div>
 </div>
 
-{{-- JS inline per abilitare/disabilitare i campi --}}
 @push('scripts')
 <script>
   document.getElementById('edit-btn').addEventListener('click', function(e) {

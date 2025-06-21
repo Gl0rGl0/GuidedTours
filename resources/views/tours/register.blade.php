@@ -27,8 +27,6 @@
 
                     <p>Please enter the number of participants for your registration.</p>
 
-                    {{-- TODO: Add validation error display here --}}
-
                     <form action="{{ route('visits.register.submit', ['visit' => $visit->visit_id]) }}" method="POST" class="mt-4">
                         @csrf
                         <div class="mb-3">

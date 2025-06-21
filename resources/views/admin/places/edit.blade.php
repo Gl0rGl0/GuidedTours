@@ -10,7 +10,7 @@
         <div class="card-body">
             <form action="{{ route('admin.places.update', $place) }}" method="POST">
                 @csrf
-                @method('PUT') {{-- Use PUT method for update --}}
+                @method('PUT')
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Place Name</label>

@@ -23,11 +23,10 @@
                         <strong>Time:</strong> {{ \Carbon\Carbon::parse($booking->visit->visitType->start_time)->format('g:i A') }}<br>
                         <strong>Participants:</strong> {{ $booking->num_participants }}
                     </p>
-                    {{-- Add option to cancel booking --}}
-                    <div class="text-end"> {{-- Align button to the right --}}
+                    <div class="text-end">
                         <form action="{{ route('user.bookings.cancel', $booking) }}" method="POST" style="display:inline;">
                             @csrf
-                            @method('DELETE') {{-- Method spoofing for DELETE request --}}
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel Booking</button>
                         </form>
                     </div>

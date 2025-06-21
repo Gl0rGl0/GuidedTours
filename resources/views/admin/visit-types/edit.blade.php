@@ -52,7 +52,6 @@
                     </div>
                      <div class="col-md-3 mb-3">
                         <label for="start_time" class="form-label">Start Time (HH:MM)</label>
-                        {{-- Format time correctly for input type=time --}}
                         <input type="time" class="form-control @error('start_time') is-invalid @enderror" id="start_time" name="start_time" value="{{ old('start_time', \Carbon\Carbon::parse($visit_type->start_time)->format('H:i')) }}" required>
                         @error('start_time')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -101,10 +100,8 @@
                     </div>
                      <div class="col-md-4 mb-3 align-self-center">
                          <div class="form-check form-switch">
-                            {{-- Handle boolean value correctly --}}
                             <input class="form-check-input" type="checkbox" role="switch" id="requires_ticket" name="requires_ticket" value="1" {{ old('requires_ticket', $visit_type->requires_ticket) ? 'checked' : '' }}>
                             <label class="form-check-label" for="requires_ticket">Requires Venue Ticket?</label>
-                             {{-- Hidden input for unchecked state --}}
                             <input type="hidden" name="requires_ticket" value="0">
                         </div>
                          @error('requires_ticket')

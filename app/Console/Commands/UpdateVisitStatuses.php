@@ -34,7 +34,6 @@ class UpdateVisitStatuses extends Command
         $today = Carbon::today();
         $threeDaysFromNow = Carbon::today()->addDays(3)->toDateString();
 
-        // 1. Process visits that are 3 days away from today
         $this->info("Processing visits for date: {$threeDaysFromNow}");
         $upcomingVisits = Visit::with(['registrations', 'visitType'])
             ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
@@ -65,7 +64,6 @@ class UpdateVisitStatuses extends Command
         }
         $this->info(count($upcomingVisits) . " upcoming visits processed.");
 
-        // 2. Process past confirmed visits to mark them as complete
         $this->info("Processing past confirmed visits to mark as complete (before {$today->toDateString()})...");
         $pastConfirmedVisits = Visit::where('status', Visit::STATUS_CONFIRMED)
             ->whereDate('visit_date', '>=', $today)

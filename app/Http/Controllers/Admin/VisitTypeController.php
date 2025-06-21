@@ -14,10 +14,6 @@ use App\Http\Controllers\Traits\HandlesAdminOperations;
 class VisitTypeController extends Controller
 {
     use HandlesAdminOperations;
-
-    /**
-     * Handle the request to remove a visit type (by admin).
-     */
     public function removeVisitType(VisitType $visit_type): RedirectResponse
     {
         return $this->handleAdminOperation(
@@ -30,18 +26,12 @@ class VisitTypeController extends Controller
         );
     }
 
-    /**
-     * Show the form for creating a new visit type.
-     */
     public function create(): View
     {
         $places = Place::orderBy('name')->pluck('name', 'place_id');
         return view('admin.visit-types.create', ['places' => $places]);
     }
 
-    /**
-     * Store a newly created visit type in storage.
-     */
     public function store(StoreVisitTypeRequest $request): RedirectResponse
     {
         return $this->handleAdminOperation(
@@ -54,9 +44,6 @@ class VisitTypeController extends Controller
         );
     }
 
-    /**
-     * Show the form for editing the specified visit type.
-     */
     public function edit(VisitType $visit_type): View
     {
         $places = Place::orderBy('name')->pluck('name', 'place_id');
@@ -66,9 +53,6 @@ class VisitTypeController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified visit type in storage.
-     */
     public function update(UpdateVisitTypeRequest $request, VisitType $visit_type): RedirectResponse
     {
          return $this->handleAdminOperation(

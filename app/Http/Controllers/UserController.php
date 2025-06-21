@@ -12,19 +12,12 @@ use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    /**
-     * Show the user's profile page.
-     * (Placeholder - implement actual profile view later)
-     */
     public function showProfile(): View
     {
         $user = Auth::user();
         return view('user.profile', ['user' => $user]);
     }
 
-    /**
-     * Update the user informations
-     */
     public function update(Request $request)
     {
         $data = $request->validate([
@@ -37,22 +30,15 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Profile updated correctly.');
     }
 
-    /**
-     * Show the form for changing the password.
-     */
     public function showChangePasswordForm(): View
     {
         return view('user.change-password');
     }
 
-    /**
-     * Handle the request to change the user's password.
-     */
     public function changePassword(Request $request): RedirectResponse
     {
         $user = Auth::user();
 
-        // Validate input
         $request->validate([
             'current_password' => ['required', 'string', function ($attribute, $value, $fail) use ($user) {
                 if (!Hash::check($value, $user->password)) {
@@ -62,7 +48,6 @@ class UserController extends Controller
             'new_password' => ['required', 'confirmed', Password::min(6)],
         ]);
 
-        // Update the password
         try {
             $user->password = Hash::make($request->new_password);
             $user->save();

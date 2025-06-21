@@ -15,17 +15,11 @@ use Illuminate\Support\Facades\Log;
 
 class RegistrationController extends Controller
 {
-    /**
-     * Apply authentication and role middleware.
-     */
     public function __construct()
     {
         $this->middleware(['auth', 'role:fruitore']);
     }
 
-    /**
-     * Common eligibility checks for both form display and submission.
-     */
     protected function checkRegistrationEligibility(Visit $visit, User $user, bool $isSubmission = false): ?array
     {
         if ($visit->status === Visit::STATUS_COMPLETE) {
@@ -51,9 +45,6 @@ class RegistrationController extends Controller
         return null;
     }
 
-    /**
-     * Display the registration form for a specific visit.
-     */
     public function showTourRegistrationForm(Visit $visit): View|RedirectResponse
     {
         $user = Auth::user();
@@ -70,9 +61,6 @@ class RegistrationController extends Controller
         return view('tours.register', compact('visit'));
     }
 
-    /**
-     * Handle registration submission for a specific visit.
-     */
     public function registerForTour(RegisterTourRequest $request, Visit $visit): RedirectResponse
     {
         $user = Auth::user();
