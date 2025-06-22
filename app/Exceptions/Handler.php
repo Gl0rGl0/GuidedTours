@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use BadMethodCallException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -10,6 +11,12 @@ class Handler extends ExceptionHandler
 {
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof BadMethodCallException) {
+            return redirect()
+                ->route('home')
+                ->with('error', 'Risorsa non trovata.');
+        }
+
         if ($exception instanceof HttpException) {
             switch ($exception->getStatusCode()) {
                 case 401:
