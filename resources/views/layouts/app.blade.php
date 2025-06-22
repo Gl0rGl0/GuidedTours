@@ -7,6 +7,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="preload" href="/images/unibslogo_micro.svg" as="image">
+
     <style>
         #toast-container {
             position: fixed;
@@ -36,7 +38,7 @@
         .toast-notification.show {
             opacity: 1;
             visibility: visible;
-            transform: translateX(0); /* Slide in */
+            transform: translateX(0);
         }
         .toast-notification.success {
             background-color: var(--bs-success, #198754);
@@ -50,21 +52,22 @@
             background-color: var(--bs-warning, #ffc107);
             color: #000;
         }
-         .toast-notification.info {
+        .toast-notification.info {
             background-color: var(--bs-info, #0dcaf0);
             color: #000;
         }
-        .logo-btn .unibs-logo {
-            height: 16px;
-            width: auto;
-            max-width: 100%;
-            align-items: center;
-            justify-content: center;
-            content: url('/images/unibslogo-white.png');
-        }
 
-        .logo-btn:hover .unibs-logo {
-            content: url('/images/unibslogo-black.png');
+        /* Logo esterno SVG, filtro per invertire colore */
+        .unibs-logo-img {
+            display: inline-block;
+            width: 16px;
+            height: auto;
+            vertical-align: middle;
+            filter: invert(1);
+            transition: filter 0.2s;
+        }
+        .logo-btn:hover .unibs-logo-img {
+            filter: invert(0);
         }
     </style>
 
@@ -74,7 +77,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home') }}">Guided Tours Org</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -85,38 +89,52 @@
                     @auth
                         @if (Auth::user()->hasRole('fruitore'))
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">My Bookings</a>
+                                <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
+                                   href="{{ route('user.dashboard') }}">My Bookings</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}" href="{{ route('user.visits.past') }}">My Past Visits</a>
+                                <a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}"
+                                   href="{{ route('user.visits.past') }}">My Past Visits</a>
                             </li>
                         @endif
                         @if (Auth::user()->hasRole('configurator'))
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin Panel</a>
+                                <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}"
+                                   href="{{ route('admin.configurator') }}">Admin Panel</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}" href="{{ route('admin.visit-planning.index') }}">Visit Planning</a>
+                                <a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}"
+                                   href="{{ route('admin.visit-planning.index') }}">Visit Planning</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.visits.past') ? 'active' : '' }}" href="{{ route('admin.visits.past') }}">Past Visits</a>
+                                <a class="nav-link {{ Route::is('admin.visits.past') ? 'active' : '' }}"
+                                   href="{{ route('admin.visits.past') }}">Past Visits</a>
                             </li>
                         @elseif (Auth::user()->hasRole('volunteer'))
-                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">My Availability</a>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}"
+                                   href="{{ route('volunteer.availability.form') }}">My Availability</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}" href="{{ route('volunteer.visits.past') }}">Assigned Visits</a>
+                                <a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}"
+                                   href="{{ route('volunteer.visits.past') }}">Assigned Visits</a>
                             </li>
                         @endif
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 {{ Auth::user()->username }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item {{ Route::is('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profile</a></li>
-                                <li><a class="dropdown-item {{ Route::is('change-password.form') ? 'active' : '' }}" href="{{ route('change-password.form') }}">Change Password</a></li>
+                                <li>
+                                    <a class="dropdown-item {{ Route::is('profile') ? 'active' : '' }}"
+                                       href="{{ route('profile') }}">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item {{ Route::is('change-password.form') ? 'active' : '' }}"
+                                       href="{{ route('change-password.form') }}">Change Password</a>
+                                </li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -141,10 +159,9 @@
 
     <main class="container py-4 flex-grow-1">
         @yield('content')
-    </main> 
+    </main>
 
     <div id="toast-container"></div>
-
 
     <footer class="bg-dark text-white mt-auto py-4">
         <div class="container">
@@ -165,9 +182,9 @@
                 <div class="col-md-2">
                     <h6 class="text-uppercase mb-3 font-weight-bold">Useful Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href=" {{ route('about-us') }} " class="text-white">About us</a></li>
-                        <li><a href=" {{ route('careers') }} " class="text-white">Careers</a></li>
-                        <li><a href=" {{ route('terms') }} " class="text-white">Terms and Condition</a></li>
+                        <li><a href="{{ route('about-us') }}" class="text-white">About us</a></li>
+                        <li><a href="{{ route('careers') }}" class="text-white">Careers</a></li>
+                        <li><a href="{{ route('terms') }}" class="text-white">Terms and Condition</a></li>
                     </ul>
                 </div>
 
@@ -182,9 +199,14 @@
                 <div class="col-md-2">
                     <h6 class="text-uppercase mb-3 font-weight-bold">Follow Us</h6>
                     <a href="https://www.unibs.it/it" class="btn btn-outline-light btn-floating m-1 logo-btn" role="button">
-                        <i alt="UniBS" class="unibs-logo"></i></a>
-                    <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-twitter"></i></a>
-                    <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-floating m-1" role="button"><i class="bi bi-instagram"></i></a>
+                        <img src="/images/unibslogo_micro.svg" alt="UniBS" class="unibs-logo-img">
+                    </a>
+                    <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-floating m-1" role="button">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-floating m-1" role="button">
+                        <i class="bi bi-instagram"></i>
+                    </a>
                 </div>
             </div>
 
@@ -198,16 +220,15 @@
         </div>
     </footer>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toastContainer = document.getElementById('toast-container');
 
-            window.showToast = function(text, type = 'info', duration = 5000) { // types: 'success', 'error', 'warning', 'info'
+            window.showToast = function(text, type = 'info', duration = 5000) {
                 if (!text || !toastContainer) {
                     console.warn('Toast container not found or no text provided.');
                     return;
-                };
+                }
 
                 const toast = document.createElement('div');
                 toast.className = `toast-notification ${type}`;
@@ -224,21 +245,20 @@
                     });
                 });
 
-
                 const hideTimeout = setTimeout(() => {
                     toast.classList.remove('show');
                     toast.addEventListener('transitionend', () => {
-                         if (toast.parentNode === toastContainer) {
+                        if (toast.parentNode === toastContainer) {
                             toastContainer.removeChild(toast);
-                         }
+                        }
                     }, { once: true });
 
-                     setTimeout(() => {
-                         if (toast.parentNode === toastContainer) {
+                    setTimeout(() => {
+                        if (toast.parentNode === toastContainer) {
                             console.warn('Toast fallback removal triggered for:', text);
                             toastContainer.removeChild(toast);
-                         }
-                     }, 600);
+                        }
+                    }, 600);
 
                 }, duration);
             }
@@ -252,7 +272,7 @@
             @if (session('error'))
                 window.showToast("{{ session('error') }}", 'error');
             @endif
-             @if (session('warning'))
+            @if (session('warning'))
                 window.showToast("{{ session('warning') }}", 'warning');
             @endif
             @if (session('info'))
