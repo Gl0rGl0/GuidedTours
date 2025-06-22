@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Place; // Import Place model
-use App\Models\VisitType; // Import VisitType model
+use App\Models\Place;
+use App\Models\VisitType;
 
 class VisitTypesSeeder extends Seeder
 {
@@ -14,7 +14,6 @@ class VisitTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get Place IDs
         $place1 = Place::where('name', 'Castello del Buonconsiglio')->first();
         $place2 = Place::where('name', 'Museo MUSE')->first();
 

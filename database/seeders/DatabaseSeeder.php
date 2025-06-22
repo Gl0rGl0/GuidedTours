@@ -3,9 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role; // Import Role model
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,18 +16,18 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create(); // Keep default factory calls commented/removed
 
         // Create Roles first
-        Role::create(['name' => 'configurator']); // Add the configurator role
+        Role::create(['name' => 'configurator']);
         Role::create(['name' => 'volunteer']);
-        Role::create(['name' => 'fruitore']); // Assuming 'fruitore' is the standard user role
+        Role::create(['name' => 'fruitore']);
 
         $this->call([
             SettingsSeeder::class,
-            UsersSeeder::class, // Users must exist before being referenced, now roles also exist
-            PlacesSeeder::class, // Places must exist before VisitTypes
-            VisitTypesSeeder::class, // VisitTypes must exist before Visits/Pivot
-            VolunteersVisitTypesSeeder::class, // Pivot table links Users and VisitTypes
-            VisitsSeeder::class, // Visits reference Users and VisitTypes
-            RegistrationsSeeder::class, // Registrations reference Users and Visits
+            UsersSeeder::class,
+            PlacesSeeder::class,
+            VisitTypesSeeder::class,
+            VolunteersVisitTypesSeeder::class,
+            VisitsSeeder::class,
+            RegistrationsSeeder::class,
             VolunteerAvailabilitySeeder::class,
         ]);
     }

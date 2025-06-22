@@ -99,6 +99,6 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Route::get('/test-error', function () {
-//     throw new \Exception('Errore di test!');
-// });
+Route::get('/test-error', function () {
+    throw new \Exception('Errore di test!');
+});

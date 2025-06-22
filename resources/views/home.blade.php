@@ -81,7 +81,7 @@
     @if($confirmed_visits->isEmpty())
         <p>There are currently no confirmed tours scheduled.</p>
     @else
-        <p>These tours are confirmed and full. You may view details:</p>
+        <p>These tours are confirmed. You may view details:</p>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach ($confirmed_visits as $tour)
                 <div class="col">

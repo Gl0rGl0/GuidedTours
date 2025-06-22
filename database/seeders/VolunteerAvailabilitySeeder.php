@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\VolunteerAvailability;
-use Carbon\Carbon;          // Import Carbon for date manipulation
+use Carbon\Carbon;
 
 class VolunteerAvailabilitySeeder extends Seeder
 {
@@ -16,11 +16,10 @@ class VolunteerAvailabilitySeeder extends Seeder
         $daysInNextMonth = $nextMonth->daysInMonth;
         $monthYear = $nextMonth->format('Y-m');
 
-        // Trova tutti gli utenti con ruolo 'volontario'
         $volunteers = User::role('volunteer')->get();
 
         foreach ($volunteers as $volunteer) {
-            // Genera da 3 a 8 giorni di disponibilità casuali nel mese prossimo
+            // Genera da 9 a 15 giorni di disponibilità casuali nel mese prossimo
             $numAvailabilities = rand(9, 15);
             $availableDays = collect(range(1, $daysInNextMonth))
                                 ->shuffle()

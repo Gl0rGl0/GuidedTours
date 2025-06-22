@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof BadMethodCallException) {
             return redirect()
                 ->route('home')
-                ->with('error', 'Risorsa non trovata.');
+                ->with('error', 'Resource not found.');
         }
 
         if ($exception instanceof HttpException) {
@@ -22,25 +22,32 @@ class Handler extends ExceptionHandler
                 case 401:
                     return redirect()
                         ->route('login')
-                        ->with('error', 'Devi essere autenticato per accedere a questa pagina.');
+                        ->with('error', 'You must be authenticated to access this page.');
 
                 case 403:
                     return redirect()
                         ->route('home')
-                        ->with('error', 'Accesso non consentito.');
+                        ->with('error', 'Access denied.');
 
                 case 404:
                     return redirect()
                         ->route('home')
-                        ->with('error', 'Pagina non trovata.');
+                        ->with('error', 'Page not found.');
 
-                case 500: // Internal Server Error
+                case 500:
                     return redirect()
                         ->route('home')
-                        ->with('error', 'Errore interno del server. Riprova più tardi.');
+                        ->with('error', 'Internal server error. Please try again later.');
             }
+            return redirect()
+                        ->route('home')
+                        ->with('error', 'Exception error. Please try again later.');
         }
 
-        return parent::render($request, $exception);
+        return redirect()
+            ->route('home')
+            ->with('error', 'An unexpected error occurred. Please try again later.');
+
+        // return parent::render($request, $exception);
     }
 }

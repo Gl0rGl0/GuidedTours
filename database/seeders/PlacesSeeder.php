@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Place; // Import Place model
+use App\Models\Place;
 
 class PlacesSeeder extends Seeder
 {

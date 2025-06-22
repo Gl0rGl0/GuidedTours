@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User; // Import User model
-use App\Models\VisitType; // Import VisitType model
+use App\Models\User;
+use App\Models\VisitType;
 
 class VolunteersVisitTypesSeeder extends Seeder
 {
@@ -14,11 +14,9 @@ class VolunteersVisitTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get Volunteers
         $vol1 = User::where('username', 'volunteer_anna')->first();
         $vol2 = User::where('username', 'volunteer_marco')->first();
 
-        // Get Visit Types
         $vt1 = VisitType::where('title', 'Storia del Castello')->first();
         $vt2 = VisitType::where('title', 'Giardini Segreti')->first();
         $vt3 = VisitType::where('title', 'Percorso Evolutivo MUSE')->first();
@@ -28,11 +26,10 @@ class VolunteersVisitTypesSeeder extends Seeder
             return;
         }
 
-        // Attach Visit Types to Volunteers
-        // Anna: Castello History, MUSE Evolution
+        // Anna: Storia del Castello, Percorso Evolutivo MUSE
         $vol1->visitTypes()->syncWithoutDetaching([$vt1->visit_type_id, $vt3->visit_type_id]);
 
-        // Marco: Castello History, Gardens
+        // Marco: Storia del Castello, Giardini Segreti
         $vol2->visitTypes()->syncWithoutDetaching([$vt1->visit_type_id, $vt2->visit_type_id]);
     }
 }

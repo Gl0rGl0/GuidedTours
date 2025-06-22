@@ -41,7 +41,7 @@ class UsersSeeder extends Seeder
         );
         $volunteerMarco->assignRole('volunteer');
 
-        // Fruitori (Users)
+        // Fruitori
         $userPaolo = User::updateOrCreate(
             ['username' => 'user_paolo'],
             ['password' => $password] 
