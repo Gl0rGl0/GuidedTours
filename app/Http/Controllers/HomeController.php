@@ -49,9 +49,4 @@ class HomeController extends Controller
     {
         return view('footer.careers');
     }
-    
-    public function aboutUs(): View
-    {
-        return view('footer.about-us');
-    }
 }

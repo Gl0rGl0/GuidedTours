@@ -44,10 +44,15 @@ class Handler extends ExceptionHandler
                         ->with('error', 'Exception error. Please try again later.');
         }
 
-        return redirect()
-            ->route('home')
-            ->with('error', 'An unexpected error occurred. Please try again later.');
+        // return redirect()
+        //     ->route('home')
+        //     ->with('error', 'An unexpected error occurred. Please try again later.');
 
-        // return parent::render($request, $exception);
+        // if (config('app.env') === 'local') {
+        //     dd($request->all(), $exception);
+        // }   
+
+
+        return parent::render($request, $exception);
     }
 }

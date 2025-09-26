@@ -17,7 +17,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
-Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

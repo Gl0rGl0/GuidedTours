@@ -167,7 +167,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <p>Lorem ipsum dolor sit amet.</p>
+                    <p>Sito di visite guidate.</p>
                 </div>
 
                 <div class="col-md-2">
@@ -182,7 +182,6 @@
                 <div class="col-md-2">
                     <h6 class="text-uppercase mb-3 font-weight-bold">Useful Links</h6>
                     <ul class="list-unstyled">
-                        <li><a href="{{ route('about-us') }}" class="text-white">About us</a></li>
                         <li><a href="{{ route('careers') }}" class="text-white">Careers</a></li>
                         <li><a href="{{ route('terms') }}" class="text-white">Terms and Condition</a></li>
                     </ul>
@@ -193,7 +192,7 @@
                     <p><i class="bi bi-house-door me-2"></i>Via Branze 38, Brescia BS 25123, IT</p>
                     <p><a href="mailto:d.barbetti@unibs.studenti.it">d.barbetti@unibs.studenti.it</a></p>
                     <p><a href="mailto:g.felappi004@unibs.studenti.it">g.felappi004@unibs.studenti.it</a></p>
-                    <p><a href="mailto:l.folgoni@unibs.studenti.it">l.folgoni@unibs.studenti.it</a></p>
+                    <p><a href="mailto:m.cesari001@unibs.studenti.it">m.cesari001@unibs.studenti.it</a></p>
                 </div>
 
                 <div class="col-md-2">
