@@ -1,0 +1,89 @@
+/* Import Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Custom Variables */
+$font-family-sans-serif: 'Roboto', sans-serif;
+
+/* Premium Color Palette */
+$primary: #2c3e50;
+/* Dark Slate Blue - Professional & Strong */
+$secondary: #7f8c8d;
+/* Slate Grey */
+$success: #27ae60;
+/* Emerald Green */
+$info: #2980b9;
+/* Belize Hole Blue */
+$warning: #f39c12;
+/* Orange */
+$danger: #c0392b;
+/* Pomegranate Red */
+$light: #ecf0f1;
+/* Clouds */
+$dark: #2c3e50;
+
+/* Global Options */
+$enable-rounded: true;
+$enable-shadows: true;
+$enable-gradients: false;
+/* Disabled for a cleaner, flatter look */
+
+/* Import Bootstrap */
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/* Custom Global Styles */
+body {
+    font-family: $font-family-sans-serif;
+    background-color: #f8f9fa;
+    color: #2c3e50;
+}
+
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.btn {
+    border-radius: 0.5rem;
+    /* Slightly less rounded than pill for a more serious look */
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: $primary;
+    border-color: $primary;
+}
+
+.btn-primary:hover {
+    background-color: lighten($primary, 5%);
+    border-color: lighten($primary, 5%);
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-color: #dfe6e9;
+}
+
+.form-control:focus {
+    border-color: lighten($primary, 20%);
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.15);
+}
+
+.pagination {
+    margin-left: 20px;
+}
