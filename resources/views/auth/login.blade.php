@@ -3,34 +3,44 @@
 @section('title', 'Login')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">{{ __('Login') }}</div>
-            <div class="card-body">
-                <p class="card-text text-center mb-4">Please enter your credentials to access your dashboard.</p>
+<div class="row justify-content-center min-vh-50 align-items-center">
+    <div class="col-md-5 col-lg-4">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-primary">Welcome Back</h2>
+                    <p class="text-muted small">Please login to continue</p>
+                </div>
+                
                 <form action="{{ route('login') }}" method="post">
                     @csrf
-                    <x-form-input
-                        name="username"
-                        label="{{ __('Username') }}"
-                        type="text"
-                        id="username"
-                        required
-                        autofocus
-                    />
-                    <x-form-input
-                        name="password"
-                        label="{{ __('Password') }}"
-                        type="password"
-                        id="password"
-                        required
-                    />
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">{{ __('Login') }}</button>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Username" required autofocus>
+                        <label for="username">Username</label>
+                        @error('username')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                         @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="d-grid mb-4">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                            Login <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="small text-muted mb-0">Don't have an account? <a href="{{ route('register') }}" class="fw-bold text-decoration-none">Register</a></p>
                     </div>
                 </form>
-                <p class="mt-3 text-center">Don't have an account? <a href="{{ route('register') }}">Register here</a> (Users/Fruitori only)</p>
             </div>
         </div>
     </div>

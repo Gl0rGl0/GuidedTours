@@ -1,49 +1,69 @@
 @extends('layouts.app')
 
-@section('title', 'Termini di Servizio')
+@section('title', 'Terms of Service')
 
 @section('content')
-<div class="container py-4" style="max-width: 800px;">
-    <h1 class="text-center"><i>Termini di Servizio</i></h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="text-center mb-5">
+                         <h1 class="fw-bold text-primary mb-2">Terms of Service</h1>
+                         <p class="text-muted fst-italic">Last Updated: June 2025</p>
+                    </div>
 
-    <h3 class="text-center"><i>Ultimo aggiornamento: Giugno 2025</i></h3>
+                    <div class="mb-5">
+                        <p class="lead text-muted text-center">
+                            This document defines the Terms of Service (ToS) for the web application developed by students 
+                            <strong>Giorgio Felappi</strong>, <strong>Daniel Barbetti</strong>, and <strong>Leonardo Folgoni</strong>, 
+                            as part of the <em>Web Programming</em> course.
+                        </p>
+                    </div>
 
-    <p>Il presente documento definisce i Termini di Servizio (ToS) dell'applicazione web sviluppata dagli studenti <strong>Giorgio Felappi</strong>, <strong>Daniel Barbetti</strong> e <strong>Leonardo Folgoni</strong>, nell'ambito del corso di <em>Programmazione Web</em> presso l'<strong>Università degli Studi di Brescia (UniBS)</strong>. L'utilizzo del software implica l'accettazione integrale di queste condizioni.</p>
+                    <div class="vstack gap-4">
+                        <section>
+                            <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-bullseye me-2"></i>1. Purpose</h4>
+                            <p class="text-secondary-emphasis">The software is designed exclusively for educational and demonstrative purposes, specifically for managing informational content, guided tours, and user roles. It is not intended for commercial use, nor is there any guarantee of availability or security for third parties.</p>
+                        </section>
 
-    <h4>1. Finalità</h4>
-    <p>Il software è stato progettato esclusivamente per scopi didattici e dimostrativi, in particolare per la gestione di contenuti informativi, visite guidate e ruoli utenti. Non è previsto un uso commerciale, né alcuna garanzia di disponibilità o sicurezza nei confronti di terzi.</p>
+                        <section>
+                            <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-copyright me-2"></i>2. Copyright & Intellectual Property</h4>
+                            <p class="text-secondary-emphasis">The source code, user interface, and all original content are considered the work of the student authors. Usage, distribution, and modification are permitted exclusively for educational purposes with proper attribution.</p>
+                        </section>
 
-    <h4>2. Diritti d'autore e proprietà intellettuale</h4>
-    <p>Il codice sorgente, l'interfaccia utente e tutti i contenuti originali sono da considerarsi opera degli studenti autori del progetto. L'uso, la distribuzione e la modifica del software sono consentiti esclusivamente per fini didattici e con adeguata attribuzione.</p>
+                        <section>
+                             <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-shield-exclamation me-2"></i>3. Liability</h4>
+                            <p class="text-secondary-emphasis">The software is provided "as is", without guarantees of continuous operation, data correctness, or system compatibility. The authors decline all responsibility for malfunctions, data loss, or damages resulting from application use.</p>
+                        </section>
 
-    <h4>3. Responsabilità</h4>
-    <p>Il software viene fornito "così com'è", senza garanzie di funzionamento continuo, correttezza dei dati o compatibilità con altri sistemi. Gli autori declinano ogni responsabilità per eventuali malfunzionamenti, perdita di dati o danni derivanti dall'uso dell'applicazione.</p>
+                         <section>
+                            <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-person-lock me-2"></i>4. Privacy & Data</h4>
+                            <p class="text-secondary-emphasis">The application may handle simulated data regarding users, visits, and preferences, but does not collect, store, or transmit real personal information. Any data entered is for demonstrative purposes only.</p>
+                        </section>
 
-    <h4>4. Privacy e dati personali</h4>
-    <p>L'applicazione può gestire dati simulati relativi a utenti, visite e preferenze, ma non raccoglie, memorizza o trasmette informazioni personali reali. Qualsiasi dato inserito dagli utenti ha esclusiva finalità dimostrativa.</p>
-
-    <h4>5. Limitazioni d'uso</h4>
-    <p>È vietato qualsiasi utilizzo del software al di fuori dell'ambito universitario previsto, in particolare per attività professionali, pubblicitarie o di profilazione degli utenti. L'uso improprio può comportare la rimozione dell'accesso o la segnalazione al docente del corso.</p>
-
-    <h4>6. Aggiornamenti e modifiche</h4>
-    <p>Il gruppo di sviluppo si riserva il diritto di modificare, integrare o rimuovere funzionalità dell'applicazione senza preavviso. Eventuali aggiornamenti futuri saranno documentati nel repository di progetto o comunicati dal docente.</p>
-
-    <h4>7. Contatti</h4>
-    <p>Per segnalazioni, domande o richieste relative al progetto, è possibile contattare direttamente gli sviluppatori tramite i canali ufficiali forniti nel repository o rivolgersi al docente del corso.</p>
-
-    <h4>8. Foro competente</h4>
-    <p>Per eventuali controversie (accademiche o disciplinari), è competente l'Università degli Studi di Brescia e, ove previsto, la Commissione Didattica del corso di studi di riferimento.</p>
-
-    <hr>
-
-    <p class="text-center">Grazie per aver utilizzato la nostra applicazione.</p>
-
-    <p class="text-center mt-4">
-        Puoi consultare il <strong>repository ufficiale del progetto</strong> su GitHub:
-        <br>
-        <a href="https://github.com/Gl0rGl0/GuidedTours" target="_blank">
-            github.com/Gl0rGl0/GuidedTours
-        </a>
-    </p>
+                        <section>
+                            <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-slash-circle me-2"></i>5. Usage Limitations</h4>
+                            <p class="text-secondary-emphasis">Any use of the software outside the intended university scope, particularly for professional, advertising, or profiling activities, is prohibited.</p>
+                        </section>
+                        
+                         <section>
+                            <h4 class="fw-bold text-secondary mb-3"><i class="bi bi-arrow-repeat me-2"></i>6. Updates</h4>
+                            <p class="text-secondary-emphasis">The development team reserves the right to modify, integrate, or remove functionality without notice.</p>
+                        </section>
+                    </div>
+                    
+                    <hr class="my-5">
+                    
+                    <div class="text-center">
+                        <p class="mb-3">Thank you for testing our application.</p>
+                        <a href="https://github.com/Gl0rGl0/GuidedTours" target="_blank" class="btn btn-outline-primary rounded-pill px-4">
+                            <i class="bi bi-github me-2"></i> Visit Repository
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

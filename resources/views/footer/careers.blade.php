@@ -1,52 +1,36 @@
 @extends('layouts.app')
 
-@section('title', 'Lavora con noi')
+@section('title', 'Careers')
 
 @section('content')
-<div class="container py-4" style="max-width: 800px;">
-    <h1 class="text-center"><i>Lavora con noi</i></h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-4 text-center">
+                <div class="card-body p-5">
+                    <div class="mb-4 text-primary">
+                        <i class="bi bi-people-fill display-1"></i>
+                    </div>
+                    
+                    <h2 class="fw-bold text-primary mb-3">Join Our Team</h2>
+                    <p class="lead text-muted mb-5">
+                        We are a group of passionate students building the future of heritage discovery.
+                    </p>
 
-    <h3 class="text-center"><i>"L'innovazione nasce dove la passione incontra la competenza."</i></h3>
+                    <div class="alert alert-light border shadow-sm text-start p-4 mb-4 rounded-3">
+                        <h5 class="alert-heading fw-bold"><i class="bi bi-code-slash me-2 text-secondary"></i>Developers</h5>
+                        <p class="mb-0 text-muted">While we are just a student project team, the collaboration and shared interest in web technologies have driven us to create this platform.</p>
+                    </div>
 
-    <p>
-        Sebbene il nostro team sia nato come gruppo di progetto universitario per il corso di Programmazione Web presso
-        l'<strong>Università degli Studi di Brescia</strong>, il percorso che abbiamo intrapreso ha fatto emergere una forte sinergia e interesse condiviso
-        verso lo sviluppo software moderno, la progettazione pulita e la collaborazione su progetti open source.
-    </p>
-
-    <p>
-        Il nostro obiettivo con <strong>GuidedTours</strong> non era solo quello di rispettare i requisiti didattici, ma anche di costruire
-        un'applicazione modulare, accessibile e realmente utilizzabile, che potesse adattarsi a contesti reali di gestione eventi e visite guidate.
-    </p>
-
-    <h4>Chi siamo?</h4>
-    <ul>
-        <li><strong>Giorgio Felappi</strong> - Fullstack developer<br>
-            GitHub: <a href="https://github.com/Gl0rGl0" target="_blank">github.com/Gl0rGl0</a>
-        </li>
-        <li><strong>Daniel Barbetti</strong> - Fullstack developer<br>
-            GitHub: <a href="https://github.com/barbetti3" target="_blank">github.com/barbetti3</a>
-        </li>
-        <li><strong>Leonardo Folgoni</strong> - Fullstack developer<br>
-            GitHub: <a href="https://github.com/f0lg0" target="_blank">github.com/f0lg0</a>
-        </li>
-    </ul>
-
-    <h4>Perché collaborare con noi?</h4>
-    <p>
-        Il nostro background accademico ci ha fornito solide basi teoriche, ma è nel lavoro di squadra che abbiamo maturato
-        competenze reali: versionamento avanzato con Git, test-driven development con JUnit, refactoring in ambienti legacy e progettazione di interfacce intuitive con Laravel e JavaFX.
-    </p>
-
-    <h4>Disponibilità</h4>
-    <p>
-        Siamo sempre aperti a nuove opportunità, progetti collaborativi open source o anche a sfide lanciate da startup emergenti.
-        Per contattarci, puoi visitare i nostri profili GitHub oppure consultare i <a href="{{ route('terms') }}">Termini di Servizio</a>.
-    </p>
-
-    <p class="text-center mt-4">
-        Il codice del progetto è disponibile al seguente indirizzo:<br>
-        <a href="https://github.com/Gl0rGl0/GuidedTours" target="_blank">github.com/Gl0rGl0/GuidedTours</a>
-    </p>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                         <a href="{{ route('home') }}" class="btn btn-primary rounded-pill px-4">Back to Home</a>
+                        <a href="https://github.com/Gl0rGl0/GuidedTours" class="btn btn-outline-secondary rounded-pill px-4">
+                           <i class="bi bi-github me-2"></i> Contribute on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

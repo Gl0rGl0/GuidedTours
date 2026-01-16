@@ -3,288 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Guided Tours')</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>@yield('title', 'Guided Tours') | City Heritage Tours</title>
+    
+    <!-- Scripts & Styles -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Preload Logo -->
     <link rel="preload" href="/images/unibslogo_micro.svg" as="image">
-
-    <style>
-        #toast-container {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            z-index: 1055;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            pointer-events: none;
-        }
-        .toast-notification {
-            background-color: var(--bs-dark, #212529);
-            color: var(--bs-light, #f8f9fa);
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 0.75rem;
-            border-radius: var(--bs-border-radius, 0.25rem);
-            box-shadow: var(--bs-box-shadow, 0 .5rem 1rem rgba(0, 0, 0, .15));
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
-            transform: translateX(100%);
-            min-width: 250px;
-            max-width: 400px;
-            pointer-events: auto;
-        }
-        .toast-notification.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-        .toast-notification.success {
-            background-color: var(--bs-success, #198754);
-            color: #fff;
-        }
-        .toast-notification.error {
-            background-color: var(--bs-danger, #dc3545);
-            color: #fff;
-        }
-        .toast-notification.warning {
-            background-color: var(--bs-warning, #ffc107);
-            color: #000;
-        }
-        .toast-notification.info {
-            background-color: var(--bs-info, #0dcaf0);
-            color: #000;
-        }
-
-        /* Logo esterno SVG, filtro per invertire colore */
-        .unibs-logo-img {
-            display: inline-block;
-            width: 16px;
-            height: auto;
-            vertical-align: middle;
-            filter: invert(1);
-            transition: filter 0.2s;
-        }
-        .logo-btn:hover .unibs-logo-img {
-            filter: invert(0);
-        }
-    </style>
-
+    
     @stack('styles')
 </head>
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">Guided Tours Org</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
-                    </li>
-                    @auth
-                        @if (Auth::user()->hasRole('fruitore'))
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
-                                   href="{{ route('user.dashboard') }}">My Bookings</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}"
-                                   href="{{ route('user.visits.past') }}">My Past Visits</a>
-                            </li>
-                        @endif
-                        @if (Auth::user()->hasRole('configurator'))
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}"
-                                   href="{{ route('admin.configurator') }}">Admin Panel</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}"
-                                   href="{{ route('admin.visit-planning.index') }}">Visit Planning</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('admin.visits.past') ? 'active' : '' }}"
-                                   href="{{ route('admin.visits.past') }}">Past Visits</a>
-                            </li>
-                        @elseif (Auth::user()->hasRole('volunteer'))
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}"
-                                   href="{{ route('volunteer.availability.form') }}">My Availability</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}"
-                                   href="{{ route('volunteer.visits.past') }}">Assigned Visits</a>
-                            </li>
-                        @endif
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ Auth::user()->username }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item {{ Route::is('profile') ? 'active' : '' }}"
-                                       href="{{ route('profile') }}">Profile</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item {{ Route::is('change-password.form') ? 'active' : '' }}"
-                                       href="{{ route('change-password.form') }}">Change Password</a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
+    <!-- Header / Navbar -->
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg glass-effect">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
+                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2">
+                    <span>Guided Tours</span>
+                </a>
+                
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="filter: invert(0.5);"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ route('register') }}">Register</a>
-                        </li>
-                    @endauth
-                </ul>
+                        
+                        @auth
+                            <!-- Role Based Links -->
+                            @if (Auth::user()->hasRole('fruitore'))
+                                <li class="nav-item"><a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">Bookings</a></li>
+                                <li class="nav-item"><a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}" href="{{ route('user.visits.past') }}">History</a></li>
+                            @endif
+
+                            @if (Auth::user()->hasRole('configurator'))
+                                <li class="nav-item"><a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin</a></li>
+                                <li class="nav-item"><a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}" href="{{ route('admin.visit-planning.index') }}">Planning</a></li>
+                            @endif
+
+                            @if (Auth::user()->hasRole('volunteer'))
+                                <li class="nav-item"><a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">Availability</a></li>
+                                <li class="nav-item"><a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}" href="{{ route('volunteer.visits.past') }}">My Visits</a></li>
+                            @endif
+                            
+                            <!-- User Dropdown -->
+                            <li class="nav-item dropdown ms-lg-3">
+                                <a class="nav-link dropdown-toggle btn btn-light px-3 rounded-pill" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->username }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item py-2" href="{{ route('profile') }}"><i class="bi bi-person me-2"></i> Profile</a></li>
+                                    <li><a class="dropdown-item py-2" href="{{ route('change-password.form') }}"><i class="bi bi-key me-2"></i> Password</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item text-danger py-2"><i class="bi bi-box-arrow-right me-2"></i> Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @else
+                            <!-- Guest Links -->
+                            <li class="nav-item ms-lg-2">
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item ms-lg-2">
+                                <a class="btn btn-primary rounded-pill px-4" href="{{ route('register') }}">Register</a>
+                            </li>
+                        @endauth
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <main class="container py-4 flex-grow-1">
+    <!-- Main Content -->
+    <main class="flex-grow-1 py-4">
         @yield('content')
     </main>
 
+    <!-- Toast Container -->
     <div id="toast-container"></div>
 
-    <footer class="bg-dark text-white mt-auto py-4">
+    <!-- Footer -->
+    <footer class="mt-auto py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <p>Sito di visite guidate.</p>
+            <div class="row gy-4">
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-white mb-3">Guided Tours</h5>
+                    <p class="small text-white-50"> The official platform for organizing and managing guided tours and cultural events.</p>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="https://www.unibs.it/it" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><img src="/images/unibslogo_micro.svg" style="width: 16px; height: 16px; filter: invert(1);"></a>
+                        <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><i class="bi bi-twitter"></i></a>
+                        <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><i class="bi bi-instagram"></i></a>
+                    </div>
                 </div>
 
-                <div class="col-md-2">
-                    <h6 class="text-uppercase mb-3 font-weight-bold">Structure</h6>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Platform</h6>
                     <ul class="list-unstyled">
-                        <li><a href="https://laravel.com/" class="text-white">Laravel</a></li>
-                        <li><a href="https://getbootstrap.com/" class="text-white">Bootstrap</a></li>
-                        <li><a href="https://vite.dev/" class="text-white">Vite</a></li>
+                        <li><a href="#" class="text-white small">About Us</a></li>
+                        <li><a href="{{ route('careers') }}" class="text-white small">Careers</a></li>
+                        <li><a href="{{ route('terms') }}" class="text-white small">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Contact</h6>
+                    <ul class="list-unstyled text-white-50 small">
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Via Branze 38, Brescia</li>
+                        <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@unibs.it</li>
                     </ul>
                 </div>
 
-                <div class="col-md-2">
-                    <h6 class="text-uppercase mb-3 font-weight-bold">Useful Links</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ route('careers') }}" class="text-white">Careers</a></li>
-                        <li><a href="{{ route('terms') }}" class="text-white">Terms and Condition</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-3">
-                    <h6 class="text-uppercase mb-3 font-weight-bold">Contact</h6>
-                    <p><i class="bi bi-house-door me-2"></i>Via Branze 38, Brescia BS 25123, IT</p>
-                    <p><a href="mailto:d.barbetti@unibs.studenti.it">d.barbetti@unibs.studenti.it</a></p>
-                    <p><a href="mailto:g.felappi004@unibs.studenti.it">g.felappi004@unibs.studenti.it</a></p>
-                    <p><a href="mailto:m.cesari001@unibs.studenti.it">m.cesari001@unibs.studenti.it</a></p>
-                </div>
-
-                <div class="col-md-2">
-                    <h6 class="text-uppercase mb-3 font-weight-bold">Follow Us</h6>
-                    <a href="https://www.unibs.it/it" class="btn btn-outline-light btn-floating m-1 logo-btn" role="button">
-                        <img src="/images/unibslogo_micro.svg" alt="UniBS" class="unibs-logo-img">
-                    </a>
-                    <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-floating m-1" role="button">
-                        <i class="bi bi-twitter"></i>
-                    </a>
-                    <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-floating m-1" role="button">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                </div>
-            </div>
-
-            <hr class="bg-secondary my-4">
-
-            <div class="row">
-                <div class="col text-center">
-                    <p class="mb-0">&copy; {{ date('Y') }} Guided Tours Org. All rights reserved.</p>
+                <div class="col-lg-3 col-md-6 text-lg-end">
+                    <small class="text-white-50">&copy; {{ date('Y') }} Guided Tours Org.<br>All rights reserved.</small>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toastContainer = document.getElementById('toast-container');
 
             window.showToast = function(text, type = 'info', duration = 5000) {
-                if (!text || !toastContainer) {
-                    console.warn('Toast container not found or no text provided.');
-                    return;
-                }
+                if (!text || !toastContainer) return;
 
                 const toast = document.createElement('div');
                 toast.className = `toast-notification ${type}`;
-                toast.textContent = text;
+                
+                // Add icon based on type
+                let icon = 'bi-info-circle';
+                if(type === 'success') icon = 'bi-check-circle';
+                if(type === 'error') icon = 'bi-exclamation-circle';
+                if(type === 'warning') icon = 'bi-exclamation-triangle';
+                
+                toast.innerHTML = `<i class="bi ${icon} me-2 fs-5"></i> <span>${text}</span>`;
                 toast.setAttribute('role', 'alert');
-                toast.setAttribute('aria-live', 'assertive');
 
                 toastContainer.appendChild(toast);
 
                 requestAnimationFrame(() => {
-                    void toast.offsetWidth;
-                    requestAnimationFrame(() => {
-                        toast.classList.add('show');
-                    });
+                    toast.classList.add('show');
                 });
 
-                const hideTimeout = setTimeout(() => {
+                setTimeout(() => {
                     toast.classList.remove('show');
-                    toast.addEventListener('transitionend', () => {
-                        if (toast.parentNode === toastContainer) {
-                            toastContainer.removeChild(toast);
-                        }
-                    }, { once: true });
-
-                    setTimeout(() => {
-                        if (toast.parentNode === toastContainer) {
-                            console.warn('Toast fallback removal triggered for:', text);
-                            toastContainer.removeChild(toast);
-                        }
-                    }, 600);
-
+                    setTimeout(() => toast.remove(), 600);
                 }, duration);
             }
 
-            @if (session('status'))
-                window.showToast("{{ session('status') }}", 'success');
-            @endif
-            @if (session('success'))
-                window.showToast("{{ session('success') }}", 'success');
-            @endif
-            @if (session('error'))
-                window.showToast("{{ session('error') }}", 'error');
-            @endif
-            @if (session('warning'))
-                window.showToast("{{ session('warning') }}", 'warning');
-            @endif
-            @if (session('info'))
-                window.showToast("{{ session('info') }}", 'info');
-            @endif
-
-            @if ($errors->any())
-                window.showToast("{{ $errors->first() }}", 'error');
-            @endif
-
+            @if (session('status')) window.showToast("{{ session('status') }}", 'success'); @endif
+            @if (session('success')) window.showToast("{{ session('success') }}", 'success'); @endif
+            @if (session('error')) window.showToast("{{ session('error') }}", 'error'); @endif
+            @if (session('warning')) window.showToast("{{ session('warning') }}", 'warning'); @endif
+            @if (session('info')) window.showToast("{{ session('info') }}", 'info'); @endif
+            @if ($errors->any()) window.showToast("{{ $errors->first() }}", 'error'); @endif
         });
     </script>
-
+    
     @stack('scripts')
 </body>
 </html>

@@ -3,161 +3,365 @@
 @section('title', 'Admin Configurator')
 
 @section('content')
-
-    <div class="container py-4">
-        <h2 class="mb-4">Admin Configurator Panel</h2>
-
-        <div class="row mb-5" id="places-visits">
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <h4 class="mb-0">Registered Places</h4>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        @if ($places->isNotEmpty())
-                            <ul class="list-group flex-grow-1 overflow-auto mb-3">
-                                @foreach ($places as $place)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        {{ $place->name }}
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-secondary btn-sm">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </a>
-                                            <form action="{{ route('admin.places.destroy', $place) }}" method="POST">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="bi bi-trash"></i> Remove
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted flex-grow-1">No places found.</p>
-                        @endif
-                        <a href="{{ route('admin.places.create') }}" class="btn btn-sm btn-primary align-self-start">+ Add Place</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <h4 class="mb-0">Registered Visit Types</h4>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        @if ($visit_types->isNotEmpty())
-                            <ul class="list-group flex-grow-1 overflow-auto mb-3">
-                                @foreach ($visit_types as $visit_type)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        {{ $visit_type->title }}
-                                        <div class="d-flex gap-2">
-                                            <a href="{{ route('admin.visit-types.edit', $visit_type) }}" class="btn btn-secondary btn-sm">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </a>
-                                            <form action="{{ route('admin.visit-types.destroy', $place) }}" method="POST">
-                                                @csrf @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="bi bi-trash"></i> Remove
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-muted flex-grow-1">No visit types found.</p>
-                        @endif
-                        <a href="{{ route('admin.visit-types.create') }}" class="btn btn-sm btn-primary align-self-start">+ Add Visit Type</a>
-                    </div>
-                </div>
-            </div>
+<div class="container py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
+        <div class="mb-3 mb-md-0">
+            <h2 class="fw-bold text-primary mb-1">Configuration Panel</h2>
+            <p class="text-muted mb-0">System management and content administration</p>
         </div>
-
-        <div class="row" id="people-management">
-            <div class="col-12 mb-3">
-                <h3>People Management</h3>
-            </div>
-
-            @foreach ($users_by_role as $role => $users)
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <h5 class="mb-0">{{ ucfirst($role) }}s</h5>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            @if ($users->isNotEmpty())
-                                <ul class="list-group flex-grow-1 overflow-auto mb-3">
-                                    @foreach ($users as $user)
-                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            {{ $user->username }}
-                                            <div class="btn-group btn-group-sm">
-                                                @if ($role !== 'configurator' && $user->user_id !== Auth::id())
-                                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                                        @csrf @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            <i class="bi bi-trash"></i> Remove
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @else
-                                <p class="text-muted flex-grow-1">No users in this role.</p>
-                            @endif
-                            @if ($role !== 'fruitore')
-                                <button class="btn btn-primary btn-sm align-self-start" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                                    + Add {{ ucfirst($role) }}
-                                </button>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+        <div class="d-flex gap-2">
+             <!-- Quick Actions Dropdown could go here if needed -->
         </div>
     </div>
 
-    <div class="modal fade" id="addUserModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Navigation Tabs (Heuristic 8: Aesthetic and minimalist design) -->
+    <!-- Reduces clutter by organizing content into views -->
+    <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white rounded-5 shadow-sm mb-4" id="configTabs" role="tablist" style="max-width: 600px; margin: 0 auto;">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active rounded-5 fw-bold" id="places-tab" data-bs-toggle="tab" data-bs-target="#places" type="button" role="tab" aria-selected="true">
+                <i class="bi bi-geo-alt me-2"></i>Places
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-5 fw-bold" id="types-tab" data-bs-toggle="tab" data-bs-target="#types" type="button" role="tab" aria-selected="false">
+                <i class="bi bi-tags me-2"></i>Visit Types
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-5 fw-bold" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-selected="false">
+                <i class="bi bi-people me-2"></i>Users
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="configTabsContent">
+        
+        <!-- PLACES TAB -->
+        <div class="tab-pane fade show active" id="places" role="tabpanel">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <h5 class="fw-bold mb-0">Manage Places</h5>
+                    <div class="d-flex gap-2">
+                        <div class="input-group input-group-sm" style="width: 200px;">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control bg-light border-0" id="searchPlaces" placeholder="Search places...">
+                        </div>
+                        <a href="{{ route('admin.places.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 d-flex align-items-center">
+                            <i class="bi bi-plus-lg me-1"></i> Add New
+                        </a>
+                    </div>
                 </div>
-                <form action="{{ route('admin.users.add') }}" method="POST">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="placesTable">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 text-muted small text-uppercase font-weight-bold border-0">Name</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Location</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Description</th>
+                                    <th class="text-end pe-4 text-muted small text-uppercase font-weight-bold border-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($places as $place)
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">{{ $place->name }}</td>
+                                        <td class="text-muted"><i class="bi bi-pin-map me-1"></i>{{ Str::limit($place->location, 30) }}</td>
+                                        <td class="text-muted small">{{ Str::limit($place->description, 50) }}</td>
+                                        <td class="text-end pe-4">
+                                            <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger ms-1" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteModal"
+                                                data-action="{{ route('admin.places.destroy', $place) }}"
+                                                data-item-name="{{ $place->name }}"
+                                                title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center py-5 text-muted">
+                                            <i class="bi bi-geo-alt display-6 d-block mb-3 opacity-25"></i>
+                                            No places found. Start by adding one.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISIT TYPES TAB -->
+        <div class="tab-pane fade" id="types" role="tabpanel">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <h5 class="fw-bold mb-0">Manage Visit Types</h5>
+                    <div class="d-flex gap-2">
+                        <div class="input-group input-group-sm" style="width: 200px;">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control bg-light border-0" id="searchTypes" placeholder="Search types...">
+                        </div>
+                        <a href="{{ route('admin.visit-types.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 d-flex align-items-center">
+                            <i class="bi bi-plus-lg me-1"></i> Add New
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0" id="typesTable">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 text-muted small text-uppercase font-weight-bold border-0">Title</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Place</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Details</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Capacity</th>
+                                     <th class="text-end pe-4 text-muted small text-uppercase font-weight-bold border-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($visit_types as $type)
+                                    <tr>
+                                        <td class="ps-4 fw-bold text-primary">{{ $type->title }}</td>
+                                        <td><span class="badge bg-light text-dark border">{{ $type->place?->name ?? 'Unassigned' }}</span></td>
+                                        <td class="small text-muted">
+                                            <div><i class="bi bi-clock me-1"></i>{{ $type->duration_minutes }} min</div>
+                                            <div><i class="bi bi-geo me-1"></i>{{ Str::limit($type->meeting_point, 20) }}</div>
+                                        </td>
+                                        <td class="small text-muted">
+                                            <i class="bi bi-people me-1"></i> {{ $type->min_participants }}-{{ $type->max_participants }}
+                                        </td>
+                                        <td class="text-end pe-4">
+                                            <a href="{{ route('admin.visit-types.edit', $type) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger ms-1" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#deleteModal"
+                                                data-action="{{ route('admin.visit-types.destroy', $type) }}"
+                                                data-item-name="{{ $type->title }}"
+                                                title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5 text-muted">
+                                            <i class="bi bi-tags display-6 d-block mb-3 opacity-25"></i>
+                                            No visit types defined yet.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- USERS TAB -->
+        <div class="tab-pane fade" id="users" role="tabpanel">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <h5 class="fw-bold mb-0">User Management</h5>
+                    <div class="d-flex gap-2">
+                        <div class="input-group input-group-sm" style="width: 200px;">
+                            <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control bg-light border-0" id="searchUsers" placeholder="Search users...">
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            <i class="bi bi-person-plus me-1"></i> Add User
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                         <table class="table table-hover align-middle mb-0" id="usersTable">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="ps-4 text-muted small text-uppercase font-weight-bold border-0">User</th>
+                                    <th class="text-muted small text-uppercase font-weight-bold border-0">Role</th>
+                                    <th class="text-end pe-4 text-muted small text-uppercase font-weight-bold border-0">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users_by_role as $role => $users)
+                                    @foreach($users as $user)
+                                        <tr>
+                                            <td class="ps-4">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar bg-primary-subtle text-primary rounded-circle me-3 d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;">
+                                                        {{ strtoupper(substr($user->username, 0, 1)) }}
+                                                    </div>
+                                                    <div>
+                                                        <div class="fw-bold">{{ $user->username }}</div>
+                                                        <div class="small text-muted">ID: {{ $user->id }}</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $badgeColor = match($role) {
+                                                        'configurator' => 'bg-danger-subtle text-danger',
+                                                        'volunteer' => 'bg-info-subtle text-info-emphasis',
+                                                        default => 'bg-light text-dark',
+                                                    };
+                                                @endphp
+                                                <span class="badge {{ $badgeColor }} rounded-pill px-3 py-2 border-0 fw-normal text-capitalize">
+                                                    {{ $role }}
+                                                </span>
+                                            </td>
+                                            <td class="text-end pe-4">
+                                                @if($role !== 'configurator' && $user->id !== Auth::id())
+                                                     <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#deleteModal"
+                                                        data-action="{{ route('admin.users.destroy', $user) }}"
+                                                        data-item-name="{{ $user->username }}"
+                                                        title="Delete User">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endforeach
+                            </tbody>
+                         </table>
+                    </div>
+                     @if(collect($users_by_role)->flatten()->isEmpty())
+                        <div class="text-center py-5 text-muted">
+                            <i class="bi bi-people display-6 d-block mb-3 opacity-25"></i>
+                            No users found.
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ADD USER MODAL -->
+<div class="modal fade" id="addUserModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+             <form action="{{ route('admin.users.add') }}" method="POST">
+                @csrf
+                <div class="modal-body pt-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="new_username" name="username" placeholder="Username" required>
+                        <label for="new_username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="6" required>
+                        <label for="new_password">Password</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                         <input type="password" class="form-control" id="new_password_confirmation" name="password_confirmation" placeholder="Confirm" required>
+                        <label for="new_password_confirmation">Confirm Password</label>
+                    </div>
+                    <div class="form-floating">
+                        <select id="new_role" name="role" class="form-select" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="volunteer">Volunteer</option>
+                            <option value="configurator">Admin (Configurator)</option>
+                        </select>
+                        <label for="new_role">Role</label>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">Create User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE CONFIRMATION MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-danger">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-0">Are you sure you want to remove <strong id="deleteItemName" class="text-dark">item</strong>? This action cannot be undone.</p>
+            </div>
+             <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="POST" action="">
                     @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control text-center" id="username" name="username" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control text-center" id="password" name="password" minlength="6" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control text-center" id="password_confirmation" name="password_confirmation" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="role" class="form-label">Role</nlabel>
-                            <select id="role" name="role" class="form-select text-center" required>
-                                <option value="" disabled selected>-- Select Role --</option>
-                                <option value="volunteer">Volunteer</option>
-                                <option value="configurator">Configurator</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Add User</button>
-                    </div>
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger rounded-pill px-4">Delete</button>
                 </form>
             </div>
         </div>
     </div>
+</div>
 
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- 1. Client-Side Search (Heuristic 7: Flexibility and efficiency of use) ---
+        function setupSearch(inputId, tableId) {
+            const input = document.getElementById(inputId);
+            const table = document.getElementById(tableId);
+            if (!input || !table) return;
+
+            input.addEventListener('keyup', function() {
+                const filter = input.value.toLowerCase();
+                const rows = table.getElementsByTagName('tr');
+
+                // Start from 1 to skip header
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    const text = row.textContent || row.innerText;
+                    if (text.toLowerCase().indexOf(filter) > -1) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                }
+            });
+        }
+
+        setupSearch('searchPlaces', 'placesTable');
+        setupSearch('searchTypes', 'typesTable');
+        setupSearch('searchUsers', 'usersTable');
+
+
+        // --- 2. Modal Handling ---
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var actionUrl = button.getAttribute('data-action');
+            var itemName = button.getAttribute('data-item-name');
+            
+            var form = document.getElementById('deleteForm');
+            form.action = actionUrl;
+            
+            document.getElementById('deleteItemName').textContent = itemName;
+        });
+        
+        // Auto-focus input on modal show (Heuristic 7)
+        var addUserModal = document.getElementById('addUserModal');
+         addUserModal.addEventListener('shown.bs.modal', function () {
+            document.getElementById('new_username').focus();
+        });
+    });
+</script>
+@endpush
 @endsection

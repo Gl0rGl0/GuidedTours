@@ -3,31 +3,28 @@
 @section('title', 'Custom Visits')
 
 @section('content')
-<div class="container my-5">
+<div class="container py-5">
     @php
         $user = Auth::user();
+        $pageTitle = 'Visits';
+        if ($user->hasRole('configurator')) $pageTitle = 'Past Visits Archive';
+        if ($user->hasRole('volunteer')) $pageTitle = 'My Assigned Visits';
+        if ($user->hasRole('fruitore')) $pageTitle = 'My Past Visits';
     @endphp
 
-    @if ($user->hasRole('configurator'))
-        <h1 class="mb-4">Past Visits</h1>
-    @endif
-    @if ($user->hasRole('volunteer'))
-        <h1 class="mb-4">Assigned Visits</h1>
-    @endif
-    @if ($user->hasRole('fruitore'))
-        <h1 class="mb-4">My Past Visits</h1>
-    @endif
+    <div class="d-flex align-items-center mb-4 border-bottom pb-2">
+        <h2 class="fw-bold text-primary mb-0 me-3">{{ $pageTitle }}</h2>
+    </div>
 
     @if($visits->isEmpty())
-        @if ($user->hasRole('configurator'))
-            <p>There are no past visits to display at the moment.</p>
-        @endif
-        @if ($user->hasRole('volunteer'))
-            <p>You haven't been assigned to any visits in the past.</p>
-        @endif
-        @if ($user->hasRole('fruitore'))
-            <p>You haven't booked any visits in the past.</p>
-        @endif
+        <div class="text-center py-5 card border-0 shadow-sm rounded-4">
+            <div class="card-body">
+                <i class="bi bi-clock-history display-4 text-muted opacity-25 mb-3"></i>
+                <h5 class="text-muted">No records found</h5>
+                <p class="text-muted small mb-0">There are no visits to display in this category.</p>
+                 <a href="{{ route('home') }}" class="btn btn-outline-primary rounded-pill mt-3">Back to Home</a>
+            </div>
+        </div>
     @else
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($visits as $visit)
@@ -43,30 +40,26 @@
                 @endphp
 
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h5 class="card-title">{{ $visit->visitType->title }}</h5>
-                                    <h6 class="card-subtitle text-muted">{{ $visit->visitType->place->name }}</h6>
-                                </div>
-                                <span class="badge {{ $badgeClass }} text-uppercase">
+                     <div class="card h-100 shadow-sm border-0 card-hover rounded-4">
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge {{ $badgeClass }} rounded-pill px-3 py-2 text-uppercase" style="font-size: 0.7rem;">
                                     {{ $visit->status }}
                                 </span>
+                                <small class="text-muted">{{ \Carbon\Carbon::parse($visit->visit_date)->format('M d, Y') }}</small>
                             </div>
 
-                            <ul class="list-unstyled mb-4 flex-grow-1">
-                                <li><strong>Date:</strong> {{ \Carbon\Carbon::parse($visit->visit_date)->format('D, M j, Y') }}</li>
-                                <li><strong>Time:</strong> {{ \Carbon\Carbon::parse($visit->visitType->start_time)->format('g:i A') }}</li>
-                                <li><strong>Meeting:</strong> {{ $visit->visitType->meeting_point }}</li>
+                             <h5 class="card-title fw-bold mb-1">{{ $visit->visitType->title }}</h5>
+                             <p class="text-muted small mb-3"><i class="bi bi-geo-alt me-1"></i> {{ $visit->visitType->place->name }}</p>
+
+                            <ul class="list-unstyled text-muted small mb-4 flex-grow-1">
+                                <li class="mb-2"><i class="bi bi-clock me-2 text-secondary"></i> {{ \Carbon\Carbon::parse($visit->visitType->start_time)->format('g:i A') }}</li>
+                                <li class="mb-2"><i class="bi bi-map me-2 text-secondary"></i> {{ $visit->visitType->meeting_point }}</li>
                                 @if($visit->assignedVolunteer)
-                                    <li><strong>Volunteer:</strong> {{ $visit->assignedVolunteer->username }}</li>
+                                    <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> Vol: {{ $visit->assignedVolunteer->username }}</li>
                                 @endif
+                                 <li><i class="bi bi-people me-2 text-secondary"></i> {{ $visit->registrations->sum('num_participants') }} Attendees</li>
                             </ul>
-
-                            <div class="mt-auto">
-                                <p class="mb-0"><strong>Registrations:</strong> {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }}</p>
-                            </div>
                         </div>
                     </div>
                 </div>
