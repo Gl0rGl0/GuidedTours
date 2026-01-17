@@ -1,0 +1,49 @@
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+// 1. Include functions first (so we can manipulate colors, SVGs, calc, etc)
+@import "../../node_modules/bootstrap/scss/functions";
+
+// 2. Variable Overrides
+
+// Typography
+$font-family-sans-serif: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headings-font-weight: 600;
+
+// Color Palette (University/Modern Vibe)
+$primary: #0d47a1; // Deep Blue
+$secondary: #ffc107; // Amber/Gold
+$success: #198754;
+$info: #0dcaf0;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #212529;
+
+// Body & Layout
+$body-bg: #eef2f6; // Darker cool gray to reduce glare
+$body-color: #343a40;
+$border-radius: 0.5rem;
+$border-radius-lg: 1rem;
+$border-radius-sm: 0.25rem;
+
+// Components
+$card-cap-bg: transparent;
+$card-border-color: rgba(0, 0, 0, 0.05);
+$card-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+$navbar-dark-bg: $primary;
+$navbar-dark-color: rgba(255, 255, 255, 0.85);
+$navbar-dark-hover-color: #fff;
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/root";
+@import "../../node_modules/bootstrap/scss/utilities";
+
+// 4. Merge modifications with map-merge() if needed (omitted for simple overrides)
+
+// 5. Add Custom Utilities or additional styles here

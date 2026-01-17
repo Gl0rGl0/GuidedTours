@@ -45,6 +45,53 @@
         </div>
     @endif
 
+    <!-- Filter Bar -->
+    <div class="card shadow-sm border-0 mb-5 p-2 rounded-4 bg-white" x-data>
+        <form action="{{ route('home') }}" method="GET" x-ref="filterForm" class="row g-2 align-items-center">
+            
+            <!-- Search -->
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-muted"></i></span>
+                    <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none" placeholder="Search tours..." value="{{ request('search') }}">
+                </div>
+            </div>
+
+            <div class="vr d-none d-md-block p-0 my-2" style="height: 20px; opacity: 0.2"></div>
+
+            <!-- Location Filter -->
+            <div class="col-md-2">
+                <select name="place" class="form-select border-0 bg-transparent shadow-none text-muted" @change="$refs.filterForm.submit()">
+                    <option value="">All Locations</option>
+                    @foreach($places as $place)
+                        <option value="{{ $place->place_id }}" {{ request('place') == $place->place_id ? 'selected' : '' }}>{{ $place->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Sorting -->
+            <div class="col-md-2">
+                 <select name="sort" class="form-select border-0 bg-transparent shadow-none text-muted" @change="$refs.filterForm.submit()">
+                    <option value="date_asc" {{ request('sort') == 'date_asc' ? 'selected' : '' }}>Date: Soonest</option>
+                    <option value="date_desc" {{ request('sort') == 'date_desc' ? 'selected' : '' }}>Date: Latest</option>
+                    <option value="popularity" {{ request('sort') == 'popularity' ? 'selected' : '' }}>Popularity</option>
+                    <option value="alpha_asc" {{ request('sort') == 'alpha_asc' ? 'selected' : '' }}>Alphabetical</option>
+                </select>
+            </div>
+            
+            <!-- Price Toggle -->
+            <div class="col-md-auto ms-auto d-flex align-items-center bg-light rounded-pill px-3 py-1 me-2">
+                 <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" role="switch" name="price" value="free" id="priceCheck" {{ request('price') == 'free' ? 'checked' : '' }} @change="$refs.filterForm.submit()">
+                    <label class="form-check-label small fw-bold text-muted" for="priceCheck">Free Only</label>
+                </div>
+            </div>
+
+            <!-- Submit (Hidden but accessible for Enter key on search) -->
+            <button type="submit" class="d-none">Filter</button>
+        </form>
+    </div>
+
     <!-- Proposed Tours -->
     <div class="section-container mb-5">
         <div class="d-flex align-items-center mb-4 border-bottom pb-2">
@@ -100,6 +147,11 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+            
+            <!-- Pagination -->
+            <div class="mt-5 d-flex justify-content-center">
+                {{ $proposed_visits->onEachSide(1)->links('pagination::bootstrap-5') }}
             </div>
         @endif
     </div>

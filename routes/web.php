@@ -15,6 +15,7 @@ use App\Http\Controllers\FruitoreController;
 // --- Public Routes ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/about-us', [HomeController::class, 'about'])->name('about');
 Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 
@@ -55,6 +56,9 @@ Route::middleware('auth')->group(function () {
         Route::delete('/places/{place}', [PlaceController::class, 'removePlace'])->name('places.destroy');
         Route::delete('/visit-types/{visit_type}', [VisitTypeController::class, 'removeVisitType'])->name('visit-types.destroy');
         
+
+        Route::post('/ai/enhance', [AdminController::class, 'enhanceContent'])->name('ai.enhance');
+
         // Add routes for Place CRUD
         Route::resource('places', PlaceController::class)->except([
             'destroy' // Define destroy separately

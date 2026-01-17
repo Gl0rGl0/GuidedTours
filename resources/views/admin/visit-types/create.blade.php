@@ -40,9 +40,48 @@
                             </div>
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Desc" style="height: 100px;">{{ old('description') }}</textarea>
+<div class="form-floating mb-3" x-data="{ loading: false }">
+                            <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Desc" style="height: 100px;" x-ref="desc">{{ old('description') }}</textarea>
                             <label for="description">Description</label>
+                            
+                            <button type="button" 
+                                    class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2 rounded-pill d-flex align-items-center gap-1 bg-white"
+                                    @click="
+                                        loading = true;
+                                        const title = document.getElementById('title').value;
+                                        const placeSelect = document.getElementById('place_id');
+                                        const place = placeSelect.options[placeSelect.selectedIndex] ? placeSelect.options[placeSelect.selectedIndex].text : '';
+                                        
+                                        if(!title || !place || place === 'Select Place') { 
+                                            alert('Please enter a Title and select a Location first.'); 
+                                            loading = false;
+                                            return; 
+                                        }
+
+                                        fetch('{{ route('admin.ai.enhance') }}', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                            },
+                                            body: JSON.stringify({ title: title, location: place })
+                                        })
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            $refs.desc.value = data.description;
+                                            loading = false;
+                                        })
+                                        .catch(err => {
+                                            console.error(err);
+                                            alert('Failed to generate description.');
+                                            loading = false;
+                                        });
+                                    "
+                                    :disabled="loading">
+                                <i class="bi" :class="loading ? 'bi-hourglass-split' : 'bi-stars'"></i> 
+                                <span x-text="loading ? 'Generating...' : 'Enhance with AI'"></span>
+                            </button>
+
                              @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

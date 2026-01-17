@@ -1,3 +1,9 @@
 import './bootstrap';
+import 'bootstrap'; // Import Bootstrap 5 JS
+import Alpine from 'alpinejs';
+import { Chart } from 'chart.js/auto';
 
-import * as bootstrap from 'bootstrap';
+window.Alpine = Alpine;
+window.Chart = Chart;
+
+Alpine.start();

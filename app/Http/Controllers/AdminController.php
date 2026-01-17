@@ -107,4 +107,16 @@ class AdminController extends Controller
             'admin.configurator'
         );
     }
+
+    public function enhanceContent(\Illuminate\Http\Request $request, \App\Services\AiContentService $aiService): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'location' => 'required|string',
+        ]);
+
+        $enhanced = $aiService->enhance($request->title, $request->location);
+
+        return response()->json(['description' => $enhanced]);
+    }
 }

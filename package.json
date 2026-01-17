@@ -16,6 +16,8 @@
         "vite": "^6.3.2"
     },
     "dependencies": {
-        "bootstrap-icons": "^1.13.1"
+        "alpinejs": "^3.15.4",
+        "bootstrap-icons": "^1.13.1",
+        "chart.js": "^4.5.1"
     }
 }

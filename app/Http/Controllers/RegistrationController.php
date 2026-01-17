@@ -10,8 +10,9 @@ use App\Models\User;
 use App\Models\Visit;
 use App\Models\Registration;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use App\Services\BookingService;
+use App\Data\BookingData;
 
 class RegistrationController extends Controller
 {
@@ -61,13 +62,11 @@ class RegistrationController extends Controller
         return view('tours.register', compact('visit'));
     }
 
-    public function registerForTour(RegisterTourRequest $request, Visit $visit): RedirectResponse
+    public function registerForTour(RegisterTourRequest $request, Visit $visit, BookingService $bookingService): RedirectResponse
     {
         $user = Auth::user();
-        Log::info($user);
-        Log::info($user->user_id);
+        
         $error = $this->checkRegistrationEligibility($visit, $user, true);
-
         if ($error) {
             if ($error['type'] === 'already_registered') {
                 return redirect()->route('user.dashboard')->with('status', $error['message']);
@@ -75,35 +74,22 @@ class RegistrationController extends Controller
             return back()->withErrors(['general' => $error['message']])->withInput();
         }
 
-        $participants = $request->input('num_participants');
-        $remaining = $visit->visitType->max_participants - $visit->registrations->sum('num_participants');
-        if ($participants > $remaining) {
-            return back()->withErrors(['num_participants' => "Only {$remaining} spots left."])->withInput();
-        }
+        // Create DTO
+        $bookingData = new BookingData(
+            visit_id: $visit->visit_id,
+            user_id: $user->user_id,
+            num_participants: (int) $request->input('num_participants')
+        );
 
-        $code = 'BK'.$visit->visit_id.'U'.$user->user_id.Str::random(4);
         try {
-            Registration::create([
-                'visit_id' => $visit->visit_id,
-                'user_id' => $user->user_id,
-                'num_participants' => $participants,
-                'booking_code' => $code,
-                'registered_at' => now(),
-            ]);
-
-            $visit->refresh();
-            if ($visit->visitType->max_participants <= $visit->registrations()->sum('num_participants')
-                && $visit->status === Visit::STATUS_PROPOSED) {
-                $visit->status = Visit::STATUS_COMPLETE;
-                $visit->save();
-                Log::info("Visit {$visit->visit_id} marked complete after reaching capacity.");
-            }
+            // Delegate to Service
+            $registration = $bookingService->book($bookingData);
 
             return redirect()->route('user.dashboard')
-                             ->with('status', 'Registration successful! Code: '.$code);
+                             ->with('status', 'Registration successful! Ticket generating... Code: ' . $registration->booking_code);
         } catch (\Exception $e) {
-            Log::error('Registration failed: '.$e->getMessage(), ['user' => $user->user_id, 'visit' => $visit->visit_id]);
-            return back()->withErrors(['general' => 'Registration failed, please try again.'])->withInput();
+            Log::error('Booking failed: '.$e->getMessage());
+            return back()->withErrors(['general' => $e->getMessage()])->withInput();
         }
     }
 }

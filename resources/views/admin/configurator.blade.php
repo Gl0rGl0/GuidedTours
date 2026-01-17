@@ -16,6 +16,70 @@
 
     <!-- Navigation Tabs (Heuristic 8: Aesthetic and minimalist design) -->
     <!-- Reduces clutter by organizing content into views -->
+    
+    <!-- Analytics Section -->
+    <div class="row mb-5" 
+         x-data="{
+            init() {
+                var ctx = this.$refs.canvas.getContext('2d');
+                var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
+                gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'New Bookings',
+                            data: [12, 19, 15, 25, 22, 30, 45],
+                            borderColor: '#4f46e5',
+                            backgroundColor: gradient,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                titleColor: '#333',
+                                bodyColor: '#666',
+                                borderColor: '#ddd',
+                                borderWidth: 1
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+         }">
+        <div class="col-12">
+            <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                     <div>
+                         <h5 class="fw-bold mb-0">Platform Growth</h5>
+                         <p class="text-muted small mb-0">Weekly booking activity overview</p>
+                     </div>
+                     <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2"><i class="bi bi-arrow-up-right me-1"></i> +12% this week</span>
+                </div>
+                <div class="card-body position-relative px-4 pb-4" style="height: 320px;">
+                    <canvas x-ref="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white rounded-5 shadow-sm mb-4" id="configTabs" role="tablist" style="max-width: 600px; margin: 0 auto;">
         <li class="nav-item" role="presentation">
             <button class="nav-link active rounded-5 fw-bold" id="places-tab" data-bs-toggle="tab" data-bs-target="#places" type="button" role="tab" aria-selected="true">

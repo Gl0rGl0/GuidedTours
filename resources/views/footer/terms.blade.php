@@ -17,7 +17,7 @@
                         <p class="lead text-muted text-center">
                             This document defines the Terms of Service (ToS) for the web application developed by students 
                             <strong>Giorgio Felappi</strong>, <strong>Daniel Barbetti</strong>, and <strong>Leonardo Folgoni</strong>, 
-                            as part of the <em>Web Programming</em> course.
+                            as part of the <em>Web Programming</em> course. Extended with the help of <strong>Marco Cesari</strong> for the <em>Human-computer interaction</em> course.
                         </p>
                     </div>
 

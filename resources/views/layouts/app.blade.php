@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+      x-data="{ 
+          theme: localStorage.getItem('theme') || 'light',
+          commandOpen: false,
+          toggleTheme() {
+              this.theme = this.theme === 'light' ? 'dark' : 'light';
+              localStorage.setItem('theme', this.theme);
+          }
+      }" 
+      :data-theme="theme"
+      @keydown.window.ctrl.k.prevent="commandOpen = !commandOpen"
+      @keydown.window.escape="commandOpen = false">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,25 +24,53 @@
     <link rel="preload" href="/images/unibslogo_micro.svg" as="image">
     
     @stack('styles')
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
+
+    <!-- Global Command Palette Modal -->
+    @auth
+        <x-command-palette />
+    @endauth
 
     <!-- Header / Navbar -->
     <header class="sticky-top">
         <nav class="navbar navbar-expand-lg glass-effect">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2">
+                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2" style="filter: grayscale(1);">
                     <span>Guided Tours</span>
                 </a>
                 
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon" style="filter: invert(0.5);"></span>
-                </button>
+                <div class="d-flex align-items-center gap-2 ms-auto order-lg-last">
+                    
+                    <!-- Command Palette Trigger (Desktop) -->
+                    @auth
+                    <button @click="commandOpen = true" class="btn btn-sm btn-light border rounded-pill px-3 text-muted d-none d-lg-flex align-items-center me-2 shadow-sm">
+                        <i class="bi bi-search me-2"></i> <span class="me-2">Search...</span> <kbd class="bg-body-secondary text-body border-0 small font-monospace">Ctrl K</kbd>
+                    </button>
+                    <!-- Command Palette Trigger (Mobile) -->
+                    <button @click="commandOpen = true" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted d-lg-none me-2">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    @endauth
+
+                    <!-- Theme Toggle -->
+                    <button @click="toggleTheme()" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted" title="Toggle Theme">
+                         <i class="bi" :class="theme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
+                    </button>
+
+                    <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon" style="filter: invert(0.5);"></span>
+                    </button>
+                </div>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
+                    <ul class="navbar-nav ms-auto align-items-center me-3">
                         <li class="nav-item">
                             <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
                         </li>
@@ -40,7 +79,6 @@
                             <!-- Role Based Links -->
                             @if (Auth::user()->hasRole('fruitore'))
                                 <li class="nav-item"><a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">Bookings</a></li>
-                                <li class="nav-item"><a class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}" href="{{ route('user.visits.past') }}">History</a></li>
                             @endif
 
                             @if (Auth::user()->hasRole('configurator'))
@@ -50,7 +88,6 @@
 
                             @if (Auth::user()->hasRole('volunteer'))
                                 <li class="nav-item"><a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">Availability</a></li>
-                                <li class="nav-item"><a class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}" href="{{ route('volunteer.visits.past') }}">My Visits</a></li>
                             @endif
                             
                             <!-- User Dropdown -->
@@ -94,84 +131,65 @@
     <div id="toast-container"></div>
 
     <!-- Footer -->
-    <footer class="mt-auto py-5">
+    <footer class="mt-auto py-5 bg-dark">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
                     <h5 class="text-white mb-3">Guided Tours</h5>
-                    <p class="small text-white-50"> The official platform for organizing and managing guided tours and cultural events.</p>
+                    <p class="small text-white-50">The official platform for organizing and managing guided tours and cultural events.</p>
                     <div class="d-flex gap-2 mt-4">
                         <a href="https://www.unibs.it/it" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><img src="/images/unibslogo_micro.svg" style="width: 16px; height: 16px; filter: invert(1);"></a>
                         <a href="https://x.com/unibs_official/" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><i class="bi bi-twitter"></i></a>
                         <a href="https://www.instagram.com/unibs.official/" class="btn btn-outline-light btn-sm btn-floating rounded-circle"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
-
                 <div class="col-lg-2 col-md-6">
                     <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Platform</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white small">About Us</a></li>
+                        <li><a href="{{ route('about') }}" class="text-white small">About Us</a></li>
                         <li><a href="{{ route('careers') }}" class="text-white small">Careers</a></li>
                         <li><a href="{{ route('terms') }}" class="text-white small">Terms of Service</a></li>
                     </ul>
                 </div>
-                
-                <div class="col-lg-3 col-md-6">
+                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Contact</h6>
                     <ul class="list-unstyled text-white-50 small">
                         <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Via Branze 38, Brescia</li>
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@unibs.it</li>
                     </ul>
                 </div>
-
                 <div class="col-lg-3 col-md-6 text-lg-end">
-                    <small class="text-white-50">&copy; {{ date('Y') }} Guided Tours Org.<br>All rights reserved.</small>
+                    <small class="text-white-50">&copy; {{ date('Y') }} Guided Tours Org.</small>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Legacy Validation Scripts support -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const toastContainer = document.getElementById('toast-container');
-
-            window.showToast = function(text, type = 'info', duration = 5000) {
+            // Toast functionality...
+             window.showToast = function(text, type = 'info', duration = 5000) {
                 if (!text || !toastContainer) return;
-
                 const toast = document.createElement('div');
                 toast.className = `toast-notification ${type}`;
-                
-                // Add icon based on type
                 let icon = 'bi-info-circle';
                 if(type === 'success') icon = 'bi-check-circle';
                 if(type === 'error') icon = 'bi-exclamation-circle';
                 if(type === 'warning') icon = 'bi-exclamation-triangle';
-                
                 toast.innerHTML = `<i class="bi ${icon} me-2 fs-5"></i> <span>${text}</span>`;
-                toast.setAttribute('role', 'alert');
-
                 toastContainer.appendChild(toast);
-
-                requestAnimationFrame(() => {
-                    toast.classList.add('show');
-                });
-
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 600);
-                }, duration);
+                requestAnimationFrame(() => toast.classList.add('show'));
+                setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 600); }, duration);
             }
 
             @if (session('status')) window.showToast("{{ session('status') }}", 'success'); @endif
             @if (session('success')) window.showToast("{{ session('success') }}", 'success'); @endif
             @if (session('error')) window.showToast("{{ session('error') }}", 'error'); @endif
-            @if (session('warning')) window.showToast("{{ session('warning') }}", 'warning'); @endif
-            @if (session('info')) window.showToast("{{ session('info') }}", 'info'); @endif
             @if ($errors->any()) window.showToast("{{ $errors->first() }}", 'error'); @endif
         });
     </script>
-    
     @stack('scripts')
 </body>
 </html>
