@@ -18,6 +18,9 @@
     <!-- Reduces clutter by organizing content into views -->
     
     <!-- Analytics Section -->
+    <script>
+        window.userGrowthStats = @json($monthlyStats);
+    </script>
     <div class="row mb-5" 
          x-data="{
             init() {
@@ -26,13 +29,17 @@
                 gradient.addColorStop(0, 'rgba(79, 70, 229, 0.2)');
                 gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
 
+                const stats = window.userGrowthStats || [];
+                const labels = stats.map(s => s.month);
+                const counts = stats.map(s => s.count);
+
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        labels: labels,
                         datasets: [{
-                            label: 'New Bookings',
-                            data: [12, 19, 15, 25, 22, 30, 45],
+                            label: 'New Users',
+                            data: counts,
                             borderColor: '#4f46e5',
                             backgroundColor: gradient,
                             fill: true,
@@ -57,7 +64,11 @@
                             }
                         },
                         scales: {
-                            y: { beginAtZero: true, grid: { borderDash: [2, 4] } },
+                            y: { 
+                                beginAtZero: true, 
+                                grid: { borderDash: [2, 4] },
+                                ticks: { precision: 0 } 
+                            },
                             x: { grid: { display: false } }
                         }
                     }
@@ -68,10 +79,9 @@
             <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
                 <div class="card-header bg-white border-bottom-0 pt-4 px-4 d-flex justify-content-between align-items-center">
                      <div>
-                         <h5 class="fw-bold mb-0">Platform Growth</h5>
-                         <p class="text-muted small mb-0">Weekly booking activity overview</p>
+                         <h5 class="fw-bold mb-0">Customer Growth</h5>
+                         <p class="text-muted small mb-0">New customer registrations (Last 6 Months)</p>
                      </div>
-                     <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2"><i class="bi bi-arrow-up-right me-1"></i> +12% this week</span>
                 </div>
                 <div class="card-body position-relative px-4 pb-4" style="height: 320px;">
                     <canvas x-ref="canvas"></canvas>

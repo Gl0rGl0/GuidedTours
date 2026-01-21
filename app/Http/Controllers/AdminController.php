@@ -48,6 +48,23 @@ class AdminController extends Controller
                     $users_by_role['Customer']->push($user);
                 }
             }
+            // Fetch Monthly User Stats (Last 6 Months)
+            $monthlyStats = collect();
+            for ($i = 6; $i >= 0; $i--) {
+                $date = \Carbon\Carbon::now()->subMonths($i);
+                $monthName = $date->format('F');
+                $year = $date->format('Y');
+                
+                $count = User::role('Customer')
+                    ->whereYear('created_at', $year)
+                    ->whereMonth('created_at', $date->month)
+                    ->count();
+                    
+                $monthlyStats->push([
+                    'month' => $monthName,
+                    'count' => $count
+                ]);
+            }
 
         } catch (\Exception $e) {
             Log::error("Admin Configurator Fetch Error: " . $e->getMessage());
@@ -59,12 +76,14 @@ class AdminController extends Controller
                 'Guide' => collect(),
                 'Customer' => collect(),
             ];
+            $monthlyStats = collect(); // Empty stats on error
         }
 
         return view('admin.configurator', [
             'places' => $places,
             'visit_types' => $visit_types,
-            'users_by_role' => $users_by_role
+            'users_by_role' => $users_by_role,
+            'monthlyStats' => $monthlyStats
         ]);
     }
 
