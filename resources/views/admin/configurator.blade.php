@@ -227,6 +227,15 @@
                                                         title="Delete User">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
+                                                @else
+                                                    @php
+                                                        $tooltipMessage = 'Administrators cannot be deleted.';
+                                                    @endphp
+                                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="{{ $tooltipMessage }}">
+                                                        <button class="btn btn-icon btn-light btn-sm rounded-circle" type="button" disabled>
+                                                            <i class="bi bi-trash text-muted opacity-50"></i>
+                                                        </button>
+                                                    </span>
                                                 @endif
                                             </td>
                                         </tr>
@@ -360,6 +369,12 @@
         var addUserModal = document.getElementById('addUserModal');
          addUserModal.addEventListener('shown.bs.modal', function () {
             document.getElementById('new_username').focus();
+        });
+
+        // --- 3. Initialize tooltips ---
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
         });
     });
 </script>
