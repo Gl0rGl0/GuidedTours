@@ -18,7 +18,7 @@ class RegistrationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'role:fruitore']);
+        $this->middleware(['auth', 'role:Customer']);
     }
 
     protected function checkRegistrationEligibility(Visit $visit, User $user, bool $isSubmission = false): ?array

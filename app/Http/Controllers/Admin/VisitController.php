@@ -56,7 +56,7 @@ class VisitController extends Controller
 
         $visitDate = \Carbon\Carbon::parse($request->visit_date)->toDateString();
 
-        $volunteers = User::role('volunteer')
+        $volunteers = User::role('Guide')
             ->whereHas('volunteerAvailabilities', function ($query) use ($visitDate) {
                 $query->whereDate('available_date', $visitDate);
             })
@@ -87,7 +87,7 @@ class VisitController extends Controller
             ->get()
             ->groupBy('visit_date');
 
-        $volunteers = User::role('volunteer')->orderBy('username')->get();
+        $volunteers = User::role('Guide')->orderBy('username')->get();
 
         $visitTypes = VisitType::orderBy('title')->get();
 

@@ -77,16 +77,16 @@
                         
                         @auth
                             <!-- Role Based Links -->
-                            @if (Auth::user()->hasRole('fruitore'))
+                            @if (Auth::user()->hasRole('Customer'))
                                 <li class="nav-item"><a class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}">Bookings</a></li>
                             @endif
 
-                            @if (Auth::user()->hasRole('configurator'))
+                            @if (Auth::user()->hasRole('Admin'))
                                 <li class="nav-item"><a class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}" href="{{ route('admin.configurator') }}">Admin</a></li>
                                 <li class="nav-item"><a class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}" href="{{ route('admin.visit-planning.index') }}">Planning</a></li>
                             @endif
 
-                            @if (Auth::user()->hasRole('volunteer'))
+                            @if (Auth::user()->hasRole('Guide'))
                                 <li class="nav-item"><a class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">Availability</a></li>
                             @endif
                             
@@ -131,7 +131,6 @@
     <div id="toast-container"></div>
 
     <!-- Footer -->
-    <footer class="mt-auto py-5 bg-dark">
     <footer class="mt-auto py-5 bg-dark">
         <div class="container">
             <div class="row gy-4">
@@ -200,6 +199,43 @@
             transition: background-color 0.3s ease-in-out;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
+
+        /* Toast Notifications */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast-notification {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px; /* Rounded-4ish */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 350px;
+            font-size: 0.95rem;
+            color: #333;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .toast-notification.show {
+            transform: translateX(0);
+        }
+        .toast-notification.success { border-left: 5px solid #198754; }
+        .toast-notification.error { border-left: 5px solid #dc3545; }
+        .toast-notification.warning { border-left: 5px solid #ffc107; }
+        .toast-notification.info { border-left: 5px solid #0d6efd; }
+        .toast-notification i { font-size: 1.25rem; }
+        .toast-notification.success i { color: #198754; }
+        .toast-notification.error i { color: #dc3545; }
+        .toast-notification.warning i { color: #ffc107; }
+        .toast-notification.info i { color: #0d6efd; }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

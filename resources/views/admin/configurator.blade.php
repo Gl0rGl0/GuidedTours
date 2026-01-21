@@ -272,8 +272,8 @@
                                             <td>
                                                 @php
                                                     $badgeColor = match($role) {
-                                                        'configurator' => 'bg-danger-subtle text-danger',
-                                                        'volunteer' => 'bg-info-subtle text-info-emphasis',
+                                                        'Admin' => 'bg-danger-subtle text-danger',
+                                                        'Guide' => 'bg-info-subtle text-info-emphasis',
                                                         default => 'bg-light text-dark',
                                                     };
                                                 @endphp
@@ -282,7 +282,7 @@
                                                 </span>
                                             </td>
                                             <td class="text-end pe-4">
-                                                @if($role !== 'configurator' && $user->id !== Auth::id())
+                                                @if($role !== 'Admin' && $user->id !== Auth::id())
                                                      <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#deleteModal"
@@ -333,7 +333,7 @@
                 @csrf
                 <div class="modal-body pt-4">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="new_username" name="username" placeholder="Username" required>
+                        <input type="text" class="form-control" id="new_username" name="username" placeholder="Username" minlength="3" required>
                         <label for="new_username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -347,8 +347,8 @@
                     <div class="form-floating">
                         <select id="new_role" name="role" class="form-select" required>
                             <option value="" disabled selected>Select Role</option>
-                            <option value="volunteer">Volunteer</option>
-                            <option value="configurator">Admin (Configurator)</option>
+                            <option value="Guide">Guide</option>
+                            <option value="Admin">Admin</option>
                         </select>
                         <label for="new_role">Role</label>
                     </div>

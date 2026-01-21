@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create(); // Keep default factory calls commented/removed
 
         // Create Roles first
-        Role::create(['name' => 'configurator']);
-        Role::create(['name' => 'volunteer']);
-        Role::create(['name' => 'fruitore']);
+        Role::create(['name' => 'Admin']);
+        Role::create(['name' => 'Guide']);
+        Role::create(['name' => 'Customer']);
 
         $this->call([
             SettingsSeeder::class,

@@ -16,7 +16,7 @@
                 </p>
                 
                 @auth
-                    @if(Auth::user()->hasRole('fruitore'))
+                    @if(Auth::user()->hasRole('Customer'))
                          <div class="d-flex justify-content-center gap-3">
                             <a href="#tours-section" class="btn btn-primary shadow-sm px-4 rounded-pill">Browse Tours</a>
                             <a href="{{ route('user.dashboard') }}" class="btn btn-outline-primary px-4 rounded-pill">My Dashboard</a>
@@ -133,12 +133,12 @@
                             </div>
                             <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
                                 @auth
-                                    @if (Auth::user()->hasRole('fruitore'))
+                                    @if (Auth::user()->hasRole('Customer'))
                                         <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}" class="btn btn-primary w-100 rounded-pill">
                                             View Details & Book
                                         </a>
                                     @else
-                                         <button class="btn btn-secondary w-100 rounded-pill" disabled>Fruitore Only</button>
+                                         <button class="btn btn-secondary w-100 rounded-pill" disabled>Customer Only</button>
                                     @endif
                                 @else
                                     <a href="{{ route('login') }}" class="btn btn-outline-primary w-100 rounded-pill">Login to Book</a>

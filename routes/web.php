@@ -45,8 +45,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/visits/{visit}/register', [RegistrationController::class, 'showTourRegistrationForm'])->name('visits.register.form');
     Route::post('/visits/{visit}/register', [RegistrationController::class, 'registerForTour'])->name('visits.register.submit');
     
-    // --- Admin (Configurator) Routes ---
-    Route::middleware('role:configurator')->prefix('admin')->name('admin.')->group(function () {
+    // Ticket Download
+    Route::get('/tickets/{code}/download', [App\Http\Controllers\TicketController::class, 'download'])->name('tickets.download');
+
+    // --- Admin (Admin) Routes ---
+    Route::middleware('role:Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/configurator', [AdminController::class, 'showConfigurator'])->name('configurator');
         
         // User Management
@@ -81,8 +84,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/volunteers/available', [VisitController::class, 'getAvailableVolunteers'])->name('volunteers.available');
     });
     
-    // --- Volunteer Routes ---
-    Route::middleware('role:volunteer')->prefix('volunteer')->name('volunteer.')->group(function () {
+    // --- Guide Routes ---
+    Route::middleware('role:Guide')->prefix('volunteer')->name('volunteer.')->group(function () {
         Route::get('/availability', [VolunteerController::class, 'showAvailabilityForm'])->name('availability.form');
         Route::post('/availability', [VolunteerController::class, 'storeAvailability'])->name('availability.store');
         
@@ -91,8 +94,8 @@ Route::middleware('auth')->group(function () {
     });
     
     
-    // --- Fruitore Routes ---
-    Route::middleware('role:fruitore')->prefix('user')->name('user.')->group(function () {
+    // --- Customer Routes ---
+    Route::middleware('role:Customer')->prefix('user')->name('user.')->group(function () {
         Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
         // Route for cancelling a booking
         Route::delete('/bookings/{booking}', [FruitoreController::class, 'cancelBooking'])->name('bookings.cancel');

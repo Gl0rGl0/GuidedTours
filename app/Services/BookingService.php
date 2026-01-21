@@ -23,7 +23,7 @@ class BookingService
 
             // Check capacity
             $currentParticipants = $visit->registrations()->sum('num_participants');
-            $maxParticipants = $visit->visitType->max_participants;
+            $maxParticipants = $visit->effective_max_capacity;
 
             if (($currentParticipants + $data->num_participants) > $maxParticipants) {
                 throw new Exception("Not enough capacity. Only " . ($maxParticipants - $currentParticipants) . " spots left.");

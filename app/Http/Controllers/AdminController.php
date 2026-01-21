@@ -23,9 +23,9 @@ class AdminController extends Controller
         $places = collect();
         $visit_types = collect();
         $users_by_role = [
-            'configurator' => collect(),
-            'volunteer' => collect(),
-            'fruitore' => collect(),
+            'Admin' => collect(),
+            'Guide' => collect(),
+            'Customer' => collect(),
         ];
 
         try {
@@ -40,12 +40,12 @@ class AdminController extends Controller
             $all_users = User::orderBy('username')->get(['user_id', 'username']);
 
             foreach ($all_users as $user) {
-                if ($user->hasRole('configurator')) {
-                     $users_by_role['configurator']->push($user);
-                } elseif ($user->hasRole('volunteer')) {
-                    $users_by_role['volunteer']->push($user);
-                } elseif ($user->hasRole('fruitore')) {
-                    $users_by_role['fruitore']->push($user);
+                if ($user->hasRole('Admin')) {
+                     $users_by_role['Admin']->push($user);
+                } elseif ($user->hasRole('Guide')) {
+                    $users_by_role['Guide']->push($user);
+                } elseif ($user->hasRole('Customer')) {
+                    $users_by_role['Customer']->push($user);
                 }
             }
 
@@ -55,9 +55,9 @@ class AdminController extends Controller
             session()->flash('error', $fetch_error);
 
             $users_by_role = [
-                'configurator' => collect(),
-                'volunteer' => collect(),
-                'fruitore' => collect(),
+                'Admin' => collect(),
+                'Guide' => collect(),
+                'Customer' => collect(),
             ];
         }
 
@@ -71,7 +71,7 @@ class AdminController extends Controller
     public function addUser(StoreUserRequest $request): RedirectResponse
     {
         $request->validate([
-            'role' => ['required', \Illuminate\Validation\Rule::in(['configurator', 'volunteer'])],
+            'role' => ['required', \Illuminate\Validation\Rule::in(['Admin', 'Guide'])],
         ]);
 
         return $this->handleAdminOperation(
@@ -96,8 +96,8 @@ class AdminController extends Controller
         if ($user->user_id === Auth::id()) {
              return back()->withErrors(['general' => 'You cannot remove yourself.']);
         }
-        // Prevent removing other configurators using Spatie's hasRole()
-        if ($user->hasRole('configurator')) {
+        // Prevent removing other Admins using Spatie's hasRole()
+        if ($user->hasRole('Admin')) {
              return back()->withErrors(['general' => 'Configurator users cannot be removed.']);
         }
 

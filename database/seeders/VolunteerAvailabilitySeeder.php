@@ -16,7 +16,7 @@ class VolunteerAvailabilitySeeder extends Seeder
         $daysInNextMonth = $nextMonth->daysInMonth;
         $monthYear = $nextMonth->format('Y-m');
 
-        $volunteers = User::role('volunteer')->get();
+        $volunteers = User::role('Guide')->get();
 
         foreach ($volunteers as $volunteer) {
             // Genera da 9 a 15 giorni di disponibilità casuali nel mese prossimo

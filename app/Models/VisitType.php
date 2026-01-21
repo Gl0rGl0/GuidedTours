@@ -8,9 +8,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+use Laravel\Scout\Searchable;
+
 class VisitType extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+            'description' => $this->description,
+             // Add other fields you want to search
+        ];
+    }
 
     /**
      * The table associated with the model.
@@ -33,6 +49,7 @@ class VisitType extends Model
      */
     protected $fillable = [
         'place_id',
+        'agency_id',
         'title',
         'description',
         'meeting_point',
@@ -58,11 +75,31 @@ class VisitType extends Model
     ];
 
     /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('agency', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            if (auth()->check() && auth()->user()->hasRole('Guide') && auth()->user()->agency_id) {
+                $builder->where('agency_id', auth()->user()->agency_id);
+            }
+        });
+    }
+
+    /**
      * Get the place that this visit type belongs to.
      */
     public function place(): BelongsTo
     {
         return $this->belongsTo(Place::class, 'place_id', 'place_id');
+    }
+
+    /**
+     * Get the agency that this visit type belongs to.
+     */
+    public function agency(): BelongsTo
+    {
+        return $this->belongsTo(Agency::class, 'agency_id', 'agency_id');
     }
 
     /**

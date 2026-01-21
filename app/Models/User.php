@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany; 
 use Spatie\Permission\Traits\HasRoles; 
 
+use Laravel\Sanctum\HasApiTokens;
+
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles; // Add HasRoles trait here
+    use HasFactory, Notifiable, HasRoles, HasApiTokens; // Add HasRoles and HasApiTokens traits here
 
     /**
      * The primary key associated with the table.
@@ -85,5 +89,12 @@ class User extends Authenticatable
     public function registrations(): HasMany
     {
         return $this->hasMany(Registration::class, 'user_id', 'user_id');
+    }
+    /**
+     * Get the agency that the user belongs to.
+     */
+    public function agency(): BelongsTo
+    {
+        return $this->belongsTo(Agency::class, 'agency_id', 'agency_id');
     }
 }

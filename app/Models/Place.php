@@ -33,7 +33,21 @@ class Place extends Model
         'name',
         'description',
         'location',
+        'latitude',
+        'longitude',
     ];
+
+    /**
+     * Scope a query to only include places within a given radius (km).
+     */
+    public function scopeWithinDistance($query, $lat, $lng, $radius = 10)
+    {
+        $haversine = "(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lng)) + sin(radians($lat)) * sin(radians(latitude))))";
+        
+        return $query->selectRaw("*, $haversine AS distance")
+                     ->having('distance', '<', $radius)
+                     ->orderBy('distance');
+    }
 
     /**
      * Get the visit types associated with the place.

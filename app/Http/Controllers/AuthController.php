@@ -67,7 +67,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            $user->assignRole('fruitore');
+            $user->assignRole('Customer');
 
             return redirect()->route('login')->with('status', 'Registration successful! Please log in.');
 

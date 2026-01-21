@@ -57,7 +57,7 @@
                                 </li>
                                 <li class="mb-2 d-flex align-items-center">
                                     <i class="bi bi-clock me-2 text-primary"></i> 
-                                    {{ \Carbon\Carbon::parse($booking->visit->visitType->start_time)->format('g:i A') }}
+                                    {{ \Carbon\Carbon::parse($booking->visit->effective_start_time ?? $booking->visit->visitType->start_time)->format('g:i A') }}
                                 </li>
                                 <li class="d-flex align-items-center">
                                     <i class="bi bi-people me-2 text-primary"></i> 
@@ -66,7 +66,12 @@
                             </ul>
                         </div>
                         <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
-                            <small class="text-muted d-block mb-2">Booking Code</small>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-muted">Booking Code</small>
+                                <a href="{{ route('tickets.download', $booking->booking_code) }}" class="btn btn-sm btn-outline-dark rounded-pill" target="_blank" title="Download PDF Ticket">
+                                    <i class="bi bi-file-earmark-pdf me-1"></i> Ticket
+                                </a>
+                            </div>
                             <div class="bg-light rounded p-2 text-center text-monospace fw-bold letter-spacing-1">
                                 {{ $booking->booking_code }}
                             </div>

@@ -15,7 +15,7 @@ class RegistrationsSeeder extends Seeder
      */
     public function run(): void
     {
-        $fruitori = User::role('fruitore')->take(3)->get();
+        $fruitori = User::role('Customer')->take(3)->get();
 
         $proposedVisits = Visit::where('status', 'proposed')->take(1)->get();
         $confirmedVisits = Visit::where('status', 'confirmed')->take(2)->get();
@@ -23,7 +23,7 @@ class RegistrationsSeeder extends Seeder
         $effectedVisits = Visit::where('status', 'effected')->take(1)->get();
 
         if ($fruitori->count() < 1 || $proposedVisits->count() < 1 || $confirmedVisits->count() < 1) {
-            $this->command->warn('Could not find enough Users (role: fruitore) or Visits (proposed/confirmed) to seed registrations. Skipping.');
+            $this->command->warn('Could not find enough Users (role: Customer) or Visits (proposed/confirmed) to seed registrations. Skipping.');
             return;
         }
 

@@ -7,9 +7,9 @@
     @php
         $user = Auth::user();
         $pageTitle = 'Visits';
-        if ($user->hasRole('configurator')) $pageTitle = 'Past Visits Archive';
-        if ($user->hasRole('volunteer')) $pageTitle = 'My Assigned Visits';
-        if ($user->hasRole('fruitore')) $pageTitle = 'My Past Visits';
+        if ($user->hasRole('Admin')) $pageTitle = 'Past Visits Archive';
+        if ($user->hasRole('Guide')) $pageTitle = 'My Assigned Visits';
+        if ($user->hasRole('Customer')) $pageTitle = 'My Past Visits';
     @endphp
 
     <div class="d-flex align-items-center mb-4 border-bottom pb-2">

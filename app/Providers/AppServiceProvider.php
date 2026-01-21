@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ExceptionHandler::class, Handler::class);
         
         // Bind the TicketGenerator Interface to the Local Implementation
-        $this->app->bind(TicketGeneratorInterface::class, LocalTicketGenerator::class);
+        // $this->app->bind(TicketGeneratorInterface::class, LocalTicketGenerator::class);
     }
 
     /**
@@ -33,20 +33,23 @@ class AppServiceProvider extends ServiceProvider
     {
         // Define Gate roles
         Gate::define('configurator', function (User $user) {
-            return $user->hasRole('configurator');
+            return $user->hasRole('Admin');
         });
 
         Gate::define('volunteer', function (User $user) {
-            return $user->hasRole('volunteer');
+            return $user->hasRole('Guide');
         });
+
         Gate::define('fruitore', function (User $user) {
-            return $user->hasRole('fruitore');
+            return $user->hasRole('Customer');
         });
 
         // Register Event Listeners
+        /*
         Event::listen(
             VisitBooked::class,
             GenerateTicketFile::class,
         );
+        */
     }
 }

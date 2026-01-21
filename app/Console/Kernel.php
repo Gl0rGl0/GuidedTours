@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        UpdateVisitStatuses::class, // Register the command
+        UpdateVisitStatuses::class,
+        Commands\GenerateRecurringVisits::class,
     ];
 
     /**
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:update-visit-statuses')->daily()->at('01:00'); // Run daily at 1 AM
+        $schedule->command('app:generate-recurring-visits')->weekly(); // Run weekly
     }
 
     /**

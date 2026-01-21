@@ -55,10 +55,28 @@ class Visit extends Model
     protected $fillable = [
         'visit_type_id',
         'visit_date',
+        'start_time',
         'assigned_volunteer_id',
         'status',
+        'max_capacity',
         // created_at and status_updated_at are handled by timestamps/defaults
     ];
+
+    /**
+     * Get the effective max capacity (override or default to visit type).
+     */
+    public function getEffectiveMaxCapacityAttribute(): int
+    {
+        return $this->max_capacity ?? $this->visitType->max_participants;
+    }
+
+    /**
+     * Get the effective start time (override or default to visit type).
+     */
+    public function getEffectiveStartTimeAttribute()
+    {
+        return $this->start_time ?? $this->visitType->start_time;
+    }
 
     /**
      * The attributes that should be cast.
@@ -67,6 +85,7 @@ class Visit extends Model
      */
     protected $casts = [
         'visit_date' => 'date',
+        'start_time' => 'datetime:H:i',
     ];
 
     /**
