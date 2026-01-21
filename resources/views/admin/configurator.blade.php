@@ -201,7 +201,7 @@
                                                     </div>
                                                     <div>
                                                         <div class="fw-bold">{{ $user->username }}</div>
-                                                        <div class="small text-muted">ID: {{ $user->id }}</div>
+                                                        <div class="small text-muted">ID: {{ $user->user_id }}</div>
                                                     </div>
                                                 </div>
                                             </td>
