@@ -29,7 +29,8 @@ class AdminController extends Controller
         ];
 
         try {
-            $places = Place::orderBy('name')->get(['place_id', 'name']);
+            $places = Place::orderBy('name')->get();
+
 
             $visit_types = VisitType::with('place')
                 ->orderBy('title')
