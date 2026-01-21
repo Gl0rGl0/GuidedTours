@@ -17,7 +17,7 @@
     <title>@yield('title', 'Guided Tours') | City Heritage Tours</title>
     
     <!-- Scripts & Styles -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Preload Logo -->
@@ -38,10 +38,10 @@
 
     <!-- Header / Navbar -->
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-lg glass-effect">
+        <nav class="navbar navbar-expand-lg glass-effect" id="main-navbar">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2" style="filter: grayscale(1);">
+                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2" style="filter: grayscale(1);" style="width: 24px; height: 24px);">
                     <span>Guided Tours</span>
                 </a>
                 
@@ -132,6 +132,7 @@
 
     <!-- Footer -->
     <footer class="mt-auto py-5 bg-dark">
+    <footer class="mt-auto py-5 bg-dark">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
@@ -144,15 +145,16 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Platform</h6>
+                    <h6 class="text-uppercase mb-3 fw-bold text-white">Platform</h6>
                     <ul class="list-unstyled">
                         <li><a href="{{ route('about') }}" class="text-white small">About Us</a></li>
                         <li><a href="{{ route('careers') }}" class="text-white small">Careers</a></li>
                         <li><a href="{{ route('terms') }}" class="text-white small">Terms of Service</a></li>
                     </ul>
                 </div>
-                 <div class="col-lg-3 col-md-6">
-                    <h6 class="text-uppercase mb-3 font-weight-bold text-primary">Contact</h6>
+                
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-uppercase mb-3 fw-bold text-white">Contact</h6>
                     <ul class="list-unstyled text-white-50 small">
                         <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Via Branze 38, Brescia</li>
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@unibs.it</li>
@@ -190,6 +192,37 @@
             @if ($errors->any()) window.showToast("{{ $errors->first() }}", 'error'); @endif
         });
     </script>
+    
+        <style>
+        /* Add a solid background and shadow to the navbar when scrolled */
+        .navbar.scrolled {
+            background-color: #fff;
+            transition: background-color 0.3s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('main-navbar');
+            if (navbar) {
+                // Function to handle scroll event
+                const handleScroll = () => {
+                    if (window.scrollY > 10) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                };
+                
+                // Add scroll event listener
+                window.addEventListener('scroll', handleScroll);
+
+                // Initial check in case the page is loaded already scrolled
+                handleScroll();
+            }
+        });
+    </script>
+    
     @stack('scripts')
 </body>
 </html>
