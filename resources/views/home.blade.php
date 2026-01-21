@@ -160,7 +160,7 @@
     @if($confirmed_visits->isNotEmpty())
         <div class="section-container">
             <div class="d-flex align-items-center mb-4 border-bottom pb-2">
-                <h3 class="fw-bold text-success mb-0 me-3">Confirmed Tours</h3>
+                <h3 class="fw-bold text-success mb-0 me-3">Your Confirmed Tours</h3>
                  <span class="badge bg-success-subtle text-success rounded-pill">Participating</span>
             </div>
 

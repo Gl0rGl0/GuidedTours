@@ -51,5 +51,9 @@ class AppServiceProvider extends ServiceProvider
             GenerateTicketFile::class,
         );
         */
+        // Force HTTPS when using ngrok (or any HTTPS proxy) to avoid mixed content errors
+        if (request()->header('X-Forwarded-Proto') === 'https' || str_contains(request()->url(), 'ngrok-free.app')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

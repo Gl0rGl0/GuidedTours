@@ -59,9 +59,9 @@
                     @endauth
 
                     <!-- Theme Toggle -->
-                    <button @click="toggleTheme()" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted" title="Toggle Theme">
+                    <!-- <button @click="toggleTheme()" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted" title="Toggle Theme">
                          <i class="bi" :class="theme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
-                    </button>
+                    </button> -->
 
                     <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
