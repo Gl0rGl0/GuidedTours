@@ -111,7 +111,7 @@
                             <input type="text" class="form-control bg-light border-0" id="searchPlaces" placeholder="Search places...">
                         </div>
                         <a href="{{ route('admin.places.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 d-flex align-items-center">
-                            <i class="bi bi-plus-lg me-1"></i> Add New
+                            <i class="bi bi-plus-lg me-1"></i> Add Place
                         </a>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                             <input type="text" class="form-control bg-light border-0" id="searchTypes" placeholder="Search types...">
                         </div>
                         <a href="{{ route('admin.visit-types.create') }}" class="btn btn-primary btn-sm rounded-pill px-3 d-flex align-items-center">
-                            <i class="bi bi-plus-lg me-1"></i> Add New
+                            <i class="bi bi-plus-lg me-1"></i> Add Visit Type
                         </a>
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                             <span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span>
                             <input type="text" class="form-control bg-light border-0" id="searchUsers" placeholder="Search users...">
                         </div>
-                        <button class="btn btn-outline-primary btn-sm rounded-pill px-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <button class="btn btn-primary btn-sm rounded-pill px-3 d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addUserModal">
                             <i class="bi bi-person-plus me-1"></i> Add User
                         </button>
                     </div>

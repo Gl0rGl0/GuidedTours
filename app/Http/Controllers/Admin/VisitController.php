@@ -21,15 +21,15 @@ class VisitController extends Controller
 
     public function create(): View
     {
-        $startOfNextMonth = Carbon::now()->startOfMonth()->addMonth();
-        $endOfNextMonth = Carbon::now()->startOfMonth()->addMonths(2)->subDay();
+        $startDate = Carbon::now();
+        $endDate = Carbon::now()->addYear();
 
-        $visitTypes = VisitType::where(function ($query) use ($startOfNextMonth, $endOfNextMonth) {
-            $query->whereBetween('period_start', [$startOfNextMonth, $endOfNextMonth])
-                ->orWhereBetween('period_end', [$startOfNextMonth, $endOfNextMonth])
-                ->orWhere(function ($q) use ($startOfNextMonth, $endOfNextMonth) {
-                    $q->where('period_start', '<', $startOfNextMonth)
-                        ->where('period_end', '>', $endOfNextMonth);
+        $visitTypes = VisitType::where(function ($query) use ($startDate, $endDate) {
+            $query->whereBetween('period_start', [$startDate, $endDate])
+                ->orWhereBetween('period_end', [$startDate, $endDate])
+                ->orWhere(function ($q) use ($startDate, $endDate) {
+                    $q->where('period_start', '<', $startDate)
+                        ->where('period_end', '>', $endDate);
                 });
         })->get();
 
@@ -143,4 +143,8 @@ class VisitController extends Controller
             'visits' => $visits,
         ]);
     }
+
+
+    
+
 }

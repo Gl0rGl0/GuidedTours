@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             VolunteersVisitTypesSeeder::class,
             VisitsSeeder::class,
             RegistrationsSeeder::class,
+            TourSchedulesSeeder::class,
             VolunteerAvailabilitySeeder::class,
         ]);
     }

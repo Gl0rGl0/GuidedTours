@@ -80,6 +80,9 @@ Route::middleware('auth')->group(function () {
         
         // Add other admin routes here (e.g., settings, visit planning)
         Route::get('/visit-planning', [VisitController::class, 'index'])->name('visit-planning.index');
+
+        
+
         
         Route::get('/volunteers/available', [VisitController::class, 'getAvailableVolunteers'])->name('volunteers.available');
     });

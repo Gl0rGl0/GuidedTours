@@ -9,9 +9,11 @@
             <h2 class="fw-bold text-primary mb-1">Visit Planning</h2>
             <p class="text-muted mb-0">Overview of schedules and volunteer availability</p>
         </div>
-        <a href="{{ route('admin.visits.create') }}" class="btn btn-primary rounded-pill shadow-sm">
-            <i class="bi bi-plus-lg me-2"></i> Add New Visit
-        </a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('admin.visits.create') }}" class="btn btn-primary rounded-pill shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i> Add New Visit
+            </a>
+        </div>
     </div>
 
     <!-- Date Range Info -->

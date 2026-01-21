@@ -12,25 +12,34 @@ class VolunteerAvailabilitySeeder extends Seeder
 {
     public function run(): void
     {
-        $nextMonth = Carbon::now()->addMonthNoOverflow();
-        $daysInNextMonth = $nextMonth->daysInMonth;
-        $monthYear = $nextMonth->format('Y-m');
+        // Clear existing availability to prevent duplicates and ensure clean state
+        VolunteerAvailability::query()->delete();
 
         $volunteers = User::role('Guide')->get();
+        
+        // Start from today and go until end of next month
+        $start = Carbon::now();
+        $end = Carbon::now()->addMonth()->endOfMonth();
 
         foreach ($volunteers as $volunteer) {
-            // Genera da 9 a 15 giorni di disponibilità casuali nel mese prossimo
-            $numAvailabilities = rand(9, 15);
-            $availableDays = collect(range(1, $daysInNextMonth))
-                                ->shuffle()
-                                ->take($numAvailabilities);
-
-            foreach ($availableDays as $day) {
-                VolunteerAvailability::create([
-                    'user_id' => $volunteer->user_id,
-                    'available_date' => $nextMonth->copy()->day($day)->toDateString(),
-                    'month_year' => $monthYear,
-                ]);
+            $current = $start->copy();
+            while ($current->lte($end)) {
+                // Randomly assign availability (e.g., ~60% chance)
+                if (rand(1, 100) <= 60) { 
+                    // Check if already exists to avoid dupes if re-running
+                    $exists = VolunteerAvailability::where('user_id', $volunteer->user_id)
+                        ->where('available_date', $current->toDateString())
+                        ->exists();
+                    
+                    if (!$exists) {
+                        VolunteerAvailability::create([
+                            'user_id' => $volunteer->user_id,
+                            'available_date' => $current->toDateString(),
+                            'month_year' => $current->format('Y-m'),
+                        ]);
+                    }
+                }
+                $current->addDay();
             }
         }
     }

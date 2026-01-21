@@ -23,7 +23,6 @@
                     </div>
 
                     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                         <a href="{{ route('home') }}" class="btn btn-primary rounded-pill px-4">Back to Home</a>
                         <a href="https://github.com/Gl0rGl0/GuidedTours" class="btn btn-outline-secondary rounded-pill px-4">
                            <i class="bi bi-github me-2"></i> Contribute on GitHub
                         </a>
