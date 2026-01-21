@@ -6,10 +6,10 @@
 
 ## SEED (populate db from current date)
 > php artisan migrate:fresh --seed
+> php artisan db:wipe && php artisan migrate --seed (wipe and migrate)
 
 ## CUSTOM COMMAND
 > php artisan app:update-visit-statuses (update status based on current time, scheduled daily at 1AM)
 
-
-# CUSTOM HANDLER
+## CUSTOM HANDLER
 Set custom code error to catch everything (o na roba del genere)!
