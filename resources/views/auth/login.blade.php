@@ -23,13 +23,28 @@
                         @enderror
                     </div>
                     
-                    <div class="form-floating mb-4">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                    <div class="form-floating mb-4 position-relative">
+                        <input type="password"
+                            class="form-control pe-5 @error('password') is-invalid @enderror"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                            required>
+
                         <label for="password">Password</label>
-                         @error('password')
+
+                        <span class="password-toggle"
+                            onmousedown="showPassword()"
+                            onmouseup="hidePassword()"
+                            onmouseleave="hidePassword()">
+                            <i class="bi bi-eye"></i>
+                        </span>
+
+                        @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
                     
                     <div class="d-grid mb-4">
                         <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
@@ -46,3 +61,19 @@
     </div>
 </div>
 @endsection
+
+<script>
+
+function showPassword() {
+    const pw = document.getElementById('password');
+    pw.type = 'text';
+    pw.nextElementSibling.nextElementSibling.innerHTML = '<i class="bi bi-eye-slash"></i>';
+}
+
+function hidePassword() {
+    const pw = document.getElementById('password');
+    pw.type = 'password';
+    pw.nextElementSibling.nextElementSibling.innerHTML = '<i class="bi bi-eye"></i>';
+}
+
+</script>
