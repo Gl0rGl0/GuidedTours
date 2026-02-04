@@ -34,7 +34,7 @@ class VisitsSeeder extends Seeder
 
         // Proposed
         Visit::updateOrCreate(
-            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(10)->toDateString()],
+            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(5)->toDateString()],
             ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
         );
 

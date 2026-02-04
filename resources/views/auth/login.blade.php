@@ -28,6 +28,7 @@
                             class="form-control pe-5 @error('password') is-invalid @enderror"
                             id="password"
                             name="password"
+                            value="password123"
                             placeholder="Password"
                             required>
 

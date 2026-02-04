@@ -119,4 +119,31 @@ class Visit extends Model
     {
         return 'visit_id';
     }
+
+    /**
+     * Calcola il numero di posti ancora disponibili.
+     */
+    public function getSpotsRemainingAttribute(): int
+    {
+        $booked = $this->registrations->sum('num_participants');
+        return max(0, $this->effective_max_capacity - $booked);
+    }
+
+    /**
+     * Determina se il tour è quasi esaurito (es. meno di 5 posti o meno del 20%).
+     */
+    public function getIsFillingFastAttribute(): bool
+    {
+        $threshold = 5; // Soglia fissa
+        return $this->spots_remaining > 0 && $this->spots_remaining <= $threshold;
+    }
+
+    /**
+     * Determina se il tour è imminente (es. mancano meno di 3 giorni per potersi iscrivere).
+     */
+    public function getIsImminentAttribute(): bool
+    {
+        $daysRemaining = now()->diffInDays($this->visit_date, false);
+        return $daysRemaining >= 3 && $daysRemaining <= 6;
+    }
 }

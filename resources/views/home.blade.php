@@ -113,23 +113,28 @@
                     <div class="col">
                         <div class="card h-100 shadow-sm border-0 card-hover bg-white">
                             <div class="card-body p-4">
-                                 <div class="d-flex justify-content-between mb-3">
-                                    <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2">Open</span>
-                                    <small class="text-muted"><i class="bi bi-geo-alt me-1"></i> {{ $tour->visitType->place->name }}</small>
-                                </div>
-                                
                                 <h5 class="card-title fw-bold mb-3">{{ $tour->visitType->title }}</h5>
-                                
                                  <ul class="list-unstyled text-muted small mb-4">
-                                    <li class="mb-2"><i class="bi bi-calendar3 me-2 text-primary"></i> {{ \Carbon\Carbon::parse($tour->visit_date)->format('D, M j, Y') }}</li>
-                                    <li class="mb-2"><i class="bi bi-clock me-2 text-primary"></i> {{ \Carbon\Carbon::parse($tour->visitType->start_time)->format('g:i A') }} ({{ $tour->visitType->duration_minutes }} min)</li>
-                                    <li class="mb-2"><i class="bi bi-people me-2 text-primary"></i> {{ $tour->registrations->sum('num_participants') }} / {{ $tour->visitType->max_participants }} Filled</li>
+                                <li class="mb-2"><i class="bi bi-geo-alt me-1 text-primary"></i> {{ $tour->visitType->place->name }}</li>
+                                <li class="mb-2 d-flex align-items-center">
+                                <i class="bi bi-calendar3 me-2 text-primary"></i> 
+                                <span>{{ \Carbon\Carbon::parse($tour->visit_date)->format('D, M j, Y') }}</span>
+                                    @if($tour->is_imminent)
+                                        <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">Imminent</span>
+                                    @endif
+                                </li>
+                                <li class="mb-2"><i class="bi bi-clock me-2 text-primary"></i> {{ \Carbon\Carbon::parse($tour->visitType->start_time)->format('g:i A') }} ({{ $tour->visitType->duration_minutes }} min)</li>
+                                <li class="mb-2 d-flex align-items-center">
+                                <i class="bi bi-people me-2 text-primary"></i> 
+                                <span>{{ $tour->registrations->sum('num_participants') }} / {{ $tour->visitType->max_participants }} Filled</span>
+                                    @if($tour->is_filling_fast)
+                                        <span class="badge bg-warning-subtle text-warning  rounded-pill ms-2">{{ $tour->spots_remaining }} Spots Remaining</span>
+                                    @endif
+                                </li>
                                     <li><i class="bi bi-map me-2 text-primary"></i> {{ $tour->visitType->meeting_point }}</li>
                                 </ul>
                                 
-                                <p class="card-text small text-muted line-clamp-3">
-                                    {{ Str::limit($tour->visitType->description, 100) }}
-                                </p>
+                                <p class="card-text small text-muted line-clamp-3">{{ Str::limit($tour->visitType->description, 100) }}</p>
                             </div>
                             <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
                                 @auth

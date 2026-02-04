@@ -50,7 +50,7 @@
                             @csrf
                             <div class="form-floating mb-4">
                                 <input type="number" id="num_participants" name="num_participants" class="form-control" placeholder="Participants" min="1" value="1" required>
-                                <label for="num_participants">Number of Participants</label>
+                                <label for="num_participants">Number of Participants ({{ $visit->getSpotsRemainingAttribute()}} spots remaining)</label>
                             </div>
                             
                             <div class="d-grid gap-2">
