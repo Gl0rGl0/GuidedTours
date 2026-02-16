@@ -139,9 +139,15 @@
                             <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
                                 @auth
                                     @if (Auth::user()->hasRole('Customer'))
-                                        <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}" class="btn btn-primary w-100 rounded-pill stretched-link">
-                                            View Details & Book
-                                        </a>
+                                        @if($tour->registrations->sum('num_participants') >= $tour->visitType->max_participants)
+                                            <button class="btn btn-secondary w-100 rounded-pill" disabled>
+                                                Sold Out
+                                            </button>
+                                        @else
+                                            <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}" class="btn btn-primary w-100 rounded-pill stretched-link">
+                                                View Details & Book
+                                            </a>
+                                        @endif
                                     @else
                                          <button class="btn btn-secondary w-100 rounded-pill" disabled>Customer Only</button>
                                     @endif
