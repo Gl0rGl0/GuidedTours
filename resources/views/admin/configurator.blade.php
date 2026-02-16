@@ -347,11 +347,12 @@
                         <label for="new_username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="6" required>
+                        <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="8" required>
                         <label for="new_password">Password</label>
+                        <div class="form-text text-muted small"><i class="bi bi-info-circle me-1"></i>Min. 8 characters</div>
                     </div>
                     <div class="form-floating mb-3">
-                         <input type="password" class="form-control" id="new_password_confirmation" name="password_confirmation" placeholder="Confirm" required>
+                         <input type="password" class="form-control" id="new_password_confirmation" name="password_confirmation" placeholder="Confirm" minlength="8" required>
                         <label for="new_password_confirmation">Confirm Password</label>
                     </div>
                     <div class="form-floating">
