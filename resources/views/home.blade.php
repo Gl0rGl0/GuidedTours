@@ -174,8 +174,8 @@
                      <div class="col">
                         <div class="card h-100 shadow-sm border-0 bg-white opacity-75">
                             <div class="card-body p-4">
-                                 <div class="d-flex justify-content-between mb-3">
-                                    <span class="badge bg-secondary rounded-pill px-3 py-2">Confirmed</span>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="badge bg-success rounded-pill px-3 py-2">Confirmed</span>
                                     <small class="text-muted"><i class="bi bi-geo-alt me-1"></i> {{ $tour->visitType->place->name }}</small>
                                 </div>
                                 <h5 class="card-title fw-bold mb-3">{{ $tour->visitType->title }}</h5>
