@@ -175,8 +175,8 @@
         @endif
     </div>
 
-    <!-- Confirmed Tours -->
-    @if($confirmed_visits->isNotEmpty())
+    <!-- Confirmed Tours        DA VALUTARE SE TENERLO O MENO, IN CASO SISTEMARLO -->
+    @if(false && $confirmed_visits->isNotEmpty())
         <div class="section-container">
             <div class="d-flex align-items-center mb-4 border-bottom pb-2">
                 <h3 class="fw-bold text-success mb-0 me-3">Your Confirmed Tours</h3>

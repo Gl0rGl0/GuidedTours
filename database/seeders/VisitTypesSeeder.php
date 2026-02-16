@@ -126,5 +126,21 @@ class VisitTypesSeeder extends Seeder
                 'max_participants' => 20
             ]
         );
+
+         VisitType::updateOrCreate(
+            ['place_id' => $place1->place_id, 'title' => 'Evento Costoso'],
+            [
+                'description' => 'Test visita costosa.',
+                'meeting_point' => 'Descrizione visita costosa',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
+                'start_time' => '12:30:00',
+                'duration_minutes' => 15,
+                'requires_ticket' => true,
+                'min_participants' => 5,
+                'max_participants' => 20,
+                'price' => 100.00
+            ]
+        );
     }
 }

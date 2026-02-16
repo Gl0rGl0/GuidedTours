@@ -70,19 +70,19 @@ class HomeController extends Controller
             $proposed_visits = $query->paginate(9)->withQueryString();
 
             // Confirmed Visits (Only show if participating)
-            if (\Illuminate\Support\Facades\Auth::check()) {
-                $confirmed_visits = Visit::with(['visitType.place', 'registrations'])
-                    ->where('status', Visit::STATUS_CONFIRMED)
-                    ->whereDate('visit_date', '>=', Carbon::today())
-                    ->whereHas('registrations', function ($q) {
-                        $q->where('user_id', \Illuminate\Support\Facades\Auth::id());
-                    })
-                    ->orderBy('visit_date')
-                    ->limit(6)
-                    ->get();
-            } else {
-                $confirmed_visits = collect();
-            }
+            // if (\Illuminate\Support\Facades\Auth::check()) {
+            //     $confirmed_visits = Visit::with(['visitType.place', 'registrations'])
+            //         ->where('status', Visit::STATUS_CONFIRMED)
+            //         ->whereDate('visit_date', '>=', Carbon::today())
+            //         ->whereHas('registrations', function ($q) {
+            //             $q->where('user_id', \Illuminate\Support\Facades\Auth::id());
+            //         })
+            //         ->orderBy('visit_date')
+            //         ->limit(6)
+            //         ->get();
+            // } else {
+            //     $confirmed_visits = collect();
+            // }
 
         } catch (\Exception $e) {
             Log::error("Error fetching visits for home page: " . $e->getMessage());
@@ -91,7 +91,7 @@ class HomeController extends Controller
 
         return view('home', [
             'proposed_visits' => $proposed_visits,
-            'confirmed_visits' => $confirmed_visits,
+            //'confirmed_visits' => $confirmed_visits,
             'places' => $places,
             'error_message' => $error_message
         ]);
