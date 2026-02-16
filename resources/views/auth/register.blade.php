@@ -23,14 +23,16 @@
                         @enderror
                     </div>
                     
-                   <div class="form-floating mb-4 position-relative">
+                    <div class="form-floating mb-4 position-relative">
                         <input type="password"
                             class="form-control pe-5 @error('password') is-invalid @enderror"
                             id="password"
                             name="password"
                             placeholder="Password"
+                            minlength="8"
                             required>
                         <label for="password">Password</label>
+                        <div class="form-text text-muted small"><i class="bi bi-info-circle me-1"></i>Min. 8 characters</div>
 
                         <span class="password-toggle"
                             onmousedown="showPassword('password')"
@@ -51,6 +53,7 @@
                             id="password_confirmation"
                             name="password_confirmation"
                             placeholder="Confirm Password"
+                            minlength="8"
                             required>
                         <label for="password_confirmation">Confirm Password</label>
 
