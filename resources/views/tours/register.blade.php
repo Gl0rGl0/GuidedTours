@@ -33,8 +33,12 @@
                                      {{ \Carbon\Carbon::parse($visit->visitType->start_time)->format('g:i A') }} ({{ $visit->visitType->duration_minutes }} mins)
                                 </li>
                                 <li class="mb-2 d-flex">
-                                     <i class="bi bi-people me-2 text-primary"></i>
-                                     {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }} Participants
+                                    <i class="bi bi-people me-2 text-primary"></i>
+                                    {{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }} Participants
+                                </li>
+                                <li class="mb-2 d-flex">
+                                    <i class="bi bi-tag me-2 text-primary"></i>
+                                    <strong>Price:</strong> &nbsp; {{ $visit->visitType->price > 0 ? '€' . number_format($visit->visitType->price, 2) : 'Free' }}
                                 </li>
                             </ul>
 
