@@ -25,7 +25,7 @@
         <div class="row g-4">
             @foreach ($bookings as $booking)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
+                    <div class="card h-100 shadow-sm border-0 {{ request('highlight') == $booking->visit_id ? 'highlight-card' : '' }}" id="booking-{{ $booking->visit_id }}">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
@@ -107,6 +107,18 @@
 </div>
 
 @push('scripts')
+<style>
+    @keyframes highlight-pulse {
+        0% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4); transform: scale(1); }
+        50% { box-shadow: 0 0 0 15px rgba(13, 110, 253, 0); transform: scale(1.02); }
+        100% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0); transform: scale(1); }
+    }
+    .highlight-card {
+        animation: highlight-pulse 2s ease-out;
+        border-color: #0d6efd !important;
+        background-color: #f8f9fa;
+    }
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var cancelModal = document.getElementById('cancelModal');
@@ -116,6 +128,12 @@
             var form = document.getElementById('cancelForm');
             form.action = actionUrl;
         });
+
+        // Scroll to highlighted booking
+        const highlighted = document.querySelector('.highlight-card');
+        if (highlighted) {
+            highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
 </script>
 @endpush

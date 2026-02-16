@@ -139,7 +139,15 @@
                             <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
                                 @auth
                                     @if (Auth::user()->hasRole('Customer'))
-                                        @if($tour->registrations->sum('num_participants') >= $tour->visitType->max_participants)
+                                        @php
+                                            $isBooked = $tour->registrations->contains('user_id', Auth::id());
+                                        @endphp
+                                        
+                                        @if($isBooked)
+                                            <a href="{{ route('user.dashboard') . '?highlight=' . $tour->visit_id }}" class="btn btn-outline-primary w-100 rounded-pill stretched-link">
+                                                Already Booked
+                                            </a>
+                                        @elseif($tour->registrations->sum('num_participants') >= $tour->visitType->max_participants)
                                             <button class="btn btn-secondary w-100 rounded-pill" disabled>
                                                 Sold Out
                                             </button>
