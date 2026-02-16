@@ -25,7 +25,7 @@
         <div class="row g-4">
             @foreach ($bookings as $booking)
                 <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0 card-hover">
+                    <div class="card h-100 shadow-sm border-0">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
