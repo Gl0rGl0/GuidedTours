@@ -107,31 +107,52 @@
                 @endphp
 
                 @foreach ($monthsAvail as $month => $weeks)
-                    <div class="mb-5 last:mb-0">
-                         <div class="d-flex align-items-center mb-3">
-                            <span class="badge bg-info text-dark py-2 px-3 rounded-pill me-3">{{ $month }}</span>
-                            <hr class="flex-grow-1 opacity-25">
+                    <div class="mb-4 last:mb-0" x-data="{ selectedWeek: '{{ array_key_first($weeks) }}' }">
+                         <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-info text-dark py-2 px-3 rounded-pill me-3">{{ $month }}</span>
+                            </div>
+                            <div class="w-auto">
+                                <select class="form-select form-select-sm rounded-pill border-info text-info fw-bold" x-model="selectedWeek" aria-label="Select Week">
+                                    @foreach($weeks as $i => $week)
+                                        <option value="{{ $i }}">Week {{ $i + 1 }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                        <div class="row g-4">
+                        
+                        <div class="row">
                             @foreach ($weeks as $i => $week)
-                                <div class="col-md-6 col-lg-3">
-                                     <div class="bg-light p-3 rounded-3 h-100">
-                                        <h6 class="text-uppercase text-muted fw-bold small mb-3">Week {{ $i + 1 }}</h6>
+                                <div class="col-12" x-show="selectedWeek == '{{ $i }}'" x-transition:enter.duration.300ms>
+                                     <div class="bg-light p-4 rounded-4 h-100 border border-info border-opacity-10">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                             <h6 class="text-uppercase text-muted fw-bold small mb-0">Availability for Week {{ $i + 1 }}</h6>
+                                             <span class="badge bg-white text-muted border">{{ count($week) }} Days active</span>
+                                        </div>
+                                        
                                         @if (!empty($week))
-                                            @foreach ($week as $date => $availabilities)
-                                                 <div class="mb-3">
-                                                    <div class="fw-bold text-dark border-bottom pb-1 mb-2">{{ \Carbon\Carbon::parse($date)->format('M d') }}</div>
-                                                    <div class="d-flex flex-wrap gap-1">
-                                                        @foreach ($availabilities as $availability)
-                                                            <span class="badge bg-white text-dark border shadow-sm fw-normal">
-                                                                {{ $availability->volunteer->username }}
-                                                            </span>
-                                                        @endforeach
+                                            <div class="row g-3">
+                                                @foreach ($week as $date => $availabilities)
+                                                     <div class="col-md-6 col-lg-3">
+                                                        <div class="card h-100 border-0 shadow-sm">
+                                                            <div class="card-header bg-white fw-bold text-dark border-bottom-0 pt-3 pb-1">
+                                                                {{ \Carbon\Carbon::parse($date)->format('D, M d') }}
+                                                            </div>
+                                                            <div class="card-body pt-0">
+                                                                <div class="d-flex flex-wrap gap-1">
+                                                                    @foreach ($availabilities as $availability)
+                                                                        <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle shadow-sm fw-normal py-2 px-2">
+                                                                            <i class="bi bi-person-check me-1"></i>{{ $availability->volunteer->username }}
+                                                                        </span>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         @else
-                                            <p class="text-muted small fst-italic">No data</p>
+                                            <p class="text-muted small fst-italic">No data for this week</p>
                                         @endif
                                     </div>
                                 </div>
