@@ -22,6 +22,7 @@
                                 @endforeach
                             </select>
                             <label for="visit_type_id">Visit Type</label>
+                            <div class="form-text text-muted small ms-1">Choose the specific tour type to organize.</div>
                             @error('visit_type_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -30,6 +31,7 @@
                         <div class="form-floating mb-3">
                             <input type="date" class="form-control @error('visit_date') is-invalid @enderror" id="visit_date" name="visit_date" value="{{ old('visit_date') }}" required>
                             <label for="visit_date">Date</label>
+                            <div class="form-text text-muted small ms-1">Select a date to fetch available volunteers.</div>
                             @error('visit_date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -37,9 +39,10 @@
 
                         <div class="form-floating mb-4">
                             <select class="form-select" id="assigned_volunteer_id" name="assigned_volunteer_id" required>
-                                <option value="">-- Select Volunteer --</option>
+                                <option value="">-- Select Date First --</option>
                             </select>
                             <label for="assigned_volunteer_id">Available Volunteer</label>
+                            <div class="form-text text-muted small ms-1">Only volunteers available on the selected date will appear here.</div>
                         </div>
 
                          @if ($errors->has('general'))

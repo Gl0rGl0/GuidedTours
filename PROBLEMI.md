@@ -37,7 +37,7 @@ Analisi basata sul confronto tra il report di usabilità della Versione 1 (`docs
 | **29** | Error Prev. | **Assenza conferma eliminazione**: Cancellazione immediata. | ✅ **Resolved** | `admin/configurator.blade.php`: Modale `#deleteModal` presente e funzionante. |
 | **30** | Aesthetics | **Disorganizzazione del layout**: Visit Planning confuso. | ✅ **Resolved** | `admin/visit-planning.blade.php`: Layout a card, raggruppamento per mesi/settimane molto chiaro. |
 | **31** | Efficiency | **Flusso inserimento non intuitivo**: Add Visit confuso. | ✅ **Resolved** | `admin/visits/create.blade.php`: Flusso guidato (Tipo -> Data -> Volontario disponibile). |
-| **32** | Visibility | **Mancanza feedback su vincoli**: Vincoli password/input non mostrati. | ⚠️ **Partial** | `auth/register.blade.php`: Label semplici, mancano hint espliciti "Min 8 chars" visibili prima dell'errore. |
+| **32** | Visibility | **Mancanza feedback su vincoli**: Vincoli password/input non mostrati. | ✅ **Resolved** | `auth/register.blade.php` & `admin/visits/create.blade.php`: Aggiunti help text espliciti per vincoli (min length, date, volunteer selection). |
 
 ## Note Tecniche per i Fix Prioritari
 
