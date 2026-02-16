@@ -1,0 +1,652 @@
+% --- DEFINIZIONE CONTATORE (Da mettere prima del chapter o nel preambolo) ---
+\newcounter{probcount}
+\setcounter{probcount}{0}
+\newcommand{\problemstep}{\stepcounter{probcount}Problema \arabic{probcount}}
+
+\chapter{Valutazione Euristica}
+
+\section{Fase preliminare}
+La valutazione euristica, eseguita al fine di rilevare i problemi di usabilità più evidenti, è stata realizzata prendendo a riferimento i 10 principi di Nielsen.
+
+La valutazione è stata eseguita da tre valutatori (i membri del gruppo). È stato deciso di non utilizzare la figura dell'osservatore in quanto si è preferito massimizzare il numero di valutatori, in modo da poter riscontrare più problemi possibile. Ogni valutatore ha svolto due sessioni da circa due ore ciascuna, usando una notazione del tipo \textit{x.y}, dove \textit{x} identifica il valutatore e \textit{y} il numero progressivo del problema individuato.
+
+Va precisato che le due categorie di utenti individuate (Giulia e Marco) dispongono delle stesse funzionalità; il sistema non presenta interfacce diverse a seconda dell'utente. La distinzione tra i due consiste nell'uso tipico e nel modello mentale di riferimento durante l'interazione.
+
+\section{Fase di debriefing}
+I documenti prodotti durante le valutazioni individuali sono stati confrontati in una fase di \textit{debriefing} collegiale. In questa sede, i problemi sono stati accorpati e la loro severità è stata mediata in base all'impatto sulle \textit{personas}.
+
+Per quanto riguarda il grado di severità, è stata utilizzata la scala di Nielsen a 5 valori (da 0 a 4). I principi violati indicati nelle tabelle seguenti rappresentano il consenso raggiunto dal gruppo durante il confronto.
+
+\subsection{Elenco dei problemi riscontrati}
+
+\subsubsection{Homepage}
+% --- Home page SLOGGATO ---
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Semantica colore "Proposed"} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Il tag di stato "Proposed" utilizza il colore giallo, risultando visivamente associabile a un messaggio di avviso (warning) piuttosto che a uno stato informativo neutrale. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli//immagini/p1.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 2 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% D,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Inconsistenza cromatica "Proposed"} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Il tag di stato "Proposed" presenta incostanza cromatica: appare giallo in alcune schermate e blu in altre, riducendo la consistenza interna dell'interfaccia. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p2.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Chiarezza nota pagamento} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Il messaggio informativo relativo alle modalità di pagamento risulta ambiguo e di difficile comprensione per l'utente finale. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p3.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 5, 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Stile nota pagamento} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Lo stile visivo della nota di pagamento manca di distinzione (contrasto/spaziatura) rispetto al testo circostante, riducendone la leggibilità. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p3.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 2 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% D,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ambiguità cromatica stati visita} \\ \hline
+\textbf{Posizione} & Homepage (User Dashboard preview) \\ \hline
+\textbf{Descrizione} & Gli stati "Confirmed" e "Complete" condividono la stessa codifica cromatica. Questa sovrapposizione impedisce di distinguere a colpo d'occhio una visita futura da una conclusa. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p4.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 4 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Mancanza feedback disponibilità} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Assenza di notifiche o indicatori visivi sullo stato di saturazione delle visite (es. avvisi di "ultimi posti disponibili"). \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p6.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% M
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ridondanza "Visite confermate"} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & La sezione "Visite confermate" appare ridondante rispetto al flusso principale e di scarso valore informativo per l'utente, suggerendone la rimozione o riorganizzazione. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p7.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% D
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Area cliccabile limitata} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & L'accesso ai dettagli della visita è vincolato al solo pulsante dedicato; la mancata interattività del titolo viola le aspettative standard di navigazione web. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p8.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 5 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Gerarchia visiva debole} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Titolo e sottotitolo mancano della necessaria evidenza grafica, compromettendo la gerarchia visiva rispetto al corpo del contenuto. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p9.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 2, 4 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% D
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Assenza shortcut area personale} \\ \hline
+\textbf{Posizione} & Homepage \\ \hline
+\textbf{Descrizione} & Dalle card delle visite in Homepage manca un collegamento diretto (shortcut) che indirizzi l'utente alla propria area personale/dashboard. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p10.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 4 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% M
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Mancanza toggle visibilità password} \\ \hline
+\textbf{Posizione} & Login/Register \\ \hline
+\textbf{Descrizione} & Assenza dell'icona per visualizzare temporaneamente la password (eye-icon) nei form di login e registrazione, aumentando la probabilità di errori di digitazione. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p11.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% M
+
+\subsubsection{Footer}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Incoerenza linguistica} \\ \hline
+\textbf{Posizione} & Footer \\ \hline
+\textbf{Descrizione} & Presenza della dicitura in italiano "Sito di visite guidate" nel footer, in contrasto con l'interfaccia localizzata interamente in inglese. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p12.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 2 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% M,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Visibilità ridotta logo} \\ \hline
+\textbf{Posizione} & Header/Navbar \\ \hline
+\textbf{Descrizione} & Scarsa visibilità e contrasto insufficiente del logo istituzionale (Unibs), che ne compromettono la riconoscibilità. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p13.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 2 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\subsubsection{Login}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Navigazione ambigua verso "Register"} \\ \hline
+\textbf{Posizione} & Login \\ \hline
+\textbf{Descrizione} & Presenza di molteplici punti di accesso (link/pulsanti) alla pagina di registrazione, causa di disorientamento nel percorso utente. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p14.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4, 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ridondanza informativa Ruoli} \\ \hline
+\textbf{Posizione} & Login \\ \hline
+\textbf{Descrizione} & L'indicazione testuale specifica del ruolo "User/Fruitore only" risulta ridondante, aumentando il rumore visivo dell'interfaccia. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p15.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 8 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Feedback di errore non user-friendly} \\ \hline
+\textbf{Posizione} & Login \\ \hline
+\textbf{Descrizione} & Il messaggio di errore in caso di credenziali errate è eccessivamente tecnico (espone dettagli di sistema) e poco informativo per l'utente. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p16.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 3, 5 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Assenza recupero password} \\ \hline
+\textbf{Posizione} & Login \\ \hline
+\textbf{Descrizione} & Manca una funzionalità o un meccanismo chiaro per il recupero delle credenziali ("Password dimenticata") in caso di smarrimento. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p17.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 3, 9 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 3 \\ \hline
+\end{tabular}
+\end{table}
+% M,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Carico cognitivo posti disponibili} \\ \hline
+\textbf{Posizione} & Tour Registration (Register form) \\ \hline
+\textbf{Descrizione} & In fase di iscrizione manca il conteggio esplicito dei posti residui, imponendo all'utente un calcolo non necessario. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p18.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 6 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\subsubsection{Register}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Navigazione ridondante verso "Login"} \\ \hline
+\textbf{Posizione} & Register \\ \hline
+\textbf{Descrizione} & Presenza eccessiva di link per tornare alla fase di login all'interno della pagina di registrazione, fonte di distrazione e disordine. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p19.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4, 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ridondanza informativa Ruoli} \\ \hline
+\textbf{Posizione} & Register \\ \hline
+\textbf{Descrizione} & L'indicazione testuale specifica del ruolo "User/Fruitore only" risulta ridondante e appesantisce l'interfaccia. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p20.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 8 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Validazione tardiva input} \\ \hline
+\textbf{Posizione} & Register \\ \hline
+\textbf{Descrizione} & La validazione dei vincoli sullo username avviene solo dopo l'invio del form (server-side), invece che in tempo reale, rallentando l'interazione. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p21.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 5 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+% --- Dashboard customer ----
+
+\subsubsection{Dashboard Fruitore}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Visibilità "Booking code"} \\ \hline
+\textbf{Posizione} & Dashboard Fruitore \\ \hline
+\textbf{Descrizione} & Scarsa evidenza grafica del "Booking code" e assenza di indicazioni contestuali (tooltip o etichette) sulla sua funzione e utilizzo. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p22.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 6 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ambiguità etichetta "Participant"} \\ \hline
+\textbf{Posizione} & Dashboard Fruitore \\ \hline
+\textbf{Descrizione} & L'etichetta "Participant" non chiarisce se il contatore si riferisca agli iscritti del proprio sottogruppo o al totale dei partecipanti alla visita. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p23.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 6 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% D,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Affordance ingannevole "My Booking"} \\ \hline
+\textbf{Posizione} & Dashboard Fruitore \\ \hline
+\textbf{Descrizione} & Violazione dell'affordance: elementi grafici nella sezione "My Booking" suggeriscono interattività (appaiono cliccabili) ma non producono alcuna azione. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p24.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 3 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% D
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Stile pulsante eliminazione} \\ \hline
+\textbf{Posizione} & Dashboard Fruitore \\ \hline
+\textbf{Descrizione} & Il pulsante per l'eliminazione della prenotazione presenta uno stile incoerente rispetto al Design System globale del sito. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p25.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\subsubsection{My Past Visits (Fruitore)}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Inconsistenza terminologica} \\ \hline
+\textbf{Posizione} & My Past Visits (Fruitore) \\ \hline
+\textbf{Descrizione} & Incongruenza nell'uso dei termini "Registrations" e "Participants" rispetto alle altre sezioni del sito, creando confusione semantica. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p26.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 6 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% D,G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Incoerenza spaziatura Header} \\ \hline
+\textbf{Posizione} & General Layout \\ \hline
+\textbf{Descrizione} & La spaziatura (padding/margin) tra titolo e header risulta eccessiva e non uniforme rispetto al layout delle altre pagine. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p27.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4, 8 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Validazione tardiva aggiunta utente} \\ \hline
+\textbf{Posizione} & Admin User Management \\ \hline
+\textbf{Descrizione} & La validazione della lunghezza dello username in fase di "aggiunta utente" avviene solo post-invio, rallentando il completamento del task. \\ \hline
+\textbf{Screenshot} & / \\ \hline
+\textbf{Principi violati} & 5 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\subsubsection{Admin Dashboard}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Assenza conferma eliminazione} \\ \hline
+\textbf{Posizione} & Admin Dashboard (Configurator) \\ \hline
+\textbf{Descrizione} & Il sistema esegue l'eliminazione di un oggetto immediatamente al click, senza richiedere una conferma preventiva (dialogo modale) all'utente. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p29.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 8, 9 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 4 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\subsubsection{Visit Planning}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Disorganizzazione del layout} \\ \hline
+\textbf{Posizione} & Visit Planning \\ \hline
+\textbf{Descrizione} & L'organizzazione della pagina risulta disordinata e ad alto carico cognitivo, rendendo poco intuitiva la modalità di interazione. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p30.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 2, 8 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\subsubsection{Add Visit}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Flusso inserimento non intuitivo} \\ \hline
+\textbf{Posizione} & Add Visit \\ \hline
+\textbf{Descrizione} & La sequenza logica di inserimento dei dati non è chiara, creando confusione sul corretto ordine delle operazioni. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p31.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 2 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 3 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Mancanza feedback su vincoli} \\ \hline
+\textbf{Posizione} & Add Visit \\ \hline
+\textbf{Descrizione} & Assenza di feedback espliciti o preventivi in caso di errori procedurali (es. ordine errato di inserimento o mancanza di volontari), lasciando l'utente senza indicazioni per la risoluzione. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p32.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 1, 8 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 3 \\ \hline
+\end{tabular}
+\end{table}
+% G
+
+\section{Analisi Statistica e Grafici}
+
+In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{capitoli/immagini/grafico_severita.png}
+    \caption{Distribuzione dei problemi per grado di severità (Scala Nielsen 0-4).}
+    \label{fig:stat_severita}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{capitoli/immagini/matrice_errori.pdf}
+    \caption{Matrice degli errori trovati }
+    \label{fig:matrice_errori}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{capitoli/immagini/grafico_principi.png}
+    \caption{Frequenza di violazione dei 10 Principi di Nielsen.}
+    \label{fig:stat_principi}
+\end{figure}
+
+
+\subsection{Stima dei problemi totali (Curva di Nielsen)}
+Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, stimiamo di aver rilevato circa il 67\% delle criticità totali.
+\[ N_{tot} = \frac{32}{0.67} \approx 48 \]
+Il calcolo teorico indica che il sistema potrebbe ospitare circa 48 problemi di usabilità totali, di cui 32 sono stati documentati in questa analisi.
+
+\section{Commento Finale alla Valutazione}
+L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{10 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.
+
+Particolarmente rilevante è la presenza di un errore di \textbf{Severità 4} (l'assenza di conferma nell'eliminazione dati nel pannello admin) e di violazioni di \textbf{Severità 3} riguardanti la gestione delle credenziali e i feedback procedurali. Questi dati confermano che il sistema attuale manca di adeguati meccanismi di salvaguardia. La riprogettazione si concentrerà prioritariamente sulla messa in sicurezza delle azioni distruttive e sulla standardizzazione del linguaggio visivo (Principi 1 e 4), al fine di trasformare gli attriti rilevati in flussi d'uso fluidi e sicuri per le \textit{personas} individuate.
+
+
+-------PER PROSSIMI PASSI--------
+
+Recupero password l ho messo come severità 3, perche tagli fuori gente dal sistema quindi abbastanza grave, in teoria però severità 3/4 andrebbero sistemato obbligatoriamente, da quello che ho capito
+Valutare se abbassare grado oppure scrivere "lo faremmo in un sistema vero" 
