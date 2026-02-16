@@ -95,7 +95,7 @@
     <!-- Proposed Tours -->
     <div class="section-container mb-5">
         <div class="d-flex align-items-center mb-4 border-bottom pb-2">
-            <h3 class="fw-bold text-primary mb-0 me-3">Upcoming Tours</h3>
+            <h3 id="upcoming-tours" class="fw-bold text-primary mb-0 me-3">Upcoming Tours</h3>
             <span class="badge bg-primary-subtle text-primary rounded-pill">Open</span>
         </div>
 
@@ -207,3 +207,14 @@
 
 </div>
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.search.includes("page=")) {
+        document.getElementById('upcoming-tours').scrollIntoView({
+  behavior: 'instant'
+})
+    }
+});
+</script>
+

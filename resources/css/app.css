@@ -3,7 +3,6 @@
 /* Custom styles in resources/css/app.css */
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-
 .password-toggle {
     position: absolute;
     top: 50%;
