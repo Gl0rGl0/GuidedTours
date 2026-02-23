@@ -10,14 +10,54 @@ La valutazione euristica, eseguita al fine di rilevare i problemi di usabilità 
 
 La valutazione è stata eseguita da tre valutatori (i membri del gruppo). È stato deciso di non utilizzare la figura dell'osservatore in quanto si è preferito massimizzare il numero di valutatori, in modo da poter riscontrare più problemi possibile. Ogni valutatore ha svolto due sessioni da circa due ore ciascuna, usando una notazione del tipo \textit{x.y}, dove \textit{x} identifica il valutatore e \textit{y} il numero progressivo del problema individuato.
 
-Va precisato che le due categorie di utenti individuate (Giulia e Marco) dispongono delle stesse funzionalità; il sistema non presenta interfacce diverse a seconda dell'utente. La distinzione tra i due consiste nell'uso tipico e nel modello mentale di riferimento durante l'interazione.
+Va precisato che le categorie di utenti individuate dispongono delle stesse funzionalità; il sistema non presenta interfacce diverse a seconda dell'utente ma a seconda della categoria. La distinzione tra i partecipanti consiste nell'uso tipico e nel modello mentale di riferimento durante l'interazione.
 
 \section{Fase di debriefing}
 I documenti prodotti durante le valutazioni individuali sono stati confrontati in una fase di \textit{debriefing} collegiale. In questa sede, i problemi sono stati accorpati e la loro severità è stata mediata in base all'impatto sulle \textit{personas}.
 
 Per quanto riguarda il grado di severità, è stata utilizzata la scala di Nielsen a 5 valori (da 0 a 4). I principi violati indicati nelle tabelle seguenti rappresentano il consenso raggiunto dal gruppo durante il confronto.
 
+\newpage
 \subsection{Elenco dei problemi riscontrati}
+\subsubsection{Generali}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Cursore non coerente su elementi cliccabili} \\ \hline
+\textbf{Posizione} & Globale (vari elementi UI) \\ \hline
+\textbf{Descrizione} & Su alcuni elementi interattivi il cursore del mouse non cambia aspetto (da freccia a puntatore/mano), riducendo la percezione della cliccabilità (affordance) dell'elemento. \\ \hline
+\textbf{Screenshot} & 
+% \vspace{0.1cm}
+% \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_cursore.png}
+% \vspace{0.1cm}
+/ \\ \hline
+\textbf{Principi violati} & 4 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Assenza notifica rischio annullamento visita} \\ \hline
+\textbf{Posizione} & Dashboard \\ \hline
+\textbf{Descrizione} & I partecipanti non vengono avvisati che l'iscrizione alla visita è solamente una prenotazione in caso il tour stesso venga effettuato (quindi abbia partecipanti a sufficienza). \\ \hline
+\textbf{Screenshot} & 
+% \vspace{0.1cm}
+% \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_alert.png}
+% \vspace{0.1cm}
+/ \\ \hline
+\textbf{Principi violati} & 1 \\ \hline
+\textbf{Numero valutatori} & 2 \\ \hline
+\textbf{Grado di severità} & 3 \\ \hline
+\end{tabular}
+\end{table}
 
 \subsubsection{Homepage}
 % --- Home page SLOGGATO ---
@@ -69,7 +109,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \textbf{Posizione} & Homepage \\ \hline
 \textbf{Descrizione} & Il messaggio informativo relativo alle modalità di pagamento risulta ambiguo e di difficile comprensione per l'utente finale. \\ \hline
 \textbf{Screenshot} & 
-\vspace{0.1cm}
+\vspace{0.05cm}
 \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p3.png}
 \vspace{0.1cm} \\ \hline
 \textbf{Principi violati} & 5, 7 \\ \hline
@@ -154,6 +194,24 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \end{tabular}
 \end{table}
 % D
+[AGGIUNTO ULTIMA VERSIONE]
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{Problema} & \textbf{Mancanza personalizzazione Home Page} \\ \hline
+\textbf{Posizione} & Home Page \\ \hline
+\textbf{Descrizione} & La pagina principale non presenta messaggi di benvenuto o contenuti differenziati in base al ruolo dell'utente loggato (Volontario o Fruitore), rendendo l'esperienza generica. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_home.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 2 (Corrispondenza tra sistema e mondo reale) \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
 
 \begin{table}[H]
 \centering
@@ -212,24 +270,6 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \end{table}
 % M
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.5}
-\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
-\hline
-\textbf{\problemstep} & \textbf{Mancanza toggle visibilità password} \\ \hline
-\textbf{Posizione} & Login/Register \\ \hline
-\textbf{Descrizione} & Assenza dell'icona per visualizzare temporaneamente la password (eye-icon) nei form di login e registrazione, aumentando la probabilità di errori di digitazione. \\ \hline
-\textbf{Screenshot} & 
-\vspace{0.1cm}
-\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p11.png}
-\vspace{0.1cm} \\ \hline
-\textbf{Principi violati} & 7 \\ \hline
-\textbf{Numero valutatori} & 1 \\ \hline
-\textbf{Grado di severità} & 1 \\ \hline
-\end{tabular}
-\end{table}
-% M
 
 \subsubsection{Footer}
 \begin{table}[H]
@@ -271,6 +311,26 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % G
 
 \subsubsection{Login}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Mancanza toggle visibilità password} \\ \hline
+\textbf{Posizione} & Login/Register \\ \hline
+\textbf{Descrizione} & Assenza dell'icona per visualizzare temporaneamente la password (eye-icon) nei form di login e registrazione, aumentando la probabilità di errori di digitazione. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p11.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 7 \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+% M
+
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.5}
@@ -609,6 +669,121 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \end{table}
 % G
 
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Email non cliccabili} \\ \hline
+\textbf{Posizione} & Footer \\ \hline
+\textbf{Descrizione} & Le mail nel footer sembrano cliccabili ma non lo sono. \\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p33.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
+\subsubsection{Volontario}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Mancanza selezione multipla nel calendario} \\ \hline
+\textbf{Posizione} & Dashboard Guida / Calendario \\ \hline
+\textbf{Descrizione} & Manca la possibilità di selezionare o deselezionare massivamente i giorni (es. "Tutti i weekend", "Tutto il mese"). L'utente è costretto a cliccare ogni singolo giorno, riducendo l'efficienza. \\ \hline
+\textbf{Screenshot} & 
+% \vspace{0.1cm}
+% \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_selezione.png}
+% \vspace{0.1cm} 
+/ \\ \hline
+\textbf{Principi violati} & 7 (Flessibilità ed efficienza d'uso) \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Assenza indicazioni operative per Volontari} \\ \hline
+\textbf{Posizione} & Sezione "Assigned Visits" \\ \hline
+\textbf{Descrizione} & Nella pagina delle visite assegnate mancano istruzioni chiare o promemoria per il volontario (es. ricordare di controllare i biglietti, procedure di check-in), lasciando l'utente senza guida. \\ \hline
+\textbf{Screenshot} & 
+% \vspace{0.1cm}
+% \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_assigned.png}
+% \vspace{0.1cm} \\ \hline
+/ \\ \hline
+\textbf{Principi violati} & 10 (Aiuto e documentazione) \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Ridondanza nome volontario nelle card} \\ \hline
+\textbf{Posizione} & Sezione "Assigned Visits" \\ \hline
+\textbf{Descrizione} & Nelle card delle visite assegnate viene visualizzato il nome del volontario incaricato. Poiché la vista è privata dell'utente loggato, questa informazione è ridondante e occupa spazio inutile. \\ \hline
+\textbf{Screenshot} & 
+% \vspace{0.1cm}
+% \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_ridondanza.png}
+% \vspace{0.1cm} \\ \hline
+/ \\ \hline
+\textbf{Principi violati} & 8 (Estetica e design minimalista) \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 1 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Messaggio di stato vuoto senza Call to Action} \\ \hline
+\textbf{Posizione} & Sezione "My Bookings" \\ \hline
+\textbf{Descrizione} & Quando non ci sono prenotazioni, il sistema mostra un messaggio statico ("You have not booked any tours yet") senza fornire link o suggerimenti per guidare l'utente verso la sezione di prenotazione. \\ \hline
+\textbf{Screenshot} & 
+\vspace{0.1cm}
+\includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_empty.png}
+\vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 6 (Riconoscimento piuttosto che richiamo) \\ \hline
+\textbf{Numero valutatori} & 1 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Analisi Statistica e Grafici}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{4cm}|>{\centering\arraybackslash}p{8cm}|}
+\hline
+\textbf{\problemstep} & \textbf{Colore bottone non coerente} \\ \hline
+\textbf{Posizione} & Profile \\ \hline
+\textbf{Descrizione} & Il colore del cambio password è rosso, sembrando un errore quando non lo è.\\ \hline
+\textbf{Screenshot} & \vspace{0.1cm} \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/p34.png} \vspace{0.1cm} \\ \hline
+\textbf{Principi violati} & 4 \\ \hline
+\textbf{Numero valutatori} & 3 \\ \hline
+\textbf{Grado di severità} & 2 \\ \hline
+\end{tabular}
+\end{table}
+% tutti
+
 \section{Analisi Statistica e Grafici}
 
 In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
@@ -637,8 +812,8 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \subsection{Stima dei problemi totali (Curva di Nielsen)}
 Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, stimiamo di aver rilevato circa il 67\% delle criticità totali.
-\[ N_{tot} = \frac{32}{0.67} \approx 48 \]
-Il calcolo teorico indica che il sistema potrebbe ospitare circa 48 problemi di usabilità totali, di cui 32 sono stati documentati in questa analisi.
+\[ N_{tot} = \frac{40}{0.67} \approx 60 \]
+Il calcolo teorico indica che il sistema potrebbe ospitare circa 60 problemi di usabilità totali, di cui 40 sono stati documentati in questa analisi.
 
 \section{Commento Finale alla Valutazione}
 L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{10 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.
@@ -648,5 +823,26 @@ Particolarmente rilevante è la presenza di un errore di \textbf{Severità 4} (l
 
 -------PER PROSSIMI PASSI--------
 
-Recupero password l ho messo come severità 3, perche tagli fuori gente dal sistema quindi abbastanza grave, in teoria però severità 3/4 andrebbero sistemato obbligatoriamente, da quello che ho capito
-Valutare se abbassare grado oppure scrivere "lo faremmo in un sistema vero" 
+[non ho capito]
+- quando cambi pagina torna su in cima invece non dovrebbe
+
+[aggiunti mancano screeenshot]
+
+{{{
+
+- bottoni per selezionare/deselezionare tutti i gironi del mese per le guide oppure tutti weekend del mese
+
+- mancanza messaggio home page personalizzata in base al ruolo
+
+- la freccina sulle cose cliccabili non diventava manina cliccante in alcuni casi 
+
+- quando loggato come volontario, mancano indicazioni su pagina 
+"Assigned Visits" tipo: "queste sono le tue..., ricordati di controllare i biglietti che cazzo ne so"
+
+-quando loggato come volontario, nella sezione assignatedvisit, nella card della visità c'è indicato il volontario che sono sempre io loggato--> ridondanza godo
+
+-quando loggato come volontario, nella sezione mybooking se non c'è nulla esce: "You have not booked any tours yet" ma se uno è mongoplettico non sa cosa fare meglio dare indicazioni :"non hai ancora nulla vai nella sezione ... e cerca ..."
+
+- se visita sta per andare ma uno stronzo decide di disiscriversi e la visita richia di non partire avvisare con un banner gli altri iscritti
+
+}}
