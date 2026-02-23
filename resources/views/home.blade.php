@@ -46,8 +46,8 @@
     @endif
 
     <!-- Filter Bar -->
-    <div class="card shadow-sm border-0 mb-5 p-2 rounded-4 bg-white" x-data>
-        <form action="{{ route('home') }}" method="GET" x-ref="filterForm" class="row g-2 align-items-center">
+    <div class="card shadow-sm border-0 mb-5 py-3 px-4 rounded-4 bg-white" x-data>
+        <form action="{{ route('home') }}" method="GET" x-ref="filterForm" class="row g-2 align-items-center m-0">
             
             <!-- Search -->
             <div class="col-md-4">

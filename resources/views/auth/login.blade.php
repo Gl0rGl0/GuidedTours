@@ -34,12 +34,9 @@
 
                         <label for="password">Password</label>
 
-                        <span class="password-toggle"
-                            onmousedown="showPassword()"
-                            onmouseup="hidePassword()"
-                            onmouseleave="hidePassword()">
-                            <i class="bi bi-eye"></i>
-                        </span>
+                        <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y text-muted px-3 border-0 shadow-none z-3" tabindex="-1" onclick="togglePassword()" id="togglePasswordBtn">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </button>
 
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -69,16 +66,19 @@
 
 <script>
 
-function showPassword() {
+function togglePassword() {
     const pw = document.getElementById('password');
-    pw.type = 'text';
-    pw.nextElementSibling.nextElementSibling.innerHTML = '<i class="bi bi-eye-slash"></i>';
-}
-
-function hidePassword() {
-    const pw = document.getElementById('password');
-    pw.type = 'password';
-    pw.nextElementSibling.nextElementSibling.innerHTML = '<i class="bi bi-eye"></i>';
+    const icon = document.getElementById('togglePasswordIcon');
+    
+    if (pw.type === 'password') {
+        pw.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+    } else {
+        pw.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+    }
 }
 
 </script>

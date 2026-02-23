@@ -34,13 +34,11 @@
                         <label for="password">Password</label>
                         <div class="form-text text-muted small" id="passwordHelp"><i class="bi bi-info-circle me-1"></i>Min. 6 characters</div>
 
-                        <span class="password-toggle"
-                            onmousedown="showPassword('password')"
-                            onmouseup="hidePassword('password')"
-                            onmouseleave="hidePassword('password')">
-                            <i class="bi bi-eye"></i>
-                        </span>
+                        <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y text-muted px-3 border-0 shadow-none z-3" tabindex="-1" onclick="togglePassword()" id="togglePasswordBtn">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </button>
 
+                        
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -58,12 +56,9 @@
                         <label for="password_confirmation">Confirm Password</label>
                         <div class="form-text text-muted small d-none" id="confirmHelp"><i class="bi bi-check-circle me-1"></i>Passwords match</div>
 
-                        <span class="password-toggle"
-                            onmousedown="showPassword('password_confirmation')"
-                            onmouseup="hidePassword('password_confirmation')"
-                            onmouseleave="hidePassword('password_confirmation')">
-                            <i class="bi bi-eye"></i>
-                        </span>
+                        <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y text-muted px-3 border-0 shadow-none z-3" tabindex="-1" onclick="togglePassword()" id="togglePasswordBtn">
+                            <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                        </button>
                     </div>
 
                     
