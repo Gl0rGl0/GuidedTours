@@ -20,6 +20,11 @@ Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 
 // Authentication Routes
+Route::get('/forgot-password', function () {
+    session()->now('status', 'Password recovery is currently under construction. Please contact an administrator.');
+    return view('auth.forgot-password');
+})->name('password.request');
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');

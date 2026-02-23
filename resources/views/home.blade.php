@@ -82,7 +82,7 @@
             <!-- Price Toggle -->
             <div class="col-md-auto ms-auto d-flex align-items-center bg-light rounded-pill px-3 py-1 me-2">
                  <div class="form-check form-switch m-0">
-                    <input class="form-check-input" type="checkbox" role="switch" name="price" value="free" id="priceCheck" {{ request('price') == 'free' ? 'checked' : '' }} @change="$refs.filterForm.submit()">
+                    <input class="form-check-input" type="checkbox" role="switch" name="price" value="free" id="priceCheck" {{ request('price') === 'free' ? 'checked' : '' }} @change="$refs.filterForm.submit()">
                     <label class="form-check-label small fw-bold text-muted" for="priceCheck">Free Only</label>
                 </div>
             </div>

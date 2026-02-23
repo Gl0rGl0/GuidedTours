@@ -102,6 +102,8 @@
 body {
     font-family: 'Outfit', sans-serif;
     background-color: var(--bs-body-bg);
+    background-image: radial-gradient(circle at 10% 20%, rgba(13, 110, 253, 0.03) 0%, transparent 60%), radial-gradient(circle at 90% 80%, rgba(255, 193, 7, 0.04) 0%, transparent 60%);
+    background-attachment: fixed;
     color: var(--bs-body-color);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -124,13 +126,14 @@ body {
     border: none;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.3s ease;
     background-color: var(--card-bg);
 }
 
 .card-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.05);
+    filter: brightness(0.96);
 }
 
 // Command Palette Styles
@@ -179,4 +182,16 @@ body {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+
+// Enhancing interactivities for inputs and actions
+.form-control,
+.form-select,
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
 }

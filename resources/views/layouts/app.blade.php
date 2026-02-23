@@ -41,8 +41,8 @@
         <nav class="navbar navbar-expand-lg glass-effect" id="main-navbar">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2" style="width: 40px; height: 40px;">
-                    <span>Guided Tours</span>
+                    <img src="/images/unibslogo_micro.svg" alt="UniBS Logo" class="me-2" style="width: 55px; height: 55px;">
+                    <span class="fs-5 fw-bold">Guided Tours</span>
                 </a>
                 
                 <div class="d-flex align-items-center gap-2 ms-auto order-lg-last">

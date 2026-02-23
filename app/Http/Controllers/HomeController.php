@@ -41,7 +41,7 @@ class HomeController extends Controller
             // 3. Filter by Price (Free)
             if ($request->filled('price') && $request->price === 'free') {
                 $query->whereHas('visitType', function ($q) {
-                    $q->where('requires_ticket', false);
+                    $q->where('price', 0)->orWhereNull('price');
                 });
             }
 

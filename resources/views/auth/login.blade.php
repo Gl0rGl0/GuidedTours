@@ -45,6 +45,10 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    
+                    <div class="d-flex justify-content-end mb-4">
+                        <a href="{{ route('password.request') }}" class="small text-decoration-none text-muted">Forgot password?</a>
+                    </div>
 
                     
                     <div class="d-grid mb-4">

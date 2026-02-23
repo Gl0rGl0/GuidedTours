@@ -347,13 +347,14 @@
                         <label for="new_username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="8" required>
+                        <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="6" required>
                         <label for="new_password">Password</label>
-                        <div class="form-text text-muted small"><i class="bi bi-info-circle me-1"></i>Min. 8 characters</div>
+                        <div class="form-text text-muted small" id="adminPasswordHelp"><i class="bi bi-info-circle me-1"></i>Min. 6 characters</div>
                     </div>
                     <div class="form-floating mb-3">
-                         <input type="password" class="form-control" id="new_password_confirmation" name="password_confirmation" placeholder="Confirm" minlength="8" required>
+                         <input type="password" class="form-control" id="new_password_confirmation" name="password_confirmation" placeholder="Confirm" minlength="6" required>
                         <label for="new_password_confirmation">Confirm Password</label>
+                        <div class="form-text text-muted small d-none" id="adminConfirmHelp"><i class="bi bi-check-circle me-1"></i>Passwords match</div>
                     </div>
                     <div class="form-floating">
                         <select id="new_role" name="role" class="form-select" required>
@@ -445,6 +446,54 @@
          addUserModal.addEventListener('shown.bs.modal', function () {
             document.getElementById('new_username').focus();
         });
+
+        // Live Password Validation (Issue 28)
+        const newPassword = document.getElementById('new_password');
+        const newConfirm = document.getElementById('new_password_confirmation');
+        const adminPassHelp = document.getElementById('adminPasswordHelp');
+        const adminConfHelp = document.getElementById('adminConfirmHelp');
+        const addUserBtn = addUserModal.querySelector('button[type="submit"]');
+
+        function validateAdminPasswords() {
+            const pVal = newPassword.value;
+            const cVal = newConfirm.value;
+            let pValid = false;
+            let cValid = false;
+
+            if (pVal.length >= 6) {
+                adminPassHelp.className = 'form-text text-success small';
+                adminPassHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>Min. 6 characters';
+                pValid = true;
+            } else if (pVal.length > 0) {
+                adminPassHelp.className = 'form-text text-danger small';
+                adminPassHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>Min. 6 characters';
+            } else {
+                adminPassHelp.className = 'form-text text-muted small';
+                adminPassHelp.innerHTML = '<i class="bi bi-info-circle me-1"></i>Min. 6 characters';
+            }
+
+            if (cVal.length > 0) {
+                adminConfHelp.classList.remove('d-none');
+                if (pVal === cVal) {
+                    adminConfHelp.className = 'form-text text-success small';
+                    adminConfHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>Passwords match';
+                    cValid = true;
+                } else {
+                    adminConfHelp.className = 'form-text text-danger small';
+                    adminConfHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>Passwords do not match';
+                }
+            } else {
+                adminConfHelp.classList.add('d-none');
+            }
+
+            addUserBtn.disabled = !(pValid && cValid);
+        }
+
+        newPassword.addEventListener('input', validateAdminPasswords);
+        newConfirm.addEventListener('input', validateAdminPasswords);
+        
+        // Initial state disable
+        addUserBtn.disabled = true;
 
         // --- 3. Initialize tooltips ---
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
