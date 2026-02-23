@@ -20,10 +20,12 @@ Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('/careers', [HomeController::class, 'careers'])->name('careers');
 
 // Authentication Routes
-Route::get('/forgot-password', function () {
-    session()->now('status', 'Password recovery is currently under construction. Please contact an administrator.');
-    return view('auth.forgot-password');
-})->name('password.request');
+use App\Http\Controllers\Auth\PasswordResetController;
+
+Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -115,4 +117,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/test-error', function () {
     throw new \Exception('Errore di test!');
+});
+
+Route::get('/test-email', function () {
+    $html = '<p>Congrats on sending your <strong>first email</strong>!</p>';
+
+    \Illuminate\Support\Facades\Mail::html($html, function (\Illuminate\Mail\Message $message) {
+        $message->to('g.felappi004@studenti.unibs.it')
+                ->subject('Hello World');
+    });
+
+    return 'Successfully sent email via Resend!';
 });
