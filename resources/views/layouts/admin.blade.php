@@ -53,6 +53,11 @@
                 <span class="material-icons text-primary text-3xl">public</span>
                 <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Guided Tours <span class="text-xs font-normal bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-1 border border-primary/20">Admin</span></span>
             </a>
+            
+            <!-- Dark Mode Toggle -->
+            <button @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')" class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-colors" title="Toggle dark mode">
+                <span class="material-icons text-xl" x-text="darkMode ? 'light_mode' : 'dark_mode'"></span>
+            </button>
         </div>
         <div class="flex items-center gap-6">
             <!-- Search (Hidden on mobile) -->
@@ -65,11 +70,6 @@
                 <button class="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-colors">
                     <span class="material-icons">notifications</span>
                     <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
-                </button>
-                
-                <!-- Dark Mode Toggle -->
-                <button @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')" class="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-full transition-colors">
-                    <span class="material-icons text-xl" x-text="darkMode ? 'light_mode' : 'dark_mode'"></span>
                 </button>
 
                 <div class="h-8 w-px bg-gray-200 dark:bg-gray-700 mx-1"></div>

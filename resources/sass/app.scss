@@ -16,8 +16,8 @@
 
 [data-theme="dark"] {
     // Neutral "Zinc" Palette (Modern & Premium)
-    --glass-bg: rgba(30, 30, 30, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(42, 42, 42, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
 
     // Main Backgrounds
@@ -25,7 +25,7 @@
     --bs-body-color: #e0e0e0; // Soft White
 
     // Cards & Panels
-    --card-bg: #1e1e1e; // Slightly lighter than body
+    --card-bg: #2a2a2a; // Noticeably lighter than body for better contrast
     --text-primary: #e0e0e0;
 
     .card {
@@ -40,11 +40,11 @@
 
     // Fix Light Backgrounds in Dark Mode
     .bg-light {
-        background-color: #252525 !important; // Dark Grey for "light" areas
+        background-color: #333333 !important; // Darker grey, visibly different from cards
     }
 
     .bg-white {
-        background-color: #1e1e1e !important;
+        background-color: #2a2a2a !important;
     }
 
     // Inputs

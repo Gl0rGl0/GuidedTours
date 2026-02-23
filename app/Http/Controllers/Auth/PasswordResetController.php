@@ -46,7 +46,7 @@ class PasswordResetController extends Controller
         ]);
 
         // Send the email (always to the hardcoded test address, but with the user's email identifying the request)
-        $testEmailAddress = 'g.felappi004@studenti.unibs.it';
+        $testEmailAddress = 'm.cesari001@studenti.unibs.it';
         $resetUrl = route('password.reset', ['token' => $token, 'email' => $email]);
 
         Mail::to($testEmailAddress)->send(new PasswordResetMail($resetUrl));
