@@ -142,6 +142,11 @@
     <!-- Toast Container -->
     <div id="toast-container"></div>
 
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Back to top">
+        <i class="bi bi-chevron-up"></i>
+    </button>
+
     <!-- Footer -->
     <footer :class="theme === 'light' ? 'bg-dark text-white' : 'bg-light text-dark'" class="mt-auto py-5">
         <div class="container">
@@ -302,10 +307,140 @@
         .toast-notification.error i { color: #dc3545; }
         .toast-notification.warning i { color: #ffc107; }
         .toast-notification.info i { color: #0d6efd; }
+
+        /* Scroll to Top Button */
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .scroll-to-top-btn:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-to-top-btn.show {
+            display: flex;
+        }
+
+        /* Dark theme scroll button */
+        html[data-theme="dark"] .scroll-to-top-btn {
+            background-color: #444;
+            color: #e0e0e0;
+        }
+
+        html[data-theme="dark"] .scroll-to-top-btn:hover {
+            background-color: #555;
+            color: #fff;
+        }
+
+        /* Load More Button */
+        .load-more-btn {
+            background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .load-more-btn:hover {
+            background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+            color: white;
+            text-decoration: none;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .load-more-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Dark theme load more button */
+        html[data-theme="dark"] .load-more-btn {
+            background: linear-gradient(135deg, #444 0%, #333 100%);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        html[data-theme="dark"] .load-more-btn:hover {
+            background: linear-gradient(135deg, #555 0%, #444 100%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Load More Button Loading State */
+        .load-more-btn:disabled,
+        .load-more-btn[data-loading="true"] {
+            opacity: 0.8;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.2em;
+            color: currentColor;
+        }
+
+        .spinner-border {
+            display: inline-block;
+            vertical-align: text-bottom;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: spinner-border 0.75s linear infinite;
+        }
+
+        @keyframes spinner-border {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Smooth fade-in animation for new tours */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tour-card {
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: both;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const navbar = document.getElementById('main-navbar');
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            const loadMoreLink = document.querySelector('.load-more-link');
+            
             if (navbar) {
                 // Function to handle scroll event
                 const handleScroll = () => {
@@ -314,6 +449,15 @@
                     } else {
                         navbar.classList.remove('scrolled');
                     }
+                    
+                    // Show/hide scroll to top button
+                    if (scrollToTopBtn) {
+                        if (window.scrollY > 300) {
+                            scrollToTopBtn.classList.add('show');
+                        } else {
+                            scrollToTopBtn.classList.remove('show');
+                        }
+                    }
                 };
                 
                 // Add scroll event listener
@@ -321,6 +465,30 @@
 
                 // Initial check in case the page is loaded already scrolled
                 handleScroll();
+            }
+            
+            // Scroll to top button functionality
+            if (scrollToTopBtn) {
+                scrollToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Load More button loading state
+            if (loadMoreLink) {
+                loadMoreLink.addEventListener('click', function(e) {
+                    if (loadMoreLink.dataset.loading === 'true') {
+                        e.preventDefault();
+                        return;
+                    }
+                    
+                    loadMoreLink.dataset.loading = 'true';
+                    loadMoreLink.querySelector('.btn-content').style.display = 'none';
+                    loadMoreLink.querySelector('.btn-loading').style.display = 'inline';
+                });
             }
         });
     </script>
