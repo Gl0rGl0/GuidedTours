@@ -87,5 +87,38 @@ class UsersSeeder extends Seeder
             ] 
         );
         $userLuca->assignRole('Customer');
+
+        $userGiorgio = User::updateOrCreate(
+            ['email' => 'g.felappi004@studenti.unibs.it'],
+            [
+                'password' => $password,
+                'first_name' => 'Giorgio',
+                'last_name' => 'Felappi'
+            ] 
+        );
+        $userGiorgio->assignRole('Customer');
+        // Generate 10 extra Guides
+        $faker = \Faker\Factory::create('it_IT');
+
+        for ($i = 0; $i < 10; $i++) {
+            $guide = User::create([
+                'email' => $faker->unique()->safeEmail,
+                'password' => $password,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+            ]);
+            $guide->assignRole('Guide');
+        }
+
+        // Generate 20 extra Customers
+        for ($i = 0; $i < 20; $i++) {
+            $customer = User::create([
+                'email' => $faker->unique()->safeEmail,
+                'password' => $password,
+                'first_name' => $faker->firstName,
+                'last_name' => $faker->lastName,
+            ]);
+            $customer->assignRole('Customer');
+        }
     }
 }

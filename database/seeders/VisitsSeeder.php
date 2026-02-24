@@ -16,86 +16,62 @@ class VisitsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get Volunteers
-        $vol1 = User::where('email', 'anna@example.com')->first();
-        $vol2 = User::where('email', 'marco@example.com')->first();
+        $visitTypes = VisitType::with('volunteers')->get();
 
-        // Get Visit Types
-        $vt1 = VisitType::where('title', 'Storia del Castello')->first();
-        $vt2 = VisitType::where('title', 'Giardini Segreti')->first();
-        $vt3 = VisitType::where('title', 'Percorso Evolutivo MUSE')->first();
-
-        if (!$vol1 || !$vol2 || !$vt1 || !$vt2 || !$vt3) {
-            $this->command->error('Required Users or VisitTypes not found. Run UsersSeeder and VisitTypesSeeder first.');
+        if ($visitTypes->isEmpty()) {
+            $this->command->error('No VisitTypes found. Run VisitTypesSeeder first.');
             return;
         }
 
         $now = Carbon::now();
 
-        // Proposed
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(5)->toDateString()],
-            ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
-        );
+        // Generate 10 Past Visits (Effected / Cancelled)
+        for ($i = 0; $i < 10; $i++) {
+            $vt = $visitTypes->random();
+            $volunteers = $vt->volunteers;
+            
+            if ($volunteers->isEmpty()) continue;
 
-        for ($i = 1; $i <= 100; $i++){
-            Visit::updateOrCreate(
-                ['visit_type_id' => $vt2->visit_type_id, 'visit_date' => $now->copy()->addDays($i + 12)->toDateString()],
-                ['assigned_volunteer_id' => $vol2->user_id, 'status' => 'proposed']
-            );
+            $volunteer = $volunteers->random();
+            $visitDate = $now->copy()->subDays(rand(1, 30));
+
+            // Ensure availability on that past date (mostly optional for seeding but good practice)
+            $isAvailable = \App\Models\VolunteerAvailability::where('user_id', $volunteer->user_id)
+                ->where('available_date', $visitDate->toDateString())
+                ->exists();
+            if (!$isAvailable && rand(1, 10) > 2) continue; // 80% strictly follow availability
+
+            // Randomly pick status
+            $status = rand(1, 100) <= 80 ? 'effected' : 'cancelled';
+
+            Visit::create([
+                'visit_type_id' => $vt->visit_type_id,
+                'visit_date' => $visitDate->toDateString(),
+                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
+                'assigned_volunteer_id' => $volunteer->user_id,
+                'status' => $status,
+                'status_updated_at' => clone $visitDate, // Pretend it was updated on the day of the visit
+            ]);
         }
-        
-        // Visit::updateOrCreate(
-        //     ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(14)->toDateString()],
-        //     ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
-        // );
-        // Visit::updateOrCreate(
-        //     ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(17)->toDateString()],
-        //     ['assigned_volunteer_id' => $vol2->user_id, 'status' => 'proposed']
-        // );
-        //  Visit::updateOrCreate(
-        //     ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(20)->toDateString()],
-        //     ['assigned_volunteer_id' => $vol1->user_id, 'status' => 'proposed']
-        // );
 
+        // Generate 30 Future Visits (Proposed / Confirmed)
+        for ($i = 0; $i < 30; $i++) {
+            $vt = $visitTypes->random();
+            $volunteers = $vt->volunteers;
+            
+            if ($volunteers->isEmpty()) continue;
 
-        // Confirmed
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->addDays(1)->toDateString()],
-            [
-                'assigned_volunteer_id' => $vol2->user_id,
-                'status' => 'confirmed',
-                'status_updated_at' => $now->copy()->subDay() // Set status update time
-            ]
-        );
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt3->visit_type_id, 'visit_date' => $now->copy()->addDays(3)->toDateString()],
-            [
-                'assigned_volunteer_id' => $vol1->user_id,
-                'status' => 'confirmed',
-                'status_updated_at' => $now->copy()->subDays(2) // Set status update time
-            ]
-        );
+            $volunteer = $volunteers->random();
+            $visitDate = $now->copy()->addDays(rand(1, 45));
 
-        // Cancelled
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt2->visit_type_id, 'visit_date' => $now->copy()->subDays(6)->toDateString()],
-            [
-                'assigned_volunteer_id' => $vol2->user_id,
-                'status' => 'cancelled',
-                'status_updated_at' => $now->copy()->subDays(3) // Set status update time
-            ]
-        );
-
-        // Effected
-        // Cancelled
-        Visit::updateOrCreate(
-            ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->subDays(7)->toDateString()],
-            [
-                'assigned_volunteer_id' => $vol1->user_id,
-                'status' => 'effected',
-                'status_updated_at' => $now->copy()->subDays(3) // Set status update time
-            ]
-        );
+            Visit::create([
+                'visit_type_id' => $vt->visit_type_id,
+                'visit_date' => $visitDate->toDateString(),
+                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
+                'assigned_volunteer_id' => $volunteer->user_id,
+                'status' => 'proposed',
+                'status_updated_at' => $now,
+            ]);
+        }
     }
 }

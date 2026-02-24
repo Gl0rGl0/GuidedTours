@@ -17,9 +17,9 @@ class VolunteerAvailabilitySeeder extends Seeder
 
         $volunteers = User::role('Guide')->get();
         
-        // Start from today and go until end of next month
-        $start = Carbon::now();
-        $end = Carbon::now()->addMonth()->endOfMonth();
+        // Start from 1 month ago and go until end of 2 months from now
+        $start = Carbon::now()->subMonth()->startOfMonth();
+        $end = Carbon::now()->addMonths(2)->endOfMonth();
 
         foreach ($volunteers as $volunteer) {
             $current = $start->copy();
