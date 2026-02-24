@@ -9,13 +9,32 @@
         <div class="container py-5">
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <h1 class="display-4 fw-bold mb-3 text-primary">Discover the Secret <br><span
-                            class="text-secondary">Beauty of the City</span></h1>
-                    <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
-                        Join our guided tours to explore the history, secret gardens, architecture, and hidden gems of the
-                        city.
-                        Book your visit today.
-                    </p>
+                    <h1 class="display-4 fw-bold mb-3 text-primary">Discover the Secret <br><span class="text-secondary">Beauty of the City</span></h1>
+                    @auth
+                        @if(Auth::user()->hasRole('Admin'))
+                            <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                                Welcome back, Admin. Monitor visits, manage guides, and keep the experience running smoothly.
+                            </p>
+                        @elseif(Auth::user()->hasRole('Guide'))
+                            <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                                Check your assigned visits and set your availability to keep adventures going.
+                            </p>
+                        @elseif(Auth::user()->hasRole('Customer'))
+                            <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                                Browse our guided tours and book your next unforgettable experience.
+                            </p>
+                        @else
+                            <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                                Join our guided tours to explore the history, secret gardens, architecture, and hidden gems of the city.
+                                Book your visit today.
+                            </p>
+                        @endif
+                    @else
+                        <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+                            Join our guided tours to explore the history, secret gardens, architecture, and hidden gems of the city.
+                            Book your visit today.
+                        </p>
+                    @endauth
                     <p class="text-muted small fst-italic mb-4 mx-auto" style="max-width: 600px;">
                         Note: Your booking is a prenotation. If the minimum number of participants is not achieved, the tour will be automatically cancelled and you will be notified via email.
                     </p>
