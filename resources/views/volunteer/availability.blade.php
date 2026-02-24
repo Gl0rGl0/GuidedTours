@@ -4,6 +4,17 @@
 
 @push('styles')
     <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
+    <style>
+        .calendar-header.clickable {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        .calendar-header.clickable:hover {
+            background-color: var(--bs-primary-bg-subtle, #cfe2ff) !important;
+            color: var(--bs-primary, #0d6efd) !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -22,13 +33,13 @@
                         <div class="d-flex justify-content-center">
                             <div class="calendar-wrapper shadow-sm rounded-3 overflow-hidden border mb-4" style="max-width: 800px; width: 100%;">
                                 <div class="calendar-grid">
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Mon</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Tue</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Wed</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Thu</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Fri</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Sat</div>
-                                    <div class="calendar-header bg-light py-2 fw-bold text-secondary">Sun</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="0" title="Select all Mondays">Mon</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="1" title="Select all Tuesdays">Tue</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="2" title="Select all Wednesdays">Wed</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="3" title="Select all Thursdays">Thu</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="4" title="Select all Fridays">Fri</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="5" title="Select all Saturdays">Sat</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="6" title="Select all Sundays">Sun</div>
 
                                     @php
                                         $firstDayOfMonth = \Carbon\Carbon::createFromFormat('Y-m', $monthYear)->startOfMonth();
@@ -100,6 +111,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Toggle visual indicator if we want to be fancy, or just rely on CSS class
                 // Ideally CSS handles the .selected state appearance
+            }
+        }
+        
+        const headerCell = event.target.closest('.calendar-header.clickable');
+        if (headerCell && headerCell.dataset.dayIndex !== undefined) {
+            const dayIndex = parseInt(headerCell.dataset.dayIndex, 10);
+            
+            // The grid contains 7 headers first, then the day cells
+            const children = Array.from(calendarGrid.children);
+            const dayCells = children.slice(7);
+            
+            // Find valid days in this column
+            const columnCells = dayCells.filter((cell, index) => {
+                return (index % 7) === dayIndex && !cell.classList.contains('other-month');
+            });
+            
+            if (columnCells.length > 0) {
+                // If every valid cell is selected, deselect all. Otherwise, select all.
+                const allSelected = columnCells.every(cell => cell.classList.contains('selected'));
+                const targetState = !allSelected;
+                
+                columnCells.forEach(cell => {
+                    const checkbox = cell.querySelector('input[type="checkbox"]');
+                    if (checkbox && checkbox.checked !== targetState) {
+                        checkbox.checked = targetState;
+                        cell.classList.toggle('selected', targetState);
+                    }
+                });
             }
         }
     });
