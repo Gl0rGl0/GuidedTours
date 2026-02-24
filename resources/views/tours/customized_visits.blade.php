@@ -3,7 +3,6 @@
 @section('title', 'Custom Visits')
 
 @section('content')
-<div class="container py-5">
     @php
         $user = Auth::user();
         $pageTitle = 'Visits';
@@ -66,5 +65,4 @@
             @endforeach
         </div>
     @endif
-</div>
 @endsection

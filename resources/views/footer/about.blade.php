@@ -3,7 +3,6 @@
 @section('title', 'About Us')
 
 @section('content')
-<div class="container py-5">
     <div class="row align-items-center mb-5">
         <div class="col-lg-6">
             <h1 class="display-4 fw-bold text-primary mb-4">Discover Our Story</h1>
@@ -46,5 +45,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

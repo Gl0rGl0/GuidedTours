@@ -3,7 +3,6 @@
 @section('title', 'Admin Configurator')
 
 @section('content')
-<div class="container py-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5">
         <div class="mb-3 mb-md-0">
             <h2 class="fw-bold text-primary mb-1">Configuration Panel</h2>
@@ -329,8 +328,6 @@
         </div>
 
     </div>
-</div>
-
 <!-- ADD USER MODAL -->
 <div class="modal fade" id="addUserModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

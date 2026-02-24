@@ -134,9 +134,15 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-grow-1 pt-0 pb-4">
-        @yield('content')
+    <!-- Main Content Area -->
+    <main class="flex-grow-1" id="main-content">
+        @hasSection('full-width-content')
+            @yield('full-width-content')
+        @else
+            <div class="container py-5 my-4">
+                @yield('content')
+            </div>
+        @endif
     </main>
 
     <!-- Toast Container -->

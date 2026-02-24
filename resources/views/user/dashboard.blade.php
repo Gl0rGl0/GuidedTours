@@ -3,7 +3,6 @@
 @section('title', 'My Bookings')
 
 @section('content')
-<div class="container py-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
         <div>
             <h2 class="fw-bold text-primary mb-1">My Bookings</h2>
@@ -83,8 +82,6 @@
             @endforeach
         </div>
     @endif
-</div>
-
 <!-- Cancel Confirmation Modal -->
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

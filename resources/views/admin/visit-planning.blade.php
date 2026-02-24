@@ -3,7 +3,6 @@
 @section('title', 'Visit Planning')
 
 @section('content')
-<div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h2 class="fw-bold text-primary mb-1">Visit Planning</h2>
@@ -179,5 +178,4 @@
             @endif
         </div>
     </div>
-</div>
 @endsection

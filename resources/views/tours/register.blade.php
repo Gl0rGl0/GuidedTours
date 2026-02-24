@@ -3,7 +3,6 @@
 @section('title', 'Register for Tour')
 
 @section('content')
-<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-4">
@@ -75,5 +74,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

@@ -3,7 +3,6 @@
 @section('title', 'User Profile')
 
 @section('content')
-<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
             <div class="card shadow-sm border-0 rounded-4">
@@ -55,8 +54,6 @@
             </div>
         </div>
     </div>
-</div>
-
 @push('scripts')
 <script>
     document.getElementById('edit-btn').addEventListener('click', function(e) {

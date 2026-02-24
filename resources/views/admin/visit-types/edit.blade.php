@@ -3,7 +3,6 @@
 @section('title', 'Edit Visit Type')
 
 @section('content')
-<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card shadow-sm border-0 rounded-4">
@@ -137,5 +136,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

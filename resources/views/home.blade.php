@@ -2,7 +2,7 @@
 
 @section('title', 'Home - Guided Tours')
 
-@section('content')
+@section('full-width-content')
 
     <!-- Hero Section (Full Width with Background) -->
     <div class="hero-section bg-white border-bottom shadow-sm mb-5">

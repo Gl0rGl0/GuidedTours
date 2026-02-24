@@ -94,8 +94,7 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
 
 <script>
     function togglePassword(inputId, btn) {
