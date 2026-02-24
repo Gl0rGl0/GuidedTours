@@ -179,9 +179,9 @@
                     </div>
                 </div>
             @else
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="tours-container">
                     @foreach ($proposed_visits as $tour)
-                        <div class="col">
+                        <div class="col tour-card">
                             <div class="card h-100 shadow-sm border-0 card-hover bg-white position-relative">
                                 <div class="card-body p-4">
                                     <h5 class="card-title fw-bold mb-3">{{ $tour->visitType->title }}</h5>
@@ -250,9 +250,19 @@
                     @endforeach
                 </div>
 
-                <!-- Pagination -->
+                <!-- Load More Button -->
                 <div class="mt-5 d-flex justify-content-center">
-                    {{ $proposed_visits->onEachSide(1)->links('pagination::bootstrap-5') }}
+                    @if ($proposed_visits->hasMorePages())
+                        <button type="button" class="btn load-more-btn rounded-pill px-4 py-2 fw-semibold load-more-btn-ajax"
+                            data-next-page="{{ $proposed_visits->currentPage() + 1 }}" data-loading="false">
+                            <span class="btn-content">
+                                <i class="bi bi-arrow-down me-2" style="font-size: 0.9rem;"></i> Show More
+                            </span>
+                            <span class="btn-loading" style="display: none;">
+                                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Loading...
+                            </span>
+                        </button>
+                    @endif
                 </div>
                 </div>
             @endif
@@ -293,11 +303,54 @@
 @endsection
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        if (window.location.search.includes("page=")) {
-            document.getElementById('upcoming-tours').scrollIntoView({
-                behavior: 'instant'
-            })
-        }
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    const loadMoreBtn = document.querySelector('.load-more-btn-ajax');
+    const toursContainer = document.getElementById('tours-container');
+
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function () {
+            if (loadMoreBtn.dataset.loading === 'true') return;
+
+            const nextPage = parseInt(loadMoreBtn.dataset.nextPage);
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('page', nextPage);
+
+            loadMoreBtn.dataset.loading = 'true';
+            loadMoreBtn.querySelector('.btn-content').style.display = 'none';
+            loadMoreBtn.querySelector('.btn-loading').style.display = 'inline';
+
+            fetch(currentUrl.toString(), { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newTours = doc.querySelectorAll('.tour-card');
+
+                    if (newTours.length > 0) {
+                        newTours.forEach((tour, index) => {
+                            toursContainer.appendChild(tour);
+                        });
+
+                        const nextPageBtn = doc.querySelector('.load-more-btn-ajax');
+                        if (nextPageBtn) {
+                            loadMoreBtn.dataset.nextPage = nextPageBtn.dataset.nextPage;
+                            loadMoreBtn.dataset.loading = 'false';
+                            loadMoreBtn.querySelector('.btn-content').style.display = 'inline';
+                            loadMoreBtn.querySelector('.btn-loading').style.display = 'none';
+                        } else {
+                            loadMoreBtn.style.display = 'none';
+                        }
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading more tours:', error);
+                    loadMoreBtn.dataset.loading = 'false';
+                    loadMoreBtn.querySelector('.btn-content').style.display = 'inline';
+                    loadMoreBtn.querySelector('.btn-loading').style.display = 'none';
+                });
+        });
+    }
+});
 </script>
