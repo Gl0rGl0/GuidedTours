@@ -47,6 +47,11 @@
                                     <div>Remember: Entrance ticket required at venue.</div>
                                 </div>
                             @endif
+
+                            <div class="alert alert-info d-flex align-items-center mt-3 mb-0 py-2 small fst-italic">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <div>Note: Your booking is a prenotation. If the minimum number of participants is not achieved, the tour will be automatically cancelled and you will be notified via email.</div>
+                            </div>
                         </div>
 
                         <form action="{{ route('visits.register.submit', ['visit' => $visit->visit_id]) }}" method="POST">

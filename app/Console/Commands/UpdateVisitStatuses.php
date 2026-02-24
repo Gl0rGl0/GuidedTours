@@ -35,7 +35,7 @@ class UpdateVisitStatuses extends Command
         $threeDaysFromNow = Carbon::today()->addDays(3)->toDateString();
 
         $this->info("Processing visits for date: {$threeDaysFromNow}");
-        $upcomingVisits = Visit::with(['registrations', 'visitType'])
+        $upcomingVisits = Visit::with(['registrations.user', 'visitType'])
             ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
             ->whereDate('visit_date', '<=', $threeDaysFromNow)
             ->get();
@@ -44,7 +44,7 @@ class UpdateVisitStatuses extends Command
             $registrationsCount = $visit->registrations->sum('num_participants');
             $minParticipants = $visit->visitType->min_participants;
 
-            if($visit->assignedVolunteer()){
+            if($visit->assigned_volunteer_id){
                 if ($registrationsCount >= $minParticipants) {
                     $visit->status = Visit::STATUS_CONFIRMED;
                     $this->line("Visit ID {$visit->visit_id} confirmed. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
@@ -53,11 +53,29 @@ class UpdateVisitStatuses extends Command
                     $visit->status = Visit::STATUS_CANCELLED;
                     $this->line("Visit ID {$visit->visit_id} cancelled. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
                     Log::info("Visit ID {$visit->visit_id} cancelled due to insufficient registrations. Registrations: {$registrationsCount}, Min required: {$minParticipants}");
+                    
+                    // Send cancellation emails
+                    foreach ($visit->registrations as $registration) {
+                        try {
+                            \Illuminate\Support\Facades\Mail::to($registration->user->email)->send(new \App\Mail\TourCancelledMail($visit, $registration->user));
+                        } catch (\Exception $e) {
+                            Log::error("Failed to send cancellation email to {$registration->user->email}: " . $e->getMessage());
+                        }
+                    }
                 }
             }else{
                 $visit->status = Visit::STATUS_CANCELLED;
                 $this->line("Visit ID {$visit->visit_id} cancelled. No volunteer assigned");
                 Log::info("Visit ID {$visit->visit_id} cancelled due to unassigned volunteer.");
+                
+                // Send cancellation emails
+                foreach ($visit->registrations as $registration) {
+                    try {
+                        \Illuminate\Support\Facades\Mail::to($registration->user->email)->send(new \App\Mail\TourCancelledMail($visit, $registration->user));
+                    } catch (\Exception $e) {
+                        Log::error("Failed to send cancellation email to {$registration->user->email}: " . $e->getMessage());
+                    }
+                }
             }
 
             $visit->save();

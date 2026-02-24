@@ -9,7 +9,8 @@
                 <div class="card-body p-4 p-md-5">
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-primary">Create Account</h2>
-                        <p class="text-muted small">Join us to book your guided tours</p>
+                        <p class="text-muted small mb-1">Join us to book your guided tours</p>
+                        <p class="text-muted small fst-italic">Note: Tour bookings are prenotations. If the minimum number of participants is not achieved, the tour will be cancelled and you will be notified via email.</p>
                     </div>
 
                     <form action="{{ route('register') }}" method="post">

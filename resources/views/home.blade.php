@@ -16,6 +16,9 @@
                         city.
                         Book your visit today.
                     </p>
+                    <p class="text-muted small fst-italic mb-4 mx-auto" style="max-width: 600px;">
+                        Note: Your booking is a prenotation. If the minimum number of participants is not achieved, the tour will be automatically cancelled and you will be notified via email.
+                    </p>
 
                     @auth
                         @if(Auth::user()->hasRole('Customer'))
