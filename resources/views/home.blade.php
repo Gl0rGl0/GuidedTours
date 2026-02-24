@@ -40,7 +40,62 @@
         </div>
     </div>
 
-    <div class="container pb-5" id="tours-section">
+    <div class="container pb-5" id="tours-section"
+         x-data="{ 
+             loading: false,
+             updateTours() {
+                 this.loading = true;
+                 const formData = new FormData(this.$refs.filterForm);
+                 const qs = new URLSearchParams(formData).toString();
+                 const url = '{{ route('home') }}?' + qs;
+                 
+                 fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                     .then(r => r.text())
+                     .then(html => {
+                         const doc = new DOMParser().parseFromString(html, 'text/html');
+                         const newWrapper = doc.getElementById('tours-list-wrapper');
+                         if(newWrapper) {
+                             document.getElementById('tours-list-wrapper').innerHTML = newWrapper.innerHTML;
+                         }
+                         window.history.pushState({}, '', url);
+                         this.loading = false;
+                     });
+             },
+             init() {
+                 // Intercept pagination clicks
+                 document.body.addEventListener('click', (e) => {
+                     const link = e.target.closest('#tours-list-wrapper .pagination a');
+                     if (link) {
+                         e.preventDefault();
+                         this.loading = true;
+                         fetch(link.href, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                             .then(r => r.text())
+                             .then(html => {
+                                 const doc = new DOMParser().parseFromString(html, 'text/html');
+                                 const newWrapper = doc.getElementById('tours-list-wrapper');
+                                 if(newWrapper) {
+                                     document.getElementById('tours-list-wrapper').innerHTML = newWrapper.innerHTML;
+                                 }
+                                 window.history.pushState({}, '', link.href);
+                                 
+                                 // Sync form inputs with url params
+                                 const params = new URL(link.href).searchParams;
+                                 if (this.$refs.filterForm.search) this.$refs.filterForm.search.value = params.get('search') || '';
+                                 if (this.$refs.filterForm.place) this.$refs.filterForm.place.value = params.get('place') || '';
+                                 if (this.$refs.filterForm.sort) this.$refs.filterForm.sort.value = params.get('sort') || 'date_asc';
+                                 
+                                 const priceCheck = document.getElementById('priceCheck');
+                                 if (priceCheck) priceCheck.checked = params.get('price') === 'free';
+
+                                 this.loading = false;
+                                 
+                                 // scroll slightly up to see changes smoothly if pagination is at bottom
+                                 document.getElementById('tours-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                             });
+                     }
+                 });
+             }
+         }">
 
         @if(session('error_message'))
             <div class="alert alert-danger rounded-4 shadow-sm mb-4" role="alert">
@@ -49,8 +104,8 @@
         @endif
 
         <!-- Filter Bar -->
-        <div class="card shadow-sm border-0 mb-5 py-3 px-4 rounded-4 bg-light" x-data>
-            <form action="{{ route('home') }}" method="GET" x-ref="filterForm" class="row g-2 align-items-center m-0">
+        <div class="card shadow-sm border-0 mb-5 py-3 px-4 rounded-4 bg-light">
+            <form action="{{ route('home') }}" method="GET" x-ref="filterForm" @submit.prevent="updateTours" class="row g-2 align-items-center m-0">
 
                 <!-- Search -->
                 <div class="col-md-4">
@@ -58,7 +113,8 @@
                         <span class="input-group-text bg-transparent border-0 ps-3"><i
                                 class="bi bi-search text-muted"></i></span>
                         <input type="text" name="search" class="form-control border-0 bg-transparent shadow-none"
-                            placeholder="Search tours..." value="{{ request('search') }}">
+                            placeholder="Search tours..." value="{{ request('search') }}"
+                            @input.debounce.500ms="updateTours" @keydown.enter.prevent="">
                     </div>
                 </div>
 
@@ -67,7 +123,7 @@
                 <!-- Location Filter -->
                 <div class="col-md-2">
                     <select name="place" class="form-select border-0 bg-transparent shadow-none text-muted"
-                        @change="$refs.filterForm.submit()">
+                        @change="updateTours">
                         <option value="">All Locations</option>
                         @foreach($places as $place)
                             <option value="{{ $place->place_id }}" {{ request('place') == $place->place_id ? 'selected' : '' }}>
@@ -80,7 +136,7 @@
                 <!-- Sorting -->
                 <div class="col-md-2">
                     <select name="sort" class="form-select border-0 bg-transparent shadow-none text-muted"
-                        @change="$refs.filterForm.submit()">
+                        @change="updateTours">
                         <option value="date_asc" {{ request('sort') == 'date_asc' ? 'selected' : '' }}>Date: Soonest</option>
                         <option value="date_desc" {{ request('sort') == 'date_desc' ? 'selected' : '' }}>Date: Latest</option>
                         <option value="popularity" {{ request('sort') == 'popularity' ? 'selected' : '' }}>Popularity</option>
@@ -93,7 +149,7 @@
                     <div class="form-check form-switch m-0">
                         <input class="form-check-input" type="checkbox" role="switch" name="price" value="free"
                             id="priceCheck" {{ request('price') === 'free' ? 'checked' : '' }}
-                            @change="$refs.filterForm.submit()">
+                            @change="updateTours">
                         <label class="form-check-label small fw-bold text-muted" for="priceCheck">Free Only</label>
                     </div>
                 </div>
@@ -104,6 +160,7 @@
         </div>
 
         <!-- Proposed Tours -->
+        <div id="tours-list-wrapper" :class="{ 'opacity-50 pe-none': loading }" style="transition: opacity 0.3s ease;">
         <div class="section-container mb-5">
             <div class="d-flex align-items-center mb-4 border-bottom pb-2">
                 <h3 id="upcoming-tours" class="fw-bold text-primary mb-0 me-3">Upcoming Tours</h3>
@@ -194,7 +251,9 @@
                 <div class="mt-5 d-flex justify-content-center">
                     {{ $proposed_visits->onEachSide(1)->links('pagination::bootstrap-5') }}
                 </div>
+                </div>
             @endif
+        </div>
         </div>
 
         <!-- Confirmed Tours        DA VALUTARE SE TENERLO O MENO, IN CASO SISTEMARLO -->
@@ -227,7 +286,6 @@
                 </div>
             </div>
         @endif
-
     </div>
 @endsection
 
