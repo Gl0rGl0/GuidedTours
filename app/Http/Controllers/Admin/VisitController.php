@@ -60,7 +60,7 @@ class VisitController extends Controller
             ->whereHas('volunteerAvailabilities', function ($query) use ($visitDate) {
                 $query->whereDate('available_date', $visitDate);
             })
-            ->select('user_id', 'username')
+            ->select('user_id', 'email', 'first_name', 'last_name')
             ->get();
             
         return response()->json($volunteers);
@@ -87,7 +87,7 @@ class VisitController extends Controller
             ->get()
             ->groupBy('visit_date');
 
-        $volunteers = User::role('Guide')->orderBy('username')->get();
+        $volunteers = User::role('Guide')->orderBy('email')->get();
 
         $visitTypes = VisitType::orderBy('title')->get();
 

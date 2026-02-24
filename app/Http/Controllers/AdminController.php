@@ -37,7 +37,7 @@ class AdminController extends Controller
                 ->get();
 
             // Fetch Users
-            $all_users = User::orderBy('username')->get(['user_id', 'username']);
+            $all_users = User::orderBy('email')->get(['user_id', 'email', 'first_name', 'last_name']);
 
             foreach ($all_users as $user) {
                 if ($user->hasRole('Admin')) {
@@ -96,7 +96,9 @@ class AdminController extends Controller
         return $this->handleAdminOperation(
             function () use ($request) {
                 $user = User::create([
-                    'username' => $request->username,
+                    'email' => $request->email,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
                     'password' => Hash::make($request->password)
                 ]);
 

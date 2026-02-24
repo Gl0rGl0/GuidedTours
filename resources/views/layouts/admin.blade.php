@@ -77,10 +77,10 @@
                 <div class="relative" x-data="{ open: false }">
                     <button @click="open = !open" @click.outside="open = false" class="flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-slate-800 py-1 px-2 rounded-lg transition-colors">
                         <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-sm">
-                            {{ substr(Auth::user()->username ?? 'A', 0, 1) }}
+                            {{ substr(Auth::user()->first_name ?? 'A', 0, 1) }}
                         </div>
                         <div class="hidden md:flex flex-col items-start">
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-200 leading-tight">{{ Auth::user()->username ?? 'Admin' }}</span>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-200 leading-tight">{{ Auth::user()->first_name ?? 'Admin' }} {{ Auth::user()->last_name ?? '' }}</span>
                             <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Super Admin</span>
                         </div>
                         <span class="material-icons text-gray-400 text-lg hidden md:block">expand_more</span>

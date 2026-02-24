@@ -14,8 +14,8 @@ class VolunteersVisitTypesSeeder extends Seeder
      */
     public function run(): void
     {
-        $vol1 = User::where('username', 'volunteer_anna')->first();
-        $vol2 = User::where('username', 'volunteer_marco')->first();
+        $vol1 = User::where('email', 'anna@example.com')->first();
+        $vol2 = User::where('email', 'marco@example.com')->first();
 
         $vt1 = VisitType::where('title', 'Storia del Castello')->first();
         $vt2 = VisitType::where('title', 'Giardini Segreti')->first();

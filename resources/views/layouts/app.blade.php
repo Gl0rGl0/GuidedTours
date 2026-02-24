@@ -105,7 +105,7 @@
                             <!-- User Dropdown -->
                             <li class="nav-item dropdown ms-lg-3">
                                 <a :class="theme === 'dark' ? 'text-dark' : ''" class="nav-link dropdown-toggle btn btn-light px-3 rounded-pill" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->username }}
+                                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item py-2" href="{{ route('profile') }}"><i class="bi bi-person me-2"></i> Profile</a></li>
@@ -191,10 +191,27 @@
                 if(type === 'success') icon = 'bi-check-circle';
                 if(type === 'error') icon = 'bi-exclamation-circle';
                 if(type === 'warning') icon = 'bi-exclamation-triangle';
-                toast.innerHTML = `<i class="bi ${icon} me-2 fs-5"></i> <span>${text}</span>`;
+                toast.innerHTML = `
+                    <i class="bi ${icon} me-2 fs-5"></i> 
+                    <span style="flex-grow: 1; margin-right: 15px;">${text}</span>
+                    <button type="button" class="btn-close" aria-label="Close" style="font-size: 0.75rem; opacity: 0.6;"></button>
+                `;
                 toastContainer.appendChild(toast);
+
+                const closeBtn = toast.querySelector('.btn-close');
+                closeBtn.addEventListener('click', () => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300); // Wait for CSS transition
+                });
+
                 requestAnimationFrame(() => toast.classList.add('show'));
-                setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 600); }, duration);
+                
+                setTimeout(() => { 
+                    if (toast.parentElement) {
+                        toast.classList.remove('show'); 
+                        setTimeout(() => toast.remove(), 600); 
+                    }
+                }, duration);
             }
 
             @if (session('status')) window.showToast("{{ session('status') }}", 'success'); @endif

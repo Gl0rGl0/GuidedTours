@@ -75,7 +75,7 @@
                                                                             <div class="fw-bold">{{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }} {{ $visit->visitType->title }}</div>
                                                                             <div class="text-muted">{{ $visit->visitType->place->name }}</div>
                                                                             <div class="text-xs text-muted mt-1">
-                                                                                <i class="bi bi-person-badge me-1"></i> {{ $visit->assignedVolunteer->username ?? 'Unassigned' }}
+                                                                                <i class="bi bi-person-badge me-1"></i> {{ $visit->assignedVolunteer->first_name ?? 'Unassigned' }} {{ $visit->assignedVolunteer->last_name ?? '' }}
                                                                             </div>
                                                                         </li>
                                                                     @endforeach
@@ -152,7 +152,7 @@
                                                                     <div class="d-flex flex-wrap gap-1">
                                                                         @foreach ($availabilities as $availability)
                                                                             <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle shadow-sm fw-normal py-2 px-2">
-                                                                                <i class="bi bi-person-check me-1"></i>{{ $availability->volunteer->username }}
+                                                                                <i class="bi bi-person-check me-1"></i>{{ $availability->volunteer->first_name }} {{ $availability->volunteer->last_name }}
                                                                             </span>
                                                                         @endforeach
                                                                     </div>

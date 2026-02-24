@@ -61,7 +61,7 @@
 
         <div class="info-row">
             <span class="label">Booked By:</span>
-            {{ $registration->user->username }}
+            {{ $registration->user->first_name }} {{ $registration->user->last_name }}
         </div>
 
         <div class="qr-code">

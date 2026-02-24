@@ -88,7 +88,7 @@ document.getElementById('visit_date').addEventListener('change', function () {
                 data.forEach(volunteer => {
                     const option = document.createElement('option');
                     option.value = volunteer.user_id;
-                    option.textContent = volunteer.username;
+                    option.textContent = volunteer.first_name + ' ' + volunteer.last_name;
                     volunteerSelect.appendChild(option);
                 });
             }

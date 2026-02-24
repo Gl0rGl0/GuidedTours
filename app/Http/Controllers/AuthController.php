@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'username' => ['required', 'string'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required'],
         ]);
 
@@ -35,8 +35,8 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.', // Generic error
-        ])->onlyInput('username');
+            'email' => 'The provided credentials do not match our records.', // Generic error
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request): RedirectResponse
@@ -57,7 +57,6 @@ class AuthController extends Controller
     public function register(Request $request): RedirectResponse
     {
         $request->validate([
-            'username' => ['required', 'string', 'min:3', 'max:50', 'unique:users,username'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
@@ -66,7 +65,6 @@ class AuthController extends Controller
 
         try {
             $user = User::create([
-                'username' => $request->username,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -79,7 +77,7 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             Log::error("Registration failed: " . $e->getMessage());
-            return back()->withInput()->withErrors(['username' => 'Registration failed. Please try again.']);
+            return back()->withInput()->withErrors(['email' => 'Registration failed. Please try again.']);
         }
     }
 }

@@ -56,7 +56,7 @@
                                 <li class="mb-2"><i class="bi bi-clock me-2 text-secondary"></i> {{ \Carbon\Carbon::parse($visit->visitType->start_time)->format('g:i A') }}</li>
                                 <li class="mb-2"><i class="bi bi-map me-2 text-secondary"></i> {{ $visit->visitType->meeting_point }}</li>
                                 @if($visit->assignedVolunteer)
-                                    <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> Vol: {{ $visit->assignedVolunteer->username }}</li>
+                                    <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> Vol: {{ $visit->assignedVolunteer->first_name }} {{ $visit->assignedVolunteer->last_name }}</li>
                                 @endif
                                  <li><i class="bi bi-people me-2 text-secondary"></i> {{ $visit->registrations->sum('num_participants') }} Attendees</li>
                             </ul>

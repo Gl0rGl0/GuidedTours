@@ -17,9 +17,9 @@
                 <div class="card-body p-4">
                     <div class="text-center mb-4">
                         <div class="avatar bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
-                             {{ strtoupper(substr($user->username, 0, 1)) }}
+                             {{ strtoupper(substr($user->first_name, 0, 1)) }}
                         </div>
-                        <h5 class="fw-bold">{{ $user->username }}</h5>
+                        <h5 class="fw-bold">{{ $user->first_name }} {{ $user->last_name }}</h5>
                         <p class="text-muted small badge bg-light text-dark shadow-sm border">{{ ucfirst(Auth::user()->getRoleNames()->first()) }} Account</p>
                     </div>
 

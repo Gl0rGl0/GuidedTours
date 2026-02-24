@@ -17,80 +17,73 @@ class UsersSeeder extends Seeder
         $password = Hash::make('password123');
 
         $configAdmin = User::updateOrCreate(
-            ['username' => 'config_admin'],
+            ['email' => 'admin@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Config',
-                'last_name' => 'Admin',
-                'email' => 'admin@example.com'
+                'last_name' => 'Admin'
             ] 
         );
         $configAdmin->assignRole('Admin');
 
         $configManager = User::updateOrCreate(
-            ['username' => 'config_manager'],
+            ['email' => 'manager@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Config',
-                'last_name' => 'Manager',
-                'email' => 'manager@example.com'
+                'last_name' => 'Manager'
             ] 
         );
         $configManager->assignRole('Admin');
 
         // Volunteers
         $volunteerAnna = User::updateOrCreate(
-            ['username' => 'volunteer_anna'],
+            ['email' => 'anna@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Anna',
-                'last_name' => 'Volunteer',
-                'email' => 'anna@example.com'
+                'last_name' => 'Volunteer'
             ] 
         );
         $volunteerAnna->assignRole('Guide');
 
         $volunteerMarco = User::updateOrCreate(
-            ['username' => 'volunteer_marco'],
+            ['email' => 'marco@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Marco',
-                'last_name' => 'Volunteer',
-                'email' => 'marco@example.com'
+                'last_name' => 'Volunteer'
             ] 
         );
         $volunteerMarco->assignRole('Guide');
 
         // Fruitori
         $userPaolo = User::updateOrCreate(
-            ['username' => 'user_paolo'],
+            ['email' => 'paolo@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Paolo',
-                'last_name' => 'User',
-                'email' => 'paolo@example.com'
+                'last_name' => 'User'
             ] 
         );
         $userPaolo->assignRole('Customer');
 
         $userElena = User::updateOrCreate(
-            ['username' => 'user_elena'],
+            ['email' => 'elena@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Elena',
-                'last_name' => 'User',
-                'email' => 'elena@example.com'
+                'last_name' => 'User'
             ] 
         );
         $userElena->assignRole('Customer');
 
         $userLuca = User::updateOrCreate(
-            ['username' => 'user_luca'],
+            ['email' => 'luca@example.com'],
             [
                 'password' => $password,
                 'first_name' => 'Luca',
-                'last_name' => 'User',
-                'email' => 'luca@example.com'
+                'last_name' => 'User'
             ] 
         );
         $userLuca->assignRole('Customer');

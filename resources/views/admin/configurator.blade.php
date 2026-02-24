@@ -271,11 +271,11 @@
                                             <td class="ps-4">
                                                 <div class="d-flex align-items-center">
                                                     <div class="avatar bg-primary-subtle text-primary rounded-circle me-3 d-flex align-items-center justify-content-center fw-bold" style="width: 40px; height: 40px;">
-                                                        {{ strtoupper(substr($user->username, 0, 1)) }}
+                                                        {{ strtoupper(substr($user->first_name, 0, 1)) }}
                                                     </div>
                                                     <div>
-                                                        <div class="fw-bold">{{ $user->username }}</div>
-                                                        <div class="small text-muted">ID: {{ $user->user_id }}</div>
+                                                        <div class="fw-bold">{{ $user->first_name }} {{ $user->last_name }}</div>
+                                                        <div class="small text-muted">{{ $user->email }}</div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -297,7 +297,7 @@
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#deleteModal"
                                                         data-action="{{ route('admin.users.destroy', $user) }}"
-                                                        data-item-name="{{ $user->username }}"
+                                                        data-item-name="{{ $user->first_name }} {{ $user->last_name }}"
                                                         title="Delete User">
                                                         <i class="bi bi-trash"></i>
                                                     </button>
@@ -342,9 +342,19 @@
              <form action="{{ route('admin.users.add') }}" method="POST">
                 @csrf
                 <div class="modal-body pt-4">
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="new_first_name" name="first_name" placeholder="First Name" required>
+                            <label for="new_first_name">First Name</label>
+                        </div>
+                        <div class="col-md-6 form-floating">
+                            <input type="text" class="form-control" id="new_last_name" name="last_name" placeholder="Last Name" required>
+                            <label for="new_last_name">Last Name</label>
+                        </div>
+                    </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="new_username" name="username" placeholder="Username" minlength="3" required>
-                        <label for="new_username">Username</label>
+                        <input type="email" class="form-control" id="new_email" name="email" placeholder="Email Address" required>
+                        <label for="new_email">Email</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="new_password" name="password" placeholder="Password" minlength="6" required>
@@ -444,7 +454,7 @@
         // Auto-focus input on modal show (Heuristic 7)
         var addUserModal = document.getElementById('addUserModal');
          addUserModal.addEventListener('shown.bs.modal', function () {
-            document.getElementById('new_username').focus();
+            document.getElementById('new_first_name').focus();
         });
 
         // Live Password Validation (Issue 28)

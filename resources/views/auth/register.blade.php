@@ -3,7 +3,7 @@
 @section('title', 'Register')
 
 @section('content')
-    <div class="row justify-content-center min-vh-50 align-items-center">
+    <div class="row justify-content-center min-vh-50 align-items-center mt-4">
         <div class="col-md-6 col-lg-5">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-4 p-md-5">
@@ -16,19 +16,9 @@
                         @csrf
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username"
-                                name="username" placeholder="Choose a Username" value="{{ old('username') }}" required
-                                autofocus>
-                            <label for="username">Username</label>
-                            @error('username')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-floating mb-3">
                             <input type="text" class="form-control @error('first_name') is-invalid @enderror"
                                 id="first_name" name="first_name" placeholder="First Name" value="{{ old('first_name') }}"
-                                required>
+                                required autofocus>
                             <label for="first_name">First Name</label>
                             @error('first_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
