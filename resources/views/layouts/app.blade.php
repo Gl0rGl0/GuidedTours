@@ -100,6 +100,7 @@
 
                             @if (Auth::user()->hasRole('Guide'))
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''" class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}" href="{{ route('volunteer.availability.form') }}">Availability</a></li>
+                                <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''" class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}" href="{{ route('volunteer.visits.past') }}">My Visits</a></li>
                             @endif
                             
                             <!-- User Dropdown -->
