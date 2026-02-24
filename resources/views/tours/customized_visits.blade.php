@@ -11,6 +11,21 @@
         if ($user->hasRole('Customer')) $pageTitle = 'My Past Visits';
     @endphp
 
+    @if($user->hasRole('Guide'))
+        <div class="alert alert-info border-0 rounded-4 shadow-sm mb-4 d-flex gap-3 align-items-start">
+            <i class="bi bi-info-circle-fill fs-4 mt-1 flex-shrink-0"></i>
+            <div>
+                <strong>Guide instructions</strong>
+                <ul class="mb-0 mt-1 small">
+                    <li>Arrive at the meeting point <strong>10 minutes early</strong> to welcome participants.</li>
+                    <li>Check each participant's <strong>booking code</strong> before starting the tour.</li>
+                    <li>If a participant has a ticket requirement, verify it at the entrance.</li>
+                    <li>In case of issues, contact the organisation immediately.</li>
+                </ul>
+            </div>
+        </div>
+    @endif
+
     <div class="d-flex align-items-center mb-4 border-bottom pb-2">
         <h2 class="fw-bold text-primary mb-0 me-3">{{ $pageTitle }}</h2>
     </div>
