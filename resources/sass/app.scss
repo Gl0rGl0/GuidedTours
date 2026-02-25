@@ -15,6 +15,37 @@
     --card-bg: #ffffff;
 }
 
+// --- VIEW TRANSITIONS (Theme Reveal) ---
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+// Light Mode is target (Dark shrinks)
+// The light mode (new) stays underneath while the dark mode (old) animates its clip-path away
+::view-transition-old(root) {
+    z-index: 2147483646;
+}
+
+::view-transition-new(root) {
+    z-index: 1;
+}
+
+// Dark Mode is target (Dark expands)
+// The dark mode (new) animates its clip-path outward on top of the light mode (old)
+[data-theme="dark"]::view-transition-old(root) {
+    z-index: 1;
+}
+
+[data-theme="dark"]::view-transition-new(root) {
+    z-index: 2147483646;
+}
+
+html.theme-transitioning * {
+    transition: none !important;
+}
+
 [data-theme="dark"] {
     color-scheme: dark; // Ensure native scrollbars and selects use dark UI
     // Neutral "Zinc" Palette (Modern & Premium)

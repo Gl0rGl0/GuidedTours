@@ -74,3 +74,16 @@ This is a comprehensive roadmap to transform your project into an enterprise-gra
 2.  **Availability & Bookings** (The heart of the complexity).
 3.  **Invoicing & QR** (Provides immediate value).
 4.  **Scout & Maps** (The "Polish" phase).
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------
+Quando guest schiaccia su una visita e poi accede come admin non appare toast per avvisare che non può

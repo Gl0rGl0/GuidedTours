@@ -2,10 +2,54 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ 
           theme: document.documentElement.getAttribute('data-theme') || 'light',
           commandOpen: false,
-          toggleTheme() {
-              this.theme = this.theme === 'light' ? 'dark' : 'light';
-              localStorage.setItem('theme', this.theme);
-              document.documentElement.setAttribute('data-theme', this.theme);
+          toggleTheme(event) {
+              const isDark = this.theme === 'light';
+              const applyTheme = () => {
+                  this.theme = isDark ? 'dark' : 'light';
+                  localStorage.setItem('theme', this.theme);
+                  document.documentElement.setAttribute('data-theme', this.theme);
+              };
+
+              if (!document.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                  applyTheme();
+                  return;
+              }
+
+              const x = event?.clientX ?? window.innerWidth / 2;
+              const y = event?.clientY ?? window.innerHeight / 2;
+              const endRadius = Math.hypot(
+                  Math.max(x, innerWidth - x),
+                  Math.max(y, innerHeight - y)
+              );
+
+              document.documentElement.classList.add('theme-transitioning');
+              const transition = document.startViewTransition(applyTheme);
+
+                transition.ready.then(() => {
+                    // 1. Cambia 15px con 0px!
+                    const clipPath = [
+                        `circle(1px at ${x}px ${y}px)`,
+                        `circle(${endRadius}px at ${x}px ${y}px)`
+                    ];
+                    
+                    // 2. Anziché usare 'direction', invertiamo brutalmente l'array per la chiusura.
+                    // È molto più stabile per il rendering del browser.
+                    const animationClip = isDark ? clipPath : [...clipPath].reverse();
+
+                    document.documentElement.animate(
+                        { clipPath: animationClip },
+                        {
+                            duration: 500,
+                            easing: 'ease-in-out',
+                            pseudoElement: isDark ? '::view-transition-new(root)' : '::view-transition-old(root)',
+                            fill: 'forwards' // 3. FONDAMENTALE: impedisce il flash nell'ultimo millisecondo
+                        }
+                    );
+                });
+
+              transition.finished.then(() => {
+                  document.documentElement.classList.remove('theme-transitioning');
+              });
           }
       }" :data-theme="theme" @keydown.window.ctrl.k.prevent="commandOpen = !commandOpen"
     @keydown.window.escape="commandOpen = false">
@@ -79,7 +123,7 @@
                     @endauth
 
                     <!-- Theme Toggle -->
-                    <button @click="toggleTheme()" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted"
+                    <button @click="toggleTheme($event)" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted"
                         title="Toggle Theme">
                         <i class="bi" :class="theme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
                     </button>
