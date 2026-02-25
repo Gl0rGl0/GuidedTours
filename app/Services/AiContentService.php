@@ -21,3 +21,5 @@ class AiContentService
                "Book now to secure your spot in this high-demand experience!";
     }
 }
+
+//NON è USATO MA LO LASCIO GIUSTO PER

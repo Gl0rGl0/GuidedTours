@@ -57,7 +57,6 @@ class VisitType extends Model
         'period_end',
         'start_time',
         'duration_minutes',
-        'requires_ticket',
         'min_participants',
         'max_participants',
         'price',
@@ -72,7 +71,6 @@ class VisitType extends Model
         'period_start' => 'date',
         'period_end' => 'date',
         'start_time' => 'datetime:H:i', // Cast to time only H:i format
-        'requires_ticket' => 'boolean',
         'price' => 'float',
     ];
 

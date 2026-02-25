@@ -39,11 +39,11 @@
                             </div>
                         </div>
 
-<div class="form-floating mb-3" x-data="{ loading: false }">
+                        <div class="form-floating mb-3" x-data="{ loading: false }">
                             <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" placeholder="Desc" style="height: 100px;" x-ref="desc">{{ old('description') }}</textarea>
                             <label for="description">Description</label>
                             
-                            <button type="button" 
+                            <!-- <button type="button" 
                                     class="btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2 rounded-pill d-flex align-items-center gap-1 bg-white"
                                     @click="
                                         loading = true;
@@ -79,7 +79,7 @@
                                     :disabled="loading">
                                 <i class="bi" :class="loading ? 'bi-hourglass-split' : 'bi-stars'"></i> 
                                 <span x-text="loading ? 'Generating...' : 'Enhance with AI'"></span>
-                            </button>
+                            </button> -->
 
                              @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -148,13 +148,6 @@
                                 <div class="form-floating">
                                     <input type="number" class="form-control @error('max_participants') is-invalid @enderror" id="max_participants" name="max_participants" placeholder="Max" value="{{ old('max_participants') }}" min="1" required>
                                     <label for="max_participants">Max Participants</label>
-                                </div>
-                             </div>
-                             <div class="col-md-4">
-                                <div class="form-check form-switch p-3 border rounded bg-light">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="requires_ticket" name="requires_ticket" value="1" {{ old('requires_ticket', 0) == 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label fw-bold small" for="requires_ticket">Requires Venue Ticket</label>
-                                    <input type="hidden" name="requires_ticket" value="0">
                                 </div>
                              </div>
                         </div>

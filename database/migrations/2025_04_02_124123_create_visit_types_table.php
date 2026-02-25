@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('period_end');
             $table->time('start_time');
             $table->integer('duration_minutes');
-            $table->boolean('requires_ticket')->default(false);
             $table->integer('min_participants');
             $table->integer('max_participants');
             $table->timestamps(); // Handles created_at and updated_at

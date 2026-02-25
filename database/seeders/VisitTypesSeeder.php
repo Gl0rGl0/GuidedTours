@@ -31,7 +31,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-12-31',
                 'start_time' => '10:00:00',
                 'duration_minutes' => 90,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 25
             ]
@@ -46,7 +45,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-10-31',
                 'start_time' => '15:00:00',
                 'duration_minutes' => 60,
-                'requires_ticket' => true,
                 'min_participants' => 3,
                 'max_participants' => 15
             ]
@@ -61,7 +59,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-12-31',
                 'start_time' => '11:00:00',
                 'duration_minutes' => 120,
-                'requires_ticket' => true,
                 'min_participants' => 8,
                 'max_participants' => 30
             ]
@@ -76,7 +73,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-12-31',
                 'start_time' => '14:00:00',
                 'duration_minutes' => 75,
-                'requires_ticket' => true,
                 'min_participants' => 4,
                 'max_participants' => 20
             ]
@@ -91,7 +87,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-12-31',
                 'start_time' => '16:00:00',
                 'duration_minutes' => 90,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 25
             ]
@@ -106,7 +101,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-09-15',
                 'start_time' => '19:00:00',
                 'duration_minutes' => 60,
-                'requires_ticket' => false,
                 'min_participants' => 6,
                 'max_participants' => 18
             ]
@@ -121,7 +115,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-08-31',
                 'start_time' => '15:30:00',
                 'duration_minutes' => 75,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 20
             ]
@@ -136,7 +129,6 @@ class VisitTypesSeeder extends Seeder
                 'period_end' => '2026-12-31',
                 'start_time' => '12:30:00',
                 'duration_minutes' => 15,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 20,
                 'price' => 100.00

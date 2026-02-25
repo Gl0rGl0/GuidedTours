@@ -20,7 +20,7 @@ class HomeController extends Controller
             // Base Query for Proposed Visits
             $query = Visit::with(['visitType.place', 'registrations'])
                 ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
-                ->whereDate('visit_date', '>=', Carbon::today());
+                ->whereDate('visit_date', '>=', Carbon::today()->addDays(3));
 
             // 1. Filter by Search (Title or Description)
             if ($request->filled('search')) {

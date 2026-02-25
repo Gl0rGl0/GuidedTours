@@ -41,12 +41,10 @@
                                 </li>
                             </ul>
 
-                             @if ($visit->visitType->requires_ticket)
-                                <div class="alert alert-warning d-flex align-items-center mt-3 mb-0 py-2 small">
-                                    <i class="bi bi-ticket-perforated me-2"></i>
-                                    <div>Remember: Entrance ticket required at venue.</div>
-                                </div>
-                            @endif
+                            <div class="alert alert-warning d-flex align-items-center mt-3 mb-0 py-2 small">
+                                <i class="bi bi-ticket-perforated me-2"></i>
+                                <div>Remember: Entrance ticket required at venue.</div>
+                            </div>
 
                             <div class="alert alert-info d-flex align-items-center mt-3 mb-0 py-2 small fst-italic">
                                 <i class="bi bi-info-circle me-2"></i>

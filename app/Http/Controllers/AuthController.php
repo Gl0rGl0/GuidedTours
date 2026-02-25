@@ -34,9 +34,9 @@ class AuthController extends Controller
             return Redirect::intended(route('home'));
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.', // Generic error
-        ])->onlyInput('email');
+        return back()
+            ->with('error', 'The provided credentials do not match our records.')
+            ->withInput(); // Mantiene l'email scritta dall'utente nel form
     }
 
     public function logout(Request $request): RedirectResponse

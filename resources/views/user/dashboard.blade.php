@@ -28,7 +28,7 @@
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-start mb-3">
                                 <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
-                                    {{ $booking->visit->visitType->title }}
+                                    {{ $booking->visit->visitType->place->name }}
                                 </span>
                                 <!-- Cancel action extracted from dropdown for better affordance (Issue 24) -->
                                 <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3" 
@@ -39,7 +39,7 @@
                                 </button>
                             </div>
                             
-                            <h5 class="card-title fw-bold mb-3">{{ $booking->visit->visitType->place->name }}</h5>
+                            <h5 class="card-title fw-bold mb-3">{{ $booking->visit->visitType->title }}</h5>
                             
                             <ul class="list-unstyled text-muted small mb-0">
                                 <li class="mb-2 d-flex align-items-center">

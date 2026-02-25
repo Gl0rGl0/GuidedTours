@@ -35,7 +35,6 @@ class UpdateVisitTypeRequest extends BaseFormRequest
             'period_end'   => ['required', 'date', 'after_or_equal:period_start', "before_or_equal:{$maxEnd}"],
             'start_time' => ['required', 'date_format:H:i'],
             'duration_minutes' => ['required', 'integer', 'min:1', 'max:600'],
-            'requires_ticket' => ['required', 'boolean'],
             'min_participants' => ['required', 'integer', 'min:1', 'max:100'],
             'max_participants' => ['required', 'integer', 'min:1', 'gte:min_participants', 'max:100'],
         ];
