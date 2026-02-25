@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ 
-          theme: localStorage.getItem('theme') || 'light',
+          theme: document.documentElement.getAttribute('data-theme') || 'light',
           commandOpen: false,
           toggleTheme() {
               this.theme = this.theme === 'light' ? 'dark' : 'light';
               localStorage.setItem('theme', this.theme);
+              document.documentElement.setAttribute('data-theme', this.theme);
           }
       }" :data-theme="theme" @keydown.window.ctrl.k.prevent="commandOpen = !commandOpen"
     @keydown.window.escape="commandOpen = false">
@@ -16,7 +17,7 @@
 
     <!-- Theme Flash Prevention -->
     <script>
-        const theme = localStorage.getItem('theme') || 'light';
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
     </script>
 
@@ -181,17 +182,17 @@
     <div id="toast-container"></div>
 
     <!-- Footer -->
-    <footer :class="theme === 'light' ? 'bg-dark text-white' : 'bg-light text-dark'" class="mt-auto py-5">
+    <footer class="theme-footer mt-auto py-5">
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
-                    <h5 :class="theme === 'light' ? 'text-white' : 'text-dark'" class="mb-3">Guided Tours</h5>
-                    <p :class="theme === 'light' ? 'text-white-50' : 'text-secondary'" class="small">The official
+                    <h5 class="mb-3">Guided Tours</h5>
+                    <p class="small">The official
                         platform for organizing and managing guided tours and cultural events.</p>
                     <div class="d-flex gap-2 mt-4">
                         <a href="https://www.unibs.it/it"
                             class="btn btn-outline-light btn-sm btn-floating rounded-circle"><img
-                                :src="theme === 'light' ? '/images/unibslogo-black.png' : '/images/unibslogo-white.png'"
+                                src="/images/unibslogo-white.png"
                                 style="width: 16px; height: 16px;"></a>
                         <a href="https://x.com/unibs_official/"
                             class="btn btn-outline-light btn-sm btn-floating rounded-circle"><i
@@ -202,29 +203,28 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <h6 :class="theme === 'light' ? 'text-white' : 'text-dark'" class="text-uppercase mb-3 fw-bold">
+                    <h6 class="text-uppercase mb-3 fw-bold">
                         Platform</h6>
                     <ul class="list-unstyled">
-                        <li><a :class="theme === 'light' ? 'text-white' : 'text-dark'" class="small"
+                        <li><a class="small"
                                 style="text-decoration: none;" href="{{ route('about') }}">About Us</a></li>
-                        <li><a :class="theme === 'light' ? 'text-white' : 'text-dark'" class="small"
+                        <li><a class="small"
                                 style="text-decoration: none;" href="{{ route('careers') }}">Careers</a></li>
-                        <li><a :class="theme === 'light' ? 'text-white' : 'text-dark'" class="small"
+                        <li><a class="small"
                                 style="text-decoration: none;" href="{{ route('terms') }}">Terms of Service</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <h6 :class="theme === 'light' ? 'text-white' : 'text-dark'" class="text-uppercase mb-3 fw-bold">
+                    <h6 class="text-uppercase mb-3 fw-bold">
                         Contact</h6>
-                    <ul class="list-unstyled" :class="theme === 'light' ? 'text-white-50' : 'text-secondary'"
-                        class="small">
+                    <ul class="list-unstyled small">
                         <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Via Branze 38, Brescia</li>
                         <li class="mb-2"><i class="bi bi-envelope me-2"></i> info@unibs.it</li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 text-lg-end">
-                    <small :class="theme === 'light' ? 'text-white-50' : 'text-secondary'">&copy; {{ date('Y') }} Guided
+                    <small>&copy; {{ date('Y') }} Guided
                         Tours Org.</small>
                 </div>
             </div>
@@ -279,7 +279,7 @@
         .navbar {
             box-shadow: none !important;
             border: none !important;
-            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         /* Light theme scrolled state */
