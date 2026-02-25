@@ -87,3 +87,4 @@ This is a comprehensive roadmap to transform your project into an enterprise-gra
 
 -------------------------------------------
 Quando guest schiaccia su una visita e poi accede come admin non appare toast per avvisare che non può
+error 419 -> redirecta a home, ogni tanto dice sessione scaduta

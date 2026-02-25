@@ -8,9 +8,11 @@
             <h2 class="fw-bold text-primary mb-1">My Bookings</h2>
             <p class="text-muted mb-0">Manage your upcoming and past tours</p>
         </div>
+          @if (!$bookings->isEmpty())
         <a href="{{ route('home') }}" class="btn btn-outline-primary rounded-pill">
             <i class="bi bi-plus-lg me-1"></i> Book New Tour
         </a>
+        @endif
     </div>
 
     @if ($bookings->isEmpty())
