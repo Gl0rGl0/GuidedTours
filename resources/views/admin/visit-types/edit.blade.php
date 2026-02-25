@@ -112,13 +112,6 @@
                                     <label for="max_participants">Max Participants</label>
                                 </div>
                              </div>
-                             <div class="col-md-4">
-                                <div class="form-check form-switch p-3 border rounded bg-light">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="requires_ticket" name="requires_ticket" value="1" {{ old('requires_ticket', $visit_type->requires_ticket) ? 'checked' : '' }}>
-                                    <label class="form-check-label fw-bold small" for="requires_ticket">Requires Venue Ticket</label>
-                                    <input type="hidden" name="requires_ticket" value="0">
-                                </div>
-                             </div>
                         </div>
 
                         @if ($errors->has('general'))
