@@ -10,7 +10,6 @@
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-primary">Create Account</h2>
                         <p class="text-muted small mb-1">Join us to book your guided tours</p>
-                        <p class="text-muted small fst-italic">Note: Tour bookings are prenotations. If the minimum number of participants is not achieved, the tour will be cancelled and you will be notified via email.</p>
                     </div>
 
                     <form action="{{ route('register') }}" method="post">
@@ -35,12 +34,15 @@
                             @enderror
                         </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                name="email" placeholder="name@example.com" value="{{ old('email') }}" required>
-                            <label for="email">Email</label>
+                        <div class="mb-3">
+                            <div class="form-floating position-relative">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                                    name="email" placeholder="name@example.com" value="{{ old('email') }}" required>
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="form-text text-muted small d-none" id="emailHelp"></div>
                             @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -114,15 +116,27 @@
     document.addEventListener('DOMContentLoaded', function () {
         const password = document.getElementById('password');
         const confirm = document.getElementById('password_confirmation');
+        const email = document.getElementById('email');
         const passHelp = document.getElementById('passwordHelp');
         const confHelp = document.getElementById('confirmHelp');
+        const emailHelp = document.getElementById('emailHelp');
         const submitBtn = document.getElementById('submitBtn');
+
+        let pValid = false;
+        let cValid = false;
+        let eValid = (email.value.trim() !== '' && validateEmailFormat(email.value.trim())); // Check on load (e.g., from old() input)
+        let typingTimer;
+
+        // Simple strict email regex
+        function validateEmailFormat(mail) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+        }
 
         function validatePasswords() {
             const pVal = password.value;
             const cVal = confirm.value;
-            let pValid = false;
-            let cValid = false;
+            pValid = false;
+            cValid = false;
 
             if (pVal.length >= 6) {
                 passHelp.className = 'form-text text-success small';
@@ -150,12 +164,76 @@
                 confHelp.classList.add('d-none');
             }
 
-            submitBtn.disabled = !(pValid && cValid);
+            updateSubmitStatus();
         }
 
+        function updateSubmitStatus() {
+            submitBtn.disabled = !(pValid && cValid && eValid);
+        }
+
+        // Email Real-time validation
+        function handleEmailInput() {
+            clearTimeout(typingTimer);
+            const val = email.value.trim();
+            
+            if (val.length === 0) {
+                emailHelp.classList.add('d-none');
+                eValid = false;
+                updateSubmitStatus();
+                return;
+            }
+
+            // Immediately clear error if they start typing again
+            emailHelp.classList.add('d-none');
+            
+            // Only validate when they stop typing for 600ms
+            typingTimer = setTimeout(() => {
+                if (validateEmailFormat(val)) {
+                    emailHelp.classList.remove('d-none');
+                    emailHelp.className = 'form-text text-success small';
+                    emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>Valid email format';
+                    eValid = true;
+                } else {
+                    emailHelp.classList.remove('d-none');
+                    emailHelp.className = 'form-text text-danger small';
+                    emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>Please enter a valid email address';
+                    eValid = false;
+                }
+                updateSubmitStatus();
+            }, 600);
+        }
+
+        // Standard instant validation (password logic)
         password.addEventListener('input', validatePasswords);
         confirm.addEventListener('input', validatePasswords);
+        
+        // Debounced email validation
+        email.addEventListener('input', handleEmailInput);
 
+        // Immediate check on unfocus (blur)
+        email.addEventListener('blur', () => {
+             clearTimeout(typingTimer);
+             const val = email.value.trim();
+             if (val.length > 0) {
+                 if (validateEmailFormat(val)) {
+                    emailHelp.classList.remove('d-none');
+                    emailHelp.className = 'form-text text-success small';
+                    emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>Valid email format';
+                    eValid = true;
+                } else {
+                    emailHelp.classList.remove('d-none');
+                    emailHelp.className = 'form-text text-danger small';
+                    emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>Please enter a valid email address';
+                    eValid = false;
+                }
+                updateSubmitStatus();
+             }
+        });
+
+        // Initialize state
         validatePasswords();
+        if(email.value.trim().length > 0) {
+             email.dispatchEvent(new Event('blur')); // Trigger initial visual validation if they failed registration once and their email is prepopulated via old()
+        }
     });
 </script>
