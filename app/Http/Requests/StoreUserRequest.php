@@ -15,7 +15,7 @@ class StoreUserRequest extends BaseFormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::min(6)],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::min(8)->mixedCase()->numbers()],
         ];
     }
 }

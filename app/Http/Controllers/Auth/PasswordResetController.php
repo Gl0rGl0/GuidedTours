@@ -29,10 +29,17 @@ class PasswordResetController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
         ]);
 
         $email = $request->email;
+
+        // Always return the same message to prevent user enumeration
+        $user = User::where('email', $email)->first();
+        if (!$user) {
+            return back()->with('status', 'If your email is registered, you will receive a reset link.');
+        }
+
         $token = Str::random(64);
 
         // Delete any existing tokens for this email
@@ -45,13 +52,12 @@ class PasswordResetController extends Controller
             'created_at' => Carbon::now()
         ]);
 
-        // Send the email (always to the hardcoded test address, but with the user's email identifying the request)
-        $testEmailAddress = 'm.cesari001@studenti.unibs.it';
+        // Send the email to the requesting user
         $resetUrl = route('password.reset', ['token' => $token, 'email' => $email]);
+        $email = 'g.felappi004@studenti.unibs.it';
+        Mail::to($email)->send(new PasswordResetMail($resetUrl));
 
-        Mail::to($testEmailAddress)->send(new PasswordResetMail($resetUrl));
-
-        return back()->with('status', 'We have emailed your password reset link!');
+        return back()->with('status', 'If your email is registered, you will receive a reset link.');
     }
 
     /**
@@ -72,7 +78,7 @@ class PasswordResetController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', Password::min(6)],
+            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
         ]);
 
         $tokenData = DB::table('password_reset_tokens')

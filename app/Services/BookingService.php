@@ -34,7 +34,7 @@ class BookingService
                 'visit_id' => $data->visit_id,
                 'user_id' => $data->user_id,
                 'num_participants' => $data->num_participants,
-                'booking_code' => strtoupper(Str::random(8)),
+                'booking_code' => strtoupper(Str::random(20)),
             ]);
 
             // Fire Event

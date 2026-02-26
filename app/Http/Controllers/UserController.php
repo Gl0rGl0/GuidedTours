@@ -27,7 +27,7 @@ class UserController extends Controller
         ]);
 
         Auth::user()->update($data);
-        return redirect()->back()->with('success', 'Profile updated correctly.');
+        return redirect()->back()->with('success', __('messages.user.profile.update_success'));
     }
 
     public function showChangePasswordForm(): View
@@ -42,21 +42,21 @@ class UserController extends Controller
         $request->validate([
             'current_password' => ['required', 'string', function ($attribute, $value, $fail) use ($user) {
                 if (!Hash::check($value, $user->password)) {
-                    $fail('The provided current password does not match your actual password.');
+                    $fail(__('messages.user.change_password.wrong_current'));
                 }
             }],
-            'new_password' => ['required', 'confirmed', Password::min(6)],
+            'new_password' => ['required', 'confirmed', Password::min(8)->mixedCase()->numbers()],
         ]);
 
         try {
             $user->password = Hash::make($request->new_password);
             $user->save();
 
-            return back()->with('status', 'Password updated successfully!');
+            return back()->with('status', __('messages.user.change_password.update_success'));
 
         } catch (\Exception $e) {
             Log::error("Password change failed for user {$user->user_id}: " . $e->getMessage());
-            return back()->withErrors(['current_password' => 'Failed to update password. Please try again.']);
+            return back()->withErrors(['current_password' => __('messages.user.change_password.update_failed')]);
         }
     }
 }

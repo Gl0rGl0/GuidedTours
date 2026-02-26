@@ -87,7 +87,7 @@ class VolunteerController extends Controller
             // Rollback transaction on error
             DB::rollBack();
             Log::error("Failed to update availability for user {$user->user_id}: " . $e->getMessage(), ['exception' => $e]);
-            return back()->withErrors(['general' => 'Failed to update availability. Please try again. Error: ' . $e->getMessage()]); // Temporarily show error message
+            return back()->withErrors(['general' => 'Failed to update availability. Please try again.']);
         }
     }
 }

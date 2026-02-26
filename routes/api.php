@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LoginController;
 
 // Public routes
-Route::post('/login', [LoginController::class, 'login']);
+Route::middleware('throttle:5,1')->post('/login', [LoginController::class, 'login']);
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {

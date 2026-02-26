@@ -23,7 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (HttpException $e, Request $request) {
-            print($e->getStatusCode());
             if ($e->getStatusCode() === 419) {
                 return redirect()->route('home')->with('status', 'Session expired.');
             }
