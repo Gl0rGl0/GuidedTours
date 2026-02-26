@@ -12,9 +12,6 @@
              <!-- Quick Actions Dropdown could go here if needed -->
         </div>
     </div>
-
-    <!-- Navigation Tabs (Heuristic 8: Aesthetic and minimalist design) -->
-    <!-- Reduces clutter by organizing content into views -->
     
     <!-- Analytics Section -->
     <script>
@@ -37,7 +34,7 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'New Users',
+                            label: '{{ __("messages.admin.configurator.new_users_label") }}',
                             data: counts,
                             borderColor: '#4f46e5',
                             backgroundColor: gradient,
@@ -376,8 +373,8 @@
                     <div class="form-floating">
                         <select id="new_role" name="role" class="form-select" required>
                             <option value="" disabled selected>{{ __('messages.admin.configurator.modals.role_select') }}</option>
-                            <option value="Guide">Guide</option>
-                            <option value="Admin">Admin</option>
+                            <option value="Guide">{{ __('messages.roles.guide') }}</option>
+                            <option value="Admin">{{ __('messages.roles.admin') }}</option>
                         </select>
                         <label for="new_role">{{ __('messages.admin.configurator.modals.role_label') }}</label>
                     </div>

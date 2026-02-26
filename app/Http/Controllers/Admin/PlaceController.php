@@ -20,8 +20,8 @@ class PlaceController extends Controller
             function () use ($place) {
                 $place->delete(); // Effetto a cascata causa vincoli del DB
             },
-            'Place and associated visit types removed successfully!',
-            'Failed to remove place.',
+            __('messages.admin.places.remove_success'),
+            __('messages.admin.places.remove_failed'),
             'admin.configurator'
         );
     }
@@ -37,8 +37,8 @@ class PlaceController extends Controller
             function () use ($request) {
                 Place::create($request->validated());
             },
-            'Place created successfully!',
-            'Failed to create place.',
+            __('messages.admin.places.create_success'),
+            __('messages.admin.places.create_failed'),
             'admin.configurator'
         );
     }
@@ -54,8 +54,8 @@ class PlaceController extends Controller
             function () use ($request, $place) {
                 $place->update($request->validated());
             },
-            'Place updated successfully!',
-            'Failed to update place.',
+            __('messages.admin.places.update_success'),
+            __('messages.admin.places.update_failed'),
             'admin.configurator'
         );
     }

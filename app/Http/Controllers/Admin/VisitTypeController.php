@@ -20,8 +20,8 @@ class VisitTypeController extends Controller
             function () use ($visit_type) {
                 $visit_type->delete();
             },
-            'Visit type removed successfully!',
-            'Failed to remove visit type.',
+            __('messages.admin.visit_types.remove_success'),
+            __('messages.admin.visit_types.remove_failed'),
             'admin.configurator'
         );
     }
@@ -38,8 +38,8 @@ class VisitTypeController extends Controller
             function () use ($request) {
                 VisitType::create($request->validated());
             },
-            'Visit Type created successfully!',
-            'Failed to create visit type.',
+            __('messages.admin.visit_types.create_success'),
+            __('messages.admin.visit_types.create_failed'),
             'admin.configurator'
         );
     }
@@ -59,8 +59,8 @@ class VisitTypeController extends Controller
             function () use ($request, $visit_type) {
                 $visit_type->update($request->validated());
             },
-            'Visit Type updated successfully!',
-            'Failed to update visit type.',
+            __('messages.admin.visit_types.update_success'),
+            __('messages.admin.visit_types.update_failed'),
             'admin.configurator'
         );
     }

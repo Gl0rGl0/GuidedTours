@@ -42,6 +42,7 @@
                             </select>
                             <label for="assigned_volunteer_id">{{ __('messages.admin.visits.volunteer_label') }}</label>
                             <div class="form-text text-muted small ms-1">{{ __('messages.admin.visits.volunteer_help') }}</div>
+                            <div style="font-style: italic;" class="form-text text-muted small ms-1">{{ __('messages.admin.visits.volunteer_note') }}</div>
                         </div>
 
                          @if ($errors->has('general'))

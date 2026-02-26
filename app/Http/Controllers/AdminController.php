@@ -52,7 +52,7 @@ class AdminController extends Controller
             $monthlyStats = collect();
             for ($i = 6; $i >= 0; $i--) {
                 $date = \Carbon\Carbon::now()->subMonths($i);
-                $monthName = $date->format('F');
+                $monthName = $date->translatedFormat('F');
                 $year = $date->format('Y');
                 
                 $count = User::role('Customer')
@@ -105,8 +105,8 @@ class AdminController extends Controller
                 // Assign the validated role using Spatie
                 $user->assignRole($request->role);
             },
-            'User added successfully!',
-            'Failed to add user.',
+            __('messages.admin.configurator.users.add_success'),
+            __('messages.admin.configurator.users.add_failed'),
             'admin.configurator'
         );
     }
@@ -115,19 +115,19 @@ class AdminController extends Controller
     {
         // Prevent removing self or other configurators
         if ($user->user_id === Auth::id()) {
-             return back()->withErrors(['general' => 'You cannot remove yourself.']);
+             return back()->withErrors(['general' => __('messages.admin.configurator.users.cannot_remove_self')]);
         }
         // Prevent removing other Admins using Spatie's hasRole()
         if ($user->hasRole('Admin')) {
-             return back()->withErrors(['general' => 'Configurator users cannot be removed.']);
+             return back()->withErrors(['general' => __('messages.admin.configurator.users.cannot_remove_admin')]);
         }
 
         return $this->handleAdminOperation(
             function () use ($user) {
                 $user->delete();
             },
-            'User removed successfully!',
-            'Failed to remove user.',
+            __('messages.admin.configurator.users.remove_success'),
+            __('messages.admin.configurator.users.remove_failed'),
             'admin.configurator'
         );
     }

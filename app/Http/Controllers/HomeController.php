@@ -86,7 +86,7 @@ class HomeController extends Controller
 
         } catch (\Exception $e) {
             Log::error("Error fetching visits for home page: " . $e->getMessage());
-            $error_message = "Sorry, we couldn't retrieve the tour list at this time.";
+            $error_message = __('messages.home.tours.error_loading');
         }
 
         return view('home', [

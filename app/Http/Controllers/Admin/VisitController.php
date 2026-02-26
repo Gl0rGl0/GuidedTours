@@ -42,8 +42,8 @@ class VisitController extends Controller
             function () use ($request) {
                 Visit::create($request->validated());
             },
-            'Visit created successfully!',
-            'Failed to create visit.',
+            __('messages.admin.visits.create_success'),
+            __('messages.admin.visits.create_failed'),
             'admin.configurator'
         );
     }

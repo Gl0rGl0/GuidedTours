@@ -33,7 +33,7 @@ class FruitoreController extends Controller
     public function cancelBooking(Registration $booking): \Illuminate\Http\RedirectResponse
     {
         if ($booking->user_id !== Auth::user()->user_id) {
-             return redirect()->route('user.dashboard')->with('error_message', 'You can only cancel your own bookings.');
+             return redirect()->route('user.dashboard')->with('error_message', __('messages.user.dashboard.cancel_own_only'));
         }
 
         try {
@@ -41,7 +41,7 @@ class FruitoreController extends Controller
 
             if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED])) {
                 //return redirect()->route('home')->with('error_message', 'This visit is no longer available for cancellation.');
-                return back()->withErrors(['general' => 'This visit is no longer available for cancellation.'])->withInput();
+                return back()->withErrors(['general' => __('messages.user.dashboard.cancel_unavailable')])->withInput();
             }
             $booking->delete();
             
@@ -58,10 +58,10 @@ class FruitoreController extends Controller
                 }
             }
 
-            return redirect()->route('user.dashboard')->with('status', 'Booking cancelled successfully.');
+            return redirect()->route('user.dashboard')->with('status', __('messages.user.dashboard.cancel_success'));
         } catch (\Exception $e) {
             Log::error("Booking cancellation failed for booking {$booking->registration_id} by user {$booking->user_id}: " . $e->getMessage(), ['exception' => $e]);
-            return redirect()->route('user.dashboard')->with('error_message', 'Failed to cancel booking. Please try again.');
+            return redirect()->route('user.dashboard')->with('error_message', __('messages.user.dashboard.cancel_failed'));
         }
     }
 }

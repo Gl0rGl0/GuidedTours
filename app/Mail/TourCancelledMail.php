@@ -33,7 +33,7 @@ class TourCancelledMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Notice: Tour Cancelled',
+            subject: __('messages.emails.tour_cancelled.subject'),
         );
     }
 
