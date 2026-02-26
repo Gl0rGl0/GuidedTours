@@ -145,29 +145,29 @@
 
                         @auth
                             <!-- Role Based Links -->
-                            @if (Auth::user()->hasRole('Customer'))
+                            @role('Customer')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
                                         href="{{ route('user.dashboard') }}">Bookings</a></li>
-                            @endif
+                            @endrole
 
-                            @if (Auth::user()->hasRole('Admin'))
+                            @role('Admin')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}"
                                         href="{{ route('admin.configurator') }}">Admin</a></li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}"
                                         href="{{ route('admin.visit-planning.index') }}">Planning</a></li>
-                            @endif
+                            @endrole
 
-                            @if (Auth::user()->hasRole('Guide'))
+                            @role('Guide')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}"
                                         href="{{ route('volunteer.availability.form') }}">Availability</a></li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}"
                                         href="{{ route('volunteer.visits.past') }}">My Visits</a></li>
-                            @endif
+                            @endrole
 
                             <!-- User Dropdown -->
                             <li class="nav-item dropdown ms-lg-3">

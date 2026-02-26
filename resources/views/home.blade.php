@@ -181,83 +181,25 @@
             </div>
 
             @if($proposed_visits->isEmpty())
-                <div class="text-center py-5 card border-0 shadow-sm">
+                <div class="col-12 text-center py-5 card border-0 shadow-sm" id="no-results-message">
                     <div class="card-body">
-                        <i class="bi bi-calendar-x display-4 text-muted opacity-25 mb-3"></i>
-                        <h5 class="text-muted">No upcoming tours scheduled</h5>
-                        <p class="text-muted small mb-0">Please check back later for new dates.</p>
+                        <x-empty-state 
+                            icon="bi-calendar-x" 
+                            title="No upcoming tours scheduled" 
+                            message="Please check back later for new dates." 
+                            :card="false" 
+                        />
                     </div>
                 </div>
             @else
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="tours-container">
                     @foreach ($proposed_visits as $tour)
                         <div class="col tour-card">
-                            <div class="card h-100 shadow-sm border-0 card-hover bg-white position-relative">
-                                <div class="card-body p-4">
-                                    <h5 class="card-title fw-bold mb-3">{{ $tour->visitType->title }}</h5>
-                                    <ul class="list-unstyled text-muted small mb-4">
-                                        <li class="mb-2"><i class="bi bi-geo-alt me-1 text-primary"></i>
-                                            {{ $tour->visitType->place->name }}</li>
-                                        <li class="mb-2 d-flex align-items-center">
-                                            <i class="bi bi-calendar3 me-2 text-primary"></i>
-                                            <span>{{ \Carbon\Carbon::parse($tour->visit_date)->format('D, M j, Y') }}</span>
-                                            @if($tour->is_imminent)
-                                                <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">Imminent</span>
-                                            @endif
-                                        </li>
-                                        <li class="mb-2"><i class="bi bi-clock me-2 text-primary"></i>
-                                            {{ \Carbon\Carbon::parse($tour->visitType->start_time)->format('g:i A') }}
-                                            ({{ $tour->visitType->duration_minutes }} min)</li>
-                                        <li class="mb-2 d-flex align-items-center">
-                                            <i class="bi bi-people me-2 text-primary"></i>
-                                            <span>{{ $tour->registrations->sum('num_participants') }} /
-                                                {{ $tour->visitType->max_participants }} Filled</span>
-                                            @if($tour->is_filling_fast)
-                                                <span
-                                                    class="badge bg-warning-subtle text-warning  rounded-pill ms-2">{{ $tour->spots_remaining }}
-                                                    Spots Remaining</span>
-                                            @endif
-                                        </li>
-                                        <li><i class="bi bi-map me-2 text-primary"></i> {{ $tour->visitType->meeting_point }}</li>
-                                    </ul>
-
-                                    <p class="card-text small text-muted line-clamp-3">
-                                        {{ Str::limit($tour->visitType->description, 100) }}
-                                    </p>
-                                </div>
-                                <div class="card-footer bg-transparent border-top-0 p-4 pt-0">
-                                    @auth
-                                        @if (Auth::user()->hasRole('Customer'))
-                                            @php
-                                                $isBooked = $tour->registrations->contains('user_id', Auth::id());
-                                            @endphp
-
-                                            @if($isBooked)
-                                                <a href="{{ route('user.dashboard') . '?highlight=' . $tour->visit_id }}"
-                                                    class="btn btn-outline-primary w-100 rounded-pill stretched-link">
-                                                    Already Booked
-                                                </a>
-                                            @elseif($tour->registrations->sum('num_participants') >= $tour->visitType->max_participants)
-                                                <button class="btn btn-secondary w-100 rounded-pill" disabled>
-                                                    Sold Out
-                                                </button>
-                                            @else
-                                                <a href="{{ route('visits.register.form', ['visit' => $tour->visit_id]) }}"
-                                                    class="btn btn-primary w-100 rounded-pill stretched-link">
-                                                    View Details & Book
-                                                </a>
-                                            @endif
-                                        @else
-                                            <button class="btn btn-secondary w-100 rounded-pill" disabled>Customer Only</button>
-                                        @endif
-                                    @else
-                                        <a href="{{ route('login') }}"
-                                            class="btn btn-outline-primary w-100 rounded-pill stretched-link">Login to Book</a>
-                                    @endauth
-                                </div>
-                            </div>
+                            <x-tour-card :visit="$tour" context="home" />
                         </div>
                     @endforeach
+                </div>
+            @endif
                 </div>
 
                 <!-- Load More Button -->
@@ -275,7 +217,7 @@
                     @endif
                 </div>
                 </div>
-            @endif
+                </div>
         </div>
         </div>
 
@@ -312,6 +254,7 @@
     </div>
 @endsection
 
+@push('scripts')
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const loadMoreBtn = document.querySelector('.load-more-btn-ajax');
@@ -364,3 +307,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
+@endpush

@@ -157,9 +157,13 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center py-5 text-muted">
-                                            <i class="bi bi-geo-alt display-6 d-block mb-3 opacity-25"></i>
-                                            No places found. Start by adding one.
+                                        <td colspan="4" class="p-0 border-0">
+                                            <x-empty-state 
+                                                icon="bi-geo-alt" 
+                                                title="No places found" 
+                                                message="Start by adding one." 
+                                                :card="false" 
+                                            />
                                         </td>
                                     </tr>
                                 @endforelse
@@ -225,9 +229,13 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center py-5 text-muted">
-                                            <i class="bi bi-tags display-6 d-block mb-3 opacity-25"></i>
-                                            No visit types defined yet.
+                                        <td colspan="5" class="p-0 border-0">
+                                            <x-empty-state 
+                                                icon="bi-tags" 
+                                                title="No visit types defined yet." 
+                                                message="" 
+                                                :card="false" 
+                                            />
                                         </td>
                                     </tr>
                                 @endforelse
@@ -318,10 +326,12 @@
                          </table>
                     </div>
                      @if(collect($users_by_role)->flatten()->isEmpty())
-                        <div class="text-center py-5 text-muted">
-                            <i class="bi bi-people display-6 d-block mb-3 opacity-25"></i>
-                            No users found.
-                        </div>
+                        <x-empty-state 
+                            icon="bi-people" 
+                            title="No users found." 
+                            message="" 
+                            :card="false" 
+                        />
                     @endif
                 </div>
             </div>
