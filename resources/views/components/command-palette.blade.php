@@ -26,12 +26,12 @@
     x-data="{ 
         query: '', 
         items: [
-            { id: 'home', title: 'Go to Home', icon: 'bi-house', url: '{{ route('home') }}' },
-            { id: 'dash', title: 'My Dashboard', icon: 'bi-speedometer2', url: '{{ route('user.dashboard') }}' },
-            { id: 'profile', title: 'My Profile', icon: 'bi-person', url: '{{ route('profile') }}' },
+            { id: 'home', title: '{{ __('messages.components.command_palette.items.home') }}', icon: 'bi-house', url: '{{ route('home') }}' },
+            { id: 'dash', title: '{{ __('messages.components.command_palette.items.dashboard') }}', icon: 'bi-speedometer2', url: '{{ route('user.dashboard') }}' },
+            { id: 'profile', title: '{{ __('messages.components.command_palette.items.profile') }}', icon: 'bi-person', url: '{{ route('profile') }}' },
             @role('configurator')
-            { id: 'admin', title: 'Admin Configurator', icon: 'bi-gear', url: '{{ route('admin.configurator') }}' },
-            { id: 'add_place', title: 'Add New Place', icon: 'bi-geo-alt', url: '{{ route('admin.places.create') }}' },
+            { id: 'admin', title: '{{ __('messages.components.command_palette.items.admin_configurator') }}', icon: 'bi-gear', url: '{{ route('admin.configurator') }}' },
+            { id: 'add_place', title: '{{ __('messages.components.command_palette.items.add_place') }}', icon: 'bi-geo-alt', url: '{{ route('admin.places.create') }}' },
             @endrole
         ],
         get filteredItems() {
@@ -58,7 +58,7 @@
             <div class="p-3 border-bottom border-secondary-subtle">
                 <div class="input-group">
                     <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-primary"></i></span>
-                    <input x-model="query" type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="What do you need?" autofocus>
+                    <input x-model="query" type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="{{ __('messages.components.command_palette.search_placeholder') }}" autofocus>
                 </div>
             </div>
             
@@ -73,13 +73,13 @@
                     </button>
                 </template>
                 <div x-show="filteredItems.length === 0" class="p-4 text-center text-muted">
-                    No results found.
+                    {{ __('messages.components.command_palette.no_results') }}
                 </div>
             </div>
             
             <div class="p-2 bg-light border-top border-secondary-subtle small text-end text-muted">
-                <span class="me-2">Select <i class="bi bi-arrow-return-left"></i></span>
-                <span style="cursor: pointer" @click="commandOpen = false">Close <i class="bi bi-escape"></i></span>
+                <span class="me-2">{{ __('messages.components.command_palette.select') }} <i class="bi bi-arrow-return-left"></i></span>
+                <span style="cursor: pointer" @click="commandOpen = false">{{ __('messages.components.command_palette.close') }} <i class="bi bi-escape"></i></span>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Forgot Password')
+@section('title', __('messages.auth.forgot_password.page_title'))
 
 @section('content')
 <div class="row justify-content-center min-vh-50 align-items-center">
@@ -8,8 +8,8 @@
         <div class="card shadow-lg border-0 rounded-4">
             <div class="card-body p-4 p-md-5 text-center">
                 <div class="text-center mb-4">
-                    <h2 class="fw-bold text-primary">Forgot Password?</h2>
-                    <p class="text-muted small">Enter your registered email address and we will send you a link to reset your password.</p>
+                    <h2 class="fw-bold text-primary">{{ __('messages.auth.forgot_password.title') }}</h2>
+                    <p class="text-muted small">{{ __('messages.auth.forgot_password.description') }}</p>
                 </div>
 
                 @if (session('status'))
@@ -23,8 +23,8 @@
                     @csrf
                     
                     <div class="form-floating mb-4">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="name@example.com" value="{{ old('email') }}" required autofocus>
-                        <label for="email">Email address</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('messages.auth.forgot_password.email_placeholder') }}" value="{{ old('email') }}" required autofocus>
+                        <label for="email">{{ __('messages.auth.forgot_password.email_label') }}</label>
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -32,12 +32,12 @@
                     
                     <div class="d-grid mb-4">
                         <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm d-flex align-items-center justify-content-center">
-                            <i class="bi bi-envelope-paper me-2"></i> Send Reset Link
+                            <i class="bi bi-envelope-paper me-2"></i> {{ __('messages.auth.forgot_password.submit_btn') }}
                         </button>
                     </div>
 
                     <div class="text-center">
-                        <p class="small text-muted mb-0">Remembered your password? <a href="{{ route('login') }}" class="fw-bold text-decoration-none">Back to Login</a></p>
+                        <p class="small text-muted mb-0">{{ __('messages.auth.forgot_password.remembered_password') }} <a href="{{ route('login') }}" class="fw-bold text-decoration-none">{{ __('messages.auth.forgot_password.back_to_login') }}</a></p>
                     </div>
                 </form>
             </div>

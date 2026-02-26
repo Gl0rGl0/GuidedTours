@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Visit Planning')
+@section('title', __('messages.admin.visit_planning.page_title'))
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="fw-bold text-primary mb-1">Visit Planning</h2>
-            <p class="text-muted mb-0">Overview of schedules and volunteer availability</p>
+            <h2 class="fw-bold text-primary mb-1">{{ __('messages.admin.visit_planning.title') }}</h2>
+            <p class="text-muted mb-0">{{ __('messages.admin.visit_planning.description') }}</p>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('admin.visits.create') }}" class="btn btn-primary rounded-pill shadow-sm">
-                <i class="bi bi-plus-lg me-2"></i> Add New Visit
+                <i class="bi bi-plus-lg me-2"></i> {{ __('messages.admin.visit_planning.add_btn') }}
             </a>
         </div>
     </div>
@@ -19,7 +19,7 @@
     <div class="alert alert-light border shadow-sm d-flex align-items-center mb-5 rounded-4">
         <i class="bi bi-calendar-range text-primary fs-4 me-3"></i>
         <div>
-            <small class="text-muted text-uppercase fw-bold">Planning Period</small>
+            <small class="text-muted text-uppercase fw-bold">{{ __('messages.admin.visit_planning.planning_period') }}</small>
             <div class="fw-bold">{{ $startDate->format('M j, Y') }} — {{ $endDate->format('M j, Y') }}</div>
         </div>
     </div>
@@ -27,7 +27,7 @@
     <!-- Planned Visits -->
     <div class="card shadow-sm border-0 rounded-4 mb-5">
         <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-             <h4 class="fw-bold text-success mb-0"><i class="bi bi-geo-alt me-2"></i>Planned Visits</h4>
+             <h4 class="fw-bold text-success mb-0"><i class="bi bi-geo-alt me-2"></i>{{ __('messages.admin.visit_planning.planned_visits') }}</h4>
         </div>
         <div class="card-body p-4">
             @if ($plannedVisits->isNotEmpty())
@@ -55,9 +55,9 @@
                                     <button @click="expanded = !expanded" class="w-100 btn btn-light d-flex justify-content-between align-items-center px-4 py-3 border-0 rounded-0 text-start focus-ring-none">
                                         <div class="d-flex align-items-center gap-3">
                                             <i class="bi" :class="expanded ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
-                                            <h6 class="text-uppercase text-muted fw-bold small mb-0">Week {{ $i + 1 }}</h6>
+                                            <h6 class="text-uppercase text-muted fw-bold small mb-0">{{ __('messages.admin.visit_planning.week', ['number' => $i + 1]) }}</h6>
                                         </div>
-                                        <span class="badge bg-white text-muted border">{{ count($week) }} Days</span>
+                                        <span class="badge bg-white text-muted border">{{ __('messages.admin.visit_planning.days', ['count' => count($week)]) }}</span>
                                     </button>
                                     
                                     <div x-show="expanded" x-collapse style="display: none;">
@@ -74,7 +74,7 @@
                                                                             <div class="fw-bold">{{ $visit->start_time ? $visit->start_time->format('H:i') . ' - ' : '' }} {{ $visit->visitType->title }}</div>
                                                                             <div class="text-muted">{{ $visit->visitType->place->name }}</div>
                                                                             <div class="text-xs text-muted mt-1">
-                                                                                <i class="bi bi-person-badge me-1"></i> {{ $visit->assignedVolunteer->first_name ?? 'Unassigned' }} {{ $visit->assignedVolunteer->last_name ?? '' }}
+                                                                                <i class="bi bi-person-badge me-1"></i> {{ $visit->assignedVolunteer->first_name ?? __('messages.admin.visit_planning.unassigned') }} {{ $visit->assignedVolunteer->last_name ?? '' }}
                                                                             </div>
                                                                         </li>
                                                                     @endforeach
@@ -84,7 +84,7 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                <p class="text-muted small fst-italic mb-0">No visits planned for this week</p>
+                                                <p class="text-muted small fst-italic mb-0">{{ __('messages.admin.visit_planning.no_visits_week') }}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
             @else
                 <div class="text-center py-5 text-muted">
                     <i class="bi bi-calendar-x display-4 mb-3 d-block opacity-25"></i>
-                    No visits planned.
+                    {{ __('messages.admin.visit_planning.no_visits_planned') }}
                 </div>
             @endif
         </div>
@@ -105,7 +105,7 @@
     <!-- Volunteer Availability -->
     <div class="card shadow-sm border-0 rounded-4">
         <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-             <h4 class="fw-bold text-info mb-0"><i class="bi bi-people me-2"></i>Volunteer Availability</h4>
+             <h4 class="fw-bold text-info mb-0"><i class="bi bi-people me-2"></i>{{ __('messages.admin.visit_planning.volunteer_availability') }}</h4>
         </div>
         <div class="card-body p-4">
             @if ($volunteerAvailabilities->isNotEmpty())
@@ -132,9 +132,9 @@
                                      <button @click="expanded = !expanded" class="w-100 btn btn-light d-flex justify-content-between align-items-center px-4 py-3 border-0 rounded-0 text-start focus-ring-none">
                                         <div class="d-flex align-items-center gap-3">
                                             <i class="bi" :class="expanded ? 'bi-chevron-down' : 'bi-chevron-right'"></i>
-                                            <h6 class="text-uppercase text-muted fw-bold small mb-0">Availability for Week {{ $i + 1 }}</h6>
+                                            <h6 class="text-uppercase text-muted fw-bold small mb-0">{{ __('messages.admin.visit_planning.availability_week', ['number' => $i + 1]) }}</h6>
                                         </div>
-                                        <span class="badge bg-white text-muted border">{{ count($week) }} Days active</span>
+                                        <span class="badge bg-white text-muted border">{{ __('messages.admin.visit_planning.days_active', ['count' => count($week)]) }}</span>
                                     </button>
                                     
                                     <div x-show="expanded" x-collapse style="display: none;">
@@ -161,7 +161,7 @@
                                                     @endforeach
                                                 </div>
                                             @else
-                                                <p class="text-muted small fst-italic mb-0">No data for this week</p>
+                                                <p class="text-muted small fst-italic mb-0">{{ __('messages.admin.visit_planning.no_data_week') }}</p>
                                             @endif
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
             @else
                 <div class="text-center py-5 text-muted">
                     <i class="bi bi-person-x display-4 mb-3 d-block opacity-25"></i>
-                    No availability recorded.
+                    {{ __('messages.admin.visit_planning.no_availability') }}
                 </div>
             @endif
         </div>

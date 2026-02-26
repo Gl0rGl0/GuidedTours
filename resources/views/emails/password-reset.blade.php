@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reset Password Notification</title>
+    <title>{{ __('messages.emails.password_reset.subject') }}</title>
 </head>
 <body>
-    <p>You are receiving this email because we received a password reset request for your account.</p>
-    <p>Please click the link below to reset your password. This link will expire in 60 minutes.</p>
+    <p>{{ __('messages.emails.password_reset.line1') }}</p>
+    <p>{{ __('messages.emails.password_reset.line2') }}</p>
     
-    <p><a href="{{ $resetUrl }}">Reset Password</a></p>
+    <p><a href="{{ $resetUrl }}">{{ __('messages.emails.password_reset.action') }}</a></p>
 
-    <p>If you did not request a password reset, no further action is required.</p>
+    <p>{{ __('messages.emails.password_reset.line3') }}</p>
     <br>
-    <p>Regards,<br>{{ config('app.name') }}</p>
+    <p>{!! __('messages.emails.password_reset.regards', ['app_name' => config('app.name')]) !!}</p>
 </body>
 </html>

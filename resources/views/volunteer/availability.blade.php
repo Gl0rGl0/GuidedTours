@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Declare Availability')
+@section('title', __('messages.volunteer.availability.page_title'))
 
 @push('styles')
     <link href="{{ asset('css/calendar.css') }}" rel="stylesheet">
@@ -23,8 +23,8 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-5">
                     <div class="text-center mb-5">
-                        <h2 class="fw-bold text-primary mb-2">Volunteer Availability</h2>
-                        <p class="text-muted">Select the days you are available to guide tours for <strong>{{ $monthName }}</strong>.</p>
+                        <h2 class="fw-bold text-primary mb-2">{{ __('messages.volunteer.availability.title') }}</h2>
+                        <p class="text-muted">{!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}</p>
                     </div>
 
                     <form action="{{ route('volunteer.availability.store') }}" method="POST" id="availability-form">
@@ -33,13 +33,13 @@
                         <div class="d-flex justify-content-center">
                             <div class="calendar-wrapper shadow-sm rounded-3 overflow-hidden border mb-4" style="max-width: 800px; width: 100%;">
                                 <div class="calendar-grid">
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="0" title="Select all Mondays">Mon</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="1" title="Select all Tuesdays">Tue</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="2" title="Select all Wednesdays">Wed</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="3" title="Select all Thursdays">Thu</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="4" title="Select all Fridays">Fri</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="5" title="Select all Saturdays">Sat</div>
-                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="6" title="Select all Sundays">Sun</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="0" title="{{ __('messages.volunteer.availability.mon_title') }}">{{ __('messages.volunteer.availability.days.mon') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="1" title="{{ __('messages.volunteer.availability.tue_title') }}">{{ __('messages.volunteer.availability.days.tue') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="2" title="{{ __('messages.volunteer.availability.wed_title') }}">{{ __('messages.volunteer.availability.days.wed') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="3" title="{{ __('messages.volunteer.availability.thu_title') }}">{{ __('messages.volunteer.availability.days.thu') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="4" title="{{ __('messages.volunteer.availability.fri_title') }}">{{ __('messages.volunteer.availability.days.fri') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="5" title="{{ __('messages.volunteer.availability.sat_title') }}">{{ __('messages.volunteer.availability.days.sat') }}</div>
+                                    <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="6" title="{{ __('messages.volunteer.availability.sun_title') }}">{{ __('messages.volunteer.availability.days.sun') }}</div>
 
                                     @php
                                         $firstDayOfMonth = \Carbon\Carbon::createFromFormat('Y-m', $monthYear)->startOfMonth();
@@ -83,9 +83,9 @@
                         </div>
 
                         <div class="text-center mt-4">
-                             <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 me-2">Cancel</a>
+                             <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 me-2">{{ __('messages.volunteer.availability.cancel_btn') }}</a>
                             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-sm">
-                                <i class="bi bi-save me-2"></i> Save Availability
+                                <i class="bi bi-save me-2"></i> {{ __('messages.volunteer.availability.save_btn') }}
                             </button>
                         </div>
                     </form>

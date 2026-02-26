@@ -21,7 +21,7 @@
                     data-bs-toggle="modal" 
                     data-bs-target="#cancelModal" 
                     data-action="{{ route('user.bookings.cancel', $visit->registrations->where('user_id', Auth::id())->first() ?? 0) }}">
-                    <i class="bi bi-x-circle me-1"></i> Cancel
+                    <i class="bi bi-x-circle me-1"></i> {{ __('messages.common.cancel') }}
                 </button>
             @elseif($context === 'archive')
                 <small class="text-muted">{{ \Carbon\Carbon::parse($visit->visit_date)->format('M d, Y') }}</small>
@@ -48,7 +48,7 @@
                     <i class="bi bi-calendar3 me-2 text-primary"></i> 
                     <span>{{ \Carbon\Carbon::parse($visit->visit_date)->format('D, M j, Y') }}</span>
                     @if($context === 'home' && $visit->is_imminent)
-                        <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">Imminent</span>
+                        <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">{{ __('messages.components.tour_card.imminent') }}</span>
                     @endif
                 </li>
             @endif
@@ -69,13 +69,13 @@
                     @php 
                         $userReg = $visit->registrations->where('user_id', Auth::id())->first();
                     @endphp
-                    {{ $userReg ? $userReg->num_participants : 0 }} Participants
+                    {{ $userReg ? $userReg->num_participants : 0 }} {{ __('messages.components.tour_card.participants') }}
                 @elseif($context === 'archive')
-                    {{ $visit->registrations->sum('num_participants') }} Attendees
+                    {{ $visit->registrations->sum('num_participants') }} {{ __('messages.components.tour_card.attendees') }}
                 @else
-                    <span>{{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }} Filled</span>
+                    <span>{{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }} {{ __('messages.components.tour_card.filled') }}</span>
                     @if($visit->is_filling_fast)
-                        <span class="badge bg-warning-subtle text-warning rounded-pill ms-2">{{ $visit->spots_remaining }} Spots Remaining</span>
+                        <span class="badge bg-warning-subtle text-warning rounded-pill ms-2">{{ $visit->spots_remaining }} {{ __('messages.components.tour_card.spots_remaining') }}</span>
                     @endif
                 @endif
             </li>
@@ -86,7 +86,7 @@
             @endif
 
             @if($context === 'archive' && $visit->assignedVolunteer && $visit->assignedVolunteer->id !== Auth::id())
-                <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> Vol: {{ $visit->assignedVolunteer->first_name }} {{ $visit->assignedVolunteer->last_name }}</li>
+                <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> {{ __('messages.components.tour_card.volunteer') }}: {{ $visit->assignedVolunteer->first_name }} {{ $visit->assignedVolunteer->last_name }}</li>
             @endif
         </ul>
 
@@ -111,23 +111,23 @@
                         @if($isBooked)
                             <a href="{{ route('user.dashboard') . '?highlight=' . $visit->visit_id }}"
                                 class="btn btn-outline-primary w-100 rounded-pill stretched-link">
-                                Already Booked
+                                {{ __('messages.components.tour_card.already_booked') }}
                             </a>
                         @elseif($visit->registrations->sum('num_participants') >= $visit->visitType->max_participants)
                             <button class="btn btn-secondary w-100 rounded-pill" disabled>
-                                Sold Out
+                                {{ __('messages.components.tour_card.sold_out') }}
                             </button>
                         @else
                             <a href="{{ route('visits.register.form', ['visit' => $visit->visit_id]) }}"
                                 class="btn btn-primary w-100 rounded-pill stretched-link">
-                                View Details & Book
+                                {{ __('messages.components.tour_card.view_details_book') }}
                             </a>
                         @endif
                     @else
-                        <button class="btn btn-secondary w-100 rounded-pill" disabled>Customer Only</button>
+                        <button class="btn btn-secondary w-100 rounded-pill" disabled>{{ __('messages.components.tour_card.customer_only') }}</button>
                     @endrole
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary w-100 rounded-pill stretched-link">Login to Book</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-primary w-100 rounded-pill stretched-link">{{ __('messages.components.tour_card.login_to_book') }}</a>
                 @endauth
 
             @elseif($context === 'dashboard')
@@ -136,9 +136,9 @@
                 @endphp
                 @if($bookingCode)
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <small class="text-muted">Booking Code</small>
+                        <small class="text-muted">{{ __('messages.components.tour_card.booking_code') }}</small>
                         <a href="{{ route('tickets.download', $bookingCode) }}" class="btn btn-sm btn-outline-dark rounded-pill shadow-sm" target="_blank" title="Download PDF Ticket">
-                            <i class="bi bi-file-earmark-pdf me-1"></i> View Ticket
+                            <i class="bi bi-file-earmark-pdf me-1"></i> {{ __('messages.components.tour_card.view_ticket') }}
                         </a>
                     </div>
                     <div class="bg-light rounded p-2 text-center text-monospace fw-bold letter-spacing-1">

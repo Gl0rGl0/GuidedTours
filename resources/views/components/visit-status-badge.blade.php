@@ -15,5 +15,5 @@
     @if($showIcon)
         <i class="bi bi-{{ $badgeConfig['icon'] }} me-1"></i>
     @endif
-    {{ ucfirst($status) }}
+    {{ __('messages.status.' . $status) }}
 </span>

@@ -57,7 +57,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Guided Tours') | City Heritage Tours</title>
+    <title>@yield('title', __('messages.app.title_default')) | {{ __('messages.app.title_suffix') }}</title>
 
     <!-- Theme Flash Prevention -->
     <script>
@@ -102,8 +102,7 @@
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
                     <img :src="theme === 'light' ? '/images/unibslogo-black.png' : '/images/unibslogo-white.png'"
                         alt="UniBS Logo" class="me-2" style="width: 55px; height: 55px;">
-                    <span :class="theme === 'dark' ? 'text-white' : 'text-dark'" class="fs-5 fw-bold">Guided
-                        Tours</span>
+                    <span :class="theme === 'dark' ? 'text-white' : 'text-dark'" class="fs-5 fw-bold">{{ __('messages.app.brand_name') }}</span>
                 </a>
 
                 <div class="d-flex align-items-center gap-2 ms-auto order-lg-last">
@@ -112,7 +111,7 @@
                     @auth
                         <button @click="commandOpen = true"
                             class="btn btn-sm btn-light border rounded-pill px-3 text-muted d-none d-lg-flex align-items-center me-2 shadow-sm">
-                            <i class="bi bi-search me-2"></i> <span class="me-2">Search...</span> <kbd
+                            <i class="bi bi-search me-2"></i> <span class="me-2">{{ __('messages.app.search_placeholder') }}</span> <kbd
                                 class="bg-body-secondary text-body border-0 small font-monospace">Ctrl K</kbd>
                         </button>
                         <!-- Command Palette Trigger (Mobile) -->
@@ -128,6 +127,29 @@
                         <i class="bi" :class="theme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
                     </button>
 
+                    <!-- Language Switcher -->
+                    <div class="dropdown">
+                        <button class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="Change Language">
+                            <i class="bi bi-globe"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="languageDropdown" style="min-width: 120px;">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 {{ app()->getLocale() === 'en' ? 'active bg-primary text-white' : '' }}" 
+                                   href="{{ route(Route::currentRouteName() ?? 'home', array_merge(request()->route()->parameters() ?? [], ['locale' => 'en'])) }}">
+                                    English
+                                    @if(app()->getLocale() === 'en') <i class="bi bi-check2"></i> @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 {{ app()->getLocale() === 'it' ? 'active bg-primary text-white' : '' }}" 
+                                   href="{{ route(Route::currentRouteName() ?? 'home', array_merge(request()->route()->parameters() ?? [], ['locale' => 'it'])) }}">
+                                    Italiano
+                                    @if(app()->getLocale() === 'it') <i class="bi bi-check2"></i> @endif
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
                     <button class="navbar-toggler border-0 ms-2" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                         aria-label="Toggle navigation">
@@ -140,7 +162,7 @@
                         <li class="nav-item">
                             <a :class="theme === 'dark' ? 'text-white' : ''"
                                 class="nav-link {{ Route::is('home') ? 'active' : '' }}"
-                                href="{{ route('home') }}">Home</a>
+                                href="{{ route('home') }}">{{ __('messages.app.nav.home') }}</a>
                         </li>
 
                         @auth
@@ -148,25 +170,25 @@
                             @role('Customer')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
-                                        href="{{ route('user.dashboard') }}">Bookings</a></li>
+                                        href="{{ route('user.dashboard') }}">{{ __('messages.app.nav.bookings') }}</a></li>
                             @endrole
 
                             @role('Admin')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}"
-                                        href="{{ route('admin.configurator') }}">Admin</a></li>
+                                        href="{{ route('admin.configurator') }}">{{ __('messages.app.nav.admin') }}</a></li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}"
-                                        href="{{ route('admin.visit-planning.index') }}">Planning</a></li>
+                                        href="{{ route('admin.visit-planning.index') }}">{{ __('messages.app.nav.planning') }}</a></li>
                             @endrole
 
                             @role('Guide')
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}"
-                                        href="{{ route('volunteer.availability.form') }}">Availability</a></li>
+                                        href="{{ route('volunteer.availability.form') }}">{{ __('messages.app.nav.availability') }}</a></li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}"
-                                        href="{{ route('volunteer.visits.past') }}">My Visits</a></li>
+                                        href="{{ route('volunteer.visits.past') }}">{{ __('messages.app.nav.my_visits') }}</a></li>
                             @endrole
 
                             <!-- User Dropdown -->
@@ -180,9 +202,9 @@
                                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0"
                                     aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item py-2" href="{{ route('profile') }}"><i
-                                                class="bi bi-person me-2"></i> Profile</a></li>
+                                                class="bi bi-person me-2"></i> {{ __('messages.app.nav.profile') }}</a></li>
                                     <li><a class="dropdown-item py-2" href="{{ route('change-password.form') }}"><i
-                                                class="bi bi-key me-2"></i> Password</a></li>
+                                                class="bi bi-key me-2"></i> {{ __('messages.app.nav.password') }}</a></li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
@@ -190,7 +212,7 @@
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <button type="submit" class="dropdown-item text-danger py-2"><i
-                                                    class="bi bi-box-arrow-right me-2"></i> Logout</button>
+                                                    class="bi bi-box-arrow-right me-2"></i> {{ __('messages.app.nav.logout') }}</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -199,10 +221,10 @@
                             <!-- Guest Links -->
                             <li class="nav-item ms-lg-2">
                                 <a :class="theme === 'dark' ? 'text-white' : ''" class="nav-link"
-                                    href="{{ route('login') }}">Login</a>
+                                    href="{{ route('login') }}">{{ __('messages.app.nav.login') }}</a>
                             </li>
                             <li class="nav-item ms-lg-2">
-                                <a class="btn btn-primary rounded-pill px-4" href="{{ route('register') }}">Register</a>
+                                <a class="btn btn-primary rounded-pill px-4" href="{{ route('register') }}">{{ __('messages.app.nav.register') }}</a>
                             </li>
                         @endauth
                     </ul>
@@ -230,9 +252,8 @@
         <div class="container">
             <div class="row gy-4">
                 <div class="col-lg-4 col-md-6">
-                    <h5 class="mb-3">Guided Tours</h5>
-                    <p class="small">The official
-                        platform for organizing and managing guided tours and cultural events.</p>
+                    <h5 class="mb-3">{{ __('messages.app.footer.brand_name') }}</h5>
+                    <p class="small">{{ __('messages.app.footer.description') }}</p>
                     <div class="d-flex gap-2 mt-4">
                         <a href="https://www.unibs.it/it"
                             class="btn btn-outline-light btn-sm btn-floating rounded-circle"><img
@@ -248,30 +269,29 @@
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <h6 class="text-uppercase mb-3 fw-bold">
-                        Platform</h6>
+                        {{ __('messages.app.footer.platform') }}</h6>
                     <ul class="list-unstyled">
                         <li><a class="small"
-                                style="text-decoration: none;" href="{{ route('about') }}">About Us</a></li>
+                                style="text-decoration: none;" href="{{ route('about') }}">{{ __('messages.app.footer.about_us') }}</a></li>
                         <li><a class="small"
-                                style="text-decoration: none;" href="{{ route('careers') }}">Careers</a></li>
+                                style="text-decoration: none;" href="{{ route('careers') }}">{{ __('messages.app.footer.careers') }}</a></li>
                         <li><a class="small"
-                                style="text-decoration: none;" href="{{ route('terms') }}">Terms of Service</a></li>
+                                style="text-decoration: none;" href="{{ route('terms') }}">{{ __('messages.app.footer.terms') }}</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <h6 class="text-uppercase mb-3 fw-bold">
-                        Contact</h6>
+                        {{ __('messages.app.footer.contact') }}</h6>
                     <ul class="list-unstyled small">
-                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Via Branze 38, Brescia</li>
+                        <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> {{ __('messages.app.footer.address') }}</li>
                         <p><a href="mailto:d.barbetti@unibs.studenti.it">d.barbetti@unibs.studenti.it</a></p>
                         <p><a href="mailto:g.felappi004@unibs.studenti.it">g.felappi004@unibs.studenti.it</a></p>
                         <p><a href="mailto:m.cesari001@unibs.studenti.it">m.cesari001@unibs.studenti.it</a></p>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 text-lg-end">
-                    <small>&copy; {{ date('Y') }} Guided
-                        Tours Org.</small>
+                    <small>&copy; {{ date('Y') }} {{ __('messages.app.footer.copyright') }}</small>
                 </div>
             </div>
         </div>
