@@ -57,7 +57,7 @@ class UpdateVisitStatuses extends Command
                     // Send cancellation emails
                     foreach ($visit->registrations as $registration) {
                         try {
-                            \Illuminate\Support\Facades\Mail::to($registration->user->email)->send(new \App\Mail\TourCancelledMail($visit, $registration->user));
+                            \Illuminate\Support\Facades\Mail::to($registration->user->email)->queue(new \App\Mail\TourCancelledMail($visit, $registration->user));
                         } catch (\Exception $e) {
                             Log::error("Failed to send cancellation email to {$registration->user->email}: " . $e->getMessage());
                         }
@@ -71,7 +71,7 @@ class UpdateVisitStatuses extends Command
                 // Send cancellation emails
                 foreach ($visit->registrations as $registration) {
                     try {
-                        \Illuminate\Support\Facades\Mail::to($registration->user->email)->send(new \App\Mail\TourCancelledMail($visit, $registration->user));
+                        \Illuminate\Support\Facades\Mail::to($registration->user->email)->queue(new \App\Mail\TourCancelledMail($visit, $registration->user));
                     } catch (\Exception $e) {
                         Log::error("Failed to send cancellation email to {$registration->user->email}: " . $e->getMessage());
                     }

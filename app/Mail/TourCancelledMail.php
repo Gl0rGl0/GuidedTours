@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Visit;
 use App\Models\User;
 
-class TourCancelledMail extends Mailable
+class TourCancelledMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
