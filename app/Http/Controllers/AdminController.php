@@ -37,7 +37,8 @@ class AdminController extends Controller
                 ->get();
 
             // Fetch Users
-            $all_users = User::orderBy('email')->get(['user_id', 'email', 'first_name', 'last_name']);
+            // OPTIMIZATION: Eager load 'roles' to prevent N+1 queries when checking hasRole
+            $all_users = User::with('roles')->orderBy('email')->get(['user_id', 'email', 'first_name', 'last_name']);
 
             foreach ($all_users as $user) {
                 if ($user->hasRole('Admin')) {
@@ -48,17 +49,36 @@ class AdminController extends Controller
                     $users_by_role['Customer']->push($user);
                 }
             }
+
             // Fetch Monthly User Stats (Last 6 Months)
+            // OPTIMIZATION: Use a single aggregated query to fetch counts by month, reducing 14 queries down to 1
+            $startDate = \Carbon\Carbon::now()->subMonths(6)->startOfMonth();
+
+            $connection = \Illuminate\Support\Facades\DB::connection()->getDriverName();
+            if ($connection === 'sqlite') {
+                $selectRaw = 'COUNT(user_id) as count, STRFTIME("%Y", created_at) as year, STRFTIME("%m", created_at) as month';
+            } elseif ($connection === 'pgsql') {
+                $selectRaw = 'COUNT(user_id) as count, EXTRACT(YEAR FROM created_at) as year, EXTRACT(MONTH FROM created_at) as month';
+            } else { // mysql / mariadb
+                $selectRaw = 'COUNT(user_id) as count, YEAR(created_at) as year, MONTH(created_at) as month';
+            }
+
+            $stats = User::role('Customer')
+                ->where('created_at', '>=', $startDate)
+                ->selectRaw($selectRaw)
+                ->groupBy('year', 'month')
+                ->get()
+                ->keyBy(function ($item) {
+                    return $item->year . '-' . str_pad($item->month, 2, '0', STR_PAD_LEFT);
+                });
+
             $monthlyStats = collect();
             for ($i = 6; $i >= 0; $i--) {
                 $date = \Carbon\Carbon::now()->subMonths($i);
                 $monthName = $date->translatedFormat('F');
-                $year = $date->format('Y');
+                $key = $date->format('Y-m');
                 
-                $count = User::role('Customer')
-                    ->whereYear('created_at', $year)
-                    ->whereMonth('created_at', $date->month)
-                    ->count();
+                $count = isset($stats[$key]) ? $stats[$key]->count : 0;
                     
                 $monthlyStats->push([
                     'month' => $monthName,
