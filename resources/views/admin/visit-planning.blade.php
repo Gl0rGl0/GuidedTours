@@ -25,11 +25,12 @@
     </div>
 
     <!-- Planned Visits -->
-    <div class="card shadow-sm border-0 rounded-4 mb-5">
-        <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-             <h4 class="fw-bold text-success mb-0"><i class="bi bi-geo-alt me-2"></i>{{ __('messages.admin.visit_planning.planned_visits') }}</h4>
-        </div>
-        <div class="card-body p-4">
+    <div class="card shadow-sm border-0 rounded-4 mb-5" x-data="{ expanded: true }">
+        <button @click="expanded = !expanded" class="card-header bg-white border-0 w-100 text-start d-flex justify-content-between align-items-center pt-4 px-4 pb-4 rounded-4" style="cursor:pointer;">
+            <h4 class="fw-bold text-success mb-0"><i class="bi bi-geo-alt me-2"></i>{{ __('messages.admin.visit_planning.planned_visits') }}</h4>
+            <i class="bi text-muted fs-5" :class="expanded ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </button>
+        <div class="card-body p-4" x-show="expanded" x-collapse>
             @if ($plannedVisits->isNotEmpty())
                 @php
                     // Organize by Month -> Week
@@ -103,11 +104,12 @@
     </div>
 
     <!-- Volunteer Availability -->
-    <div class="card shadow-sm border-0 rounded-4">
-        <div class="card-header bg-white border-bottom-0 pt-4 px-4 pb-0">
-             <h4 class="fw-bold text-info mb-0"><i class="bi bi-people me-2"></i>{{ __('messages.admin.visit_planning.volunteer_availability') }}</h4>
-        </div>
-        <div class="card-body p-4">
+    <div class="card shadow-sm border-0 rounded-4" x-data="{ expanded: true }">
+        <button @click="expanded = !expanded" class="card-header bg-white border-0 w-100 text-start d-flex justify-content-between align-items-center pt-4 px-4 pb-4 rounded-4" style="cursor:pointer;">
+            <h4 class="fw-bold text-info mb-0"><i class="bi bi-people me-2"></i>{{ __('messages.admin.visit_planning.volunteer_availability') }}</h4>
+            <i class="bi text-muted fs-5" :class="expanded ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </button>
+        <div class="card-body p-4" x-show="expanded" x-collapse>
             @if ($volunteerAvailabilities->isNotEmpty())
                 @php
                     $monthsAvail = [];
