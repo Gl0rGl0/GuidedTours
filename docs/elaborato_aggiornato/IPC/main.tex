@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{report}
+
+% ╔═════════════════════════════════════════════════════════════════════
+%                         ISTRUZIONI PER LA COMPILAZIONE     
+%                       
+%                      usare \showimagestrue - \showimаgestrue
+% ╚═════════════════════════════════════════════════════════════════════
+
+\newif\ifshowimages
+\showimagestrue% ← CAMBIA QUI: \showimagesfalse (veloce) | \showimаgestrue (completo)
+
+%\includeonly{capitoli/01_introduzione}
+%\includeonly{capitoli/02_profilo_utente}
+%\includeonly{capitoli/03_valutazione_euristica}
+%\includeonly{capitoli/04_walkthrough}
+%\includeonly{capitoli/05_riprogettazione}
+%\includeonly{capitoli/06_esperimento}
+%\includeonly{capitoli/07_analisi_risultati}
+%\includeonly{capitoli/08_conclusioni}
+
+% ─────────────────────────────────────────────────────────────────────────────
+
+% 1. Encoding and Language (Babel first)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,italian]{babel}
+\usepackage{lmodern}
+
+% 2. Math and Graphics
+\usepackage{amsmath, amssymb, amsfonts}
+\ifshowimages
+  \usepackage{graphicx}
+\else
+  \usepackage[draft]{graphicx}
+\fi
+\usepackage{svg}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% 3. Layout and Utilities
+\usepackage[left=2.5cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+% 4. Footnotes and Typography (Footmisc BEFORE Microtype)
+\usepackage{footmisc}
+\usepackage{microtype}
+
+% 5. Code Listings
+\usepackage{listings}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{
+    backgroundcolor=\color{backcolour},
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    columns=flexible
+}
+
+% 6. Links and URLs (Hyperref and Xurl ALWAYS last)
+\usepackage{xurl}
+\usepackage{hyperref}
+
+% --- Custom Formatting ---
+
+% Formattazione Titoli
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries}
+  {\thechapter.}{1em}{}
+
+% Impostazioni paragrafo
+\setlength{\parindent}{0pt} 
+\setstretch{1.2}
+\setlength{\parskip}{8pt}
+
+% --- Document Data ---
+
+\title{Progetto di Interazione Uomo-Macchina\\ \large Analisi dell'Usabilità e Riprogettazione del sito "Guided Tours"}
+\author{Daniel Barbetti\\Marco Cesari\\Felappi Giorgio}
+\date{\today}
+
+% --- Main Content ---
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\renewcommand{\contentsname}{Indice}
+\tableofcontents
+
+% Inclusione dei capitoli
+\include{capitoli/01_introduzione}
+\include{capitoli/02_profilo_utente}
+\include{capitoli/03_valutazione_euristica}
+\include{capitoli/04_walkthrough}
+\include{capitoli/05_riprogettazione}
+\include{capitoli/06_esperimento}
+\include{capitoli/07_analisi_risultati}
+\include{capitoli/08_conclusioni}
+
+\end{document}

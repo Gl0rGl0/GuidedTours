@@ -1,0 +1,123 @@
+\chapter{Introduzione e Descrizione del Sistema}
+\label{cap:intro}
+
+\section{Panoramica dell'Applicazione}
+Il progetto oggetto di questa relazione, denominato \textbf{Guided Tours}, consiste nella progettazione e nello sviluppo di un'applicazione web orientata alla gestione di visite guidate. Il sistema è stato concepito per rispondere alle esigenze di organizzazioni locali senza scopo di lucro che si occupano della valorizzazione del patrimonio territoriale, sia esso di natura storico-artistica che paesaggistica.
+
+L'obiettivo primario della piattaforma è la digitalizzazione del flusso organizzativo che intercorre tra la domanda, rappresentata da visitatori singoli o gruppi (scuole, turisti), e l'offerta, costituita da una rete di guide volontarie. Attualmente, tali processi sono spesso gestiti in modo frammentato e manuale; il sistema proposto mira a centralizzare le informazioni, ottimizzare l'assegnazione delle risorse umane e garantire un canale di comunicazione strutturato.
+
+L'architettura logica dell'applicazione prevede tre attori principali, ciascuno caratterizzato da specifici privilegi e interfacce dedicate:
+\begin{itemize}
+    \item \textbf{Fruitore:} L'utente esterno che naviga il catalogo delle offerte culturali e inoltra richieste di prenotazione. Può agire come singolo o come capogruppo.
+    \item \textbf{Volontario:} La risorsa operativa dell'organizzazione. Accede al sistema per comunicare le proprie disponibilità temporali e le proprie competenze (es. lingue parlate, abilitazioni per specifici luoghi).
+    \item \textbf{Configuratore:} Il ruolo amministrativo che detiene il controllo completo del sistema. Si occupa del popolamento delle anagrafiche (Luoghi, Tipologie di Visita) e della gestione operativa delle richieste, incrociando le esigenze dei fruitori con le disponibilità dei volontari.
+\end{itemize}
+
+\section{Analisi dell'Interfaccia e Funzionalità}
+L'interfaccia utente è stata progettata seguendo i principi di usabilità e chiarezza informativa, differenziando nettamente le aree pubbliche da quelle riservate. Di seguito viene fornita un'analisi dettagliata delle sezioni costitutive del sistema.
+
+\subsection{Landing Page e Navigazione Pubblica}
+La Home Page (\texttt{welcome.blade.php}) funge da punto di accoglienza e smistamento per le diverse tipologie di utenza.
+Graficamente, la pagina è dominata da una sezione introduttiva (\textit{Hero Section}) che comunica immediatamente la missione dell'organizzazione.
+La barra di navigazione superiore è persistente e offre accesso rapido alle funzioni di autenticazione.
+
+Dal punto di vista funzionale, questa pagina deve assolvere a due compiti:
+\begin{enumerate}
+    \item \textbf{Informativo:} Presentare il servizio ai visitatori anonimi, invitandoli a registrarsi per prenotare una visita.
+    \item \textbf{Direzionale:} Fornire un accesso immediato all'area riservata per lo staff e i volontari già registrati.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=1.0\textwidth]{screenshot_home.png}
+    \caption{Landing Page: visualizzazione pubblica con call-to-action per la registrazione.}
+    \label{fig:home}
+\end{figure}
+
+\subsection{Sistema di Autenticazione e Registrazione}
+La gestione degli accessi è un componente critico, gestito tramite i controller di autenticazione di Laravel. La pagina di registrazione (\texttt{auth/register.blade.php}) presenta una particolarità logica fondamentale: la selezione del ruolo.
+A differenza di sistemi standard, l'utente deve specificare in fase di iscrizione se intende operare come \textit{Fruitore} o come \textit{Volontario}. Questa scelta condiziona irreversibilmente l'esperienza utente successiva e le voci di menu visibili.
+
+Il modulo richiede l'inserimento di dati obbligatori quali:
+\begin{itemize}
+    \item Nome e Cognome (per l'identificazione nelle liste presenze).
+    \item Indirizzo Email (univoco, utilizzato come username).
+    \item Password (con criteri minimi di sicurezza).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.7\textwidth]{screenshot_register.png}
+    \caption{Modulo di registrazione con selettore per la tipologia di utenza (Fruitore/Volontario).}
+    \label{fig:login_register}
+\end{figure}
+
+\subsection{Modulo di Richiesta Visita (Area Fruitore)}
+Una volta autenticato, il Fruitore accede alla sezione per la prenotazione dei tour \newline(\texttt{tours/register.blade.php}). Questa interfaccia non è un semplice carrello acquisti, ma un modulo di "richiesta di servizio".
+Il layout è strutturato per guidare l'utente nella compilazione sequenziale dei requisiti della visita.
+
+I campi principali, validati lato server tramite \texttt{StoreVisitRequest}, includono:
+\begin{itemize}
+    \item \textbf{Dettagli Logistici:} Data preferita per la visita e numero di partecipanti (dato essenziale per valutare il rapporto guida/visitatori).
+    \item \textbf{Preferenze:} Lingua richiesta per la spiegazione e note opzionali per segnalare esigenze specifiche (es. disabilità motorie).
+\end{itemize}
+Al termine della compilazione, la richiesta viene salvata nel database con stato "In attesa" (Pending), in attesa di essere presa in carico dal Configuratore.
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{screenshot_booking.png}
+    \caption{Interfaccia di inserimento richiesta visita per l'utente Fruitore.}
+    \label{fig:booking}
+\end{figure}
+
+\subsection{Gestione Disponibilità (Area Volontario)}
+Il Volontario interagisce principalmente con la dashboard di disponibilità \newline (\texttt{volunteer/availability.blade.php}). Questa vista implementa un'interfaccia a calendario che permette una manipolazione intuitiva delle fasce orarie.
+L'obiettivo di questa pagina è popolare la tabella \texttt{volunteer\_availability}, fondamentale per l'algoritmo di assegnazione.
+
+L'interazione prevede:
+\begin{enumerate}
+    \item Visualizzazione del mese corrente con evidenza dei giorni già impegnati.
+    \item Possibilità di selezionare un giorno specifico e definire una fascia oraria (mattina/pomeriggio o orari puntuali).
+    \item Feedback visivo immediato sulle disponibilità confermate.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=0.9\textwidth]{screenshot_availability.png}
+    \caption{Calendario interattivo per la gestione delle disponibilità del Volontario.}
+    \label{fig:availability}
+\end{figure}
+
+\subsection{Pannello di Configurazione (Area Configuratore)}
+Il Configuratore dispone di un'area di back-office (\texttt{admin/configurator.blade.php}) per la gestione delle entità statiche del sistema. Questa sezione funge da pannello di controllo per le anagrafiche.
+L'interfaccia è tipicamente tabellare (CRUD - Create, Read, Update, Delete) e permette di gestire:
+\begin{itemize}
+    \item \textbf{Luoghi (Places):} Inserimento di nuovi siti visitabili, con dettagli descrittivi.
+    \item \textbf{Tipologie di Visita:} Definizione delle categorie di tour offerti (es. "Visita Storica", "Percorso Naturalistico").
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=1.0\textwidth]{screenshot_config_panel.png}
+    \caption{Pannello di amministrazione per la gestione dei Luoghi e delle Tipologie di Visita.}
+    \label{fig:config_panel}
+\end{figure}
+
+\subsection{Dashboard di Pianificazione (Visit Planning)}
+Questa è la vista più complessa dell'intero sistema (\texttt{admin/visit-planning.blade.php}), dove convergono i dati generati da Fruitori e Volontari.
+L'interfaccia è progettata per supportare il processo decisionale del Configuratore.
+
+La pagina è suddivisa in aree logiche:
+\begin{itemize}
+    \item \textbf{Lista Richieste Pendenti:} Un elenco delle visite richieste dai fruitori che necessitano di approvazione.
+    \item \textbf{Strumenti di Assegnazione:} Per ogni richiesta, il sistema mostra i dettagli e permette di selezionare, tramite menu a tendina dinamici, un Luogo specifico e un Volontario compatibile (filtrato in base alla disponibilità temporale inserita).
+    \item \textbf{Stato Avanzamento:} Indicatori che mostrano lo stato della visita (Richiesta, Confermata, Completata).
+\end{itemize}
+È in questa sezione che avviene il salvataggio definitivo dell'associazione Visita-Luogo-Volontario, scatenando eventuali notifiche di conferma.
+
+\begin{figure}[H]
+    \centering
+    % \includegraphics[width=1.0\textwidth]{screenshot_visit_planning.png}
+    \caption{Interfaccia operativa di Visit Planning: assegnazione risorse e gestione stati.}
+    \label{fig:visit_planning}
+\end{figure}

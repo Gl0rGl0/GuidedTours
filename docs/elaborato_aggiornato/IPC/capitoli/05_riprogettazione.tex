@@ -1,0 +1,99 @@
+\chapter{Esperimento con gli utenti}
+\label{ch:esperimento}
+
+L'obiettivo del presente capitolo è descrivere il test di usabilità condotto con utenti reali per validare empiricamente le scelte progettuali adottate nella riprogettazione dell'applicativo "Guided Tours". Il test ha confrontato le due versioni del sistema --- V1 (originale) e V2 (riprogettata) --- su un campione di partecipanti, raccogliendo dati quantitativi (SUS score, tempo di completamento, numero di errori) e qualitativi (protocollo Think Aloud, commenti liberi).
+
+\section{Obiettivi e Ipotesi di Ricerca}
+
+Il test è stato progettato per rispondere alla seguente domanda di ricerca: \textit{La versione riprogettata V2 produce un miglioramento statisticamente significativo dell'usabilità percepita rispetto alla versione originale V1?}
+
+Sono state formulate le seguenti ipotesi:
+\begin{itemize}
+    \item \textbf{H\textsubscript{0}} (ipotesi nulla): non esiste differenza significativa nel punteggio SUS medio tra V1 e V2 ($\mu_{V1} = \mu_{V2}$).
+    \item \textbf{H\textsubscript{1}} (ipotesi alternativa): il punteggio SUS medio della versione V2 è significativamente superiore a quello di V1 ($\mu_{V2} > \mu_{V1}$).
+\end{itemize}
+
+La soglia di significatività statistica è stata fissata a $\alpha = 0.05$.
+
+\section{Partecipanti}
+
+Hanno preso parte allo studio \textbf{10 partecipanti} (5 maschi, 5 femmine), reclutati per convenienza tra studenti universitari e adulti non esperti. Il campione è stato selezionato per rappresentare il target primario dell'applicativo, privilegiando l'eterogeneità per età e livello di competenza informatica.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{ID} & \textbf{Età} & \textbf{Gen.} & \textbf{Titolo di studio} & \textbf{Comp. inf.} & \textbf{Freq. uso} & \textbf{Ordine} \\
+\hline
+U01 & 22 & M & Laurea      & Alta  & Spesso          & V1 $\to$ V2 \\ \hline
+U02 & 20 & F & Diploma     & Media & Raramente       & V1 $\to$ V2 \\ \hline
+U03 & 38 & M & Laurea      & Alta  & Spesso          & V1 $\to$ V2 \\ \hline
+U04 & 26 & F & Laurea      & Media & Raramente       & V1 $\to$ V2 \\ \hline
+U05 & 54 & M & Diploma     & Bassa & Mai             & V1 $\to$ V2 \\ \hline
+U06 & 23 & F & Laurea      & Alta  & Quotidianamente & V2 $\to$ V1 \\ \hline
+U07 & 28 & M & Laurea      & Media & Spesso          & V2 $\to$ V1 \\ \hline
+U08 & 45 & F & Laurea      & Media & Raramente       & V2 $\to$ V1 \\ \hline
+U09 & 33 & M & Diploma     & Bassa & Raramente       & V2 $\to$ V1 \\ \hline
+U10 & 21 & F & Laurea      & Alta  & Quotidianamente & V2 $\to$ V1 \\ \hline
+\end{tabular}
+\caption{Profilo demografico dei partecipanti al test di usabilità ($n=10$).}
+\label{tab:partecipanti}
+\end{table}
+
+Prima dell'inizio della sessione, ciascun partecipante ha firmato il modulo di \textbf{consenso informato} redatto in conformità al GDPR 2016/679 e ha compilato il \textbf{questionario anagrafico}.
+
+\section{Materiali e Strumenti}
+
+Per lo svolgimento del test sono stati predisposti i seguenti materiali:
+
+\begin{itemize}
+    \item \textbf{Consenso informato}: documento GDPR che garantisce l'anonimato dei dati raccolti e la loro destinazione esclusivamente accademica.
+    \item \textbf{Questionario anagrafico}: raccoglie età, genere, titolo di studio, competenza informatica autodichiarata e frequenza di utilizzo di applicativi analoghi.
+    \item \textbf{Modulo per lo sperimentatore}: scheda strutturata per la registrazione delle metriche per ciascuno dei 5 task (esito, tempo, click, errori) e delle note Think Aloud.
+    \item \textbf{Questionario SUS} (System Usability Scale): strumento standardizzato a 10 item su scala Likert 1--5, con formula di calcolo del punteggio finale in scala 0--100.
+    \item \textbf{Domanda NPS} (Net Promoter Score): item aggiuntivo "Consiglieresti questo sistema a un amico?" su scala 0--10.
+\end{itemize}
+
+Il test è stato condotto su un computer portatile con browser Chrome aggiornato, con l'applicativo in esecuzione in ambiente locale (Laravel development server con database pre-popolato tramite seeder). Lo sperimentatore si trovava nella stessa stanza in posizione non intrusiva, intervenendo esclusivamente su esplicita richiesta del partecipante.
+
+\section{Compiti Assegnati}
+
+A ciascun partecipante sono stati assegnati \textbf{5 task}, progettati per coprire i flussi principali dell'applicativo ed esercitare direttamente le aree in cui la valutazione euristica aveva rilevato le criticità di maggiore severità. I task sono stati formulati come scenari d'uso realistici, evitando riferimenti espliciti agli elementi dell'interfaccia.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\small
+\begin{tabular}{|c|p{4.5cm}|p{4.5cm}|c|}
+\hline
+\textbf{Task} & \textbf{Scenario} & \textbf{Precondizione} & \textbf{T. max} \\
+\hline
+T1 & Sei un nuovo visitatore. Registrati come utente e accedi al sistema. & Homepage, utente non autenticato. & 5 min \\ \hline
+T2 & Trova una visita gratuita disponibile e prenotala per 2 partecipanti. & Utente autenticato come Customer. & 5 min \\ \hline
+T3 & Hai appena prenotato un tour. Vai nella tua area personale e trova il codice di prenotazione. & Prenotazione T2 completata. & 3 min \\ \hline
+T4 & Hai cambiato idea. Cancella la prenotazione appena effettuata. & Dashboard aperta dopo T3. & 3 min \\ \hline
+T5 & Accedi come amministratore ed elimina il luogo "Palazzo Cigola" dal sistema. & Pagina login; credenziali admin fornite dallo sperimentatore. & 5 min \\ \hline
+\end{tabular}
+\caption{Compiti assegnati durante il test, con scenario, precondizione e tempo massimo.}
+\label{tab:task}
+\end{table}
+
+I task T1--T4 riguardano il flusso Customer (registrazione, prenotazione, consultazione, cancellazione); T5 riguarda il flusso Admin (configuratore ed eliminazione risorsa), esercitando i problemi P26, P31 e P33 tra i più critici rilevati in fase di ispezione.
+
+\section{Procedura}
+
+Ogni sessione ha avuto una durata media di circa \textbf{50 minuti} e si è svolta secondo il seguente protocollo:
+
+\begin{enumerate}
+    \item \textbf{Accoglienza e briefing} (5 min): presentazione dello scopo e istruzioni sul Think Aloud ("parla ad alta voce; non esiste una risposta giusta o sbagliata").
+    \item \textbf{Firma consenso e questionario anagrafico} (5 min).
+    \item \textbf{Sessione test -- Prima versione assegnata} (20 min): esecuzione dei 5 task con raccolta metriche e verbalizzazioni.
+    \item \textbf{Compilazione SUS per la prima versione} (5 min).
+    \item \textbf{Pausa} (5 min): per ridurre l'effetto di carry-over cognitivo.
+    \item \textbf{Sessione test -- Seconda versione} (20 min): stessi 5 task sulla versione alternativa, seguita da compilazione SUS.
+    \item \textbf{Debriefing} (5 min): commenti liberi e domande aperte ("Cosa ti ha sorpreso?", "Cosa cambieresti?").
+\end{enumerate}
+
+L'ordine è stato \textbf{controbilanciato}: U01--U05 hanno testato prima V1 poi V2; U06--U10 prima V2 poi V1. Questo design \textit{within-subjects controbilanciato} controlla gli effetti di apprendimento e di ordine, massimizzando la sensibilità del confronto con un campione ridotto.

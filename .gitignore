@@ -21,5 +21,25 @@ yarn-error.log
 /.zed
 problems*
 extracted_*
-/docs
 CLAUDE.md
+claude mb
+
+# macOS
+.DS_Store
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.toc
+*.out
+*.fls
+*.fdb_latexmk
+*.dvi
+*.synctex.gz
+
+# Untracked docs
+docs/IPC-DocumentiPerTest.pdf
+docs/vecchi elaborati/
+docs/elaborato/
+docs/teoria_documentazione/
+nuove_v2/

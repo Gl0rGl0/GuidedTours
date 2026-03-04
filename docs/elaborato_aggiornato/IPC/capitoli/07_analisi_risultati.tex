@@ -1,0 +1,78 @@
+\chapter{Sviluppi futuri}
+\label{ch:sviluppi}
+
+Il processo di riprogettazione descritto nei capitoli precedenti ha risolto 35 dei 40 problemi di usabilità identificati nella valutazione euristica, portando il sistema da una fascia di usabilità \textit{accettabile} (SUS 56.5) a una fascia \textit{buona} (SUS 78.75). Nonostante i risultati positivi, il ciclo di vita del progetto non si esaurisce con questa iterazione: l'analisi euristica, il test con gli utenti e le osservazioni raccolte in fase di debriefing hanno evidenziato aree di miglioramento che richiedono interventi futuri, sia di natura tecnica che progettuale.
+
+Questo capitolo organizza tali sviluppi in tre categorie: i problemi rimasti aperti dalla riprogettazione corrente, le estensioni funzionali suggerite dagli utenti e le evoluzioni architetturali a lungo termine.
+
+\section{Risoluzione dei Problemi Aperti}
+
+Come documentato nella Sezione~\ref{sec:problemi_aperti}, cinque problemi identificati nel Capitolo~3 non sono stati risolti nella versione corrente. La loro risoluzione costituisce la priorità immediata per la prossima iterazione.
+
+\subsection{P2 -- Notifica rischio annullamento visita (Severità 3)}
+
+Quando un partecipante si disiscrive da una visita con un numero di iscritti vicino al minimo richiesto, gli altri utenti iscritti non ricevono alcuna notifica del rischio di annullamento. Questo viola il principio di \textit{visibilità dello stato del sistema} (P1 di Nielsen) e può generare frustrazione nell'utente che si presenta al tour per trovarlo cancellato.
+
+\textbf{Sviluppo proposto}: implementare un sistema di alert server-side che confronti in tempo reale il numero di partecipanti rimanenti con la soglia minima configurata nel VisitType. Quando la soglia viene attraversata verso il basso, il sistema invierebbe una notifica push (tramite laravel-notification o un banner nella dashboard) a tutti i Customer iscritti alla visita, con un CTA per confermare la propria presenza o esplorare alternative.
+
+\subsection{P36 -- Selezione multipla nel calendario disponibilità (Severità 2)}
+
+Il calendario per la dichiarazione delle disponibilità delle Guide richiede la selezione manuale di ogni singolo giorno, rendendo onerosa la compilazione per periodi estesi. L'assenza di shortcut come "Tutti i weekend del mese" o "Seleziona tutto il mese" è stata segnalata come fonte di frustrazione in fase di debriefing.
+
+\textbf{Sviluppo proposto}: refactoring del componente Alpine.js del calendario per supportare selezione multipla tramite drag e pulsanti di selezione rapida. La logica di backend per la gestione delle disponibilità è già presente in \texttt{VolunteerAvailabilitySeeder} e non richiederebbe modifiche strutturali.
+
+\subsection{P39 -- Stato vuoto senza Call to Action (Severità 2)}
+
+Quando un Customer non ha ancora prenotato alcun tour, la dashboard mostra il messaggio "You have not booked any tours yet" senza alcun collegamento alla homepage o al catalogo tour. L'utente alle prime armi non ha indicazioni su come procedere.
+
+\textbf{Sviluppo proposto}: sostituire il messaggio statico con un componente \textit{empty state} che includa un'illustrazione, un testo motivazionale e un bottone "Explore Tours" che rimanda alla homepage con il pannello di ricerca preattivato.
+
+\subsection{P1 -- Cursore non coerente su elementi cliccabili (Severità 2)}
+
+Alcuni elementi interattivi (badge di stato, sezioni espandibili, icone di azione) non mostrano il cursore a mano (\texttt{cursor: pointer}) al passaggio del mouse, violando le aspettative di interazione standard.
+
+\textbf{Sviluppo proposto}: audit sistematico di tutti gli elementi interattivi del frontend, con aggiunta di \texttt{cursor: pointer} nella regola SCSS globale per le classi che implicano interattività (\texttt{.clickable}, \texttt{[data-action]}, \texttt{.badge}, ecc.).
+
+\subsection{Scroll inaspettato al cambio pagina}
+
+Il pattern "Load More" asincrono causa, in alcuni browser, un riposizionamento inaspettato della vista al momento del caricamento dei nuovi elementi. Il comportamento di \texttt{scrollIntoView()} non è uniforme tra Chrome, Firefox e Safari.
+
+\textbf{Sviluppo proposto}: sostituire \texttt{scrollIntoView()} con un calcolo esplicito della posizione tramite \texttt{window.scrollTo()} con coordinata assoluta, oppure gestire lo scroll lato Alpine.js dopo la conferma del render del nuovo blocco di card.
+
+\section{Estensioni Funzionali}
+
+Oltre alla risoluzione dei problemi aperti, le sessioni di debriefing hanno suggerito estensioni funzionali che ampliano il valore dell'applicativo per ciascun ruolo.
+
+\subsection{Sistema di Recensioni e Valutazioni}
+
+Diversi partecipanti Customer hanno espresso il desiderio di poter lasciare una valutazione al termine di un tour effettuato (\textit{"vorrei vedere se gli altri si sono trovati bene"}). L'introduzione di un sistema di rating a stelle con commento testuale, visibile nelle card tour della homepage, aumenterebbe la fiducia pre-prenotazione e fornirebbe feedback qualitativo alle Guide e agli Admin.
+
+\subsection{Notifiche Email Transazionali}
+
+Attualmente il sistema invia email solo per il reset della password. Un sistema di notifiche email transazionali (conferma prenotazione, promemoria 24h prima della visita, notifica cancellazione) ridurrebbe il carico cognitivo del Customer e aumenterebbe il tasso di presentazione ai tour.
+
+\subsection{Dashboard Statistica Avanzata per l'Admin}
+
+Il pannello amministrativo include attualmente grafici di base realizzati con Chart.js. Gli Admin hanno espresso interesse per metriche più avanzate: tasso di riempimento medio per tipo di visita, andamento delle prenotazioni nel tempo, heatmap dei giorni con maggiore disponibilità delle Guide. L'infrastruttura dati è già presente; richiederebbe l'aggiunta di query aggregate nel \texttt{AdminController} e nuovi componenti Chart.js.
+
+\subsection{Applicazione Mobile (Progressive Web App)}
+
+L'analisi delle personas (Capitolo~2) ha evidenziato che il profilo Customer utilizza prevalentemente dispositivi mobili. Benché l'interfaccia attuale sia responsive, un'esperienza ottimizzata come Progressive Web App (PWA) -- con supporto offline per la visualizzazione del biglietto e notifiche push -- aumenterebbe l'usabilità percepita in mobilità.
+
+\subsection{Integrazione Mappe per la Ricerca per Posizione}
+
+Il modello \texttt{Place} possiede già attributi \texttt{lat} e \texttt{lng} e uno scope \texttt{scopeWithinDistance()}. Un filtro sulla homepage basato su geolocalizzazione del browser ("Mostra tour entro X km da me") sfrutterebbe questa infrastruttura esistente, abbassando il carico di ricerca per il Customer.
+
+\section{Evoluzioni Architetturali}
+
+\subsection{Multi-tenancy Completa}
+
+Il modello \texttt{Agency} è già presente nell'architettura e gestisce la separazione dei dati tra agenzie diverse. Tuttavia, alcune funzionalità (es. la gestione degli utenti nell'Admin configurator) non applicano ancora il filtro per agenzia in modo sistematico. Un refactoring che applichi gli scope di agenzia a tutti i controller renderebbe il sistema genuinamente multi-tenant e commercializzabile come SaaS.
+
+\subsection{API REST per Integrazioni Esterne}
+
+L'architettura Laravel consente l'aggiunta di un layer API REST (tramite Laravel Sanctum, già installato) che esporrebbe le visite disponibili a sistemi di terze parti: portali turistici, aggregatori di eventi, applicazioni mobile native. Questo aprirebbe canali di distribuzione alternativi senza modificare il frontend esistente.
+
+\subsection{Internazionalizzazione Completa}
+
+L'infrastruttura i18n (EN/IT) è già implementata tramite i file di lingua Laravel. L'aggiunta di nuove lingue (es. tedesco e francese per il turismo internazionale) richiederebbe solo la traduzione dei file \texttt{resources/lang/de} e \texttt{resources/lang/fr}, senza modifiche al codice applicativo.
