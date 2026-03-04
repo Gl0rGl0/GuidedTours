@@ -85,7 +85,7 @@
                 <li class="mb-2"><i class="bi bi-map me-2 {{ $context === 'archive' ? 'text-secondary' : 'text-primary' }}"></i> {{ $visit->visitType->meeting_point }}</li>
             @endif
 
-            @if($context === 'archive' && $visit->assignedVolunteer && $visit->assignedVolunteer->id !== Auth::id())
+            @if($context === 'archive' && $visit->assignedVolunteer && !($visit->assignedVolunteer->getKey() == Auth::id() && Auth::user()->hasRole('Guide')))
                 <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> {{ __('messages.components.tour_card.volunteer') }}: {{ $visit->assignedVolunteer->first_name }} {{ $visit->assignedVolunteer->last_name }}</li>
             @endif
         </ul>

@@ -21,4 +21,5 @@ yarn-error.log
 /.zed
 problems*
 extracted_*
-/storage/framework/cache
+/docs
+CLAUDE.md

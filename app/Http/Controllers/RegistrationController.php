@@ -46,7 +46,7 @@ class RegistrationController extends Controller
         return null;
     }
 
-    public function showTourRegistrationForm(Visit $visit): View|RedirectResponse
+    public function showTourRegistrationForm(string $locale, Visit $visit): View|RedirectResponse
     {
         $user = Auth::user();
         $error = $this->checkRegistrationEligibility($visit, $user, false);
@@ -62,7 +62,7 @@ class RegistrationController extends Controller
         return view('tours.register', compact('visit'));
     }
 
-    public function registerForTour(RegisterTourRequest $request, Visit $visit, BookingService $bookingService): RedirectResponse
+    public function registerForTour(string $locale, RegisterTourRequest $request, Visit $visit, BookingService $bookingService): RedirectResponse
     {
         $user = Auth::user();
         
