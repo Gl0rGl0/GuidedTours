@@ -17,14 +17,14 @@ L'architettura logica dell'applicazione prevede tre attori principali, ciascuno 
 L'interfaccia utente è stata progettata seguendo i principi di usabilità e chiarezza informativa, differenziando nettamente le aree pubbliche da quelle riservate. Di seguito viene fornita un'analisi dettagliata delle sezioni costitutive del sistema.
 
 \subsection{Landing Page e Navigazione Pubblica}
-La Home Page (\texttt{welcome.blade.php}) funge da punto di accoglienza e smistamento per le diverse tipologie di utenza.
-Graficamente, la pagina è dominata da una sezione introduttiva (\textit{Hero Section}) che comunica immediatamente la missione dell'organizzazione.
-La barra di navigazione superiore è persistente e offre accesso rapido alle funzioni di autenticazione.
+La Home Page funge da ambiente di accoglienza e snodo direzionale primario per le diverse tipologie di utenza.
+Graficamente, il layout è dominato da una sezione introduttiva (\textit{Hero Section}) concepita per comunicare immediatamente la missione dell'organizzazione e instaurare un rapporto di fiducia.
+La barra di navigazione superiore è un elemento persistente e offre un \textit{affordance} chiara per l'accesso rapido alle funzioni di autenticazione.
 
-Dal punto di vista funzionale, questa pagina deve assolvere a due compiti:
+Dal punto di vista dell'analisi dei task, questa vista deve assolvere simultaneamente a due obiettivi:
 \begin{enumerate}
-    \item \textbf{Informativo:} Presentare il servizio ai visitatori anonimi, invitandoli a registrarsi per prenotare una visita.
-    \item \textbf{Direzionale:} Fornire un accesso immediato all'area riservata per lo staff e i volontari già registrati.
+    \item \textbf{Informativo (Discovery):} Presentare la proposta di valore ai visitatori anonimi, invitandoli alla conversione (es. registrazione) al fine di prenotare una visita.
+    \item \textbf{Direzionale (Routing):} Fornire un accesso immediato e privo di frizioni all'area riservata per lo staff e i volontari già registrati, agendo da \textit{gateway}.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -35,8 +35,8 @@ Dal punto di vista funzionale, questa pagina deve assolvere a due compiti:
 \end{figure}
 
 \subsection{Sistema di Autenticazione e Registrazione}
-La gestione degli accessi è un componente critico, gestito tramite i controller di autenticazione di Laravel. La pagina di registrazione (\texttt{auth/register.blade.php}) presenta una particolarità logica fondamentale: la selezione del ruolo.
-A differenza di sistemi standard, l'utente deve specificare in fase di iscrizione se intende operare come \textit{Fruitore} o come \textit{Volontario}. Questa scelta condiziona irreversibilmente l'esperienza utente successiva e le voci di menu visibili.
+La gestione degli accessi rappresenta uno snodo critico nel percorso utente. Il modulo di registrazione introduce una scelta logica dirimente sin dal primo contatto: la selezione del ruolo operativo.
+In contrasto con i pattern di registrazione generici, l'utente è chiamato a dichiarare esplicitamente se intende fruire del servizio (\textit{Fruitore}) o far parte del network organizzativo (\textit{Volontario}). Questa profilazione precoce determina in modo permanente l'architettura dell'informazione e il layout successivo, personalizzando l'esperienza utente.
 
 Il modulo richiede l'inserimento di dati obbligatori quali:
 \begin{itemize}
@@ -53,15 +53,15 @@ Il modulo richiede l'inserimento di dati obbligatori quali:
 \end{figure}
 
 \subsection{Modulo di Richiesta Visita (Area Fruitore)}
-Una volta autenticato, il Fruitore accede alla sezione per la prenotazione dei tour \newline(\texttt{tours/register.blade.php}). Questa interfaccia non è un semplice carrello acquisti, ma un modulo di "richiesta di servizio".
-Il layout è strutturato per guidare l'utente nella compilazione sequenziale dei requisiti della visita.
+A seguito dell'autenticazione, il \textit{Fruitore} interagisce con un'esplicita Call-to-Action che sblocca l'accesso all'ambiente dedicato alla schedulazione delle visite. Da un punto di vista dell'interazione, tale vista si discosta dal classico paradigma del carrello e-commerce in favore di un modulo guidato procedurale per l'inoltro di una "richiesta di servizio". 
+Tale approccio minimizza il carico cognitivo dell'operatore, vincolando l'attenzione su input sequenziali mirati e semanticamente raggruppati.
 
-I campi principali, validati lato server tramite \texttt{StoreVisitRequest}, includono:
+I campi principali, validati per prevenire errori accidentali di sottomissione, richiedono:
 \begin{itemize}
-    \item \textbf{Dettagli Logistici:} Data preferita per la visita e numero di partecipanti (dato essenziale per valutare il rapporto guida/visitatori).
-    \item \textbf{Preferenze:} Lingua richiesta per la spiegazione e note opzionali per segnalare esigenze specifiche (es. disabilità motorie).
+    \item \textbf{Dettagli Logistici:} Data preferita per la visita e numero di partecipanti (informazione cruciale per valutare la sostenibilità e il rapporto guida/visitatori).
+    \item \textbf{Preferenze Context-Aware:} Selezione della lingua e campo testuale libero per documentare bisogni specifici del gruppo (es. accessibilità per disabilità motorie), promuovendo un design inclusivo.
 \end{itemize}
-Al termine della compilazione, la richiesta viene salvata nel database con stato "In attesa" (Pending), in attesa di essere presa in carico dal Configuratore.
+Al completamento del flusso, il sistema fornisce un feedback contestuale di presa in carico, ponendo la pratica nello stato di sospeso in attesa di validazione asincrona da parte dell'amministrazione.
 
 \begin{figure}[H]
     \centering
@@ -71,8 +71,8 @@ Al termine della compilazione, la richiesta viene salvata nel database con stato
 \end{figure}
 
 \subsection{Gestione Disponibilità (Area Volontario)}
-Il Volontario interagisce principalmente con la dashboard di disponibilità \newline (\texttt{volunteer/availability.blade.php}). Questa vista implementa un'interfaccia a calendario che permette una manipolazione intuitiva delle fasce orarie.
-L'obiettivo di questa pagina è popolare la tabella \texttt{volunteer\_availability}, fondamentale per l'algoritmo di assegnazione.
+Il \textit{Volontario} ha come task principale l'aggiornamento della propria dashboard operativa. La vista adotta un'interfaccia a calendario (un solido modello mentale noto all'utente tramite applicativi esterni) che consente una mappatura diretta e manipolabile (\textit{Direct Manipulation}) delle proprie ore libere.
+L'obiettivo cognitivo di questo cruscotto è agevolare l'inserimento dei dati essenziali per il futuro algoritmo organizzativo, riducendo le frizioni e promuovendo l'efficienza.
 
 L'interazione prevede:
 \begin{enumerate}
@@ -89,8 +89,8 @@ L'interazione prevede:
 \end{figure}
 
 \subsection{Pannello di Configurazione (Area Configuratore)}
-Il Configuratore dispone di un'area di back-office (\texttt{admin/configurator.blade.php}) per la gestione delle entità statiche del sistema. Questa sezione funge da pannello di controllo per le anagrafiche.
-L'interfaccia è tipicamente tabellare (CRUD - Create, Read, Update, Delete) e permette di gestire:
+Il ruolo direzionale (Configuratore) opera all'interno di un'area di back-office dedicata alla gestione infrastrutturale. Questa sezione è ideata come un hub di controllo per la componente statica dell'offerta turistica.
+L'interazione è modellata su griglie dati (pattern CRUD - Create, Read, Update, Delete) pensate per le performance e l'accesso rapido all'informazione:
 \begin{itemize}
     \item \textbf{Luoghi (Places):} Inserimento di nuovi siti visitabili, con dettagli descrittivi.
     \item \textbf{Tipologie di Visita:} Definizione delle categorie di tour offerti (es. "Visita Storica", "Percorso Naturalistico").
@@ -104,8 +104,8 @@ L'interfaccia è tipicamente tabellare (CRUD - Create, Read, Update, Delete) e p
 \end{figure}
 
 \subsection{Dashboard di Pianificazione (Visit Planning)}
-Questa è la vista più complessa dell'intero sistema (\texttt{admin/visit-planning.blade.php}), dove convergono i dati generati da Fruitori e Volontari.
-L'interfaccia è progettata per supportare il processo decisionale del Configuratore.
+La plancia direzionale di Visit Planning costituisce il nodo focale dell'applicativo, l'ambiente dove si attua la confluenza dei macro-processi generati da Fruitori e Volontari.
+Data l'elevata densità di dati, l'interfaccia utente è calibrata specificamente per supportare il \textit{decision making} dell'amministratore, mitigando l'overload informativo.
 
 La pagina è suddivisa in aree logiche:
 \begin{itemize}

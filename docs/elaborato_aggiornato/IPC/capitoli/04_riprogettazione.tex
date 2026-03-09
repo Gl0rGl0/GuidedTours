@@ -5,12 +5,15 @@ In questo capitolo verranno illustrate le scelte tecniche e di design adottate p
 
 La priorità degli interventi è stata determinata in base al \textbf{grado di severità} assegnato nella fase di debriefing (scala Nielsen 0--4): sono stati affrontati tutti i problemi di grado \textbf{3} e \textbf{4}, la maggior parte di quelli di grado \textbf{2}, e un sottoinsieme di quelli di grado \textbf{1} per i quali l'impatto sull'esperienza delle \textit{personas} lo giustificasse. I problemi rimasti aperti sono documentati nella Sezione~\ref{sec:problemi_aperti}.
 
+\vspace{1em}
+\noindent\textit{Nota Metodologica}: L'attuale riprogettazione si configura come un'implementazione correttiva guidata esclusivamente dall'ispezione euristica documentata nel Capitolo 3 e dalle best practice di dominio applicativo. L'efficacia delle soluzioni adottate e il loro reale impatto sull'usabilità saranno oggetto di validazione empirica autonoma, tramite test esplorativi con gli utenti finali, come documentato nei successivi capitoli relativi all'esperimento.
+
 \section{Technical Rationale}
 La risoluzione delle criticità di usabilità ha richiesto un intervento sia lato Front-end che lato Back-end. Di seguito i principali interventi tecnologici:
 \begin{itemize}
     \item \textbf{Gestione del Design System}: Sebbene alcune opzioni progettuali potessero far pensare a Tailwind CSS, l'interfaccia finale è stata uniformata sfruttando appieno il framework \textbf{Bootstrap 5} unitamente a variabili SCSS customizzate (\texttt{\_variables.scss} e \texttt{app.scss}). Questo ha permesso di mantenere pulita la gerarchia del codice CSS, impiegando classi di utilità in modo mirato unicamente dove necessario.
     \item \textbf{Validazione e Feedback in tempo reale}: Il sistema sfrutta la \textbf{validazione integrata di Laravel} (tramite \texttt{\$request->validate()}) all'interno dei Controller (es. \texttt{UserController}, \texttt{AdminController}) per assicurare la robustezza dei dati. A livello di interfaccia frontale, script in \textit{Vanilla JavaScript} gestiscono messaggi di validazione live (come i controlli sulla robustezza della password nel configuratore), fornendo all'utente un feedback immediato già in fase di digitazione.
-    \item \textbf{Meccanismi di conferma (Modal)}: I \textit{confirmation modals} per le azioni distruttive, al posto di impiegare librerie più pesanti come Livewire, sono stati realizzati tramite \textbf{Modali Bootstrap} nativi interfacciati con script JavaScript centralizzati. Questo rende più performante la pagina: uno script globale cattura l'evento, estrae dinamicamente i parametri utente/oggetto (\texttt{data-action}, \texttt{data-item-name}) e inietta i dati prima dell'apertura visiva, garantendo modularità.
+    \item \textbf{Meccanismi di conferma (Modal)}: I \textit{confirmation modals} per le azioni distruttive, al posto di impiegare librerie più pesanti come Livewire, sono stati realizzati tramite \textbf{Modali Bootstrap} nativi interfacciati con script JavaScript centralizzati. Questo rende più performante la pagina: uno script globale cattura l'evento, estrae dinamicamente i parametri utente/oggetto (\texttt{data-action}, \texttt{data-item-name}) e inserisce i dati prima della visualizzazione del modale, garantendo modularità.
 \end{itemize}
 
 \section{Design System Documentation}
@@ -30,9 +33,9 @@ L'interfaccia è stata costruita assemblando diversi Design Pattern consolidati 
     \item \textbf{Global Navigation Bar (Menu Persistente)}: Una barra di navigazione fissa posta al vertice funge da àncora di salvataggio e di orientamento perpetuo per l'utente. Rende costantemente accessibili i link operativi determinanti (Home, Accesso, o Dashboard personale) prescindendo dal grado di scorrimento verticale.
     \item \textbf{Faceted Search \& Filter Bar}: Pattern primario inserito nella \textit{Home Page} a favore del \textit{Fruitore}. Permette di modulare dinamicamente i risultati (filtro per luogo, stringa testuale, ordine temporale o scrematura dei costi), snellendo il tempo di scoperta e trasmettendo il senso di controllo e libertà d'azione.
     \item \textbf{Visual Status Badges (Codifica semantica a etichette)}: Guidato dalla nuova palette cromatica del sistema, l'impiego di tag "pill" compatti (come "Open", "Imminent" per le visite, oppure i tag dei ruoli amministrativi) restituisce una profilazione visiva in una frazione di secondo. Alimenta il principio di \textit{recognition rather than recall}.
-    \item \textbf{Confirmation Trigger (Modali antierrore distruttivo)}: Onde scongiurare drammatici \textit{slips} neuromotori o errori d'azione distratta nel Backoffice (es. l'annullamento di risorse storicizzate o ban di un volontario), l'ecosistema frappone un baluardo esplicito. Il "Global Delete Modal" intercetta la richiesta ed obbliga l'agente ad una validazione esplicita conscia ("This action cannot be undone").
-    \item \textbf{Continuous / Asynchronous Scrolling (Load More)}: In contrapposizione ad una impaginazione classica a scaglioni chiusi (che affievolirebbe il ritmo e sfalderebbe il contesto esplorativo), l'utilizzo del pattern asincrono incrementale alla base dell'elenco tour consente un'immersione progressiva nel catalogo, conservando intatto l'header e il form dei filtri.
-    \item \textbf{Live Input Feedback (Validazione Contestuale)}: Dislocato nei form critici. Comunica istantaneamente il superamento - o fallimento - dei vincoli strutturati (per es. la metrica \textit{real-time} della password). Stempera in radice la consueta ansia e frustrazione imputabili ai secchi rigetti in fase di sottomissione (Submission Postponed Errors). 
+    \item \textbf{Confirmation Trigger (Modali antierrore distruttivo)}: Al fine di prevenire errori di esecuzione involontari (\textit{slips}) durante le operazioni di Backoffice (es. l'annullamento di risorse storicizzate o la rimozione di un volontario), è stato introdotto un meccanismo di controllo preventivo. L'interfaccia intercetta l'azione distruttiva attraverso un "Global Delete Modal", costringendo così l'utente a validare l'azione in modo esplicito e consapevole ("This action cannot be undone").
+    \item \textbf{Continuous / Asynchronous Scrolling (Load More)}: Rispetto a un'impaginazione classica tradizionale, che potrebbe frammentare l'esplorazione, l'utilizzo di un pattern asincrono incrementale per l'elenco dei tour consente una navigazione progressiva nel catalogo, mantenendo sempre visibili e accessibili l'header e il form dei filtri.
+    \item \textbf{Live Input Feedback (Validazione Contestuale)}: Questo pattern è implementato nei form critici per comunicare istantaneamente il rispetto o la violazione dei vincoli strutturali (es. i requisiti di robustezza della password). Fornendo un feedback in tempo reale, si riduce la frustrazione tipicamente associata agli errori di validazione notificati solo in fase di sottomissione (Submission Postponed Errors). 
 \end{itemize}
 
 \section{Role-Based Customization: Le 4 Home Page}
@@ -47,13 +50,13 @@ Per assecondare le diverse personas documentate in fase esplorativa, la Home Pag
 \section{Feature Breakdown}
 
 \subsection{Sistema di Filtering e Sorting dinamico}
-Sulla Home Page pubblica, il pannello di ricerca esplorativo che accoglie i biglietti da acquistare integra funzioni multiple: ricerca testuale live, selezione del luogo fisico (filtro location), costrizione del costo ("Free Only") ed un selettore di ordinamento (temporale o alfabetico). Questa architettura è pilotata integramente in \textbf{Alpine.js}, il quale intercetta l'evento di sottomissione assemblando i dati in querystring e richiedendo l'aggiornamento tramite chiamate AJAX. Una volta ricevuta la preview dal backend, il nuovo snippet HTML sostiuisce unicamente la griglia evitando ricaricamenti molesti e curando la storia del browser inserendo lo stato nella location bar reale (\texttt{pushState}).
+Sulla Home Page pubblica, il pannello di ricerca esplorativo che correda la lista dei tour integra funzioni multiple: ricerca testuale live, filtro sulla località, vincolo sul costo ("Free Only") ed un selettore di ordinamento (temporale o alfabetico). Questa architettura è pilotata interamente in \textbf{Alpine.js}, che intercetta l'evento di sottomissione assemblando i parametri in querystring e richiedendo l'aggiornamento tramite chiamate asincrone (AJAX). Ricevuto il frammento aggiornato dal backend, il nuovo snippet HTML sostituisce unicamente la griglia dei risultati, evitando ricaricamenti completi della pagina e aggiornando contestualmente la cronologia di navigazione del browser (\texttt{pushState}).
 
 \subsection{Pattern di Paginazione}
-Per limitare la profusione cognitiva emersa nelle liste particolarmente corpose dei tour, la paginazione ibrida assorbe il mix preferito tra la consueta Classic Pagination e un bottone asincrono "Load More". Con un'anima reattiva definita sempre in Alpine.js / Vanilla JS, ogni click adombra temporaneamente la view (stato di loading visivo del pulsante) procedendo a richiedere il frammento mancante da accodare. La vista viene poi delicatamente ricollocata allo zero della sezione di pertinenza via \texttt{scrollIntoView()}, eludendo qualsiasi disorientamento spaziale.
+Per ridurre il carico cognitivo derivante dall'esplorazione di liste estese, è stata adottata una soluzione ibrida di paginazione asincrona basata sul pattern "Load More". Implementata tramite Alpine.js e Vanilla JS, l'interazione con il pulsante innesca uno stato di caricamento visivo mentre viene richiesto il blocco di risultati successivo. Contestualmente, la vista è riposizionata sull'inizio del nuovo frammento tramite \texttt{scrollIntoView()}, preservando l'orientamento spaziale dell'utente.
 
 \subsection{Sistema di sicurezza (Modal) nell'Admin}
-Per combattere ed azzerare gli accidentali slip inerenti alle routine irreversibili all'interno dell'Area di Backoffice (es: rimozione luoghi turistici, eliminazione formati d'evento in archivio o espulsione attori dal sito), l'ecosistema accorpa un \textbf{Global Delete Confirmation Modal}. Alla pressione del cestino sui record in tabella, l'azione non raggiunge immediatamente la root di distruzione; in luogo, viene invocato forzatamente il pop-up Bootstrap (bloccato come layout esterno) con l'avvertimento imperativo in rosso "This action cannot be undone". L'ostacolo esplicito previene qualsiasi errore muscolare di velocità della persona che cura interfacce troppo fitte.
+Al fine di prevenire azioni irreversibili accidentali (\textit{slips}) all'interno dell'Area di Backoffice (es. rimozione di luoghi, eliminazione di eventi o disattivazione di utenti), il sistema integra un \textbf{Global Delete Confirmation Modal}. La pressione del pulsante di eliminazione sui record tabellari non innesca immediatamente l'azione distruttiva; viene invece attivato un pop-up modale bloccante che presenta un avviso esplicito ("This action cannot be undone"). Questo ostacolo intenzionale forza l'operatore a una validazione consapevole, minimizzando i rischi legati a interazioni frettolose.
 
 % ─────────────────────────────────────────────────────────────────────────────
 \section{Panoramica della Nuova Interfaccia}
@@ -79,7 +82,7 @@ Le pagine di Login e Register nella V2 sono state semplificate e arricchite di m
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_login.png}
-    
+    \caption{V2 -- Pagine di Autenticazione (Login e Register).}
     \label{fig:v2_auth}
 \end{figure}
 
@@ -107,9 +110,17 @@ Il pannello amministrativo comprende il configuratore a schede (Places, Visit Ty
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_admin_planning.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_add_visit.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_add_visit.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_admin_planning.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{V2 -- Visit Planning raggruppato per mese (sinistra) e form Add Visit con flusso guidato (destra).}
     \label{fig:v2_planning}
 \end{figure}
@@ -120,9 +131,17 @@ L'area riservata alle Guide presenta la pagina delle visite assegnate con banner
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_visits.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_calendar.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_visits.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_calendar.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{V2 -- "My Assigned Visits" con banner istruzioni operative (sinistra) e calendario disponibilità (destra).}
     \label{fig:v2_guide}
 \end{figure}
@@ -139,7 +158,7 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 3  & Semantica colore "Proposed"        & 2 & Stato rinominato "Upcoming"; badge \texttt{bg-primary-subtle} (blu neutrale) in tutte le viste. \\ \hline
@@ -153,25 +172,41 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 11 & Gerarchia visiva debole            & 1 & Gerarchia tipografica \texttt{display-4} → \texttt{h3} → \texttt{h5} con Bootstrap; titoli in grassetto. \\ \hline
 12 & Assenza shortcut area personale    & 1 & Bottone "My Dashboard" nell'hero section, visibile solo agli utenti autenticati. \\ \hline
 —  & Mancanza personalizzazione Homepage & 1 & Sottotitolo hero personalizzato per ruolo: testo specifico per Guest, Customer, Guide e Admin. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi sulla Homepage e sulla navigazione globale.}
 \label{tab:fix_home}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p1.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p1.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.3 -- Semantica colore stato visita: V1 a sinistra (badge giallo "Proposed"), V2 a destra (badge blu neutrale "Upcoming").}
     \label{fig:fix_p3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p3.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p6_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p3.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p6_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.6 -- Nota pagamento: V1 a sinistra (testo generico poco visibile), V2 a destra (banner \texttt{alert-warning} con icona).}
     \label{fig:fix_p6}
 \end{figure}
@@ -182,12 +217,12 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 13 & Incoerenza linguistica  & 1 & Footer interamente riscritto in inglese; rimossa la dicitura italiana "Sito di visite guidate". \\ \hline
 35 & Email non cliccabili    & 2 & Tutti gli indirizzi email nel footer avvolti da tag \texttt{<a href="mailto:...">}. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi su Footer e Navbar.}
 \label{tab:fix_footer}
 \end{table}
@@ -198,7 +233,7 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 15 & Mancanza toggle visibilità password  & 1 & Icona occhio (Bootstrap Icons) con script JS \texttt{showPassword()} nelle pagine Login e Register. \\ \hline
@@ -210,34 +245,58 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 21 & Navigazione ridondante verso Login   & 1 & Unico link "Already have an account? Login" nella pagina di registrazione. \\ \hline
 22 & Ridondanza informativa Ruoli (Register) & 1 & Rimossa spiegazione dei ruoli; form di registrazione semplificato. \\ \hline
 23 & Validazione tardiva input            & 2 & Aggiunta validazione JavaScript live: controllo lunghezza e corrispondenza password in tempo reale. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi sull'autenticazione.}
 \label{tab:fix_auth}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p11.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p15_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p11.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p15_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.15 -- Toggle visibilità password: V1 a sinistra (campo senza icona), V2 a destra (icona occhio per mostrare/nascondere la password).}
     \label{fig:fix_p15}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p17.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p19_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p17.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p19_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.19 -- Recupero password: V1 a sinistra (nessun link di recupero), V2 a destra (pagina "Forgot Password" dedicata).}
     \label{fig:fix_p19}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p21.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p23_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p21.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p23_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.23 -- Validazione live password: V1 a sinistra (nessun feedback), V2 a destra (indicatori in tempo reale su lunghezza e corrispondenza).}
     \label{fig:fix_p23}
 \end{figure}
@@ -248,23 +307,31 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 24 & Visibilità "Booking code"            & 1 & Codice visualizzato in font monospaziato bold con etichetta "Booking Code" esplicita. \\ \hline
 25 & Ambiguità etichetta "Participant"    & 2 & Etichetta standardizzata "X Participants" coerente con il resto dell'interfaccia. \\ \hline
 26 & Affordance ingannevole "My Booking" & 2 & Rimosso il menu a tendina ambiguo; sostituito con bottone esplicito \texttt{btn-danger} "Cancel Booking". \\ \hline
 27 & Stile pulsante eliminazione          & 1 & Pulsante in stile \texttt{btn-danger} e testo rosso, coerente con il Design System. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi sulla Dashboard Fruitore.}
 \label{tab:fix_dashboard}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p24.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p26_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p24.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p26_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.26 -- Affordance "My Booking": V1 a sinistra (menu a tendina ambiguo), V2 a destra (bottone esplicito "Cancel Booking" con modale di conferma).}
     \label{fig:fix_p26}
 \end{figure}
@@ -275,7 +342,7 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 28 & Inconsistenza terminologica            & 1 & "Tours" e "Bookings" lato utente; "Visits" riservato al contesto amministrativo (dominio tecnico corretto). \\ \hline
@@ -286,25 +353,41 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 33 & Flusso inserimento non intuitivo       & 3 & Flusso guidato in sequenza: selezione Tipo Visita → Data → Volontario disponibile (\texttt{admin/visits/create}). \\ \hline
 34 & Mancanza feedback su vincoli           & 3 & Help text espliciti accanto ad ogni campo critico (data minima, assenza volontari disponibili). \\ \hline
 40 & Colore bottone non coerente            & 2 & Bottone "Change Password" nel profilo allineato al Design System: rimosso lo stile rosso fuorviante. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi sull'Area Amministratore.}
 \label{tab:fix_admin}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p29.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p31_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p29.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p31_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.31 -- Conferma eliminazione: V1 a sinistra (eliminazione immediata senza dialogo), V2 a destra (Global Delete Confirmation Modal con avviso "This action cannot be undone").}
     \label{fig:fix_p31}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p31.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p33_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p31.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p33_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{Fix P.33 -- Flusso inserimento visita: V1 a sinistra (form non guidato), V2 a destra (flusso step-by-step Tipo → Data → Volontario disponibile).}
     \label{fig:fix_p33}
 \end{figure}
@@ -315,12 +398,12 @@ I paragrafi precedenti hanno descritto le soluzioni architetturali e i pattern a
 \centering
 \renewcommand{\arraystretch}{1.4}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Soluzione adottata} \\ \hline
 37 & Assenza indicazioni operative           & 2 & Banner \texttt{alert-info} con istruzioni operative (puntualità, verifica booking code, gestione imprevisti) nella pagina "My Assigned Visits". \\ \hline
 38 & Ridondanza nome volontario nelle card   & 1 & Il nome del volontario assegnato viene nascosto se corrisponde all'utente loggato; visibile solo agli altri ruoli. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Interventi sull'Area Volontario.}
 \label{tab:fix_volontario}
 \end{table}
@@ -346,9 +429,17 @@ Nella versione originale lo stato "Proposed" era codificato in giallo, colore se
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p1.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p1.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.3 -- Badge stato: V1 (badge giallo "Proposed") vs V2 (badge blu "Upcoming").}
     \label{fig:det_p3}
 \end{figure}
@@ -359,9 +450,17 @@ Lo stesso stato compariva giallo in alcune viste e blu in altre. In V2 \texttt{b
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p2.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p4_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p2.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p4_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.4 -- Inconsistenza cromatica: V1 (stesso stato, colori diversi) vs V2 (badge uniformi).}
     \label{fig:det_p4}
 \end{figure}
@@ -372,9 +471,17 @@ Il messaggio sulle modalità di pagamento era ambiguo e privo di enfasi visiva. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p3.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p6_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p3.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p6_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.5/P.6 -- Nota pagamento: V1 (testo generico) vs V2 (prezzo esplicito e banner warning).}
     \label{fig:det_p5}
 \end{figure}
@@ -385,9 +492,17 @@ Il messaggio sulle modalità di pagamento era ambiguo e privo di enfasi visiva. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p4.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p7_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p4.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p7_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.7 -- Ambiguità cromatica: V1 (badge identici) vs V2 (verde futuro, grigio passato).}
     \label{fig:det_p7}
 \end{figure}
@@ -398,9 +513,17 @@ Nessun indicatore visivo segnalava la saturazione delle visite. In V2 ogni card 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p6.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p6.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p3_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.8 -- Feedback disponibilità: V1 (nessun indicatore) vs V2 (contatore posti e badge "Filling Fast").}
     \label{fig:det_p8}
 \end{figure}
@@ -411,9 +534,17 @@ La sezione delle visite confermate risultava confusa. In V2 le sezioni "Upcoming
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p7.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p9_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p7.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p9_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.9 -- Sezioni homepage: V1 (struttura confusa) vs V2 (sezioni distinte con titoli chiari).}
     \label{fig:det_p9}
 \end{figure}
@@ -424,9 +555,17 @@ L'accesso ai dettagli era vincolato al solo pulsante della card. In V2 l'intera 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p8.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p10_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p8.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p10_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.10 -- Area cliccabile: V1 (solo bottone) vs V2 (intera card interattiva con hover).}
     \label{fig:det_p10}
 \end{figure}
@@ -437,9 +576,17 @@ La gerarchia tipografica era appiattita. In V2 è implementata una scala chiara:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p9.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p11_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p9.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p11_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.11 -- Gerarchia visiva: V1 (gerarchia debole) vs V2 (tipografia \texttt{display-4} con forte contrasto).}
     \label{fig:det_p11}
 \end{figure}
@@ -450,9 +597,17 @@ Dalla homepage mancava un accesso diretto alla propria area personale. In V2 l'h
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p10.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p12_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p10.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p12_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.12 -- Shortcut area personale: V1 (nessun accesso rapido) vs V2 (bottone "My Dashboard" nell'hero).}
     \label{fig:det_p12}
 \end{figure}
@@ -465,9 +620,17 @@ Il footer conteneva la dicitura italiana "Sito di visite guidate" in un'interfac
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p12.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p13_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p12.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p13_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.13 -- Incoerenza linguistica: V1 (testo italiano nel footer) vs V2 (footer interamente in inglese).}
     \label{fig:det_p13}
 \end{figure}
@@ -478,9 +641,17 @@ Gli indirizzi email nel footer non erano cliccabili nonostante l'aspetto da link
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p33.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p35_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p33.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p35_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.35 -- Email cliccabili: V1 (testo statico) vs V2 (link \texttt{mailto} attivi).}
     \label{fig:det_p35}
 \end{figure}
@@ -493,9 +664,17 @@ L'assenza di un toggle per visualizzare la password aumentava la probabilità di
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p11.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p15_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p11.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p15_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.15 -- Toggle password: V1 (campo senza icona) vs V2 (icona occhio attiva).}
     \label{fig:det_p15}
 \end{figure}
@@ -506,9 +685,17 @@ La pagina di login presentava link multipli e testo ridondante sui ruoli. In V2 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p14.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p16_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p14.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p16_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.16/P.17 -- Login: V1 (link multipli e testo ridondante) vs V2 (form pulito con link unico).}
     \label{fig:det_p16}
 \end{figure}
@@ -519,9 +706,17 @@ I messaggi di errore in caso di credenziali errate erano tecnici e poco comprens
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p16.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p18_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p16.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p18_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.18 -- Feedback errore: V1 (messaggio tecnico) vs V2 (Toast Notification chiara).}
     \label{fig:det_p18}
 \end{figure}
@@ -532,9 +727,17 @@ La mancanza di un meccanismo di recupero delle credenziali bloccava l'utente in 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p17.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p19_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p17.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p19_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.19 -- Recupero password: V1 (nessun link) vs V2 (pagina "Forgot Password" con reset via email).}
     \label{fig:det_p19}
 \end{figure}
@@ -545,9 +748,17 @@ L'utente doveva calcolare autonomamente i posti liberi nel form di prenotazione.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p18.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p20_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p18.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p20_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.20 -- Posti disponibili: V1 (nessun indicatore) vs V2 (contatore "(X spots remaining)" esplicito).}
     \label{fig:det_p20}
 \end{figure}
@@ -558,9 +769,17 @@ La pagina di registrazione aveva link multipli verso il login e spiegazioni dei 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p19.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p21_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p19.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p21_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.21/P.22 -- Register: V1 (link ridondanti e testo sui ruoli) vs V2 (form essenziale).}
     \label{fig:det_p21}
 \end{figure}
@@ -571,9 +790,17 @@ La validazione della password avveniva solo al submit. In V2 script JavaScript f
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p21.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p23_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p21.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p23_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.23 -- Validazione live: V1 (nessun feedback) vs V2 (indicatori real-time di lunghezza e match password).}
     \label{fig:det_p23}
 \end{figure}
@@ -586,9 +813,17 @@ Il codice di prenotazione era presentato senza enfasi visiva. In V2 è visualizz
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p22.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p24_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p22.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p24_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.24 -- Booking code: V1 (testo generico) vs V2 (font monospaziato bold con etichetta esplicita).}
     \label{fig:det_p24}
 \end{figure}
@@ -599,9 +834,17 @@ L'etichetta non chiariva se indicasse il gruppo dell'utente o il totale della vi
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p23.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p25_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p23.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p25_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.25 -- Etichetta partecipanti: V1 (ambigua) vs V2 (standardizzata "X Participants").}
     \label{fig:det_p25}
 \end{figure}
@@ -612,9 +855,17 @@ Il menu a tendina suggeriva interattività che non portava ad azioni utili. In V
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p24.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p26_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p24.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p26_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.26 -- Affordance: V1 (menu ambiguo) vs V2 (bottone "Cancel Booking" con modale).}
     \label{fig:det_p26}
 \end{figure}
@@ -676,9 +927,17 @@ La criticità più grave del sistema: ogni eliminazione avveniva immediatamente 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p29.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p31_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p29.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p31_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.31 -- Conferma eliminazione: V1 (eliminazione immediata) vs V2 (Global Delete Modal).}
     \label{fig:det_p31}
 \end{figure}
@@ -689,9 +948,17 @@ Il pannello di pianificazione era caotico e difficile da navigare. In V2 le visi
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p30.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p32_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p30.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p32_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.32 -- Visit Planning: V1 (layout disorganizzato) vs V2 (card mensili con sezioni chiare).}
     \label{fig:det_p32}
 \end{figure}
@@ -702,9 +969,17 @@ La sequenza di inserimento di una nuova visita non era guidata. In V2 il form pr
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p31.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p33_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p31.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p33_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.33 -- Add Visit: V1 (form non guidato) vs V2 (flusso Tipo → Data → Volontario).}
     \label{fig:det_p33}
 \end{figure}
@@ -715,9 +990,17 @@ L'utente non riceveva indicazioni sui vincoli procedurali prima del submit. In V
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p32.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p34_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p32.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p34_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.34 -- Feedback vincoli: V1 (nessun help text) vs V2 (indicazioni contestuali accanto ai campi).}
     \label{fig:det_p34}
 \end{figure}
@@ -728,9 +1011,17 @@ Il bottone "Change Password" nella pagina profilo usava il rosso, colore semanti
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/p34.png}
-    \hspace{0.04\textwidth}
-    \includegraphics[width=0.47\textwidth, keepaspectratio]{capitoli/immagini/v2/p40_v2.png}
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/p34.png}
+        \caption{V1 (Prima)}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.47\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/p40_v2.png}
+        \caption{V2 (Dopo)}
+    \end{subfigure}
     \caption{P.40 -- Bottone profilo: V1 (rosso fuorviante) vs V2 (stile neutro coerente).}
     \label{fig:det_p40}
 \end{figure}
@@ -769,7 +1060,7 @@ Cinque problemi identificati nel Capitolo 3 non sono stati risolti nella present
 \centering
 \renewcommand{\arraystretch}{1.5}
 \small
-\begin{tabular}{|c|p{3.5cm}|c|p{7cm}|}
+\begin{tabularx}{\textwidth}{|c|X|c|X|}
 \hline
 \textbf{P\#} & \textbf{Problema} & \textbf{Sev.} & \textbf{Motivazione della mancata risoluzione} \\ \hline
 1  & Cursore non coerente su elementi cliccabili & 2 & Richiede un audit sistematico di tutti gli elementi interattivi dell'interfaccia con aggiunta di \texttt{cursor: pointer} nei CSS globali. Il rischio di regressioni stilistiche ha portato a posticipare l'intervento. \\ \hline
@@ -777,7 +1068,7 @@ Cinque problemi identificati nel Capitolo 3 non sono stati risolti nella present
 36 & Mancanza selezione multipla nel calendario  & 2 & Richiederebbe un refactoring significativo del componente JavaScript del calendario disponibilità (shortcut "Tutti i weekend" / "Tutto il mese"). Identificato come miglioramento futuro ad alta priorità. \\ \hline
 39 & Messaggio stato vuoto senza Call to Action  & 2 & La funzionalità principale rimane intatta; la CTA verso la Homepage sarà integrata in un rilascio successivo a basso rischio. \\ \hline
 —  & Scroll inaspettato al cambio pagina         & — & Comportamento collaterale del pattern "Load More" asincrono: la chiamata a \texttt{scrollIntoView()} si comporta diversamente a seconda del browser. Richiede refactoring della logica di scroll nel componente Alpine.js. \\ \hline
-\end{tabular}
+\end{tabularx}
 \caption{Problemi identificati nel Capitolo 3 non risolti nella versione corrente.}
 \label{tab:problemi_aperti}
 \end{table}
