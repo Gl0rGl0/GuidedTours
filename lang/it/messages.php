@@ -69,7 +69,7 @@ return [
         'nav' => [
             'home' => 'Home',
             'bookings' => 'Prenotazioni',
-            'admin' => 'Admin',
+            'admin' => 'Pannello Admin',
             'planning' => 'Pianificazione',
             'availability' => 'Disponibilità',
             'my_visits' => 'Le Mie Visite',

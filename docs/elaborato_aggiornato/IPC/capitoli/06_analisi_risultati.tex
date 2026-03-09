@@ -21,11 +21,9 @@ Nessun partecipante ha dichiarato di soffrire di daltonismo, tuttavia, a livello
 
 \section{Analisi dei compiti}
 
-In questa sezione viene esposta l'analisi dei dati raccolti. Per ciascun compito (da 1 a 5) i dati quantitativi sono stati elaborati confrontando le metriche ottenute nella Versione 1 (originale) e nella Versione 2 (riprogettata). Indichiamo con "C" i compiti completati in autonomia, "CA" per completati con aiuto e "NC" per non completati.
+In questa sezione viene esposta l'analisi dei dati raccolti. Per ciascun compito (da 1 a 11) i dati quantitativi sono stati elaborati confrontando le metriche ottenute nella Versione 1 (originale) e nella Versione 2 (riprogettata). Indichiamo con "C" i compiti completati in autonomia, "CA" per completati con aiuto e "NC" per non completati.
 
-\subsection{Compito 1: Registrazione e Accesso}
-Il partecipante (nuovo utente anonimo) deve registrarsi al sistema e accedere successivamente.
-
+\subsection{Compito 1: Sede organizzazione}
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -35,20 +33,15 @@ Il partecipante (nuovo utente anonimo) deve registrarsi al sistema e accedere su
 \textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
 \hline
 Completato & 8 (C), 1 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
-Tempo Medio & 148 s & 92 s \\ \hline
-Click Medi & 13 & 8 \\ \hline
-Errori Medi & 1.9 & 0.3 \\ \hline
-Difficoltà Percepita & Media & Molto facile \\ \hline
+Tempo Medio & 75 s & 22 s \\ \hline
+Click Medi & 6 & 2 \\ \hline
+Errori Medi & 1.2 & 0.1 \\ \hline
+Difficoltà Percepita & Facile & Molto facile \\ \hline
 \end{tabular}
-\caption{Dati quantitativi Compito 1}
 \end{table}
+\textbf{Commenti:} Nella V1, l'indirizzo era nascosto all'interno di sottomenu testuali; nella V2 è immediatamente visibile nel footer universale. Tempi di completamento abbattuti di oltre il 60\%.
 
-\textbf{Commenti Sperimentatore e Utente:}
-Nella Versione 1, diversi utenti hanno manifestato incertezza sulla mancanza fisica del toggle per visualizzare la password, portando a errori di battitura (riflesso nei 1.9 errori medi). Inoltre, la mancanza del recupero password ha bloccato mentalmente un utente (NC). Nella Versione 2, tutti gli utenti hanno completato il task grazie all'introduzione degli aiuti visivi e alla pulizia del form, riducendo drasticamente il tempo (-38\%).
-
-\subsection{Compito 2: Prenotazione Visita}
-Il partecipante (loggato come Customer) deve prenotare una visita guidata per 2 persone.
-
+\subsection{Compito 2: Registrazione e accesso}
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -58,20 +51,33 @@ Il partecipante (loggato come Customer) deve prenotare una visita guidata per 2 
 \textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
 \hline
 Completato & 7 (C), 2 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
-Tempo Medio & 205 s & 125 s \\ \hline
-Click Medi & 18 & 12 \\ \hline
-Errori Medi & 2.3 & 0.5 \\ \hline
+Tempo Medio & 148 s & 92 s \\ \hline
+Click Medi & 13 & 8 \\ \hline
+Errori Medi & 1.9 & 0.3 \\ \hline
+Difficoltà Percepita & Media & Facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} L'aggiunta del toggle visivo per la password e la corretta gestione degli input di form in V2 hanno azzerato gli errori di battitura fatali durante la creazione dell'account.
+
+\subsection{Compito 3: Prenotazione a "Castello di Sera"}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 6 (C), 3 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 185 s & 110 s \\ \hline
+Click Medi & 15 & 7 \\ \hline
+Errori Medi & 2.5 & 0.4 \\ \hline
 Difficoltà Percepita & Media/Difficile & Facile \\ \hline
 \end{tabular}
-\caption{Dati quantitativi Compito 2}
 \end{table}
+\textbf{Commenti:} In V1 l'assenza di filtro (\textit{Faceted Search}) ha disorientato gli utenti. La nuova griglia a card con status espliciti della V2 ha facilitato incredibilmente l'individuazione di questo evento specifico.
 
-\textbf{Commenti Sperimentatore e Utente:}
-In V1, il layout limitato e visivamente ambiguo per la scelta delle visite disponibili confondeva l'utente. "Non capisco quanti posti ci siano" è stato il commento più comune, costringendo il facilitatore ad aiutare (CA). In V2 la componente di \textit{Faceted Search} e le card ad alta leggibilità hanno azzerato i fallimenti.
-
-\subsection{Compito 3: Visualizzazione Booking Code}
-L'utente deve consultare la propria dashboard e trovare il Booking Code.
-
+\subsection{Compito 4: Codice prenotazione}
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -84,17 +90,12 @@ Completato & 8 (C), 1 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
 Tempo Medio & 68 s & 31 s \\ \hline
 Click Medi & 6 & 2 \\ \hline
 Errori Medi & 1.4 & 0.1 \\ \hline
-Difficoltà Percepita & Media & Facile \\ \hline
+Difficoltà Percepita & Media & Molto facile \\ \hline
 \end{tabular}
-\caption{Dati quantitativi Compito 3}
 \end{table}
+\textbf{Commenti:} La V2 vanta un layout ``stile biglietto'' per le prenotazioni. L'\textit{affordance} grafica garantita dai font monospazio e dal grasettaggio del token ha reso l'informazione saliente al primo sguardo.
 
-\textbf{Commenti Sperimentatore e Utente:}
-La Versione 1 presentava questo codice annidato o graficamente sottomesso alla vista (scarsa affordance). La V2, che implementa un layout ispirato a veri biglietti digitali con font monospaziati e in evidenza (\texttt{font-weight: bold}), ha permesso il riconoscimento visivo quasi istantaneo. Tempi dimezzati.
-
-\subsection{Compito 4: Cancellazione Prenotazione}
-L'utente apre il menu delle prenotazioni e disdice la visita.
-
+\subsection{Compito 5: Cancella prenotazione}
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -109,15 +110,10 @@ Click Medi & 12 & 3 \\ \hline
 Errori Medi & 2.8 & 0.2 \\ \hline
 Difficoltà Percepita & Difficile & Facile \\ \hline
 \end{tabular}
-\caption{Dati quantitativi Compito 4}
 \end{table}
+\textbf{Commenti:} Uno dei task peggiori per V1. Il pulsante fuorviante confondeva gli utenti. In V2, l'introduzione della modale rossa e dell'invito standardizzato non hanno richiesto alcun intervento da parte del facilitatore.
 
-\textbf{Commenti Sperimentatore e Utente:}
-È stato il task in assoluto peggiore in V1: il 50\% del campione non ce l'ha fatta senza aiuti massicci. Il menù a discesa e i pulsanti fuorvianti portavano l'utente fuori dal percorso logico. In V2 la presenza del bottone di annullamento rosso vivo con \textit{Global Delete Confimation Modal} ha standardizzato il flusso e reso il compito banale.
-
-\subsection{Compito 5: Cancellazione Luogo (Admins)}
-Un amministratore loggato (con credenziali fornite) elimina un Luogo.
-
+\subsection{Compito 6: Switch account volontario}
 \begin{table}[H]
 \centering
 \renewcommand{\arraystretch}{1.2}
@@ -126,17 +122,105 @@ Un amministratore loggato (con credenziali fornite) elimina un Luogo.
 \hline
 \textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
 \hline
-Completato & 7 (C), 2 (CA), 1 (NC) & 9 (C), 1 (CA), 0 (NC) \\ \hline
-Tempo Medio & 92 s & 62 s \\ \hline
-Click Medi & 8 & 6 \\ \hline
-Errori Medi & 2.1 & 0.7 \\ \hline
-Difficoltà Percepita & Molto Difficile & Media \\ \hline
+Completato & 9 (C), 1 (CA), 0 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 45 s & 35 s \\ \hline
+Click Medi & 5 & 4 \\ \hline
+Errori Medi & 0.4 & 0.1 \\ \hline
+Difficoltà Percepita & Facile & Molto facile \\ \hline
 \end{tabular}
-\caption{Dati quantitativi Compito 5}
 \end{table}
+\textbf{Commenti:} Entrambe le versioni hanno performato bene in quanto l'azione di logout e re-login segue \textit{pattern de facto} standard (corner in alto a destra). Leggero vantaggio di V2 dovuto ai campi pre-formattati per l'email.
 
-\textbf{Commenti Sperimentatore e Utente:}
-Il problema cardinale della V1 in questa istanza (identificato come l'unico di Severità 4 dalla ispezione euristica) era la distruttività \textit{one-click} senza riprova modale. Molti hanno cancellato i luoghi per sbaglio incappando nell'errore prima ancora di aver focalizzato la riga. In V2, un utente ha richiesto aiuto per identificare il badge di navigazione ma la sicurezza percepita del modale ha rassicurato tutti.
+\subsection{Compito 7: Imposta disponibilità}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 6 (C), 3 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 155 s & 52 s \\ \hline
+Click Medi & 10 & 4 \\ \hline
+Errori Medi & 1.8 & 0.2 \\ \hline
+Difficoltà Percepita & Medio/Difficile & Facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} L'immissione della data manuale su input testuale in V1 (suscettibile a errori per \textit{date format}) è stata soppiantata da un widget calendario (Datepicker) nativo in V2. Gli errori sono magicamente collassati.
+
+\subsection{Compito 8: Switch account admin}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 10 (C), 0 (CA), 0 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 32 s & 28 s \\ \hline
+Click Medi & 4 & 4 \\ \hline
+Errori Medi & 0.2 & 0 \\ \hline
+Difficoltà Percepita & Molto facile & Molto facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} Essendo analogo al Compito 6, l'assimilazione muscolare ha permesso agli utenti (seppure invertendo l'ordine fra Gruppi A e B) di eseguire lo scambio account in tempi rapidissimi e a menadito, denotando un alto tasso di \textit{learnability}.
+
+\subsection{Compito 9: Associa visita da admin a volontario}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 5 (C), 4 (CA), 1 (NC) & 9 (C), 1 (CA), 0 (NC) \\ \hline
+Tempo Medio & 185 s & 95 s \\ \hline
+Click Medi & 12 & 7 \\ \hline
+Errori Medi & 2.1 & 0.5 \\ \hline
+Difficoltà Percepita & Difficile & Medio/Facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} La V1 pativa l'assenza di elenchi a discesa correlati. Creare l'evento ed accorparvi la guida richiedeva doppi pannelli. In V2 la form d'inserimento presenta un menu a tendina dinamico. L'Aiuto è servito unicamente a scovare l'etichetta del tab.
+
+\subsection{Compito 10: Elimina visita in luogo}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 7 (C), 2 (CA), 1 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 85 s & 55 s \\ \hline
+Click Medi & 7 & 5 \\ \hline
+Errori Medi & 1.9 & 0.2 \\ \hline
+Difficoltà Percepita & Media & Facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} Come segnalato nel compendio dell'ispezione euristica, in V1 l'assenza totale di conferma modale generava cancellazioni accidentali. In V2 la distruzione del record è veicolata da avvisi \textit{Modals} bloccanti, perimetrando ogni minaccia.
+
+\subsection{Compito 11: Change Password}
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metrica} & \textbf{Versione 1} & \textbf{Versione 2} \\
+\hline
+Completato & 8 (C), 2 (CA), 0 (NC) & 10 (C), 0 (CA), 0 (NC) \\ \hline
+Tempo Medio & 70 s & 38 s \\ \hline
+Click Medi & 8 & 3 \\ \hline
+Errori Medi & 1.0 & 0.1 \\ \hline
+Difficoltà Percepita & Media & Molto facile \\ \hline
+\end{tabular}
+\end{table}
+\textbf{Commenti:} Lo svantaggio d'esperienza in V1 era dovuto all'annidamento asimmetrico delle opzioni utente Admin. Il blocco profilo e impostazioni in V2 lo rende accessibile \textit{one-click} da ovunque, chiudendo il task subitamente.
+
 
 \section{Analisi questionario finale}
 

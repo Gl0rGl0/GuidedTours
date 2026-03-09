@@ -77,34 +77,185 @@ U10 & 21 & F & Laurea      & Alta  & Gruppo B (V2 $\to$ V1) \\ \hline
 
 Maggiori dettagli demografici e relative distribuzioni grafiche saranno illustrati approfonditamente nel capitolo dell'analisi dei risultati (Capitolo 6).
 
-\section{Scelta dei compiti}
+\section{Scelta dei compiti e Moduli}
 
-L'esperimento è basato su \textbf{5 compiti} (task) scelti coprendo le funzionalità più critiche emerse dall'ispezione euristica. I task sono identici per entrambe le versioni e strutturati in difficoltà e carico cognitivo crescenti.
+L'esperimento è basato su \textbf{11 compiti} (task) pensati per coprire il ciclo di vita completo della piattaforma: dalla ricerca di informazioni base, alla registrazione, per poi valutare le funzionalità transazionali (prenotazioni) e le interfacce riservate ai ruoli di volontario e amministratore. 
+Per standardizzare lo svolgimento, oltre al questionario anagrafico iniziale, è stato predisposto un \textbf{modulo strutturato} (riportato di seguito) compilato fisicamente dallo sperimentatore per annotare click, tempi, errori e i commenti \textit{Think Aloud} degli utenti in tempo reale.
 
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.5}
-\small
-\begin{tabular}{|c|p{4.5cm}|p{4.5cm}|c|}
-\hline
-\textbf{Task} & \textbf{Scenario (Breve)} & \textbf{Precondizione} & \textbf{Tempo max} \\
-\hline
-T1 & Registrati come nuovo utente e accedi. & Homepage, utente anonimo. & 5 min \\ \hline
-T2 & Prenota una visita guidata per 2 persone. & Utente autenticato (Customer). & 5 min \\ \hline
-T3 & Trova il codice della prenotazione effettuata. & Prenotazione T2 completata. & 3 min \\ \hline
-T4 & Cancella la prenotazione appena effettuata. & Dashboard aperta dopo T3. & 3 min \\ \hline
-T5 & (Amministratore) Elimina un luogo a sistema. & Login Admin effettuato. & 5 min \\ \hline
-\end{tabular}
-\caption{Compiti assegnati durante il test.}
-\label{tab:task}
-\end{table}
+\vspace{0.5cm}
 
-\section{Moduli}
+% T1
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T1. Dire dove si trova la sede dell'organizzazione} \\[0.15cm]
+\textit{Risposta attesa:} Via Branze 38, Brescia \\
+\textbf{Tempo limite:} 1 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
 
-Per standardizzare lo svolgimento, sono stati predisposti dei moduli (digitali o cartacei) somministrati a ogni utente e compilati dallo sperimentatore:
-\begin{itemize}
-    \item \textbf{Modulo Anagrafico e Consenso}: pre-compilato dall'utente per la raccolta demografica.
-    \item \textbf{Modulo dello Sperimentatore}: tabella griglia compilata dal facilitatore per annotare click, tempi, errori ed esito.
-    \item \textbf{Modulo Post-Esperimento (Questionari)}: modulo digitale contenente gli item del questionario SUS e NPS.
-\end{itemize}
-Questi strumenti hanno consentito di normalizzare l'estrazione dei dati e garantire un solido campione comparativo tra V1 e V2.
+% T2
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T2. Registrati come nuovo utente e accedi} \\[0.15cm]
+\textit{Azione attesa:} Log-in completato con successo. \\
+\textbf{Tempo limite:} 2 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T3
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T3. Prenota una visita guidata a "Castello di Sera" del X (seconda riga) per 2 persone} \\[0.15cm]
+\textit{Azione attesa:} Prenotazione generata nel profilo. \\
+\textbf{Tempo limite:} 2 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T4
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T4. Trova il codice della prenotazione appena effettuata} \\[0.15cm]
+\textit{Risposta attesa:} Dettatura del token univoco generato randomicamente dal sistema. \\
+\textbf{Tempo limite:} 2 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T5
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T5. Cancella la prenotazione appena effettuata} \\[0.15cm]
+\textit{Azione attesa:} Modale di conferma d'annullamento superato. \\
+\textbf{Tempo limite:} 1 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T6
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T6. Effettua il logout dall'utente attuale ed esegui il login come volontario (anna@example.com)} \\[0.15cm]
+\textit{Azione attesa:} Switch dell'account superato con password: password123. \\
+\textbf{Tempo limite:} 1 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T7
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T7. Imposta la disponibilità a un giorno qualsiasi non già impostato (es 25/04/26)} \\[0.15cm]
+\textit{Azione attesa:} Slot sul calendario personale indicato come disp. \\
+\textbf{Tempo limite:} 1 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T8
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T8. Effettua il logout ed esegui il login come amministratore (admin@example.com)} \\[0.15cm]
+\textit{Azione attesa:} Dashboard admin raggiunta con successo (password123). \\
+\textbf{Tempo limite:} 30 s \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T9
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T9. Crea una visita per la data impostata come disponibile da volontario prima (es. 25/04/26)} \\[0.15cm]
+\textit{Azione attesa:} Creare l'evento associando la guida "Anna". \\
+\textbf{Tempo limite:} 2 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T10
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T10. Elimina una visita da un luogo qualsiasi} \\[0.15cm]
+\textit{Azione attesa:} Eliminazione riuscita e rimozione dall'elenco. \\
+\textbf{Tempo limite:} 2 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}
+
+% T11
+\noindent
+\framebox[\linewidth]{
+\begin{minipage}{0.96\linewidth}
+\vspace{0.2cm}
+\textbf{T11. Cambia password da password123 a Admin123} \\[0.15cm]
+\textit{Azione attesa:} Raggiungere le impostazioni del profilo Admin e mutare le credenziali. \\
+\textbf{Tempo limite:} 1 min \\[0.2cm]
+\hrule \vspace{0.2cm}
+Tempo impiegato: \rule{2.5cm}{0.4pt} \hfill Click: \rule{2cm}{0.4pt} \hfill Errori: \rule{2cm}{0.4pt} \\[0.2cm]
+Completato: \quad [\quad] Sì \qquad [\quad] No \qquad [\quad] Con Aiuto \\[0.2cm]
+\hrule \vspace{0.2cm}
+\textbf{Note Sperimentatore:} \\[1.2cm]
+\textbf{Commenti Utente:} \\[1.2cm]
+\end{minipage}} \vspace{0.5cm}

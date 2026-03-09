@@ -67,7 +67,7 @@ return [
         'nav' => [
             'home' => 'Home',
             'bookings' => 'Bookings',
-            'admin' => 'Admin',
+            'admin' => 'Dashboard Admin',
             'planning' => 'Planning',
             'availability' => 'Availability',
             'my_visits' => 'My Visits',
