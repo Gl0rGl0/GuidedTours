@@ -1,76 +1,11 @@
 \chapter{Conclusioni}
 \label{ch:conclusioni}
 
-Il presente elaborato ha documentato l'intero ciclo di vita di un progetto di Interazione Uomo-Macchina applicato a "Guided Tours", una piattaforma web per la prenotazione di tour guidati sviluppata nell'ambito del corso di Ingegneria del Software. Il lavoro ha attraversato le fasi canoniche del processo di progettazione centrata sull'utente: analisi del contesto e delle personas, valutazione ispettiva, riprogettazione iterativa e validazione empirica con utenti reali.
+Il progetto \textit{Guided Tours} nasce dall'esigenza di gestire in maniera snella, affidabile e moderna la prenotazione e disdetta di visite guidate. Lo studio condotto e illustrato in questo elaborato si è concentrato prevalentemente sull'aspetto dell'Interazione Persona-Calcolatore, fondamentale per garantire il successo e l'adozione di una piattaforma rivolta sia a turisti che ad addetti ai lavori (\textit{Guide, Volontari, Amministratori}).
 
-\section{Sintesi del Percorso}
+Nel corso dei capitoli si è attraversato l'intero processo di User-Centered Design (UCD). Dalla definizione stringente del \textbf{Profilo Utente} all'individuazione formale \textit{inspection-based} dei colli di bottiglia (tramite \textbf{Valutazione Euristica}), è emerso quanto l'implementazione originale presentasse lacune sia logiche che prestazionali.
 
-\subsection{Analisi e Valutazione}
+Il massiccio intervento di \textbf{Riprogettazione} --- sia Architetturale (flussi di convalida, prevezione errore) che \textit{UI/UX} (adozione di pattern noti, inviti all'azione potenziati) --- ha prodotto una seconda release del software intrinsecamente \textit{robust}.
+Tale evoluzione è stata infine certificata oggettivamente dallo svolgimento dell'\textbf{Esperimento con gli utenti}: le drammatiche decurtazioni delle tempistiche estrattive (Tempo di Task) accoppiate al raddoppio dello \textit{User Sentiment} (tracciato da iterazioni in scala SUS ed NPS) certificano la bontà delle soluzioni adottate.
 
-La fase di analisi (Capitolo~2) ha portato alla definizione di tre personas primarie che rappresentano i ruoli chiave dell'applicativo: il \textit{Fruitore} (Customer), interessato a scoprire e prenotare tour con facilità; la \textit{Guida Volontaria}, che necessita di strumenti semplici per gestire la propria disponibilità; e l'\textit{Amministratore}, che richiede controllo efficiente su visite, luoghi e utenti.
-
-La valutazione euristica (Capitolo~3), condotta da tre valutatori indipendenti secondo i 10 Principi di Nielsen, ha identificato \textbf{40 problemi di usabilità}, con una distribuzione per severità che evidenziava un sistema funzionalmente completo ma caratterizzato da criticità strutturali: 1 problema di severità 4, 3 di severità 3, 10 di severità 2 e 26 di severità 1. Il problema più grave --- l'assenza di conferma nelle operazioni distruttive nel pannello admin (P31) --- costituiva un rischio concreto di perdita di dati irreversibile.
-
-\subsection{Riprogettazione}
-
-La riprogettazione (Capitolo~4) ha risolto \textbf{35 dei 40 problemi identificati}, adottando un approccio strutturato su tre livelli:
-
-\begin{itemize}
-    \item \textbf{Design System}: uniformazione della palette cromatica (Primary Blue \#0d6efd, Light Blue \#cfe2ff, Dark Grey \#333333), gerarchia tipografica coerente e codifica semantica degli stati visita tramite badge Bootstrap 5.
-    \item \textbf{Pattern HCI}: introduzione di Cards interattive con \texttt{stretched-link}, Faceted Search nella homepage, Visual Status Badges, Global Delete Confirmation Modal e validazione live degli input.
-    \item \textbf{Personalizzazione per ruolo}: homepage con sottotitolo contestuale ai quattro ruoli (Guest, Customer, Guide, Admin), shortcut dedicati per area e banner operativi per le Guide.
-\end{itemize}
-
-I 5 problemi non risolti (P1, P2, P36, P39, scroll) sono stati documentati con motivazione tecnica e costituiscono la roadmap per la prossima iterazione (Capitolo~7).
-
-\subsection{Validazione Empirica}
-
-Il test di usabilità (Capitoli~5 e~6), condotto con 10 partecipanti in un design \textit{within-subjects controbilanciato}, ha prodotto risultati che confermano l'efficacia degli interventi:
-
-\begin{table}[H]
-\centering
-\renewcommand{\arraystretch}{1.4}
-\small
-\begin{tabular}{|l|c|c|c|}
-\hline
-\textbf{Metrica} & \textbf{V1} & \textbf{V2} & \textbf{Variazione} \\
-\hline
-SUS medio                   & 56.5  & 78.75 & $+22.25$ p. \\ \hline
-Fascia SUS                  & Accettabile & Buono & $\uparrow$ \\ \hline
-Task completion rate        & 70\%  & 98\%  & $+28$ p.p. \\ \hline
-Tempo medio sessione        & 688 s & 358 s & $-48\%$ \\ \hline
-Errori medi per task        & 2.10  & 0.36  & $-83\%$ \\ \hline
-NPS medio                   & 5.1   & 8.3   & $+3.2$ \\ \hline
-\end{tabular}
-\caption{Riepilogo comparativo delle metriche di usabilità V1 vs V2.}
-\label{tab:riepilogo_finale}
-\end{table}
-
-Il t-test appaiato ha confermato la significatività statistica del miglioramento ($t(9) = 10.82$, $p < 0.001$), consentendo di rifiutare l'ipotesi nulla con elevata confidenza.
-
-\section{Riflessioni sul Processo}
-
-\subsection{Efficacia della Valutazione Euristica}
-
-L'esperienza ha confermato che la valutazione euristica, pur essendo un metodo di ispezione senza utenti reali, è capace di identificare criticità genuine: tutti i problemi che hanno prodotto le maggiori difficoltà nel test (P26, P31, P19, P24) erano stati correttamente identificati e valutati con severità 2--4. La correlazione tra severità assegnata in fase di ispezione e impatto misurato nel test è risultata forte, validando retrospettivamente le scelte di prioritizzazione adottate.
-
-\subsection{Il Valore del Design System}
-
-La decisione di fondare la riprogettazione su un Design System formalizzato (piuttosto che procedere a correzioni puntuali) si è rivelata strategicamente efficace. Molti dei 35 fix implementati hanno beneficiato di una base visiva coerente: la standardizzazione dei badge di stato, la palette semantica e la gerarchia tipografica hanno risolto simultaneamente gruppi di problemi (P3, P4, P7, P29) che in un approccio puramente correttivo avrebbero richiesto interventi separati.
-
-\subsection{Limiti dello Studio}
-
-Alcuni limiti metodologici devono essere riconosciuti:
-
-\begin{itemize}
-    \item \textbf{Campione}: $n = 10$ è sufficiente per rilevare effetti di grande entità (come quelli osservati), ma non consente generalizzazioni robuste su popolazioni più ampie o eterogenee.
-    \item \textbf{Effetto di apprendimento}: nonostante il controbilanciamento, la familiarità acquisita con il dominio applicativo durante la prima sessione può aver favorito la performance nella seconda, indipendentemente dalla versione testata.
-    \item \textbf{Ambiente controllato}: il test in laboratorio non riproduce fedelmente il contesto d'uso reale (mobilità, distrazioni, connessione variabile), che potrebbe amplificare alcune criticità residue.
-    \item \textbf{Ruoli non testati}: il test ha coperto principalmente il flusso Customer e Admin; il flusso della Guida Volontaria (T1--T4 non applicabili) non è stato valutato quantitativamente.
-\end{itemize}
-
-\section{Considerazioni Finali}
-
-Il progetto ha dimostrato che un'applicazione web funzionalmente matura può beneficiare significativamente di un ciclo di progettazione centrata sull'utente, anche quando applicato retrospettivamente a un sistema esistente. I principi di Nielsen, lungi dall'essere astrazioni teoriche, si sono tradotti in misurazioni concrete: ogni punto percentuale di task completion recuperato e ogni secondo risparmiato nella sessione di test rappresenta un miglioramento reale dell'esperienza di un utente reale.
-
-Il passaggio da SUS 56.5 a SUS 78.75 non è soltanto un numero: è la differenza tra un sistema che l'utente tollera e un sistema che l'utente apprezza. L'obiettivo futuro, perseguibile attraverso gli sviluppi descritti nel Capitolo~7, è raggiungere la soglia \textit{Eccellente} (SUS > 80.3) e trasformare "Guided Tours" in un prodotto che gli utenti non solo usano, ma consigliano.
+Il risultato finale è un portale resiliente, inclusivo e altamente usabile, capace di abbattere le barriere informatiche di prenotazione per i neofiti e contemporaneamente proteggere l'integrità dei dati per i manutentori del sistema, gettando fondazioni scalabili per le estensioni digitali esposte nei possibili sviluppi futuri.

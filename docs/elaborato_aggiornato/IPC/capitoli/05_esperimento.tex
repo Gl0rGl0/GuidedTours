@@ -1,0 +1,110 @@
+\chapter{Esperimento con gli utenti}
+\label{ch:esperimento}
+
+Una volta conclusa la riprogettazione del sito sono stati eseguiti degli esperimenti con gli utenti: lo scopo di questa fase è stato quello di raccogliere dati relativi all'utilizzo del sistema da parte di utenti reali per poi usarli, nel capitolo successivo, per analizzare nel dettaglio gli effettivi miglioramenti apportati.
+Il test ha confrontato le due versioni del sistema --- V1 (originale) e V2 (riprogettata) --- su un campione temporale di partecipanti. In questo capitolo verranno illustrate le modalità con cui sono stati svolti questi esperimenti.
+
+\section{Caratteristiche dell'esperimento}
+
+Per gli esperimenti di usabilità è stato scelto l'approccio "within-subject", che implica che ogni gruppo di utenti abbia testato entrambe le condizioni sperimentali, ossia le due versioni del sito, in ordine variabile: questa metodologia è preferibile in contesti nei quali sono ridotti i problemi di apprendimento, richiede meno utenti e comporta minori problemi legati alla variabilità degli stessi.
+
+È stata inoltre utilizzata la metodologia di \textit{counterbalancing} per evitare problemi legati all'apprendimento degli utenti da una versione all'altra. Un totale di 10 utenti è stato selezionato e diviso in due gruppi distinti:
+\begin{itemize}
+    \item \textbf{Gruppo A}: ha sperimentato inizialmente la "Versione 1" del sito (originale) seguita dalla "Versione 2" (riprogettata).
+    \item \textbf{Gruppo B}: ha sperimentato inizialmente la "Versione 2" del sito seguita dalla "Versione 1".
+\end{itemize}
+
+Si è cercato, per quanto possibile, di garantire omogeneità e bilanciamento tra i gruppi considerando le informazioni demografiche raccolte attraverso questionari preliminari (Sesso, Età, Titolo di studio, Conoscenze informatiche).
+
+\section{Ambiente}
+
+Per simulare il contesto di utilizzo reale del sistema, si è deciso di eseguire gli esperimenti in luoghi familiari agli utenti (come aule studio e abitazioni private), in modo da metterli a loro agio.
+Tutti gli esperimenti sono stati eseguiti su un computer portatile fornito dallo sperimentatore (con browser Chrome), in modo da ricreare la stessa situazione e ambiente applicativo (Laravel locale) per tutti i soggetti.
+Lo sperimentatore si trovava nella stessa stanza in posizione non intrusiva, intervenendo esclusivamente su esplicita richiesta del partecipante.
+
+\section{Dati raccolti}
+
+I dati raccolti dallo sperimentatore sono sia quantitativi che qualitativi, così da permettere sia analisi statistiche che valutazioni di natura descrittiva.
+Per ogni compito sono stati raccolti i seguenti dati quantitativi:
+\begin{itemize}
+    \item \textbf{Completamento} (indica se il task è stato completato, completato con aiuto, o non completato);
+    \item \textbf{Tempo impiegato} per il completamento del compito;
+    \item \textbf{Numero di click} necessari al completamento;
+    \item \textbf{Numero di errori} eseguiti durante la navigazione.
+\end{itemize}
+
+Per i dati qualitativi si hanno:
+\begin{itemize}
+    \item \textbf{Note sperimentatore};
+    \item \textbf{Commenti dell'utente} (\textit{Think Aloud}).
+\end{itemize}
+
+Inoltre ogni utente ha valutato la \textbf{difficoltà} di ogni scenario su una scala appropriata e ha compilato il questionario \textbf{SUS (System Usability Scale)} per il grado di usabilità, affiancato dall'indice \textbf{NPS (Net Promoter Score)}.
+
+\section{Scelta degli sperimentatori}
+
+Per l'esecuzione degli esperimenti si è scelto di impiegare un solo sperimentatore, responsabile dell'osservazione e dell'annotazione delle metriche, con funzione anche di facilitatore per mettere a proprio agio gli utenti in caso di stallo prolungato. Lo sperimentatore è rimasto invariato per tutti i test svolti.
+
+\section{Scelta degli utenti}
+
+Trattandosi di un sito destinato ad un'ampia varietà di persone (dai fruitori occasionali di visite guidate ai volontari), sono stati scelti 10 utenti eterogenei: 5 per il Gruppo A e 5 per il Gruppo B. 
+Prima dell'inizio della sessione, ciascun partecipante ha compilato il \textbf{questionario anagrafico} (oltre ad aver accettato le clausole del consenso informato GDPR). 
+
+La tabella seguente riassume la suddivisione:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\small
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{ID} & \textbf{Età} & \textbf{Genere} & \textbf{Titolo di studio} & \textbf{Competenza informatica} & \textbf{Gruppo (Ordine)} \\
+\hline
+U01 & 22 & M & Laurea      & Alta  & Gruppo A (V1 $\to$ V2) \\ \hline
+U02 & 20 & F & Diploma     & Media & Gruppo A (V1 $\to$ V2) \\ \hline
+U03 & 38 & M & Laurea      & Alta  & Gruppo A (V1 $\to$ V2) \\ \hline
+U04 & 26 & F & Laurea      & Media & Gruppo A (V1 $\to$ V2) \\ \hline
+U05 & 54 & M & Diploma     & Bassa & Gruppo A (V1 $\to$ V2) \\ \hline
+U06 & 23 & F & Laurea      & Alta  & Gruppo B (V2 $\to$ V1) \\ \hline
+U07 & 28 & M & Laurea      & Media & Gruppo B (V2 $\to$ V1) \\ \hline
+U08 & 45 & F & Laurea      & Media & Gruppo B (V2 $\to$ V1) \\ \hline
+U09 & 33 & M & Diploma     & Bassa & Gruppo B (V2 $\to$ V1) \\ \hline
+U10 & 21 & F & Laurea      & Alta  & Gruppo B (V2 $\to$ V1) \\ \hline
+\end{tabular}
+\caption{Panoramica anagrafica dei partecipanti al test di usabilità ($n=10$).}
+\label{tab:partecipanti}
+\end{table}
+
+Maggiori dettagli demografici e relative distribuzioni grafiche saranno illustrati approfonditamente nel capitolo dell'analisi dei risultati (Capitolo 6).
+
+\section{Scelta dei compiti}
+
+L'esperimento è basato su \textbf{5 compiti} (task) scelti coprendo le funzionalità più critiche emerse dall'ispezione euristica. I task sono identici per entrambe le versioni e strutturati in difficoltà e carico cognitivo crescenti.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.5}
+\small
+\begin{tabular}{|c|p{4.5cm}|p{4.5cm}|c|}
+\hline
+\textbf{Task} & \textbf{Scenario (Breve)} & \textbf{Precondizione} & \textbf{Tempo max} \\
+\hline
+T1 & Registrati come nuovo utente e accedi. & Homepage, utente anonimo. & 5 min \\ \hline
+T2 & Prenota una visita guidata per 2 persone. & Utente autenticato (Customer). & 5 min \\ \hline
+T3 & Trova il codice della prenotazione effettuata. & Prenotazione T2 completata. & 3 min \\ \hline
+T4 & Cancella la prenotazione appena effettuata. & Dashboard aperta dopo T3. & 3 min \\ \hline
+T5 & (Amministratore) Elimina un luogo a sistema. & Login Admin effettuato. & 5 min \\ \hline
+\end{tabular}
+\caption{Compiti assegnati durante il test.}
+\label{tab:task}
+\end{table}
+
+\section{Moduli}
+
+Per standardizzare lo svolgimento, sono stati predisposti dei moduli (digitali o cartacei) somministrati a ogni utente e compilati dallo sperimentatore:
+\begin{itemize}
+    \item \textbf{Modulo Anagrafico e Consenso}: pre-compilato dall'utente per la raccolta demografica.
+    \item \textbf{Modulo dello Sperimentatore}: tabella griglia compilata dal facilitatore per annotare click, tempi, errori ed esito.
+    \item \textbf{Modulo Post-Esperimento (Questionari)}: modulo digitale contenente gli item del questionario SUS e NPS.
+\end{itemize}
+Questi strumenti hanno consentito di normalizzare l'estrazione dei dati e garantire un solido campione comparativo tra V1 e V2.

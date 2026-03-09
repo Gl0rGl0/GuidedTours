@@ -1,0 +1,13 @@
+# Ignora tutti i file di default
+*
+
+# Non ignorare le cartelle (serve per poter navigare al loro interno)
+!*/
+
+# Non ignorare i file con i formati desiderati
+!*.tex
+!*.pdf
+!*.png
+
+# Non ignorare questo file .gitignore
+!.gitignore
