@@ -182,8 +182,8 @@
                     <div class="card-body">
                         <x-empty-state 
                             icon="bi-calendar-x" 
-                            title="{{ __('messages.home.tours.empty_state_title') }}" 
-                            message="{{ __('messages.home.tours.empty_state_message') }}" 
+                            :title="__('messages.home.tours.empty_state_title')" 
+                            :message="__('messages.home.tours.empty_state_message')" 
                             :card="false" 
                         />
                     </div>

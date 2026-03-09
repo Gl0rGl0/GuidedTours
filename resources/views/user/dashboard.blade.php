@@ -28,9 +28,9 @@
             <div class="col-12">
                 <x-empty-state 
                     icon="bi-calendar2-x" 
-                    title="{{ __('messages.user.dashboard.empty_state_title') }}" 
-                    message="{{ __('messages.user.dashboard.empty_state_message') }}" 
-                    actionText="{{ __('messages.common.browse_tours') }}"
+                    :title="__('messages.user.dashboard.empty_state_title')" 
+                    :message="__('messages.user.dashboard.empty_state_message')" 
+                    :actionText="__('messages.common.browse_tours')"
                     actionUrl="{{ route('home') }}"
                     :card="false" 
                 />

@@ -40,9 +40,9 @@
                 <div class="card-body">
                     <x-empty-state 
                         icon="bi-clock-history" 
-                        title="{{ __('messages.tours_views.customized_visits.empty_state_title') }}" 
-                        message="{{ __('messages.tours_views.customized_visits.empty_state_message') }}" 
-                        actionText="{{ __('messages.tours_views.customized_visits.back_to_home') }}"
+                        :title="__('messages.tours_views.customized_visits.empty_state_title')" 
+                        :message="__('messages.tours_views.customized_visits.empty_state_message')" 
+                        :actionText="__('messages.tours_views.customized_visits.back_to_home')"
                         actionUrl="{{ route('home') }}"
                         :card="false" 
                     />

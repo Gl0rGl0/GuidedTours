@@ -157,8 +157,8 @@
                                         <td colspan="4" class="p-0 border-0">
                                             <x-empty-state 
                                                 icon="bi-geo-alt" 
-                                                title="{{ __('messages.admin.configurator.places.empty_title') }}" 
-                                                message="{{ __('messages.admin.configurator.places.empty_message') }}" 
+                                                :title="__('messages.admin.configurator.places.empty_title')" 
+                                                :message="__('messages.admin.configurator.places.empty_message')" 
                                                 :card="false" 
                                             />
                                         </td>
@@ -229,7 +229,7 @@
                                         <td colspan="5" class="p-0 border-0">
                                             <x-empty-state 
                                                 icon="bi-tags" 
-                                                title="{{ __('messages.admin.configurator.visit_types.empty_title') }}" 
+                                                :title="__('messages.admin.configurator.visit_types.empty_title')" 
                                                 message="" 
                                                 :card="false" 
                                             />
@@ -325,7 +325,7 @@
                      @if(collect($users_by_role)->flatten()->isEmpty())
                         <x-empty-state 
                             icon="bi-people" 
-                            title="{{ __('messages.admin.configurator.users.empty_title') }}" 
+                            :title="__('messages.admin.configurator.users.empty_title')" 
                             message="" 
                             :card="false" 
                         />
