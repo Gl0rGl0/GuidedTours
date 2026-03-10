@@ -25,6 +25,7 @@
 <div 
     x-data="{ 
         query: '', 
+        selectedIndex: 0,
         items: [
             { id: 'home', title: '{{ __('messages.components.command_palette.items.home') }}', icon: 'bi-house', url: '{{ route('home') }}' },
             { id: 'dash', title: '{{ __('messages.components.command_palette.items.dashboard') }}', icon: 'bi-speedometer2', url: '{{ route('user.dashboard') }}' },
@@ -41,6 +42,47 @@
         select(url) {
             window.location.href = url;
             this.commandOpen = false; // Access global state
+        },
+        focusNext() {
+            if (this.selectedIndex < this.filteredItems.length - 1) {
+                this.selectedIndex++;
+                this.scrollToSelected();
+            }
+        },
+        focusPrev() {
+            if (this.selectedIndex > 0) {
+                this.selectedIndex--;
+                this.scrollToSelected();
+            }
+        },
+        selectCurrent() {
+            if (this.filteredItems.length > 0 && this.filteredItems[this.selectedIndex]) {
+                this.select(this.filteredItems[this.selectedIndex].url);
+            }
+        },
+        scrollToSelected() {
+            this.$nextTick(() => {
+                const el = this.$refs['item' + this.selectedIndex];
+                if (el) el.scrollIntoView({ block: 'nearest' });
+            });
+        }
+    }"
+    x-init="
+        $watch('query', value => selectedIndex = 0);
+        $watch('commandOpen', value => {
+            if(value) {
+                setTimeout(() => $refs.searchInput.focus(), 50);
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        })
+    "
+    @keydown.window="(e) => {
+        if (commandOpen) {
+            if (e.key === 'ArrowDown') { e.preventDefault(); focusNext(); }
+            if (e.key === 'ArrowUp') { e.preventDefault(); focusPrev(); }
+            if (e.key === 'Enter') { e.preventDefault(); selectCurrent(); }
         }
     }"
 >
@@ -58,17 +100,20 @@
             <div class="p-3 border-bottom border-secondary-subtle">
                 <div class="input-group">
                     <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-primary"></i></span>
-                    <input x-model="query" type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="{{ __('messages.components.command_palette.search_placeholder') }}" autofocus>
+                    <input x-ref="searchInput" x-model="query" type="text" class="form-control border-0 shadow-none bg-transparent" placeholder="{{ __('messages.components.command_palette.search_placeholder') }}" autofocus>
                 </div>
             </div>
             
             <div class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
-                <template x-for="item in filteredItems" :key="item.id">
+                <template x-for="(item, index) in filteredItems" :key="item.id">
                     <button 
                         @click="select(item.url)"
+                        @mouseover="selectedIndex = index"
+                        :x-ref="'item' + index"
+                        :class="{'bg-primary-subtle text-primary': selectedIndex === index}"
                         class="list-group-item list-group-item-action d-flex align-items-center px-4 py-3 border-0"
                     >
-                        <i :class="'bi ' + item.icon + ' me-3 text-secondary fs-5'"></i>
+                        <i :class="'bi ' + item.icon + ' me-3 fs-5 ' + (selectedIndex === index ? 'text-primary' : 'text-secondary')"></i>
                         <span x-text="item.title" class="fw-medium"></span>
                     </button>
                 </template>

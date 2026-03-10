@@ -40,6 +40,16 @@
                                 <a href="#tours-section" class="btn btn-primary shadow-sm px-4 rounded-pill">{{ __('messages.common.browse_tours') }}</a>
                                 <a href="{{ route('user.dashboard') }}" class="btn btn-outline-primary px-4 rounded-pill">{{ __('messages.common.my_dashboard') }}</a>
                             </div>
+                        @elseif(Auth::user()->hasRole('Admin'))
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#tours-section" class="btn btn-primary shadow-sm px-4 rounded-pill">{{ __('messages.common.browse_tours') }}</a>
+                                <a href="{{ route('admin.configurator') }}" class="btn btn-outline-primary px-4 rounded-pill">{{ __('messages.app.nav.admin') }}</a>
+                            </div>
+                        @elseif(Auth::user()->hasRole('Guide'))
+                            <div class="d-flex justify-content-center gap-3">
+                                <a href="#tours-section" class="btn btn-primary shadow-sm px-4 rounded-pill">{{ __('messages.common.browse_tours') }}</a>
+                                <a href="{{ route('volunteer.availability.form') }}" class="btn btn-outline-primary px-4 rounded-pill">{{ __('messages.app.nav.availability') }}</a>
+                            </div>
                         @else
                             <div class="d-flex justify-content-center gap-3">
                                 <a href="#tours-section" class="btn btn-primary shadow-sm px-4 rounded-pill">{{ __('messages.common.browse_tours') }}</a>
