@@ -15,11 +15,14 @@
                 <form action="{{ route('login') }}" method="post">
                     @csrf
                     
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('messages.auth.login.email_label') }}" value="{{ old('email') }}" required autofocus>
-                        <label for="email">{{ __('messages.auth.login.email_label') }}</label>
+                    <div class="mb-3">
+                        <div class="form-floating position-relative">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('messages.auth.login.email_label') }}" value="{{ old('email') }}" required autofocus>
+                            <label for="email">{{ __('messages.auth.login.email_label') }}</label>
+                        </div>
+                        <div class="form-text text-muted small d-none" id="emailHelp"></div>
                         @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
                     
@@ -49,7 +52,7 @@
 
                     
                     <div class="d-grid mb-4">
-                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm" id="submitBtn">
                             {{ __('messages.auth.login.submit_btn') }} <i class="bi bi-arrow-right ms-2"></i>
                         </button>
                     </div>
@@ -80,4 +83,78 @@ function togglePassword() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const emailHelp = document.getElementById('emailHelp');
+    const submitBtn = document.getElementById('submitBtn');
+
+    let eValid = (email.value.trim() !== '' && validateEmailFormat(email.value.trim()));
+    let typingTimer;
+
+    function validateEmailFormat(mail) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+    }
+
+    function updateSubmitStatus() {
+        const pVal = password.value;
+        submitBtn.disabled = !(eValid && pVal.length > 0);
+    }
+
+    function handleEmailInput() {
+        clearTimeout(typingTimer);
+        const val = email.value.trim();
+        
+        if (val.length === 0) {
+            emailHelp.classList.add('d-none');
+            eValid = false;
+            updateSubmitStatus();
+            return;
+        }
+
+        emailHelp.classList.add('d-none');
+        
+        typingTimer = setTimeout(() => {
+            if (validateEmailFormat(val)) {
+                emailHelp.classList.remove('d-none');
+                emailHelp.className = 'form-text text-success small';
+                emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
+                eValid = true;
+            } else {
+                emailHelp.classList.remove('d-none');
+                emailHelp.className = 'form-text text-danger small';
+                emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
+                eValid = false;
+            }
+            updateSubmitStatus();
+        }, 600);
+    }
+
+    email.addEventListener('input', handleEmailInput);
+    password.addEventListener('input', updateSubmitStatus);
+
+    email.addEventListener('blur', () => {
+         clearTimeout(typingTimer);
+         const val = email.value.trim();
+         if (val.length > 0) {
+             if (validateEmailFormat(val)) {
+                emailHelp.classList.remove('d-none');
+                emailHelp.className = 'form-text text-success small';
+                emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
+                eValid = true;
+            } else {
+                emailHelp.classList.remove('d-none');
+                emailHelp.className = 'form-text text-danger small';
+                emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
+                eValid = false;
+            }
+            updateSubmitStatus();
+         }
+    });
+
+    if(email.value.trim().length > 0) {
+         email.dispatchEvent(new Event('blur'));
+    }
+    updateSubmitStatus();
+});
 </script>

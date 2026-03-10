@@ -9,7 +9,7 @@
             <p class="text-muted mb-0">{{ __('messages.user.dashboard.description') }}</p>
         </div>
           @if (!$bookings->isEmpty())
-        <a href="{{ route('home') }}" class="btn btn-outline-primary rounded-pill">
+        <a href="{{ route('home') }}#tours-section" class="btn btn-outline-primary rounded-pill">
             <i class="bi bi-plus-lg me-1"></i> {{ __('messages.user.dashboard.book_new_tour') }}
         </a>
         @endif

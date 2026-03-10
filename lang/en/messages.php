@@ -205,7 +205,7 @@ return [
             'description' => 'Update your password',
             'current_password' => 'Current Password',
             'new_password' => 'New Password',
-            'min_characters' => 'Minimum 6 characters',
+            'min_characters' => 'Minimum 8 characters, one uppercase and one number',
             'confirm_new_password' => 'Confirm New Password',
             'confirm' => 'Confirm',
             'submit_btn' => 'Update Password',
