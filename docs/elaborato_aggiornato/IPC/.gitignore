@@ -11,5 +11,8 @@
 
 # Non ignorare questo file .gitignore
 !.gitignore
+!*.xlsx
+!*.csv
+!*.numbers
 
 main.pdf
