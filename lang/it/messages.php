@@ -218,7 +218,7 @@ return [
             'description' => 'Aggiorna la tua password',
             'current_password' => 'Password Attuale',
             'new_password' => 'Nuova Password',
-            'min_characters' => 'Minimo 6 caratteri',
+            'min_characters' => 'Minimo 8 caratteri, una maiuscola e un numero',
             'confirm_new_password' => 'Conferma Nuova Password',
             'confirm' => 'Conferma',
             'submit_btn' => 'Aggiorna Password',
