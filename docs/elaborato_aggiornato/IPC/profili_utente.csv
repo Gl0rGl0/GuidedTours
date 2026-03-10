@@ -1,4 +1,3 @@
-profili_utente
 Nome;Cognome;Genere;Età;Titolo di studio;Competenze Informatiche;Qualifica;Ambito;Informatica a lavoro (0-5);Informatica extra-lavoro (0-5);Autonomia prenotazione (0-2)
 Danilo;Barbetti;M;53;Licenza media;1;Operaio;Edile;0;1;0
 Alessandra;Nodari;F;51;Licenza media;2;Operaio;Ristorazione;0;2;0
@@ -7,7 +6,7 @@ Ivana;Calufetti;F;54;Diploma;1;Impiegato;Sanità;2;1;1
 Monica;Gaioni;F;55;Diploma;3;Impiegato;Edile;3;4;2
 Erminio;Felappi;M;57;Licenza media;1;Operaio;Elettricista;1;1;1
 Alessia;Duci;F;22;Laurea Triennale;4;Operaio;Sanità;1;4;2
-Elena;Picinelli;F;22;Laurea Triennale;4;Impiegata;Educazione;2;4;2
+Elena;Picinelli;F;22;Laurea Triennale;4;Impiegato;Educazione;2;4;2
 Gaia;Zuelli;F;22;Diploma;4;Studente;Sanità;;4;2
 Francesco;Felappi;M;19;Diploma;5;Studente;Informatica;;5;2
 Leonardo;Folgoni;M;22;Laurea Triennale;5;Impiegato;Informatica;5;5;2
