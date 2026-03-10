@@ -11,3 +11,5 @@
 
 # Non ignorare questo file .gitignore
 !.gitignore
+
+main.pdf
