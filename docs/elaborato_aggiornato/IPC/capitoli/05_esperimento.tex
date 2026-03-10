@@ -77,10 +77,64 @@ U10 & 21 & F & Laurea      & Alta  & Gruppo B (V2 $\to$ V1) \\ \hline
 
 Maggiori dettagli demografici e relative distribuzioni grafiche saranno illustrati approfonditamente nel capitolo dell'analisi dei risultati (Capitolo 6).
 
+\section{Test pilota}
+
+Prima di avviare le sessioni con il campione definitivo è stato condotto un \textbf{test pilota} con un partecipante non incluso nel campione ufficiale, al fine di:
+
+\begin{itemize}
+    \item Verificare la chiarezza e la comprensibilità del testo di ogni compito, individuando eventuali ambiguità da correggere prima dell'avvio delle sessioni reali.
+    \item Calibrare i \textbf{tempi limite} assegnati a ciascun task, utilizzando i tempi di esecuzione del pilota (opportunamente arrotondati e incrementati in base alla difficoltà stimata) come riferimento.
+    \item Accertare il corretto funzionamento dell'ambiente applicativo (Laravel locale, database con seed, credenziali) e della procedura di reset tra una versione e l'altra.
+\end{itemize}
+
+I dati raccolti durante il test pilota non sono stati inclusi nell'analisi dei risultati, in quanto il partecipante era consapevole della natura preliminare della sessione e i compiti sono stati parzialmente modificati a seguito delle osservazioni emerse.
+
 \section{Scelta dei compiti e Moduli}
 
 L'esperimento è basato su \textbf{11 compiti} (task) pensati per coprire il ciclo di vita completo della piattaforma: dalla ricerca di informazioni base, alla registrazione, per poi valutare le funzionalità transazionali (prenotazioni) e le interfacce riservate ai ruoli di volontario e amministratore. 
 Per standardizzare lo svolgimento, oltre al questionario anagrafico iniziale, è stato predisposto un \textbf{modulo strutturato} (riportato di seguito) compilato fisicamente dallo sperimentatore per annotare click, tempi, errori e i commenti \textit{Think Aloud} degli utenti in tempo reale.
+
+\subsection{Modulo pre-esperimento (checklist sperimentatore)}
+
+Al fine di garantire condizioni identiche per ogni partecipante, lo sperimentatore ha seguito un \textbf{modulo di preparazione} prima di accogliere ciascun utente. La checklist è articolata in tre fasi:
+
+\vspace{0.3cm}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|}
+\hline
+\textbf{Preparazione tecnica} \newline \textit{(prima di accogliere l'utente)} &
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt]
+    \item Avviare il server Laravel locale e verificare che entrambe le versioni (V1 e V2) siano accessibili da browser
+    \item Eseguire \texttt{php artisan migrate:fresh -{}-seed} per ripristinare il database allo stato iniziale atteso
+    \item Verificare che le credenziali dei seeder siano corrette (\texttt{password123})
+    \item Chiudere notifiche, applicazioni in background e assicurare sufficiente autonomia della batteria
+    \item Predisporre il modulo dei compiti e un cronometro
+\end{itemize} \\
+\hline
+\textbf{Accoglienza utente} &
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt]
+    \item Ringraziare il partecipante e presentare brevemente lo scopo della sessione
+    \item Sottolineare che \textit{il test valuta il sistema, non l'utente}: eventuali difficoltà non rappresentano un fallimento personale
+    \item Chiedere di \textbf{pensare ad alta voce} (\textit{Think Aloud}) durante l'esecuzione dei compiti
+    \item Precisare che lo sperimentatore non interverrà tranne in caso di scadenza del tempo limite
+    \item Far compilare il \textbf{questionario anagrafico} e il modulo di consenso GDPR
+\end{itemize} \\
+\hline
+\textbf{Reset tra versioni} \newline \textit{(da eseguire per ogni cambio V1\,$\leftrightarrow$\,V2)} &
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt]
+    \item Cancellare l'account fruitore creato durante i task T2--T5
+    \item Rimuovere la disponibilità inserita al task T7 (volontario Anna)
+    \item Eliminare la visita creata al task T9 (se presente)
+    \item Ripristinare la password dell'admin al valore originale (\texttt{password123}) dopo il task T11
+    \item Aprire la versione corretta del sito e leggere insieme all'utente i compiti relativi alla nuova versione
+\end{itemize} \\
+\hline
+\end{tabularx}
+\renewcommand{\arraystretch}{1}
+
+\vspace{0.5cm}
+
+\subsection{Modulo dei compiti}
 
 \vspace{0.5cm}
 
