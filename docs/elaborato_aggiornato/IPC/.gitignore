@@ -8,6 +8,7 @@
 !*.tex
 !*.pdf
 !*.png
+!*.py
 
 # Non ignorare questo file .gitignore
 !.gitignore
