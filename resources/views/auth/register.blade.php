@@ -49,7 +49,7 @@
                         <div class="mb-4">
                             <div class="form-floating position-relative">
                                 <input type="password" class="form-control pe-5 @error('password') is-invalid @enderror"
-                                    id="password" name="password" placeholder="{{ __('messages.auth.register.password') }}" minlength="6" required>
+                                    id="password" name="password" placeholder="{{ __('messages.auth.register.password') }}" minlength="8" required>
                                 <label for="password">{{ __('messages.auth.register.password') }}</label>
 
                                 <button type="button"
@@ -69,7 +69,7 @@
                         <div class="mb-4">
                             <div class="form-floating position-relative">
                                 <input type="password" class="form-control pe-5" id="password_confirmation"
-                                    name="password_confirmation" placeholder="{{ __('messages.auth.register.confirm_password') }}" minlength="6" required>
+                                    name="password_confirmation" placeholder="{{ __('messages.auth.register.confirm_password') }}" minlength="8" required>
                                 <label for="password_confirmation">{{ __('messages.auth.register.confirm_password') }}</label>
 
                                 <button type="button"
@@ -138,7 +138,9 @@
             pValid = false;
             cValid = false;
 
-            if (pVal.length >= 6) {
+            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (passwordRegex.test(pVal)) {
                 passHelp.className = 'form-text text-success small';
                 passHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.min_characters') }}';
                 pValid = true;
