@@ -23,3 +23,16 @@ Di seguito si riportano i principali sviluppi futuri previsti:
     L'attuale filtro delle visite guidate ha aumentato drasticamente le performance di conversione nei test (Compito 2), ma potrebbe essere arricchito. Introdurre mappe interattive in cui evidenziare le zone ad alta densità di tour, o l'integrazione di tag semantici ("Kid-friendly", "Accessibile in carrozzina") ridurrebbe il carico di memoria di lavoro (HSA 3) nell'utente in fase di decisione.
 
 \end{itemize}
+
+\section{Sviluppi Futuri e Workaround per Problemi Euristici Irrisolti}
+Durante la fase di refactoring, il team ha volutamente tralasciato la correzione di cinque problemi emersi nell'ispezione euristica, classificandoli temporaneamente come \textit{out-of-scope} a causa dell'elevata complessità implementativa in rapporto alle tempistiche. Di seguito si tracciano soluzioni metodologiche e \textit{workaround} di UX per tre di queste criticità, predisponendole per i futuri cicli di sviluppo iterativo:
+
+\begin{itemize}
+    \item \textbf{Mancanza di selezione multipla nel calendario:}
+    \newline\textit{Problema identificato:} Nelle interfacce di dichiarazione disponibilità, la necessità di reiterare innumerevoli click disgiunti per profilare giorni contigui sovraccarica le procedure operative dal lato delle guide, aumentando stanchezza e potenziale errore umano in aperta violazione delle euristiche su flessibilità ed efficienza.
+    \newline\textit{Sviluppo Futuro e Workaround:} L'evoluzione strutturale ideale prevedrà la trasposizione funzionale del widget attuale per l'adozione di una libreria DOM orientata alla selezione multipla temporale integrata in logiche \textit{batch-processing} (es. plugin \textit{Flatpickr} multiselect). Tramite la gestualità di \textit{click-and-drag}, il carico cognitivo si annullerebbe radunando la sequenza all'interno di un solo carico per l'HTTP POST. La soluzione \textit{workaround} provvisoria per le fasi critiche, consisterà nell'esposizione di due meri input (``Data di Inizio'' e ``Data di Fine'') con uno script di backend preposto alla deduzione logico-matematica progressiva delle date intermedie.
+
+    \item \textbf{Assenza di notifica per annullamento visite:}
+    \newline\textit{Problema identificato:} Nel configuratore aziendale, l'epurazione di uno slot di visita da parte di un Amministratore non scaturisce riscontri attivi sui dispositivi degli iscritti, mantenendo silente lo stato e violando nettamente l'euristica di visibilità e trasparenza dello stato del sistema utente.
+    \newline\textit{Sviluppo Futuro e Workaround:} L'architettura correttiva vedrà implementato sul framework Laravel un robusto pattern logico \textit{Publisher/Subscriber}: l'intercettazione del task \textit{soft-delete} della risorsa imposterà un transito elaborativo all'interno di una \textit{Queue Job} che diramerà \textit{email transazionali d'allerta} verso ogni singolo fruitore iscritto alla seduta. Nell'immediato volendo rifuggire \textit{technical debt} si istruisce un solido \textit{alert block} temporaneo all'interno dei modali di approvazione dei \textit{delete}: \textit{<<Attenzione: Tale cancellazione è irreversibile ma per il momento non invia notifiche automatiche via mail. Si prega di farsi manualmente carico della profilazione d'invio avvisi agli associati allo slot anzitempo il task.>>}
+\end{itemize}
