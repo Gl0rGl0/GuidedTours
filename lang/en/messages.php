@@ -502,6 +502,15 @@ return [
             'footer_text' => '&copy; :year City Heritage Tours / UniBS<br>Please present this ticket to the guide.',
         ],
     ],
+    'errors' => [
+        'access_denied' => 'Access denied.',
+        'unauthenticated' => 'You must be authenticated to access this page.',
+        'page_not_found' => 'Page not found.',
+        'session_expired' => 'Session expired.',
+        'internal_error' => 'Internal server error. Please try again later.',
+        'exception_error' => 'Exception error. Please try again later.',
+        'resource_not_found' => 'Resource not found.',
+    ],
     'emails' => [
         'password_reset' => [
             'subject' => 'Reset Password Notification',

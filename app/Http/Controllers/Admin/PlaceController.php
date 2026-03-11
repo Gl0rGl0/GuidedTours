@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Place;
 use App\Http\Requests\StorePlaceRequest; 
 use App\Http\Requests\UpdatePlaceRequest; 
@@ -19,6 +20,7 @@ class PlaceController extends Controller
         return $this->handleAdminOperation(
             function () use ($place) {
                 $place->delete(); // Effetto a cascata causa vincoli del DB
+                Cache::forget('places_list');
             },
             __('messages.admin.places.remove_success'),
             __('messages.admin.places.remove_failed'),
@@ -36,6 +38,7 @@ class PlaceController extends Controller
         return $this->handleAdminOperation(
             function () use ($request) {
                 Place::create($request->validated());
+                Cache::forget('places_list');
             },
             __('messages.admin.places.create_success'),
             __('messages.admin.places.create_failed'),
@@ -53,6 +56,7 @@ class PlaceController extends Controller
          return $this->handleAdminOperation(
             function () use ($request, $place) {
                 $place->update($request->validated());
+                Cache::forget('places_list');
             },
             __('messages.admin.places.update_success'),
             __('messages.admin.places.update_failed'),

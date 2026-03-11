@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Cache;
 use App\Models\Place; 
 use App\Models\VisitType; 
 use App\Http\Controllers\Traits\HandlesAdminOperations; 
@@ -29,7 +30,9 @@ class AdminController extends Controller
         ];
 
         try {
-            $places = Place::orderBy('name')->get();
+            $places = Cache::remember('places_list', 86400, function () {
+                return Place::orderBy('name')->get();
+            });
 
 
             $visit_types = VisitType::with('place')

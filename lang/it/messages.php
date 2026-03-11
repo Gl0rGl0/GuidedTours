@@ -515,6 +515,15 @@ return [
             'footer_text' => '&copy; :year City Heritage Tours / UniBS<br>Si prega di presentare questo biglietto alla guida.',
         ],
     ],
+    'errors' => [
+        'access_denied' => 'Accesso negato.',
+        'unauthenticated' => 'Devi essere autenticato per accedere a questa pagina.',
+        'page_not_found' => 'Pagina non trovata.',
+        'session_expired' => 'Sessione scaduta.',
+        'internal_error' => 'Errore interno del server. Riprova più tardi.',
+        'exception_error' => 'Si è verificato un errore. Riprova più tardi.',
+        'resource_not_found' => 'Risorsa non trovata.',
+    ],
     'emails' => [
         'password_reset' => [
             'subject' => 'Notifica di Reimpostazione Password',

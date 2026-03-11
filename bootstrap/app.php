@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,9 +23,27 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (UnauthorizedException $e, Request $request) {
+            return redirect()->route('home')->with('error_message', __('messages.errors.access_denied'));
+        });
+
         $exceptions->render(function (HttpException $e, Request $request) {
-            if ($e->getStatusCode() === 419) {
-                return redirect()->route('home')->with('status', 'Session expired.');
+            switch ($e->getStatusCode()) {
+                case 401:
+                    return redirect()->route('login')->with('error_message', __('messages.errors.unauthenticated'));
+                case 403:
+                    return redirect()->route('home')->with('error_message', __('messages.errors.access_denied'));
+                case 404:
+                    return redirect()->route('home')->with('error_message', __('messages.errors.page_not_found'));
+                case 419:
+                    return redirect()->route('home')->with('error_message', __('messages.errors.session_expired'));
+                case 500:
+                    return redirect()->route('home')->with('error_message', __('messages.errors.internal_error'));
             }
+            return redirect()->route('home')->with('error_message', __('messages.errors.exception_error'));
+        });
+
+        $exceptions->render(function (\BadMethodCallException $e, Request $request) {
+            return redirect()->route('home')->with('error_message', __('messages.errors.resource_not_found'));
         });
     })->create();
