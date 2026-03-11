@@ -24,6 +24,9 @@ extracted_*
 CLAUDE.md
 claude mb
 
+# py
+.venv
+
 # macOS
 .DS_Store
 
