@@ -15,7 +15,7 @@ class FruitoreController extends Controller
         $user = Auth::user();
 
         $bookings = Registration::where('user_id', $user->user_id)
-                                ->with(['visit.visitType.place'])
+                                ->with(['visit.visitType.place', 'visit.registrations'])
                                 ->whereHas('visit', function($q) {
                                     $q->whereIn('status', [
                                         Visit::STATUS_PROPOSED,

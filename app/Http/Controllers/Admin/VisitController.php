@@ -79,7 +79,7 @@ class VisitController extends Controller
             ->groupBy('available_date');
 
 
-        $plannedVisits = Visit::with(['visitType.place', 'assignedVolunteer'])
+        $plannedVisits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
             ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
             ->whereBetween('visit_date', [$startDate, $endDate])
             ->orderBy('visit_date')

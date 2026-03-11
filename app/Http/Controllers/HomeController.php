@@ -14,60 +14,68 @@ class HomeController extends Controller
         $proposed_visits = collect();
         $confirmed_visits = collect();
         $error_message = null;
-        $places = \App\Models\Place::orderBy('name')->get();
+
+        $places = \Illuminate\Support\Facades\Cache::remember('places_list', 3600, function () {
+            return \App\Models\Place::orderBy('name')->get();
+        });
 
         try {
-            // Base Query for Proposed Visits
-            $query = Visit::with(['visitType.place', 'registrations'])
-                ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
-                ->whereDate('visit_date', '>=', Carbon::today()->addDays(3));
+            // Generate a unique cache key based on the request parameters and current page
+            $cacheKey = 'proposed_visits_' . md5(json_encode($request->all()) . '_page_' . $request->input('page', 1));
 
-            // 1. Filter by Search (Title or Description)
-            if ($request->filled('search')) {
-                $search = $request->search;
-                $query->whereHas('visitType', function ($q) use ($search) {
-                    $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
-                });
-            }
+            $proposed_visits = \Illuminate\Support\Facades\Cache::remember($cacheKey, 60, function () use ($request) {
+                // Base Query for Proposed Visits
+                $query = Visit::with(['visitType.place', 'registrations'])
+                    ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
+                    ->whereDate('visit_date', '>=', Carbon::today()->addDays(3));
 
-            // 2. Filter by Place
-            if ($request->filled('place')) {
-                $query->whereHas('visitType', function ($q) use ($request) {
-                    $q->where('place_id', $request->place);
-                });
-            }
+                // 1. Filter by Search (Title or Description)
+                if ($request->filled('search')) {
+                    $search = $request->search;
+                    $query->whereHas('visitType', function ($q) use ($search) {
+                        $q->where('title', 'like', "%{$search}%")
+                          ->orWhere('description', 'like', "%{$search}%");
+                    });
+                }
 
-            // 3. Filter by Price (Free)
-            if ($request->filled('price') && $request->price === 'free') {
-                $query->whereHas('visitType', function ($q) {
-                    $q->where('price', 0)->orWhereNull('price');
-                });
-            }
+                // 2. Filter by Place
+                if ($request->filled('place')) {
+                    $query->whereHas('visitType', function ($q) use ($request) {
+                        $q->where('place_id', $request->place);
+                    });
+                }
 
-            // 4. Sorting
-            $sort = $request->input('sort', 'date_asc');
-            switch ($sort) {
-                case 'alpha_asc':
-                    $query->join('visit_types', 'visits.visit_type_id', '=', 'visit_types.visit_type_id')
-                          ->orderBy('visit_types.title', 'asc')
-                          ->select('visits.*'); // Avoid column collision
-                    break;
-                case 'popularity':
-                    $query->withCount('registrations')
-                          ->orderBy('registrations_count', 'desc');
-                    break;
-                case 'date_desc':
-                    $query->orderBy('visit_date', 'desc');
-                    break;
-                case 'date_asc':
-                default:
-                    $query->orderBy('visit_date', 'asc');
-                    break;
-            }
+                // 3. Filter by Price (Free)
+                if ($request->filled('price') && $request->price === 'free') {
+                    $query->whereHas('visitType', function ($q) {
+                        $q->where('price', 0)->orWhereNull('price');
+                    });
+                }
 
-            // 5. Pagination
-            $proposed_visits = $query->paginate(9)->withQueryString();
+                // 4. Sorting
+                $sort = $request->input('sort', 'date_asc');
+                switch ($sort) {
+                    case 'alpha_asc':
+                        $query->join('visit_types', 'visits.visit_type_id', '=', 'visit_types.visit_type_id')
+                              ->orderBy('visit_types.title', 'asc')
+                              ->select('visits.*'); // Avoid column collision
+                        break;
+                    case 'popularity':
+                        $query->withCount('registrations')
+                              ->orderBy('registrations_count', 'desc');
+                        break;
+                    case 'date_desc':
+                        $query->orderBy('visit_date', 'desc');
+                        break;
+                    case 'date_asc':
+                    default:
+                        $query->orderBy('visit_date', 'asc');
+                        break;
+                }
+
+                // 5. Pagination
+                return $query->paginate(9)->withQueryString();
+            });
 
             // Confirmed Visits (Only show if participating)
             // if (\Illuminate\Support\Facades\Auth::check()) {

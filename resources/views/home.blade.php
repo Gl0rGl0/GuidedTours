@@ -74,6 +74,11 @@
                              document.getElementById('tours-list-wrapper').innerHTML = newWrapper.innerHTML;
                          }
                          window.history.pushState({}, '', url);
+                     })
+                     .catch(error => {
+                         console.error('Error fetching tours:', error);
+                     })
+                     .finally(() => {
                          this.loading = false;
                      });
              },
@@ -102,11 +107,15 @@
                                  
                                  const priceCheck = document.getElementById('priceCheck');
                                  if (priceCheck) priceCheck.checked = params.get('price') === 'free';
-
-                                 this.loading = false;
                                  
                                  // scroll slightly up to see changes smoothly if pagination is at bottom
                                  document.getElementById('tours-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                             })
+                             .catch(error => {
+                                 console.error('Error fetching pagination:', error);
+                             })
+                             .finally(() => {
+                                 this.loading = false;
                              });
                      }
                  });
