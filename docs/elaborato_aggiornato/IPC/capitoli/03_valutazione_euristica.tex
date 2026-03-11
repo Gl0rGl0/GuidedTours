@@ -864,6 +864,13 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 
 In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
 
+% TODO: rigenerare i 3 grafici con i dati aggiornati (41 problemi, erano 32)
+%   - grafico_severita.png  (Sev1=20, Sev2=16, Sev3=4, Sev4=1)
+%   - grafico_principi.png  (P1=13, P2=8, P3=3, P4=11, P5=5, P6=5, P7=6, P8=7, P9=2, P10=1)
+%   - matrice_errori.pdf    (aggiungere colonne P33-P41)
+% Script pronto: docs/elaborato_aggiornato/IPC/grafici/rigenera_grafici_euristica.py
+% Copiare gli output in capitoli/immagini/ sostituendo i file esistenti.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{capitoli/immagini/grafico_severita.png}
@@ -888,11 +895,11 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \subsection{Stima dei problemi totali (Curva di Nielsen)}
 Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, stimiamo di aver rilevato circa il 67\% delle criticità totali.
-\[ N_{tot} = \frac{40}{0.67} \approx 60 \]
-Il calcolo teorico indica che il sistema potrebbe ospitare circa 60 problemi di usabilità totali, di cui 40 sono stati documentati in questa analisi.
+\[ N_{tot} = \frac{41}{0.67} \approx 61 \]
+Il calcolo teorico indica che il sistema potrebbe ospitare circa 61 problemi di usabilità totali, di cui 41 sono stati documentati in questa analisi.
 
 \section{Commento Finale alla Valutazione}
-L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{10 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.
+L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{16 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.
 
 Particolarmente rilevante è la presenza di un errore di \textbf{Severità 4} (l'assenza di conferma nell'eliminazione dati nel pannello admin) e di violazioni di \textbf{Severità 3} riguardanti la gestione delle credenziali e i feedback procedurali. Questi dati confermano che il sistema attuale manca di adeguati meccanismi di salvaguardia. La riprogettazione si concentrerà prioritariamente sulla messa in sicurezza delle azioni distruttive e sulla standardizzazione del linguaggio visivo (Principi 1 e 4), al fine di trasformare gli attriti rilevati in flussi d'uso fluidi e sicuri per le \textit{personas} individuate.
 
