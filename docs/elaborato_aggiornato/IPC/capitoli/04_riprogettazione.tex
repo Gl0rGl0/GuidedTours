@@ -8,6 +8,26 @@ La priorità degli interventi è stata determinata in base al \textbf{grado di s
 \vspace{1em}
 \noindent\textit{Nota Metodologica}: L'attuale riprogettazione si configura come un'implementazione correttiva guidata esclusivamente dall'ispezione euristica documentata nel Capitolo 3 e dalle best practice di dominio applicativo. L'efficacia delle soluzioni adottate e il loro reale impatto sull'usabilità saranno oggetto di validazione empirica autonoma, tramite test esplorativi con gli utenti finali, come documentato nei successivi capitoli relativi all'esperimento.
 
+\section{Fase di Prototipazione (Wireframing e Mock-up)}
+La transizione tra l'evidenza empirica emersa dalla valutazione euristica e lo sviluppo effettivo del software ha richiesto una fase dedicata di prototipazione iterativa. Il team di progettazione ha inizialmente adottato un approccio a bassa fedeltà (\textit{Low-Fidelity Wireframing}), lavorando su schizzi concettuali per riorganizzare l'architettura dell'informazione. Questo step è risultato cruciale per definire preventivamente la gerarchia visiva dei contenuti sulla pagina, ottimizzando la disposizione dei filtri di ricerca e delle schede (card) dei tour e riducendo il carico cognitivo dell'interfaccia.
+
+Successivamente, ci si è avvalsi di piattaforme di prototipazione vettoriale (in particolare Figma) per tradurre i wireframe in Mock-up ad alta fedeltà (\textit{High-Fidelity}). Tale passaggio ha consentito di concretizzare e validare la nuova identità visiva, codificando formalmente il Design System (palette cromatica, tipografia ad alto contrasto, forme dei componenti interattivi) e simulando i flussi di navigazione (\textit{User Flows}) prima della stesura del codice. Aver validato interattivamente l'interfaccia ha minimizzato il rischio di dover approntare costosi \textit{refactoring} tardivi in fase di sviluppo, garantendo al contempo l'aderenza ai principi di Human-Computer Interaction definiti nelle fasi precedenti.
+
+\begin{center}
+    [INSERIRE QUI IMMAGINE MOCKUP HOME PAGE]
+    
+    [INSERIRE LINK AL PROGETTO FIGMA]
+\end{center}
+
+\subsection{Validazione Formativa dei Prototipi (Mock-up)}
+Prima di procedere alla stesura del codice (coding), i mock-up ad alta fedeltà realizzati su Figma sono stati sottoposti a un meticoloso processo di validazione formativa. Il team ha adottato un approccio metodologico ibrido, diviso in due macro-fasi sequenziali, al fine di ottimizzare preventivamente l'esperienza utente.
+
+La prima fase, di natura interna (Esperti), è consistita in un'ispezione analitica da parte del team di sviluppo. Avvalendosi del metodo del \textit{Cognitive Walkthrough}, i progettisti hanno navigato i prototipi validando la coerenza dei flussi logici (\textit{User Flows}) interattivi e verificando accuratamente il corretto posizionamento delle \textit{affordance}.
+
+La seconda fase, di carattere esterno (Utenti finali), ha coinvolto un campione empirico ristretto di 3 individui estranei al progetto. Aderendo ai moderni dettami metodologici della \textit{Lean UX} e del \textit{Guerrilla Testing}, si è optato per una valutazione qualitativa snella. Ai partecipanti è stato chiesto di interagire liberamente con il prototipo, verbalizzando i propri ragionamenti ad alta voce secondo il celebre protocollo \textit{Think-Aloud}. La decisione di affidarsi a soli tre utenti trova solida giustificazione negli studi accademici di Jakob Nielsen, i quali dimostrano empiricamente che un campione da 3 a 5 soggetti è ampiamente sufficiente per far emergere la stragrande maggioranza delle criticità euristiche.
+
+Questo collaudo formativo ha permesso di correggere la rotta progettuale prima di impegnare risorse nello sviluppo software (coding), demandando la misurazione statistica e oggettiva all'esperimento sommativo finale.
+
 \section{Technical Rationale}
 La risoluzione delle criticità di usabilità ha richiesto un intervento sia lato Front-end che lato Back-end. Di seguito i principali interventi tecnologici:
 \begin{itemize}
@@ -16,14 +36,29 @@ La risoluzione delle criticità di usabilità ha richiesto un intervento sia lat
     \item \textbf{Meccanismi di conferma (Modal)}: I \textit{confirmation modals} per le azioni distruttive, al posto di impiegare librerie più pesanti come Livewire, sono stati realizzati tramite \textbf{Modali Bootstrap} nativi interfacciati con script JavaScript centralizzati. Questo rende più performante la pagina: uno script globale cattura l'evento, estrae dinamicamente i parametri utente/oggetto (\texttt{data-action}, \texttt{data-item-name}) e inserisce i dati prima della visualizzazione del modale, garantendo modularità.
 \end{itemize}
 
-\section{Design System Documentation}
-Il restyling grafico ha posto forte enfasi sull'accessibilità, cercando di risolverne un difetto di base emerso nell'analisi. Il Design System finale si basa su una palette cromatica precisa e facilmente riconoscibile:
+\section{Reverse Engineering e Documentazione del Visual Design dal Codice}
+Il restyling grafico ha posto forte enfasi sull'accessibilità, cercando di risolverne un difetto di base emerso nell'analisi. Attraverso il \textit{reverse engineering} dei fogli di stile customizzati (file \texttt{\_variables.scss} e \texttt{app.scss}) e dei template base dell'interfaccia (es. \texttt{app.blade.php}), è possibile mappare formalmente i principi di visual design adottati nel sistema.
+
+\subsection{Psicologia e Gerarchia del Colore}
+La palette cromatica estratta dal codice definisce una gerarchia visiva basata su un forte contrasto, progettata per bilanciare l'aderenza all'estetica istituzionale con l'usabilità:
 \begin{itemize}
-    \item \textbf{Primary Blue (\#0d6efd)}: Utilizzato per le azioni principali (le classiche call-to-action), per i link interattivi e i pulsanti di prima grandezza. Rappresenta l'identità visiva del brand.
-    \item \textbf{Light Blue / Subtle Background (\#cfe2ff)}: Impiegato per badge di stato e sfondi secondari delle card. Fornisce un contrasto bilanciato che alleggerisce l'impatto visivo senza affaticare la lettura del testo scuro in sovraimpressione.
-    \item \textbf{Dark Grey (\#333333)}: Utilizzato come colore di rottura, specialmente nei contesti del tema scuro e per la tipografia forte dell'header, distinguendo i container e le card primarie dallo sfondo monocromo dell'applicazione.
+    \item \textbf{Primario (Vibrant Blue, \#0d6efd):} Impiegato per le azioni principali (\textit{call-to-action}) e le direttive di navigazione primaria. Comunica sicurezza e grande affidabilità professionale.
+    \item \textbf{Secondario e Accento (Amber/Gold, \#ffc107):} Riservato per le notifiche di avviso (\textit{warning}) o per polarizzare focalmente l'attenzione visuale in contesti con alta densità informativa.
+    \item \textbf{Feedback Semantico (Success \#198754, Danger \#dc3545, Info \#0dcaf0):} Il frontend sfrutta sistematicamente questa sintassi cromatica universale per i \textit{Live Input Feedback} (es. form validation) e per marcare le alterazioni critiche dello stato (es. i \textit{Global Delete Modal} in rosso), abbattendo i tempi di ricezione cognitiva degli esiti di sistema.
+    \item \textbf{Colori Neutri e Tema Scuro:} Le variabili architetturali \texttt{--bs-body-bg} (\#121212) e \texttt{--card-bg} (\#2a2a2a) presenti nel blocco nativo del tema \textit{dark} dimostrano una stratificazione atta a sopprimere l'affaticamento oculare (\textit{eye-strain}). Viene adoperato un grigio antracite al posto del nero assoluto, esaltando otticamente il volume del componente sollevato rispetto al fondale. Vi si accavallano filtri traslucidi (\textit{glassmorphism} settato all'85\% di opacità, es. \texttt{rgba(42, 42, 42, 0.85)}) che permettono ai layer di compenetrarsi organicamente.
 \end{itemize}
-L'impiego coerente di queste tre tonalità principali ha risolto in gran parte le incongruenze della \textit{Valutazione Euristica} (come stati informativi che utilizzavano semanticamente tinte fuorvianti, ad esempio il "Proposed" in giallo).
+
+\subsection{Tipografia e Leggibilità}
+Dall'ispezione della dichiarazione centrale globale (\texttt{\$font-family-sans-serif}), emerge primariamente l'utilizzo dell'innovativa famiglia tipografica \textit{Outfit} (importata via \textit{Google Fonts}) e del successivo \textit{system stack}. Si tratta di un \textit{sans-serif} geometrico assai limpido, leggibile a qualsivoglia scalatura *viewport*.
+
+La gerarchia dei pesi è decisa sincreticamente all'adozione delle utility del framework (\texttt{display-4}, \texttt{h3}, \texttt{h5}), abbinate per la titolazione ad un peso netto e consistente (\texttt{\$headings-font-weight: 600;}). Scelte del genere irrobustiscono e incanalano efficacemente lo \textit{scanning pattern} oculare rapido (stile F-Pattern), demarcando con solida incisività il perimetro visivo della \textit{hero section} dai normali blocchi testuali più analitici di un \textit{body} classico.
+
+\subsection{Spaziature e Principi della Gestalt}
+Le logiche strutturali CSS di \textit{Guided Tours} e i costrutti formali del layout adottati traslano in codice i fondamenti pervasivi dettati dalla psicologia della forma (\textit{Gestalt}):
+\begin{itemize}
+    \item \textbf{Prossimità e Regione Comune:} L'impiego pervasivo di \texttt{.card} dotate di raggiature accentuate (\texttt{border-radius: 1rem}) unito a background cromaticamente scissi (\texttt{--card-bg}), delimita materialmente insiemi eterogenei in una sola "regione comune" raggruppata logicamente. La separazione visiva è amministrata da una netta abbondanza di padding regolari (\texttt{py-5}, \texttt{gap-2}) che disaccoppia entità estranee alleggerendone drasticamente la tensione di decifrazione (\textit{Legge della Prossimità}).
+    \item \textbf{Feedback Tattile Implicito (Buona Continuazione):} Le tessere (\textit{Cards}) accolgono micro-transizioni reattive (\texttt{.card-hover:hover}) che traducono un istantaneo vettore verticale di elevazione (\texttt{translateY(-8px)}), associato ad intensificazione dell'ombra (\textit{drop-shadow}). Tali riscontri tridimensionali emulano solide affordance del mondo fisico, canalizzando per implicita continuazione visiva le scelte esplorative e il rassicurante cliccaggio dei dispositivi di input dell'internauta.
+\end{itemize}
 
 \section{Design Pattern d'Interazione (HCI)}
 L'interfaccia è stata costruita assemblando diversi Design Pattern consolidati nella Human-Computer Interaction, al fine di garantire familiarità, ridurre il carico cognitivo e accelerare la curva di apprendimento per i diversi profili utente presenti nel vario panorama del progetto:
