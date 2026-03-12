@@ -82,5 +82,53 @@ plt.ylabel("Principio Violato", fontsize=12)
 plt.tight_layout()
 plt.savefig(os.path.join(out_dir, "matrice_errori.pdf"), format='pdf', bbox_inches="tight")
 plt.close()
+# 4. Grafico contributo valutatori
+tex_path = os.path.join(script_dir, "../capitoli/03_valutazione_euristica.tex")
+with open(tex_path, "r", encoding='utf-8') as f:
+    text = f.read()
+
+tables = text.split("\\begin{table}")[1:]
+results = []
+for t in tables:
+    if "\\end{table}" in t:
+        after_table = t.split("\\end{table}")[1]
+        lines = after_table.split("\n")
+        evaluator_str = ""
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith("%"):
+                line_lower = line.lower()
+                if "risolto" in line_lower or "capito" in line_lower or "migliorare" in line_lower:
+                    continue
+                evaluator_str = line
+                break
+            else:
+                break
+        
+        if not evaluator_str or "tutti" in evaluator_str.lower():
+            results.append("tutti")
+        else:
+            results.append(evaluator_str)
+
+giorgio_count = sum(1 for x in results if 'g' in x.lower() or 'tutti' in x.lower())
+daniel_count = sum(1 for x in results if 'd' in x.lower() or 'tutti' in x.lower())
+marco_count = sum(1 for x in results if 'm' in x.lower() or 'tutti' in x.lower())
+
+plt.figure(figsize=(7, 5))
+evaluators = ['Giorgio (G)', 'Daniel (D)', 'Marco (M)']
+counts = [giorgio_count, daniel_count, marco_count]
+bars = plt.bar(evaluators, counts, color=['#198754', '#0d6efd', '#ffc107'])
+plt.title("Contributo dei Valutatori (Problemi Trovati)", fontsize=14)
+plt.xlabel("Valutatore", fontsize=12)
+plt.ylabel("Numero di Problemi Individuati", fontsize=12)
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval + 0.3, int(yval), ha='center', va='bottom', fontsize=11)
+plt.ylim(0, max(counts) + 5)
+plt.tight_layout()
+plt.savefig(os.path.join(out_dir, "grafico_valutatori.png"), dpi=300)
+plt.close()
 
 print("Grafici generati con successo in capitoli/immagini/")
