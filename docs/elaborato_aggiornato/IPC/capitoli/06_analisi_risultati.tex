@@ -248,6 +248,46 @@ Difficoltà Percepita & Media/Difficile & Facile \\ \hline
 \end{table}
 \textbf{Commenti:} In V1, l'assenza di una dashboard statistica dedicata costringeva l'amministratore a navigare manualmente tra le liste di prenotazione, filtrando visivamente per mese. In V2, il pannello Chart.js del Configuratore espone i dati aggregati direttamente come grafico a barre mensile, rendendo la risposta ricavabile con un colpo d'occhio. Il singolo caso di completamento con aiuto in V2 è riconducibile a un utente del cluster maturo che non aveva familiarità con il layout a schede del pannello admin.
 
+\section{Riepilogo aggregato dei compiti}
+
+Le tabelle per-task mostrate nelle sezioni precedenti evidenziano miglioramenti consistenti in ogni singolo compito. Per fornire una visione d'insieme, i grafici seguenti aggregano le metriche principali su tutti e 12 i task.
+
+\begin{figure}[H]
+    \vspace{0.8em}
+    \centering
+    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_torta_esiti.png}
+    \caption{Distribuzione aggregata degli esiti (C / CA / NC) su tutti i 12 compiti — V1 vs V2.}
+    \label{fig:torta_esiti}
+    \vspace{0.8em}
+\end{figure}
+
+La torta aggregata rende immediato il salto qualitativo: in V1 il 70.8\% dei task viene completato autonomamente, il 20.8\% richiede l'intervento del facilitatore e l'8.3\% non viene portato a termine. In V2 il tasso di completamento autonomo sale al 98.3\%, con solo due casi di completamento con aiuto (T9 e T12) e zero task non completati.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_completamento.png}
+    \caption{Tasso di completamento autonomo (\%) per compito — V1 vs V2.}
+    \label{fig:completamento}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_tempi.png}
+    \caption{Tempo medio di completamento (secondi) per compito — V1 vs V2.}
+    \label{fig:tempi}
+\end{figure}
+
+Il grafico dei tempi evidenzia le riduzioni più drastiche nei task di maggior frizione in V1: il Compito 3 (prenotazione visita) scende da 185~s a 110~s ($-$41\%), il Compito 5 (cancellazione) da 175~s a 48~s ($-$73\%), e il Compito 7 (disponibilità volontario) da 155~s a 52~s ($-$66\%). I task più semplici (T6, T8) mostrano miglioramenti minori in termini assoluti, ma erano già performanti in V1.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_errori.png}
+    \caption{Errori medi per compito — V1 vs V2.}
+    \label{fig:errori}
+\end{figure}
+
+Il grafico degli errori conferma la tendenza: la riduzione media è dell'85\% su tutti i task. Il picco di errori in V1 si registra nel Compito 5 (2.8 errori medi), dove la mancanza di modale di conferma generava cancellazioni accidentali o loop di navigazione. In V2 nessun task supera 0.5 errori medi.
+
 \section{Analisi questionario finale}
 
 \subsection{Questionario SUS}
