@@ -901,8 +901,10 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 
 \subsection{Stima dei problemi totali (Curva di Nielsen)}
-Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, stimiamo di aver rilevato circa il 67\% delle criticità totali.
-\[ N_{tot} = \frac{41}{0.67} \approx 61 \]
+Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, si ottiene:
+\[ P(3) = 1 - (1 - 0.31)^3 = 1 - 0.69^3 \approx 0.67 \]
+Poiché $P(n)$ rappresenta la frazione di problemi totali individuata da $n$ valutatori, il numero totale stimato di problemi è:
+\[ N_{tot} = \frac{N_{trovati}}{P(n)} = \frac{41}{0.67} \approx 61 \]
 Il calcolo teorico indica che il sistema potrebbe ospitare circa 61 problemi di usabilità totali, di cui 41 sono stati documentati in questa analisi.
 
 \section{Commento Finale alla Valutazione}
