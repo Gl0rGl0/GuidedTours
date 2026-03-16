@@ -5,7 +5,33 @@ Il progetto \textit{Guided Tours} nasce dall'esigenza di gestire in maniera snel
 
 Nel corso dei capitoli si è attraversato l'intero processo di User-Centered Design (UCD). Dalla definizione stringente del \textbf{Profilo Utente} all'individuazione formale \textit{inspection-based} dei colli di bottiglia (tramite \textbf{Valutazione Euristica}), è emerso quanto l'implementazione originale presentasse lacune sia logiche che prestazionali.
 
-Il massiccio intervento di \textbf{Riprogettazione} --- sia Architetturale (flussi di convalida, prevezione errore) che \textit{UI/UX} (adozione di pattern noti, inviti all'azione potenziati) --- ha prodotto una seconda release del software intrinsecamente \textit{robust}.
+Il massiccio intervento di \textbf{Riprogettazione} --- sia Architetturale (flussi di convalida, prevenzione errore) che \textit{UI/UX} (adozione di pattern noti, inviti all'azione potenziati) --- ha prodotto una seconda release del software intrinsecamente \textit{robust}.
 Tale evoluzione è stata infine certificata oggettivamente dallo svolgimento dell'\textbf{Esperimento con gli utenti}: le drammatiche decurtazioni delle tempistiche estrattive (Tempo di Task) accoppiate al raddoppio dello \textit{User Sentiment} (tracciato da iterazioni in scala SUS ed NPS) certificano la bontà delle soluzioni adottate.
 
 Il risultato finale è un portale resiliente, inclusivo e altamente usabile, capace di abbattere le barriere informatiche di prenotazione per i neofiti e contemporaneamente proteggere l'integrità dei dati per i manutentori del sistema, gettando fondazioni scalabili per le estensioni digitali esposte nei possibili sviluppi futuri.
+
+\section{Riflessione sul processo UCD}
+
+Guardando retrospettivamente al percorso compiuto, uno degli aspetti più significativi emersi riguarda il valore della \textbf{separazione netta tra ispezione e validazione empirica}. La valutazione euristica, pur avendo identificato con precisione la natura e la localizzazione dei problemi, non avrebbe potuto da sola quantificarne l'impatto reale sull'esperienza d'uso. È stato l'esperimento con gli utenti a trasformare osservazioni qualitative in evidenza misurabile: il passaggio da una difficoltà percepita "Media/Difficile" a "Facile" sul Compito 5 (cancellazione prenotazione), per esempio, non era prevedibile con la sola analisi euristica.
+
+Un secondo apprendimento riguarda l'\textbf{eterogeneità del campione} come leva progettuale. La scelta deliberata di includere utenti del cluster maturo (51--57 anni, bassa alfabetizzazione informatica) ha rivelato criticità invisibili al team di sviluppo, abituato ad interagire col sistema con un modello mentale già formato. Le difficoltà di U01 e U02 in V1 hanno guidato decisioni di design che hanno beneficiato l'intera base utenti, confermando che progettare per i casi limite migliora l'esperienza per tutti.
+
+\section{Limitazioni dello studio}
+
+Pur nella solidità dei risultati ottenuti, è doveroso riconoscere alcune limitazioni metodologiche che ne circoscrivono la generalizzabilità:
+
+\begin{itemize}
+    \item \textbf{Dimensione del campione}: I 12 partecipanti costituiscono un campione adeguato per un test esplorativo di usabilità, ma insufficiente per inferenze statistiche robuste sulla popolazione generale. Un campione più ampio avrebbe permesso analisi di varianza più granulari per sottogruppi demografici.
+
+    \item \textbf{Ambiente controllato}: Le sessioni si sono svolte in ambienti noti ai partecipanti (abitazioni, aule studio), con un laptop fornito dallo sperimentatore. Questo riduce la variabilità ambientale ma non replica fedelmente l'utilizzo reale, che avviene spesso su dispositivi personali in contesti meno controllati.
+
+    \item \textbf{Effetto di apprendimento}: Nonostante il \textit{counterbalancing}, l'esposizione sequenziale a entrambe le versioni introduce un inevitabile effetto di familiarizzazione con i task, che potrebbe aver leggermente sovrastimato le performance sulla seconda versione testata.
+
+    \item \textbf{Assenza di test longitudinale}: L'esperimento misura la \textit{learnability} e l'usabilità immediata, ma non la \textit{retention} nel tempo. Un follow-up a distanza di settimane avrebbe consentito di valutare la curva di apprendimento a lungo termine e la memorabilità dell'interfaccia.
+\end{itemize}
+
+\section{Considerazioni finali}
+
+Nonostante i limiti sopracitati, i dati raccolti disegnano un quadro coerente e statisticamente significativo ($p < 0.001$). Il miglioramento del punteggio SUS da 56.50 a 78.75 rappresenta un salto di categoria qualitativa --- da \textit{Marginale} a \textit{Buono} nella scala Bangor --- che si riflette tangibilmente nelle metriche comportamentali: il tasso di completamento autonomo è passato dall'81\% al 99\% e il numero medio di errori per task si è ridotto dell'85\%.
+
+Questi risultati confermano che l'applicazione sistematica della metodologia HCI, anche in contesti di sviluppo accademico con risorse limitate, produce miglioramenti misurabili e significativi. Il valore aggiunto non risiede esclusivamente nelle singole correzioni implementate, ma nel \textbf{cambio di paradigma progettuale}: anteporre la comprensione dell'utente alle decisioni tecniche, e validare empiricamente ogni assunzione prima di considerarla consolidata.
