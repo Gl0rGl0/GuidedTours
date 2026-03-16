@@ -84,6 +84,25 @@ Struttura del compito & Molto Alta \\ \hline
     \item \textbf{Quote/Citazione rappresentativa:} \textit{``La tecnologia deve essere il mio braccio destro, non un ostacolo burocratico. Quando pianifico le attività, voglio interazioni nette e rassicuranti, che mi confermino immediatamente di avere la situazione in pugno.''}
 \end{itemize}
 
+\subsection{Obiettivi, azioni principali e differenze di interazione}
+\textbf{Obiettivi principali:}
+\begin{itemize}
+    \item Pianificare e assegnare le visite garantendo copertura completa delle risorse umane disponibili.
+    \item Gestire l'anagrafica di luoghi e tipologie di visita mantenendo il catalogo aggiornato.
+    \item Monitorare lo stato avanzamento di ogni prenotazione, intervenendo prontamente su anomalie o conflitti di pianificazione.
+\end{itemize}
+
+\textbf{Azioni principali nel sistema:}
+\begin{enumerate}
+    \item Creazione e modifica di \textit{VisitType} (tipologie di tour) e \textit{Place} (luoghi).
+    \item Revisione delle richieste pendenti nel pannello \textit{Visit Planning} e assegnazione di un volontario compatibile.
+    \item Gestione del ciclo di vita delle visite: transizione degli stati da \textit{proposed} → \textit{confirmed} → \textit{effected} → \textit{complete}/\textit{cancelled}.
+    \item Consultazione della dashboard amministrativa per statistiche aggregate su prenotazioni e volontari.
+\end{enumerate}
+
+\textbf{Differenze di interazione rispetto agli altri ruoli:}
+Il Configuratore è l'unico utente con visibilità \emph{globale} su tutte le entità del sistema. A differenza del Volontario — che vede solo le proprie disponibilità e i tour assegnati — e del Fruitore — che opera esclusivamente sul proprio fascicolo prenotazioni — il Configuratore agisce su griglie dati dense (pattern CRUD) e flussi decisionali complessi. L'interfaccia gli richiede un \textit{information processing} di tipo \textbf{analitico-sequenziale}: deve leggere, confrontare e modificare molteplici record in un'unica sessione. Le conseguenti esigenze progettuali si traducono in: tabelle ordinabili e filtrabili, feedback sincrono sulle operazioni critiche, e controlli di validazione che prevengano conflitti di assegnazione.
+
 \section{Volontario (Guida e fornitore di disponibilità)}
 Il volontario mette a disposizione il proprio tempo per guidare i fruitori. Interagisce con il sistema principalmente per comunicare disponibilità e consultare i tour assegnati.
 
@@ -130,6 +149,24 @@ Uso di altri sistemi & Frequente (Social, Calendar) \\ \hline
     \item \textbf{Frustrazioni e Pain Points:} Si avvilisce dinanzi a piattaforme non ottimizzate per \textit{touch-screen} o layout rigidi. È ostacolata dall'impossibilità di consultare agilmente i contatti del gruppo in caso di imprevisti last-minute o da flussi macchinosi per il ritiro e la gestione di una disponibilità data in precedenza.
     \item \textbf{Quote/Citazione rappresentativa:} \textit{``Il volontariato deve essere gratificante, non stressante. Ho bisogno di un sistema immediato, sul mio telefono, che mi dica chi sto per incontrare e quando, in modo chiaro e con pochissimi tap.''}
 \end{itemize}
+
+\subsection{Obiettivi, azioni principali e differenze di interazione}
+\textbf{Obiettivi principali:}
+\begin{itemize}
+    \item Comunicare con precisione le proprie finestre di disponibilità per consentire all'amministrazione un'assegnazione ottimale.
+    \item Consultare il calendario dei tour assegnati senza ambiguità su data, luogo e dettagli del gruppo.
+    \item Minimizzare il tempo speso sul sistema: l'interazione deve essere rapida e concludibile in pochi passaggi.
+\end{itemize}
+
+\textbf{Azioni principali nel sistema:}
+\begin{enumerate}
+    \item Inserimento o aggiornamento delle disponibilità tramite il calendario interattivo (\textit{VolunteerAvailability}).
+    \item Consultazione dell'elenco delle visite assegnate (\textit{volunteer.visits.past}) per ricevere dettagli logistici.
+    \item Eventuale modifica o ritiro di una disponibilità precedentemente dichiarata.
+\end{enumerate}
+
+\textbf{Differenze di interazione rispetto agli altri ruoli:}
+Il Volontario opera su un sottoinsieme circoscritto del sistema, privo di funzioni di back-office. Il suo modello di interazione privilegia la \textbf{manipolazione diretta} su oggetti visuali familiari (calendario) piuttosto che form testuali astratti. A differenza del Configuratore — che lavora prevalentemente su desktop in sessioni prolungate — il Volontario accede al sistema in micro-sessioni, spesso da smartphone, per aggiornamenti rapidi. Questo impone requisiti stringenti di \textit{mobile responsiveness}, riduzione del numero di tap per completare un'azione e feedback immediato che elimini ogni dubbio sul buon esito dell'operazione.
 
 \section{Fruitore (Utente finale)}
 Il fruitore utilizza la piattaforma per scoprire e prenotare le visite guidate. È l'utente che trae il beneficio culturale dal servizio.
@@ -192,3 +229,22 @@ Struttura del compito & Bassa \\ \hline
     \item \textbf{Frustrazioni e Pain Points:} Prova forte ansia da \textit{checkout} informatico e diffidenza verso la condivisione esagerata di dati anagrafici prima di poter prendere visione delle tariffe. È infastidito da font minuti e contrasti cromatici labili (es. testo grigio tenue su sfondo bianco). L'incertezza sullo stato finale (es. ``la prenotazione è andata a buon fine o no?'') rappresenta il suo principale deterrente.
     \item \textbf{Quote/Citazione rappresentativa:} \textit{``Esplorare la mia città in compagnia deve essere un piacere fin dal primo click. Non voglio dover essere un ingegnere per assicurarmi quattro posti liberi e per accertarmi che la mia prenotazione sia realmente andata a buon fine.''}
 \end{itemize}
+
+\subsection{Obiettivi, azioni principali e differenze di interazione}
+\textbf{Obiettivi principali:}
+\begin{itemize}
+    \item Individuare rapidamente un tour di interesse consultando il catalogo con filtri pertinenti (data, luogo, lingua).
+    \item Completare la prenotazione con il minimo sforzo cognitivo, ricevendo conferma esplicita e inequivocabile dell'avvenuta iscrizione.
+    \item Poter gestire autonomamente la propria prenotazione (consultazione, disdetta) senza necessità di supporto esterno.
+\end{itemize}
+
+\textbf{Azioni principali nel sistema:}
+\begin{enumerate}
+    \item Navigazione della \textit{Landing Page} e ricerca/filtro delle visite disponibili.
+    \item Compilazione del modulo di richiesta visita (\textit{Registration}) specificando numero di partecipanti, lingua e note aggiuntive.
+    \item Download del biglietto PDF con QR code a conferma dell'iscrizione.
+    \item Cancellazione di una prenotazione esistente dalla propria dashboard (\textit{user.visits.past}).
+\end{enumerate}
+
+\textbf{Differenze di interazione rispetto agli altri ruoli:}
+Il Fruitore rappresenta l'utente con il \textbf{minor controllo sul sistema} e, al tempo stesso, il \textbf{più alto rischio di abbandono}: a differenza del Configuratore e del Volontario — che utilizzano la piattaforma per obbligo o scelta consapevole — il Fruitore può rinunciare in qualsiasi momento a favore di alternative più semplici. Il suo modello cognitivo è \textbf{visivo-intuitivo}: si aspetta che le funzioni principali siano immediatamente evidenti (\textit{affordance}) senza richiedere alcun addestramento preliminare. L'ampiezza demografica del gruppo (18–80 anni) con gradi eterogenei di alfabetizzazione informatica impone il rispetto rigoroso dei principi di accessibilità: testo leggibile, contrasto elevato, aree di tocco generose e feedback di stato sempre espliciti. Queste differenze si riflettono direttamente nelle scelte di redesign discusse nei capitoli successivi.
