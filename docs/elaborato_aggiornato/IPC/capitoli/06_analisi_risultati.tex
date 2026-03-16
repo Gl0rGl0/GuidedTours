@@ -83,7 +83,7 @@ Errori Medi & 2.5 & 0.4 \\ \hline
 Difficoltà Percepita & Media/Difficile & Facile \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} In V1 l'assenza di filtro (\textit{Faceted Search}) ha disorientato gli utenti. La nuova griglia a card con status espliciti della V2 ha facilitato incredibilmente l'individuazione di questo evento specifico.
+\textbf{Commenti:} In V1 l'assenza di un sistema di filtro (\textit{Faceted Search}) costringeva l'utente a scorrere manualmente l'intera lista di visite per individuare l'evento desiderato, incrementando sia il numero di click (15) che il carico cognitivo. La navigazione lineare senza affordance visive sullo stato delle visite produceva frequenti errori di selezione (2.5 medi), con utenti che prenotavano la visita sbagliata o si perdevano nel flusso. In V2 l'introduzione della griglia a card con filtri per luogo, data e stato, unita all'indicazione esplicita dei posti residui, ha ridotto il percorso di ricerca da 15 a 7 click ($-$53\%) e il tempo da 185~s a 110~s ($-$41\%), portando al 100\% il tasso di completamento autonomo.
 
 \subsection{Compito 4: Codice prenotazione}
 \begin{table}[H]
@@ -119,7 +119,7 @@ Errori Medi & 2.8 & 0.2 \\ \hline
 Difficoltà Percepita & Difficile & Facile \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} Uno dei task peggiori per V1. Il pulsante fuorviante confondeva gli utenti. In V2, l'introduzione della modale rossa e dell'invito standardizzato non hanno richiesto alcun intervento da parte del facilitatore.
+\textbf{Commenti:} Il Compito 5 è il task con il peggior punteggio assoluto in V1 (2.8 errori medi, 2 NC su 10) e il miglioramento più drastico in V2 ($-$73\% sul tempo, da 175~s a 48~s). In V1 l'elemento di cancellazione era presentato come un menu a tendina ambiguo privo di feedback visivo di rischio, portando frequentemente gli utenti a cliccare la voce sbagliata o ad abbandonare il task. Il redesign ha introdotto un pulsante esplicito "Cancel Booking" con stile \texttt{btn-danger} e una modale di conferma con testo descrittivo dell'azione irreversibile. Questo pattern --- noto come \textit{Confirmation Dialog} --- elimina alla radice l'ambiguità di affordance: l'utente sa esattamente cosa sta per fare prima di confermarlo, abbattendo gli errori da 2.8 a 0.2 e portando il tasso di completamento dal 50\% al 100\%.
 
 \subsection{Compito 6: Switch account volontario}
 \begin{table}[H]
@@ -155,7 +155,7 @@ Errori Medi & 1.8 & 0.2 \\ \hline
 Difficoltà Percepita & Medio/Difficile & Facile \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} L'immissione della data manuale su input testuale in V1 (suscettibile a errori per \textit{date format}) è stata soppiantata da un widget calendario (Datepicker) nativo in V2. Gli errori sono magicamente collassati.
+\textbf{Commenti:} Il task di dichiarazione disponibilità è particolarmente critico per il profilo del Volontario, che lo esegue con frequenza medio-bassa e su dispositivi mobili. In V1 l'input testuale libero per la data generava sistematicamente errori di formato (es. \texttt{25/04/26} vs \texttt{2026-04-25}), che venivano rigettati silenziosamente dal sistema senza feedback esplicito — un pattern di errore identificato già nella valutazione euristica (Problema 7, Severità 3). Il risultato erano 1.8 errori medi e un tasso di completamento del 60\%. In V2 la sostituzione dell'input testuale con un widget datepicker nativo elimina alla radice la classe di errori legata al formato: l'utente seleziona visivamente il giorno dal calendario senza dover digitare nulla, riducendo click da 10 a 4 ($-$60\%) e tempo da 155~s a 52~s ($-$66\%), con completamento autonomo al 100\%.
 
 \subsection{Compito 8: Switch account admin}
 \begin{table}[H]
@@ -246,7 +246,7 @@ Errori Medi & 1.5 & 0.3 \\ \hline
 Difficoltà Percepita & Media/Difficile & Facile \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} In V1, l'assenza di una dashboard statistica dedicata costringeva l'amministratore a navigare manualmente tra le liste di prenotazione, filtrando visivamente per mese. In V2, il pannello Chart.js del Configuratore espone i dati aggregati direttamente come grafico a barre mensile, rendendo la risposta ricavabile con un colpo d'occhio. Il singolo caso di completamento con aiuto in V2 è riconducibile a un utente del cluster maturo che non aveva familiarità con il layout a schede del pannello admin.
+\textbf{Commenti:} In V1, l'assenza di una dashboard statistica dedicata costringeva l'amministratore a navigare manualmente tra le liste di prenotazione, filtrando visivamente riga per riga per individuare le iscrizioni del mese di interesse. Questo processo — privo di aggregazione automatica — produceva un alto carico cognitivo e frequenti errori di conteggio (1.5 medi), con alcuni utenti che includevano o escludevano per errore prenotazioni di mesi adiacenti. In V2, il pannello di amministrazione espone i dati aggregati direttamente come grafico a barre mensile (Chart.js), rendendo la risposta ricavabile con un singolo colpo d'occhio senza alcuna navigazione aggiuntiva. Il miglioramento è netto: il tempo scende da 95~s a 40~s ($-$58\%), i click da 9 a 4 ($-$56\%) e gli errori da 1.5 a 0.3 ($-$80\%). L'unico caso di completamento con aiuto in V2 è riconducibile a un utente del cluster maturo (U09) che non aveva familiarità con il layout a schede del pannello admin e ha richiesto indicazione sul tab corretto.
 
 \section{Riepilogo aggregato dei compiti}
 
