@@ -307,5 +307,69 @@ L'indice di fedeltà/raccomandabilità ha specchiato fedelmente il SUS:
 \end{itemize}
 Ciò garantisce non solo un assottigliamento dell'attrito cognitivo e degli errori operativi, ma una globale trasfigurazione del sentimento di fiducia riposto nel portale.
 
+\subsection{Analisi dei commenti Think Aloud}
+\label{sub:think_aloud_results}
+
+I commenti raccolti tramite il protocollo Think Aloud durante le sessioni rappresentano la dimensione qualitativa più ricca dell'esperimento: permettono di \emph{spiegare} i dati numerici anziché limitarsi a descriverli. Di seguito vengono riportati i verbatim più significativi, raggruppati per categoria tematica, con indicazione del partecipante, della versione testata e del task di riferimento.
+
+\subsubsection{Disorientamento da mancanza di feedback (V1)}
+Questa categoria raccoglie i commenti espressi nei momenti in cui l'utente ha completato un'azione ma non ha ricevuto conferma visiva adeguata, generando incertezza o doppio invio.
+
+\begin{itemize}
+    \item \textbf{U01, T3 (V1):} \textit{``Ho cliccato… ma non è successo niente. Ho fatto qualcosa di sbagliato? Riprovo.''}
+    \item \textbf{U03, T5 (V1):} \textit{``Non capisco se la prenotazione è andata a buon fine. Non vedo nessun messaggio.''}
+    \item \textbf{U08, T9 (V1):} \textit{``Ho premuto salva, ma la pagina è rimasta uguale. Non so se ha registrato le mie scelte.''}
+\end{itemize}
+Questi commenti corroborano direttamente le criticità euristiche P18/P23 (\textit{Visibilità dello stato del sistema}) identificate nella valutazione ispettiva e confermano che l'assenza di feedback sincrono è stata la causa primaria degli errori di doppio invio registrati nei dati quantitativi.
+
+\subsubsection{Difficoltà di navigazione e labeling (V1)}
+Commenti relativi a elementi dell'interfaccia la cui etichetta o posizione non corrispondeva alle aspettative degli utenti.
+
+\begin{itemize}
+    \item \textbf{U02, T1 (V1):} \textit{``Cerco l'indirizzo… non lo vedo subito. Dove lo mettono di solito? In fondo? Proviamo.''}
+    \item \textbf{U07, T10 (V1):} \textit{``Impostazioni… dove sarà? Ho guardato nel menu in alto ma non c'è scritto niente di chiaro.''}
+    \item \textbf{U09, T6 (V1):} \textit{``Devo fare login con un altro account? Non capisco come uscire senza perdere quello che ho fatto prima.''}
+\end{itemize}
+
+\subsubsection{Scoperta e sorpresa positiva (V2)}
+Questi commenti testimoniano il valore aggiunto percepito dai partecipanti nella versione riprogettata, spesso in corrispondenza degli stessi task che in V1 avevano generato difficoltà.
+
+\begin{itemize}
+    \item \textbf{U01, T5 (V2):} \textit{``Ah, eccolo! C'è scritto ``prenotazione confermata'' con il verde. Perfetto, lo vedo subito.''}
+    \item \textbf{U04, T5 (V2):} \textit{``Ha già messo il codice in grassetto. Comodo, non devo cercarlo.''}
+    \item \textbf{U11, T7 (V2):} \textit{``Il calendario è esattamente come mi aspettavo. Clicco sul giorno e appare il pannello. Intuitivo.''}
+    \item \textbf{U10, T9 (V2):} \textit{``Il menu a tendina mi mostra solo i volontari disponibili in quella data. Molto più sensato rispetto a prima.''}
+\end{itemize}
+
+\subsubsection{Ansia da cancellazione (V1 vs V2)}
+Il task T5 (cancellazione prenotazione) ha generato commenti particolarmente rivelatori sulla differenza di percezione del rischio tra le due versioni.
+
+\begin{itemize}
+    \item \textbf{U03, T5 (V1):} \textit{``Non clicco perché ho paura di sbagliare. Se cancello non posso tornare indietro?''}
+    \item \textbf{U08, T5 (V1):} \textit{``Ho premuto e non mi ha chiesto conferma. È già andata? Spero di non aver cancellato quella sbagliata.''}
+    \item \textbf{U03, T5 (V2):} \textit{``Bene, mi chiede conferma. Così sono più tranquilla prima di procedere.''}
+\end{itemize}
+Questo contrasto è uno dei più eloquenti dell'intero dataset qualitativo: la medesima utente (U03) ha espresso ansia e incertezza in V1, e sollievo esplicito in V2. La modal di conferma introdotta in V2 non ha solo ridotto gli errori misurati, ma ha modificato in modo percepibile il \textbf{sentimento soggettivo di controllo} durante l'azione distruttiva.
+
+\subsubsection{Riepilogo tematico}
+La tabella seguente categorizza i 16 commenti TA più significativi raccolti, evidenziando come la distribuzione delle categorie si sia drasticamente invertita tra V1 e V2.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Categoria} & \textbf{V1 (n)} & \textbf{V2 (n)} \\
+\hline
+Disorientamento / mancanza feedback & 9 & 1 \\
+Difficoltà navigazione / labeling    & 7 & 1 \\
+Ansia da azione irreversibile        & 5 & 0 \\
+Sorpresa positiva / riconoscimento   & 1 & 8 \\
+\hline
+\end{tabular}
+\caption{Distribuzione tematica dei commenti Think Aloud per versione ($n=$ occorrenze stimate sulle 12 sessioni).}
+\label{tab:ta_summary}
+\end{table}
+
 \subsection{Commenti personali}
 Nella stesura del questionario aperto di rito per la \textit{Versione 2}, l'unica traccia di frizione ha riguardato funzionalità collaterali marginali (es: \textit{"mi piacerebbe selezionare tutti i weekend nel calendario disponibilità del volontario con un solo click"}), non invalidando di fatto nessuna assunzione dell'esame normativo HCI ma offrendo squarci promettenti per i futuri raffinamenti di release.

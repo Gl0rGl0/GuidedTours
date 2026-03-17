@@ -41,6 +41,42 @@ Per i dati qualitativi si hanno:
 
 Inoltre ogni utente ha valutato la \textbf{difficoltà} di ogni scenario su una scala appropriata e ha compilato il questionario \textbf{SUS (System Usability Scale)} per il grado di usabilità, affiancato dall'indice \textbf{NPS (Net Promoter Score)}.
 
+\section{Tecnica Think Aloud}
+\label{sec:think_aloud}
+
+\subsection{Definizione e rationale}
+Il \textbf{Think Aloud} (TA), o \textit{protocollo del pensiero ad alta voce}, è una tecnica di raccolta dati qualitativi in cui il partecipante è invitato a verbalizzare continuamente i propri processi cognitivi durante l'esecuzione di un compito: ciò che percepisce, le aspettative che forma, le decisioni che prende e le difficoltà che incontra. La tecnica è stata originariamente formalizzata da Ericsson e Simon (1984) e da allora è diventata uno degli strumenti cardine della ricerca sull'usabilità, raccomandata esplicitamente da Nielsen come complemento indispensabile ai test comportamentali.
+
+La scelta del Think Aloud in questo studio è motivata da tre ragioni principali:
+\begin{enumerate}
+    \item \textbf{Accesso ai modelli mentali}: i dati quantitativi (tempo, errori, click) descrivono \emph{cosa} accade, ma non \emph{perché}. La verbalizzazione permette di identificare la causa profonda di un errore: un'etichetta ambigua, un'aspettativa tradita, un flusso di navigazione controintuitivo.
+    \item \textbf{Rilevazione in tempo reale}: a differenza dei questionari post-task (soggetti a bias di memoria e razionalizzazione retrospettiva), il TA cattura la reazione cognitiva istantanea, prima che l'utente elabori o minimizzi la propria difficoltà.
+    \item \textbf{Efficienza campionaria}: con soli 12 partecipanti il campione è insufficiente per inferenze statistiche robuste sui sottogruppi; i commenti TA compensano questa limitazione arricchendo ogni osservazione individuale di un contesto interpretativo non ottenibile dai soli numeri.
+\end{enumerate}
+
+\subsection{Modalità di applicazione}
+È stato adottato il formato \textbf{Concurrent Think Aloud}: il partecipante verbalizza \emph{durante} l'esecuzione del task, senza interruzione del flusso operativo. Questa variante è preferita rispetto al Retrospective TA (in cui il partecipante commenta dopo aver completato il compito vedendo un video replay) per la maggiore fedeltà temporale dei dati e per la semplicità logistica in sessioni non video-registrate.
+
+Lo sperimentatore ha adottato un ruolo \textbf{passivo}: non ha mai interpretato, riformulato né risposto ai commenti degli utenti durante l'esecuzione, limitandosi a incoraggiare la verbalizzazione con prompts neutri standardizzati (es. \textit{``Continua a dirmi cosa stai pensando''}) ogniqualvolta un partecipante cadesse in silenzio prolungato. Questo approccio riduce il rischio di \textit{demand characteristics}, ovvero il fenomeno per cui l'utente modifica il proprio comportamento in risposta alle aspettative percepite del ricercatore.
+
+\subsection{Istruzioni fornite ai partecipanti}
+Prima dell'inizio della sessione, ciascun partecipante ha ricevuto le seguenti istruzioni orali standardizzate:
+
+\begin{quote}
+\itshape
+``Durante i compiti ti chiedo di pensare ad alta voce: dicci tutto ciò che ti passa per la testa mentre navighi. Non esistono risposte giuste o sbagliate. Commentate ciò che vedete, ciò che vi aspettate che accada, e ciò che vi sorprende o vi confonde. Non ti giudicheremo per nessuna difficoltà che incontri: vogliamo capire come funziona il sito, non testare te.''
+\end{quote}
+
+Per familiarizzare con la tecnica prima dell'inizio del test vero e proprio, ogni partecipante ha svolto un breve \textbf{esercizio di riscaldamento} di circa due minuti su un sito web generico (un portale di notizie), durante il quale lo sperimentatore ha corretto gentilmente eventuali silenzi prolungati, consolidando l'abitudine alla verbalizzazione prima che i dati sperimentali iniziassero ad essere raccolti.
+
+\subsection{Limiti della tecnica}
+Pur essendo uno strumento potente, il Think Aloud presenta alcune limitazioni metodologiche rilevanti nel contesto di questo studio:
+\begin{itemize}
+    \item \textbf{Reattività}: la doppia attività cognitiva (navigare \emph{e} verbalizzare) può rallentare leggermente i tempi di esecuzione rispetto all'utilizzo naturale non osservato, potenzialmente sovrastimando in modo marginale i valori di task time rilevati.
+    \item \textbf{Variabilità tra profili}: i partecipanti con bassa alfabetizzazione informatica (cluster 51--57 anni) hanno mostrato una tendenza maggiore al silenzio durante i momenti di confusione, proprio quando la verbalizzazione sarebbe stata più informativa. In questi casi i commenti post-task e le note dello sperimentatore hanno integrato le lacune.
+    \item \textbf{Assenza di registrazione audio/video}: la raccolta dei commenti TA è avvenuta esclusivamente tramite annotazione manuale dello sperimentatore in tempo reale. Questo introduce un rischio di perdita parziale di verbalizazioni rapide, mitigato dalla struttura del modulo di annotazione che includeva un campo ``Commenti Utente'' per ogni task.
+\end{itemize}
+
 \section{Scelta degli sperimentatori}
 
 Per l'esecuzione degli esperimenti si è scelto di impiegare un solo sperimentatore, responsabile dell'osservazione e dell'annotazione delle metriche, con funzione anche di facilitatore per mettere a proprio agio gli utenti in caso di stallo prolungato. Lo sperimentatore è rimasto invariato per tutti i test svolti.
