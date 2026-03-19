@@ -95,6 +95,22 @@ html.theme-transitioning * {
         }
     }
 
+    // Placeholder styling for better visibility
+    .form-control::placeholder,
+    .form-select::placeholder {
+        color: #b0b0b0;
+        opacity: 1;
+    }
+
+    // Labels
+    label {
+        color: #dddddd !important;
+    }
+
+    .form-floating > label {
+        color: #dddddd !important;
+    }
+
     // Checkboxes and Switches
     .form-check-input {
         background-color: #2a2a2a;
@@ -151,6 +167,63 @@ html.theme-transitioning * {
         .dropdown-divider {
             border-top-color: #333;
         }
+
+        // Command Palette Modal in Dark Mode
+        .command-palette-modal {
+            // Search bar section styling
+            > .p-3 {
+                background-color: #1a1a1a;
+                border-bottom-color: #333 !important;
+            }
+
+            .input-group {
+                background-color: #252525;
+                border: 1px solid #3a3a3a;
+                border-radius: 8px;
+                padding: 0.25rem 0;
+            }
+
+            .input-group-text {
+                background-color: transparent;
+                border-color: transparent;
+                color: #888;
+            }
+
+            .form-control {
+                background-color: transparent;
+                color: #e0e0e0;
+                border: none;
+
+                &::placeholder {
+                    color: #bbb;
+                    opacity: 1;
+                }
+
+                &:focus {
+                    background-color: transparent;
+                    color: #fff;
+                    border: none;
+                    box-shadow: none;
+                }
+            }
+
+            .list-group-item {
+                background-color: transparent;
+                border-color: #333;
+                color: #e0e0e0;
+
+                &:hover,
+                &.bg-primary-subtle {
+                    background-color: rgba(13, 110, 253, 0.15) !important;
+                    color: #fff;
+                }
+            }
+
+            .p-2.bg-light {
+                background-color: #1e1e1e !important;
+                border-top-color: #333 !important;
+            }
+        }
     }
 }
 
@@ -203,7 +276,8 @@ body {
 
     // Enhance input contrast within filter bar
     .form-control::placeholder {
-        color: #777;
+        color: #b0b0b0;
+        opacity: 1;
     }
 
     .form-control,
@@ -269,6 +343,44 @@ footer.theme-footer {
     transform: translateY(-8px);
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.05);
     filter: brightness(0.96);
+}
+
+// Visit details styling in dark mode
+[data-theme="dark"] {
+    .card-body .bg-light {
+        background-color: #333333 !important;
+        border: 1px solid #444444;
+
+        h5 {
+            color: #ffffff !important;
+        }
+
+        h5.text-dark {
+            color: #ffffff !important;
+        }
+
+        p {
+            color: #dddddd !important;
+        }
+
+        .text-muted {
+            color: #cccccc !important;
+        }
+
+        ul li {
+            color: #dddddd !important;
+
+            strong {
+                color: #ffffff !important;
+            }
+        }
+
+        .alert {
+            background-color: rgba(255, 255, 255, 0.08) !important;
+            border-color: #444444 !important;
+            color: #dddddd !important;
+        }
+    }
 }
 
 // Command Palette Styles
