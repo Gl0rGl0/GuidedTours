@@ -132,7 +132,6 @@ return [
             'submit_btn' => 'Send Reset Link',
             'remembered_password' => 'Remembered your password?',
             'back_to_login' => 'Back to Login',
-            'invalid_credentials' => 'The provided credentials are not correct, try again.',
         ],
         'login' => [
             'page_title' => 'Login',
@@ -145,6 +144,7 @@ return [
             'no_account' => 'Don\'t have an account?',
             'register' => 'Register',
             'login_success' => 'Login successful.',
+            'invalid_credentials' => 'The provided credentials are not correct, try again.',
         ],
         'register' => [
             'page_title' => 'Register',

@@ -134,7 +134,6 @@ return [
             'submit_btn' => 'Invia Link di Reset',
             'remembered_password' => 'Ti sei ricordato la password?',
             'back_to_login' => 'Torna al Login',
-            'invalid_credentials' => 'Le credenziali fornite non sono corrette, riprova.',
         ],
         'login' => [
             'page_title' => 'Accedi',
