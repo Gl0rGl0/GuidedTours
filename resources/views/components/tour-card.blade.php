@@ -1,6 +1,6 @@
 @props([
     'visit', 
-    'context' => 'home', // home, dashboard, archive
+    'context' => 'home', // home, dashboard
     'highlight' => false
 ])
 
@@ -8,53 +8,44 @@
     <div class="card-body p-4 d-flex flex-column">
         {{-- Header: Location & Actions --}}
         <div class="d-flex justify-content-between align-items-start mb-3">
-            @if($context === 'archive' || $context === 'dashboard')
-                <x-visit-status-badge :status="$visit->status" :classes="$context === 'archive' ? 'text-uppercase' : ''" style="{{ $context === 'archive' ? 'font-size: 0.7rem;' : '' }}" />
+            @if($context === 'dashboard')
+                <x-visit-status-badge :status="$visit->status" :classes="$context === 'dashboard' ? 'text-uppercase' : ''" style="{{ $context === 'dashboard' ? 'font-size: 0.7rem;' : '' }}" />
             @else
                 <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2">
-                    {{ $visit->visitType->place->name }}
+                    <i class="bi bi-geo-alt me-1"></i> {{ $visit->visitType->place->name }}
                 </span>
             @endif
 
-            @if($context === 'dashboard')
+            @if($context === 'dashboard' && $visit->status !== App\Models\Visit::STATUS_CONFIRMED)
                 <button type="button" class="btn btn-sm btn-outline-danger rounded-pill px-3" 
                     data-bs-toggle="modal" 
                     data-bs-target="#cancelModal" 
                     data-action="{{ route('user.bookings.cancel', $visit->registrations->where('user_id', Auth::id())->first() ?? 0) }}">
                     <i class="bi bi-x-circle me-1"></i> {{ __('messages.user.dashboard.cancel_btn') }}
                 </button>
-            @elseif($context === 'archive')
-                <small class="text-muted">{{ \Carbon\Carbon::parse($visit->visit_date)->format('M d, Y') }}</small>
             @endif
         </div>
 
         {{-- Title --}}
-        <h5 class="card-title fw-bold mb-{{ $context === 'archive' ? '1' : '3' }}">{{ $visit->visitType->title }}</h5>
-
-        {{-- Optional Description / Place (Archive Context) --}}
-        @if($context === 'archive')
-            <p class="text-muted small mb-3"><i class="bi bi-geo-alt me-1"></i> {{ $visit->visitType->place->name }}</p>
-        @endif
+        <h5 class="card-title fw-bold mb-3">{{ $visit->visitType->title }}</h5>
 
         {{-- Common Details --}}
         <ul class="list-unstyled text-muted small mb-4 flex-grow-1">
-            @if($context !== 'archive')
-                @if($context === 'home')
-                    <li class="mb-2"><i class="bi bi-geo-alt me-1 text-primary"></i> 
-                        {{ $visit->visitType->place->name }}
-                    </li>
+            <li class="mb-2 d-flex align-items-center">
+                <i class="bi bi-geo-alt me-2 text-primary"></i> 
+                <span>{{ $visit->visitType->place->name }}</span>
+            </li>
+
+            <li class="mb-2 d-flex align-items-center">
+                <i class="bi bi-calendar3 me-2 text-primary"></i> 
+                <span>{{ \Carbon\Carbon::parse($visit->visit_date)->format('D, M j, Y') }}</span>
+                @if($context === 'home' && $visit->is_imminent)
+                    <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">{{ __('messages.components.tour_card.imminent') }}</span>
                 @endif
-                <li class="mb-2 d-flex align-items-center">
-                    <i class="bi bi-calendar3 me-2 text-primary"></i> 
-                    <span>{{ \Carbon\Carbon::parse($visit->visit_date)->format('D, M j, Y') }}</span>
-                    @if($context === 'home' && $visit->is_imminent)
-                        <span class="badge bg-primary-subtle text-primary rounded-pill ms-2">{{ __('messages.components.tour_card.imminent') }}</span>
-                    @endif
-                </li>
-            @endif
+            </li>
 
             <li class="mb-2">
-                <i class="bi bi-clock me-2 {{ $context === 'archive' ? 'text-secondary' : 'text-primary' }}"></i>
+                <i class="bi bi-clock me-2 text-primary"></i>
                 {{ \Carbon\Carbon::parse($visit->effective_start_time ?? $visit->visitType->start_time)->format('g:i A') }}
                 @if($context === 'home')
                     ({{ $visit->visitType->duration_minutes }} min)
@@ -63,15 +54,13 @@
 
             {{-- Participants --}}
             <li class="mb-2 d-flex align-items-center">
-                <i class="bi bi-people me-2 {{ $context === 'archive' ? 'text-secondary' : 'text-primary' }}"></i> 
+                <i class="bi bi-people me-2 text-primary"></i> 
 
                 @if($context === 'dashboard')
                     @php 
                         $userReg = $visit->registrations->where('user_id', Auth::id())->first();
                     @endphp
                     {{ $userReg ? $userReg->num_participants : 0 }} {{ __('messages.components.tour_card.participants') }}
-                @elseif($context === 'archive')
-                    {{ $visit->registrations->sum('num_participants') }} {{ __('messages.components.tour_card.attendees') }}
                 @else
                     <span>{{ $visit->registrations->sum('num_participants') }} / {{ $visit->visitType->max_participants }} {{ __('messages.components.tour_card.filled') }}</span>
                     @if($visit->is_filling_fast)
@@ -80,22 +69,21 @@
                 @endif
             </li>
 
-            {{-- Meeting Point / Volunteer --}}
-            @if($context === 'home' || $context === 'archive')
-                <li class="mb-2"><i class="bi bi-map me-2 {{ $context === 'archive' ? 'text-secondary' : 'text-primary' }}"></i> {{ $visit->visitType->meeting_point }}</li>
+            {{-- Meeting Point --}}
+            @if($context === 'dashboard')
+                <li class="mb-2"><i class="bi bi-map me-2 text-primary"></i> {{ $visit->visitType->meeting_point }}</li>
             @endif
 
-            @if($context === 'archive' && $visit->assignedVolunteer && !($visit->assignedVolunteer->getKey() == Auth::id() && Auth::user()->hasRole('Guide')))
+            {{-- Volunteer --}}
+            @if($visit->assignedVolunteer && !($visit->assignedVolunteer->getKey() == Auth::id() && Auth::user()->hasRole('Guide')))
                 <li class="mb-2"><i class="bi bi-person-badge me-2 text-secondary"></i> {{ __('messages.components.tour_card.volunteer') }}: {{ $visit->assignedVolunteer->first_name }} {{ $visit->assignedVolunteer->last_name }}</li>
             @endif
         </ul>
 
         {{-- Description snippet (Home Context) --}}
-        @if($context === 'home')
-            <p class="card-text small text-muted line-clamp-3">
-                {{ Str::limit($visit->visitType->description, 100) }}
-            </p>
-        @endif
+        <p class="card-text small text-muted line-clamp-3">
+            {{ Str::limit($visit->visitType->description, 100) }}
+        </p>
     </div>
 
     {{-- Footer Actions --}}
@@ -127,7 +115,7 @@
                         <button class="btn btn-secondary w-100 rounded-pill" disabled>{{ __('messages.components.tour_card.customer_only') }}</button>
                     @endrole
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-primary w-100 rounded-pill stretched-link">{{ __('messages.components.tour_card.login_to_book') }}</a>
+                    <a href="{{ route('visits.register.form', ['visit' => $visit->visit_id]) }}" class="btn btn-outline-primary w-100 rounded-pill stretched-link">{{ __('messages.components.tour_card.login_to_book') }}</a>
                 @endauth
 
             @elseif($context === 'dashboard')

@@ -70,6 +70,7 @@
     .highlight-card {
         animation: highlight-pulse 2s ease-out;
         border-color: #0d6efd !important;
+        border-width: 2px !important;
         background-color: #f8f9fa;
     }
 </style>

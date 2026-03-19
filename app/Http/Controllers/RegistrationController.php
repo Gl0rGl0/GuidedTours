@@ -53,7 +53,7 @@ class RegistrationController extends Controller
 
         if ($error) {
             if ($error['type'] === 'already_registered') {
-                return redirect()->route('user.dashboard')->with('warning', $error['message']);
+                return redirect()->route('user.dashboard', ['highlight' => $visit->visit_id])->with('warning', $error['message']);
             }
             return redirect()->route('home')->with('error_message', $error['message']);
         }

@@ -50,7 +50,7 @@ return [
             'attendees' => 'Attendees',
             'filled' => 'Filled',
             'spots_remaining' => 'Spots Remaining',
-            'volunteer' => 'Vol',
+            'volunteer' => 'Guide',
             'already_booked' => 'Already Booked',
             'sold_out' => 'Sold Out',
             'view_details_book' => 'View Details & Book',

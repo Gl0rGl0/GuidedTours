@@ -335,6 +335,8 @@
 
             @if (session('status')) window.showToast("{{ session('status') }}", 'success'); @endif
             @if (session('success')) window.showToast("{{ session('success') }}", 'success'); @endif
+            @if (session('warning')) window.showToast("{{ session('warning') }}", 'warning'); @endif
+            @if (session('info')) window.showToast("{{ session('info') }}", 'info'); @endif
             @if (session('error')) window.showToast("{{ session('error') }}", 'error'); @endif
             @if (session('error_message')) window.showToast("{{ session('error_message') }}", 'error'); @endif
             @if ($errors->any()) window.showToast("{{ $errors->first() }}", 'error'); @endif

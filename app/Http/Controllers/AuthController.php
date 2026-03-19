@@ -32,7 +32,7 @@ class AuthController extends Controller
             $user = Auth::user();
             Auth::login($user, $request->filled('remember'));
 
-            return redirect()->route('home')->with('status', __('messages.auth.login.login_success'));
+            return redirect()->intended(route('home'))->with('status', __('messages.auth.login.login_success'));
         }
 
         return back()

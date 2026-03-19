@@ -52,7 +52,7 @@ return [
             'attendees' => 'Presenti',
             'filled' => 'Al completo',
             'spots_remaining' => 'Posti Rimanenti',
-            'volunteer' => 'Vol',
+            'volunteer' => 'Guida',
             'already_booked' => 'Già Prenotato',
             'sold_out' => 'Esaurito',
             'view_details_book' => 'Vedi Dettagli e Prenota',
@@ -104,7 +104,7 @@ return [
         ],
         'filter' => [
             'search_placeholder' => 'Cerca tour...',
-            'all_locations' => 'Tutte le Sedi',
+            'all_locations' => 'Tutte le Località',
             'sort_date_asc' => 'Data: Più vicina',
             'sort_date_desc' => 'Data: Più lontana',
             'sort_popularity' => 'Popolarità',

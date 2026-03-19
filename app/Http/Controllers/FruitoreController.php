@@ -20,6 +20,7 @@ class FruitoreController extends Controller
                                     $q->whereIn('status', [
                                         Visit::STATUS_PROPOSED,
                                         Visit::STATUS_COMPLETE,
+                                        Visit::STATUS_CONFIRMED,
                                     ]);
                                 })
                                 ->get();
@@ -39,7 +40,7 @@ class FruitoreController extends Controller
         try {
             $visit = $booking->visit()->with('visitType', 'registrations')->first();
 
-            if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED])) {
+            if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED, Visit::STATUS_EFFECTED])) {
                 return back()->withErrors(['general' => __('messages.user.dashboard.cancel_unavailable')])->withInput();
             }
             $booking->delete();
