@@ -27,11 +27,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Un viaggio attraverso le epoche del castello, dalle origini medievali al Concilio di Trento.',
                 'meeting_point' => 'Ingresso principale del Castello',
-                'period_start' => '2025-01-01',
-                'period_end' => '2025-12-31',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
                 'start_time' => '10:00:00',
                 'duration_minutes' => 90,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 25
             ]
@@ -42,11 +41,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Esplorazione dei giardini e delle logge rinascimentali.',
                 'meeting_point' => 'Cortile interno, vicino alla fontana',
-                'period_start' => '2025-04-01',
-                'period_end' => '2025-10-31',
+                'period_start' => '2026-04-01',
+                'period_end' => '2026-10-31',
                 'start_time' => '15:00:00',
                 'duration_minutes' => 60,
-                'requires_ticket' => true,
                 'min_participants' => 3,
                 'max_participants' => 15
             ]
@@ -57,11 +55,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Dalle vette alpine ai segreti della foresta tropicale.',
                 'meeting_point' => 'Biglietteria MUSE',
-                'period_start' => '2025-01-01',
-                'period_end' => '2025-12-31',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
                 'start_time' => '11:00:00',
                 'duration_minutes' => 120,
-                'requires_ticket' => true,
                 'min_participants' => 8,
                 'max_participants' => 30
             ]
@@ -72,11 +69,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Analisi degli stili architettonici dal medievale al barocco.',
                 'meeting_point' => 'Piazza principale del Castello',
-                'period_start' => '2025-01-01',
-                'period_end' => '2025-12-31',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
                 'start_time' => '14:00:00',
                 'duration_minutes' => 75,
-                'requires_ticket' => true,
                 'min_participants' => 4,
                 'max_participants' => 20
             ]
@@ -87,11 +83,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Un tour interattivo pensato per bambini e genitori.',
                 'meeting_point' => 'Area Accoglienza MUSE',
-                'period_start' => '2025-01-01',
-                'period_end' => '2025-12-31',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
                 'start_time' => '16:00:00',
                 'duration_minutes' => 90,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 25
             ]
@@ -102,11 +97,10 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Visita suggestiva al tramonto con focus sulle leggende locali.',
                 'meeting_point' => 'Ponte levatoio',
-                'period_start' => '2025-06-01',
-                'period_end' => '2025-09-15',
+                'period_start' => '2026-06-01',
+                'period_end' => '2026-09-15',
                 'start_time' => '19:00:00',
                 'duration_minutes' => 60,
-                'requires_ticket' => false,
                 'min_participants' => 6,
                 'max_participants' => 18
             ]
@@ -117,13 +111,27 @@ class VisitTypesSeeder extends Seeder
             [
                 'description' => 'Approfondimento sulla mostra temporanea dedicata ai dinosauri.',
                 'meeting_point' => 'Ingresso Mostra Temporanea, Piano -1',
-                'period_start' => '2025-05-01',
-                'period_end' => '2025-08-31',
+                'period_start' => '2026-05-01',
+                'period_end' => '2026-08-31',
                 'start_time' => '15:30:00',
                 'duration_minutes' => 75,
-                'requires_ticket' => true,
                 'min_participants' => 5,
                 'max_participants' => 20
+            ]
+        );
+
+         VisitType::updateOrCreate(
+            ['place_id' => $place1->place_id, 'title' => 'Evento Costoso'],
+            [
+                'description' => 'Test visita costosa.',
+                'meeting_point' => 'Descrizione visita costosa',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
+                'start_time' => '12:30:00',
+                'duration_minutes' => 15,
+                'min_participants' => 5,
+                'max_participants' => 20,
+                'price' => 100.00
             ]
         );
     }

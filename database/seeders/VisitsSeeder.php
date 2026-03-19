@@ -17,8 +17,8 @@ class VisitsSeeder extends Seeder
     public function run(): void
     {
         // Get Volunteers
-        $vol1 = User::where('username', 'volunteer_anna')->first();
-        $vol2 = User::where('username', 'volunteer_marco')->first();
+        $vol1 = User::where('username', 'anna@example.com')->first();
+        $vol2 = User::where('username', 'marco@example.com')->first();
 
         // Get Visit Types
         $vt1 = VisitType::where('title', 'Storia del Castello')->first();
@@ -88,7 +88,6 @@ class VisitsSeeder extends Seeder
         );
 
         // Effected
-        // Cancelled
         Visit::updateOrCreate(
             ['visit_type_id' => $vt1->visit_type_id, 'visit_date' => $now->copy()->subDays(7)->toDateString()],
             [

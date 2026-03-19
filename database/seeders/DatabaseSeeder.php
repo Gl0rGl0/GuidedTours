@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,5 +30,8 @@ class DatabaseSeeder extends Seeder
             RegistrationsSeeder::class,
             VolunteerAvailabilitySeeder::class,
         ]);
+
+        $this->command->info('Updating visit statuses based on seeded dates and participants...');
+        Artisan::call('app:update-visit-statuses');
     }
 }

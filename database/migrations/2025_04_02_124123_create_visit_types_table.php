@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('requires_ticket')->default(false);
             $table->integer('min_participants');
             $table->integer('max_participants');
+            $table->decimal('price', 10, 2)->default(0.00);
             $table->timestamps(); // Handles created_at and updated_at
         });
     }

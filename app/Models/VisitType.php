@@ -43,6 +43,7 @@ class VisitType extends Model
         'requires_ticket',
         'min_participants',
         'max_participants',
+        'price'
     ];
 
     /**
