@@ -139,5 +139,5 @@ Route::get('/test-email', function () {
                 ->subject('Hello World');
     });
 
-    return 'Successfully sent email via Resend!';
+    return '<a href="{{ route("/en") }}" class="btn btn-primary rounded-pill">Home</a>';
 });

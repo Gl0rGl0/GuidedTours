@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         return back()
-            ->with('error', 'The provided credentials do not match our records.')
+            ->with('error', __('messages.auth.login.invalid_credentials'))
             ->withInput(); // Mantiene l'email scritta dall'utente nel form
     }
 
@@ -46,7 +46,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('status', 'Logout effected.');
+        return redirect()->route('home')->with('status', __('messages.common.logout_success'));
     }
 
     public function showRegistrationForm(): View
@@ -73,11 +73,11 @@ class AuthController extends Controller
 
             $user->assignRole('Customer');
 
-            return redirect()->route('login')->with('status', 'Registration successful! Please log in.');
+            return redirect()->route('login')->with('status', __('messages.user.dashboard.registration_success'));
 
         } catch (\Exception $e) {
             Log::error("Registration failed: " . $e->getMessage());
-            return back()->withInput()->withErrors(['email' => 'Registration failed. Please try again.']);
+            return back()->withInput()->withErrors(['email' => __('messages.user.dashboard.registration_failed')]);
         }
     }
 }

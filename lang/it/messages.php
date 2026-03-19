@@ -5,6 +5,7 @@ return [
         'browse_tours' => 'Sfoglia Tour',
         'my_dashboard' => 'La Mia Dashboard',
         'login_to_book' => 'Accedi per Prenotare',
+        'logout_success' => 'Logout riuscito!',
         'register' => 'Registrati',
         'filter' => 'Filtra',
         'show_more' => 'Mostra Altro',
@@ -131,6 +132,7 @@ return [
             'submit_btn' => 'Invia Link di Reset',
             'remembered_password' => 'Ti sei ricordato la password?',
             'back_to_login' => 'Torna al Login',
+            'invalid_credentials' => 'Le credenziali fornite non sono corrette, riprova.',
         ],
         'login' => [
             'page_title' => 'Accedi',
@@ -195,6 +197,7 @@ return [
             'keep_booking_btn' => 'Mantieni Prenotazione',
             'yes_cancel_btn' => 'Sì, Annulla',
             'registration_success' => 'Registrazione riuscita! Controlla la tua dashboard per maggiori dettagli.',
+            'registration_failed' => 'Registrazione fallita. Riprova.',
             'cancel_own_only' => 'Puoi annullare solo le tue prenotazioni.',
             'cancel_unavailable' => 'Questa visita non è più disponibile per l\'annullamento.',
             'cancel_success' => 'Prenotazione annullata con successo.',

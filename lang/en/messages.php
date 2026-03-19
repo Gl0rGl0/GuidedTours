@@ -5,6 +5,7 @@ return [
         'browse_tours' => 'Browse Tours',
         'my_dashboard' => 'My Dashboard',
         'login_to_book' => 'Login to Book',
+        'logout_success' => 'Logout successful!',
         'register' => 'Register',
         'filter' => 'Filter',
         'show_more' => 'Show More',
@@ -129,6 +130,7 @@ return [
             'submit_btn' => 'Send Reset Link',
             'remembered_password' => 'Remembered your password?',
             'back_to_login' => 'Back to Login',
+            'invalid_credentials' => 'The provided credentials are not correct, try again.',
         ],
         'login' => [
             'page_title' => 'Login',
@@ -182,6 +184,7 @@ return [
             'keep_booking_btn' => 'Keep Booking',
             'yes_cancel_btn' => 'Yes, Cancel',
             'registration_success' => 'Registration successful! See your dashboard for more details.',
+            'registration_failed' => 'Registration failed. Please try again.',
             'cancel_own_only' => 'You can only cancel your own bookings.',
             'cancel_unavailable' => 'This visit is no longer available for cancellation.',
             'cancel_success' => 'Booking cancelled successfully.',

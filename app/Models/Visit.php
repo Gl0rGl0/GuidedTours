@@ -144,6 +144,6 @@ class Visit extends Model
     public function getIsImminentAttribute(): bool
     {
         $daysRemaining = now()->diffInDays($this->visit_date, false);
-        return $daysRemaining >= 3 && $daysRemaining <= 6;
+        return $daysRemaining <= 6;
     }
 }
