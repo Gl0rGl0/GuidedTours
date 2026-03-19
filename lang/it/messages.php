@@ -134,7 +134,6 @@ return [
             'submit_btn' => 'Invia Link di Reset',
             'remembered_password' => 'Ti sei ricordato la password?',
             'back_to_login' => 'Torna al Login',
-            'invalid_credentials' => 'Le credenziali fornite non sono corrette, riprova.',
         ],
         'login' => [
             'page_title' => 'Accedi',
@@ -153,6 +152,7 @@ return [
             'submit' => 'Accedi',
             'register_link' => 'Registrati ora',
             'login_success' => 'Login effettuato con successo.',
+            'invalid_credentials' => 'Le credenziali fornite non sono corrette, riprova.',
         ],
         'register' => [
             'page_title' => 'Registrazione',
