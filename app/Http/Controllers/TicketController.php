@@ -10,7 +10,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TicketController extends Controller
 {
-    public function download($code)
+    public function download(string $locale, $code)
     {
         $registration = Registration::with(['visit.visitType.place', 'user'])
             ->where('booking_code', $code)

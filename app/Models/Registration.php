@@ -67,4 +67,12 @@ class Registration extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
+
+    /**
+     * Use `registration_id` for route-model binding.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'registration_id';
+    }
 }

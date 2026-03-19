@@ -56,4 +56,11 @@ class Place extends Model
     {
         return $this->hasMany(VisitType::class, 'place_id', 'place_id');
     }
+    /**
+     * Use `place_id` for route-model binding.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'place_id';
+    }
 }

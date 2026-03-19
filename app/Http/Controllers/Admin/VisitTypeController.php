@@ -14,7 +14,7 @@ use App\Http\Controllers\Traits\HandlesAdminOperations;
 class VisitTypeController extends Controller
 {
     use HandlesAdminOperations;
-    public function removeVisitType(VisitType $visit_type): RedirectResponse
+    public function removeVisitType(string $locale, VisitType $visit_type): RedirectResponse
     {
         return $this->handleAdminOperation(
             function () use ($visit_type) {
@@ -44,7 +44,7 @@ class VisitTypeController extends Controller
         );
     }
 
-    public function edit(VisitType $visit_type): View
+    public function edit(string $locale, VisitType $visit_type): View
     {
         $places = Place::orderBy('name')->pluck('name', 'place_id');
         return view('admin.visit-types.edit', [
@@ -53,7 +53,7 @@ class VisitTypeController extends Controller
         ]);
     }
 
-    public function update(UpdateVisitTypeRequest $request, VisitType $visit_type): RedirectResponse
+    public function update(string $locale, UpdateVisitTypeRequest $request, VisitType $visit_type): RedirectResponse
     {
          return $this->handleAdminOperation(
             function () use ($request, $visit_type) {

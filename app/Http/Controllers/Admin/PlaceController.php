@@ -15,7 +15,7 @@ class PlaceController extends Controller
 {
     use HandlesAdminOperations;
 
-    public function removePlace(Place $place): RedirectResponse
+    public function removePlace(string $locale, Place $place): RedirectResponse
     {
         return $this->handleAdminOperation(
             function () use ($place) {
@@ -46,12 +46,12 @@ class PlaceController extends Controller
         );
     }
 
-    public function edit(Place $place): View
+    public function edit(string $locale, Place $place): View
     {
         return view('admin.places.edit', ['place' => $place]);
     }
 
-    public function update(UpdatePlaceRequest $request, Place $place): RedirectResponse
+    public function update(string $locale, UpdatePlaceRequest $request, Place $place): RedirectResponse
     {
          return $this->handleAdminOperation(
             function () use ($request, $place) {

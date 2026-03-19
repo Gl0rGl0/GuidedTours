@@ -97,4 +97,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Agency::class, 'agency_id', 'agency_id');
     }
+    /**
+     * Use `user_id` for route-model binding.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'user_id';
+    }
 }

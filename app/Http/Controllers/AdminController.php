@@ -134,7 +134,7 @@ class AdminController extends Controller
         );
     }
 
-    public function removeUser(User $user): RedirectResponse
+    public function removeUser(string $locale, User $user): RedirectResponse
     {
         // Prevent removing self or other configurators
         if ($user->user_id === Auth::id()) {

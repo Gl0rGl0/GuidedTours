@@ -30,7 +30,7 @@ class FruitoreController extends Controller
         return view('user.dashboard', ['bookings' => $bookings]);
     }
 
-    public function cancelBooking(Registration $booking): \Illuminate\Http\RedirectResponse
+    public function cancelBooking(string $locale, Registration $booking): \Illuminate\Http\RedirectResponse
     {
         if ($booking->user_id !== Auth::user()->user_id) {
              return redirect()->route('user.dashboard')->with('error_message', __('messages.user.dashboard.cancel_own_only'));
