@@ -527,6 +527,16 @@ return [
         'exception_error' => 'Exception error. Please try again later.',
         'resource_not_found' => 'Resource not found.',
     ],
+    'validation' => [
+        'valid_email' => 'Valid email format',
+        'invalid_email' => 'Please enter a valid email address',
+        'password_info' => 'Min. 8 characters, one uppercase and one number',
+        'password_info_admin' => 'Min. 6 characters, one uppercase and one number',
+        'password_valid' => 'Password meets requirements',
+        'password_invalid' => 'Password does not meet the minimum requirements',
+        'passwords_match' => 'Passwords match',
+        'passwords_no_match' => 'Passwords do not match',
+    ],
     'emails' => [
         'password_reset' => [
             'subject' => 'Reset Password Notification',

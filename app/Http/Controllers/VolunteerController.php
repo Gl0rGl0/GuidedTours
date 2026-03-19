@@ -81,13 +81,13 @@ class VolunteerController extends Controller
             // Commit transaction
             DB::commit();
 
-            return redirect()->route('volunteer.availability.form')->with('status', __('messages.components.volunteer_calendar.status.success'));
+            return redirect()->route('volunteer.availability.form')->with('status', __('messages.volunteer.availability.status.success'));
 
         } catch (\Exception $e) {
             // Rollback transaction on error
             DB::rollBack();
             Log::error("Failed to update availability for user {$user->user_id}: " . $e->getMessage(), ['exception' => $e]);
-            return back()->withErrors(['general' => __('messages.components.volunteer_calendar.status.error')]);
+            return back()->withErrors(['general' => __('messages.volunteer.availability.status.error')]);
         }
     }
 }

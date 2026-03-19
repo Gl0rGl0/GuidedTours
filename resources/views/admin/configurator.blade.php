@@ -381,7 +381,7 @@
                 </div>
                 <div class="modal-footer border-0 pt-0">
                     <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">{{ __('messages.admin.configurator.modals.cancel_btn') }}</button>
-                    <button type="submit" class="btn btn-primary rounded-pill px-4">{{ __('messages.admin.configurator.modals.create_user_btn') }}</button>
+                    <button type="submit" id="addUserSubmitBtn" class="btn btn-primary rounded-pill px-4">{{ __('messages.admin.configurator.modals.create_user_btn') }}</button>
                 </div>
             </form>
         </div>
@@ -461,53 +461,22 @@
             document.getElementById('new_first_name').focus();
         });
 
-        // Live Password Validation (Issue 28)
-        const newPassword = document.getElementById('new_password');
-        const newConfirm = document.getElementById('new_password_confirmation');
-        const adminPassHelp = document.getElementById('adminPasswordHelp');
-        const adminConfHelp = document.getElementById('adminConfirmHelp');
-        const addUserBtn = addUserModal.querySelector('button[type="submit"]');
-
-        function validateAdminPasswords() {
-            const pVal = newPassword.value;
-            const cVal = newConfirm.value;
-            let pValid = false;
-            let cValid = false;
-
-            if (pVal.length >= 6) {
-                adminPassHelp.className = 'form-text text-success small';
-                adminPassHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __("messages.admin.configurator.modals.min_chars") }}';
-                pValid = true;
-            } else if (pVal.length > 0) {
-                adminPassHelp.className = 'form-text text-danger small';
-                adminPassHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __("messages.admin.configurator.modals.min_chars") }}';
-            } else {
-                adminPassHelp.className = 'form-text text-muted small';
-                adminPassHelp.innerHTML = '<i class="bi bi-info-circle me-1"></i>{{ __("messages.admin.configurator.modals.min_chars") }}';
+        // Live Validation using reusable function
+        setupFormValidation({
+            emailInputId: 'new_email',
+            passwordInputId: 'new_password',
+            passwordHelpId: 'adminPasswordHelp',
+            confirmInputId: 'new_password_confirmation',
+            confirmHelpId: 'adminConfirmHelp',
+            submitBtnId: 'addUserSubmitBtn',
+            passwordMinLength: 6,
+            requireComplexPassword: false, // Admin modal only checks 6 chars
+            messages: {
+                passwordInfo: window.validationMessages.passwordInfoAdmin,
+                passwordValid: window.validationMessages.passwordInfoAdmin,
+                passwordInvalid: window.validationMessages.passwordInfoAdmin
             }
-
-            if (cVal.length > 0) {
-                adminConfHelp.classList.remove('d-none');
-                if (pVal === cVal) {
-                    adminConfHelp.className = 'form-text text-success small';
-                    adminConfHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __("messages.admin.configurator.modals.passwords_match") }}';
-                    cValid = true;
-                } else {
-                    adminConfHelp.className = 'form-text text-danger small';
-                    adminConfHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __("messages.admin.configurator.modals.passwords_do_not_match") }}';
-                }
-            } else {
-                adminConfHelp.classList.add('d-none');
-            }
-
-            addUserBtn.disabled = !(pValid && cValid);
-        }
-
-        newPassword.addEventListener('input', validateAdminPasswords);
-        newConfirm.addEventListener('input', validateAdminPasswords);
-        
-        // Initial state disable
-        addUserBtn.disabled = true;
+        });
 
         // --- 3. Initialize tooltips ---
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

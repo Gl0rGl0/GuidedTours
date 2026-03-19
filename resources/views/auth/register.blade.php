@@ -100,142 +100,17 @@
     @endsection
 
 <script>
-    function togglePassword(inputId, btn) {
-        const input = document.getElementById(inputId);
-        const icon = btn.querySelector('i');
-
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.replace('bi-eye', 'bi-eye-slash');
-        } else {
-            input.type = 'password';
-            icon.classList.replace('bi-eye-slash', 'bi-eye');
-        }
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
-        const password = document.getElementById('password');
-        const confirm = document.getElementById('password_confirmation');
-        const email = document.getElementById('email');
-        const passHelp = document.getElementById('passwordHelp');
-        const confHelp = document.getElementById('confirmHelp');
-        const emailHelp = document.getElementById('emailHelp');
-        const submitBtn = document.getElementById('submitBtn');
-
-        let pValid = false;
-        let cValid = false;
-        let eValid = (email.value.trim() !== '' && validateEmailFormat(email.value.trim())); // Check on load (e.g., from old() input)
-        let typingTimer;
-
-        // Simple strict email regex
-        function validateEmailFormat(mail) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-        }
-
-        function validatePasswords() {
-            const pVal = password.value;
-            const cVal = confirm.value;
-            pValid = false;
-            cValid = false;
-
-            const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
-
-            if (passwordRegex.test(pVal)) {
-                passHelp.className = 'form-text text-success small';
-                passHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.min_characters') }}';
-                pValid = true;
-            } else if (pVal.length > 0) {
-                passHelp.className = 'form-text text-danger small';
-                passHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.min_characters') }}';
-            } else {
-                passHelp.className = 'form-text text-muted small';
-                passHelp.innerHTML = '<i class="bi bi-info-circle me-1"></i>{{ __('messages.auth.register.min_characters') }}';
-            }
-
-            if (cVal.length > 0) {
-                confHelp.classList.remove('d-none');
-                if (pVal === cVal) {
-                    confHelp.className = 'form-text text-success small';
-                    confHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.passwords_match') }}';
-                    cValid = true;
-                } else {
-                    confHelp.className = 'form-text text-danger small';
-                    confHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.passwords_no_match') }}';
-                }
-            } else {
-                confHelp.classList.add('d-none');
-            }
-
-            updateSubmitStatus();
-        }
-
-        function updateSubmitStatus() {
-            submitBtn.disabled = !(pValid && cValid && eValid);
-        }
-
-        // Email Real-time validation
-        function handleEmailInput() {
-            clearTimeout(typingTimer);
-            const val = email.value.trim();
-            
-            if (val.length === 0) {
-                emailHelp.classList.add('d-none');
-                eValid = false;
-                updateSubmitStatus();
-                return;
-            }
-
-            // Immediately clear error if they start typing again
-            emailHelp.classList.add('d-none');
-            
-            // Only validate when they stop typing for 600ms
-            typingTimer = setTimeout(() => {
-                if (validateEmailFormat(val)) {
-                    emailHelp.classList.remove('d-none');
-                    emailHelp.className = 'form-text text-success small';
-                    emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
-                    eValid = true;
-                } else {
-                    emailHelp.classList.remove('d-none');
-                    emailHelp.className = 'form-text text-danger small';
-                    emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
-                    eValid = false;
-                }
-                updateSubmitStatus();
-            }, 600);
-        }
-
-        // Standard instant validation (password logic)
-        password.addEventListener('input', validatePasswords);
-        confirm.addEventListener('input', validatePasswords);
-        
-        // Debounced email validation
-        email.addEventListener('input', handleEmailInput);
-
-        // Immediate check on unfocus (blur)
-        email.addEventListener('blur', () => {
-             clearTimeout(typingTimer);
-             const val = email.value.trim();
-             if (val.length > 0) {
-                 if (validateEmailFormat(val)) {
-                    emailHelp.classList.remove('d-none');
-                    emailHelp.className = 'form-text text-success small';
-                    emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
-                    eValid = true;
-                } else {
-                    emailHelp.classList.remove('d-none');
-                    emailHelp.className = 'form-text text-danger small';
-                    emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
-                    eValid = false;
-                }
-                updateSubmitStatus();
-             }
+        setupFormValidation({
+            emailInputId: 'email',
+            emailHelpId: 'emailHelp',
+            passwordInputId: 'password',
+            passwordHelpId: 'passwordHelp',
+            confirmInputId: 'password_confirmation',
+            confirmHelpId: 'confirmHelp',
+            submitBtnId: 'submitBtn',
+            passwordMinLength: 8,
+            requireComplexPassword: true
         });
-
-        // Initialize state
-        validatePasswords();
-        if(email.value.trim().length > 0) {
-             email.dispatchEvent(new Event('blur')); // Trigger initial visual validation if they failed registration once and their email is prepopulated via old()
-        }
     });
 </script>

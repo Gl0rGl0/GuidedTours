@@ -429,6 +429,19 @@
         });
     </script>
 
+    <script>
+        window.validationMessages = {
+            validEmail: '<i class="bi bi-check-circle me-1"></i>{!! __('messages.validation.valid_email') !!}',
+            invalidEmail: '<i class="bi bi-x-circle me-1"></i>{!! __('messages.validation.invalid_email') !!}',
+            passwordInfo: '<i class="bi bi-info-circle me-1"></i>{!! __('messages.validation.password_info') !!}',
+            passwordInfoAdmin: '<i class="bi bi-info-circle me-1"></i>{!! __('messages.validation.password_info_admin') !!}',
+            passwordValid: '<i class="bi bi-check-circle me-1"></i>{!! __('messages.validation.password_valid') !!}',
+            passwordInvalid: '<i class="bi bi-x-circle me-1"></i>{!! __('messages.validation.password_invalid') !!}',
+            passwordsMatch: '<i class="bi bi-check-circle me-1"></i>{!! __('messages.validation.passwords_match') !!}',
+            passwordsNoMatch: '<i class="bi bi-x-circle me-1"></i>{!! __('messages.validation.passwords_no_match') !!}'
+        };
+    </script>
+    <script src="{{ asset('js/validation.js') }}"></script>
     @stack('scripts')
 </body>
 

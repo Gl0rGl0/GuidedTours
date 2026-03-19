@@ -14,6 +14,9 @@
             background-color: var(--bs-primary-bg-subtle, #cfe2ff) !important;
             color: var(--bs-primary, #0d6efd) !important;
         }
+        #availability-title {
+            scroll-margin-top: 110px;
+        }
     </style>
 @endpush
 
@@ -23,7 +26,7 @@
             <div class="card shadow-sm border-0 rounded-4">
                 <div class="card-body p-4">
                     <div class="text-center mb-3">
-                        <h2 class="fw-bold text-primary mb-2">{{ __('messages.volunteer.availability.title') }}</h2>
+                        <h2 id="availability-title" class="fw-bold text-primary mb-2">{{ __('messages.volunteer.availability.title') }}</h2>
                         <p class="text-muted mb-4">{!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}</p>
                     </div>
 
@@ -161,6 +164,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Smooth scroll to title on entry
+    setTimeout(() => {
+        const title = document.getElementById('availability-title');
+        if (title) {
+            title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 500); // Balanced delay for standard page load
 });
 </script>
 @endpush

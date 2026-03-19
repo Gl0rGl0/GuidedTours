@@ -36,7 +36,7 @@
 
                         <label for="password">{{ __('messages.auth.login.password_label') }}</label>
 
-                        <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y text-muted px-3 border-0 shadow-none z-3" tabindex="-1" onclick="togglePassword()" id="togglePasswordBtn">
+                        <button type="button" class="btn position-absolute top-50 end-0 translate-middle-y text-muted px-3 border-0 shadow-none z-3" tabindex="-1" onclick="togglePassword('password', this)" id="togglePasswordBtn">
                             <i class="bi bi-eye" id="togglePasswordIcon"></i>
                         </button>
 
@@ -66,94 +66,15 @@
 @endsection
 
 <script>
-
-function togglePassword() {
-    const pw = document.getElementById('password');
-    const icon = document.getElementById('togglePasswordIcon');
-    
-    if (pw.type === 'password') {
-        pw.type = 'text';
-        icon.classList.remove('bi-eye');
-        icon.classList.add('bi-eye-slash');
-    } else {
-        pw.type = 'password';
-        icon.classList.remove('bi-eye-slash');
-        icon.classList.add('bi-eye');
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const emailHelp = document.getElementById('emailHelp');
-    const submitBtn = document.getElementById('submitBtn');
-
-    let eValid = (email.value.trim() !== '' && validateEmailFormat(email.value.trim()));
-    let typingTimer;
-
-    function validateEmailFormat(mail) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-    }
-
-    function updateSubmitStatus() {
-        const pVal = password.value;
-        submitBtn.disabled = !(eValid && pVal.length > 0);
-    }
-
-    function handleEmailInput() {
-        clearTimeout(typingTimer);
-        const val = email.value.trim();
-        
-        if (val.length === 0) {
-            emailHelp.classList.add('d-none');
-            eValid = false;
-            updateSubmitStatus();
-            return;
-        }
-
-        emailHelp.classList.add('d-none');
-        
-        typingTimer = setTimeout(() => {
-            if (validateEmailFormat(val)) {
-                emailHelp.classList.remove('d-none');
-                emailHelp.className = 'form-text text-success small';
-                emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
-                eValid = true;
-            } else {
-                emailHelp.classList.remove('d-none');
-                emailHelp.className = 'form-text text-danger small';
-                emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
-                eValid = false;
-            }
-            updateSubmitStatus();
-        }, 300);
-    }
-
-    email.addEventListener('input', handleEmailInput);
-    password.addEventListener('input', updateSubmitStatus);
-
-    email.addEventListener('blur', () => {
-         clearTimeout(typingTimer);
-         const val = email.value.trim();
-         if (val.length > 0) {
-             if (validateEmailFormat(val)) {
-                emailHelp.classList.remove('d-none');
-                emailHelp.className = 'form-text text-success small';
-                emailHelp.innerHTML = '<i class="bi bi-check-circle me-1"></i>{{ __('messages.auth.register.valid_email') }}';
-                eValid = true;
-            } else {
-                emailHelp.classList.remove('d-none');
-                emailHelp.className = 'form-text text-danger small';
-                emailHelp.innerHTML = '<i class="bi bi-x-circle me-1"></i>{{ __('messages.auth.register.invalid_email') }}';
-                eValid = false;
-            }
-            updateSubmitStatus();
-         }
+    // We only need to check email format and ensure password is not empty.
+    // togglePassword is now globally available in validation.js.
+    setupFormValidation({
+        emailInputId: 'email',
+        emailHelpId: 'emailHelp',
+        passwordInputId: 'password',
+        submitBtnId: 'submitBtn',
+        requireComplexPassword: false // Simple requirement for login
     });
-
-    if(email.value.trim().length > 0) {
-         email.dispatchEvent(new Event('blur'));
-    }
-    updateSubmitStatus();
 });
 </script>

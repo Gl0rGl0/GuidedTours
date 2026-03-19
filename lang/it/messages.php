@@ -540,6 +540,16 @@ return [
         'exception_error' => 'Si è verificato un errore. Riprova più tardi.',
         'resource_not_found' => 'Risorsa non trovata.',
     ],
+    'validation' => [
+        'valid_email' => 'Formato email valido',
+        'invalid_email' => 'Inserisci un indirizzo email valido',
+        'password_info' => 'Minimo 8 caratteri, una maiuscola e un numero',
+        'password_info_admin' => 'Minimo 6 caratteri, una maiuscola e un numero',
+        'password_valid' => 'Password valida',
+        'password_invalid' => 'La password non rispetta i requisiti minimi',
+        'passwords_match' => 'Le password corrispondono',
+        'passwords_no_match' => 'Le password non corrispondono',
+    ],
     'emails' => [
         'password_reset' => [
             'subject' => 'Notifica di Reimpostazione Password',
