@@ -16,6 +16,7 @@ class FruitoreController extends Controller
 
         $bookings = Registration::where('user_id', $user->user_id)
                                 ->with(['visit.visitType.place', 'visit.registrations'])
+                                ->join('visits', 'registrations.visit_id', '=', 'visits.visit_id')
                                 ->whereHas('visit', function($q) {
                                     $q->whereIn('status', [
                                         Visit::STATUS_PROPOSED,
@@ -23,6 +24,9 @@ class FruitoreController extends Controller
                                         Visit::STATUS_CONFIRMED,
                                     ]);
                                 })
+                                ->orderBy('visits.visit_date', 'asc')
+                                ->orderBy('visits.start_time', 'asc')
+                                ->select('registrations.*')
                                 ->get();
 
         Log::info("Fetching bookings for user ID: " . $user->user_id);
