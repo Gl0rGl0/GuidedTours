@@ -1,7 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ 
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{
           theme: document.documentElement.getAttribute('data-theme') || 'light',
           commandOpen: false,
+          a11y: localStorage.getItem('a11y') === 'true',
+          toggleA11y() {
+              this.a11y = !this.a11y;
+              localStorage.setItem('a11y', this.a11y);
+              document.documentElement.classList.toggle('accessibility-mode', this.a11y);
+          },
           toggleTheme(event) {
               const isDark = this.theme === 'light';
               const applyTheme = () => {
@@ -51,7 +57,9 @@
                   document.documentElement.classList.remove('theme-transitioning');
               });
           }
-      }" :data-theme="theme" @keydown.window.ctrl.k.prevent="commandOpen = !commandOpen"
+      }" :data-theme="theme"
+    x-init="document.documentElement.classList.toggle('accessibility-mode', a11y)"
+    @keydown.window.ctrl.k.prevent="commandOpen = !commandOpen"
     @keydown.window.escape="commandOpen = false">
 
 <head>
@@ -63,6 +71,9 @@
     <script>
         const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
+        if (localStorage.getItem('a11y') === 'true') {
+            document.documentElement.classList.add('accessibility-mode');
+        }
     </script>
 
     <!-- Scripts & Styles -->
@@ -121,6 +132,13 @@
                     <button @click="toggleTheme($event)" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted"
                         title="Toggle Theme">
                         <i class="bi" :class="theme === 'light' ? 'bi-moon-stars-fill' : 'bi-sun-fill'"></i>
+                    </button>
+
+                    <!-- Accessibility Toggle -->
+                    <button @click="toggleA11y()" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted"
+                        :class="a11y ? 'a11y-btn-active' : ''"
+                        title="Accessibility Mode">
+                        <i class="bi bi-universal-access"></i>
                     </button>
 
                     <!-- Language Switcher -->
@@ -350,6 +368,68 @@
     </script>
 
     <style>
+        /* ── Accessibility Mode ─────────────────────────────────────────── */
+        html.accessibility-mode {
+            font-size: 112.5%; /* scala tutti i rem di Bootstrap */
+        }
+
+        html.accessibility-mode body {
+            line-height: 1.75;
+            letter-spacing: 0.01em;
+        }
+
+        html.accessibility-mode .btn {
+            padding-top: 0.55rem;
+            padding-bottom: 0.55rem;
+            padding-left: 1.2rem;
+            padding-right: 1.2rem;
+            font-size: 1rem;
+        }
+
+        html.accessibility-mode .btn-sm {
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+        }
+
+        html.accessibility-mode .nav-link {
+            font-size: 1.05rem;
+            padding-top: 0.6rem;
+            padding-bottom: 0.6rem;
+        }
+
+        html.accessibility-mode .card {
+            border-width: 2px !important;
+        }
+
+        html.accessibility-mode .small,
+        html.accessibility-mode small {
+            font-size: 0.9rem !important; /* small non diventa illeggibile */
+        }
+
+        html.accessibility-mode *:focus-visible {
+            outline: 3px solid #0d6efd !important;
+            outline-offset: 3px !important;
+        }
+
+        html.accessibility-mode a,
+        html.accessibility-mode button,
+        html.accessibility-mode [role="button"] {
+            cursor: pointer !important;
+        }
+
+        html.accessibility-mode .card-hover,
+        html.accessibility-mode .highlight-card {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        /* Bottone attivo nella navbar */
+        .a11y-btn-active {
+            color: #0d6efd !important;
+            background-color: rgba(13, 110, 253, 0.1) !important;
+        }
+        /* ─────────────────────────────────────────────────────────────── */
+
         /* Add a solid background and shadow to the navbar when scrolled */
         .navbar {
             box-shadow: none !important;
