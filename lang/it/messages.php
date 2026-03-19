@@ -547,7 +547,7 @@ return [
         'password_info' => 'Minimo 8 caratteri, una maiuscola e un numero',
         'password_info_admin' => 'Minimo 6 caratteri, una maiuscola e un numero',
         'password_valid' => 'Password valida',
-        'password_invalid' => 'La password non rispetta i requisiti minimi',
+        'password_invalid' => 'Minimo 8 caratteri, una maiuscola e un numero',
         'passwords_match' => 'Le password corrispondono',
         'passwords_no_match' => 'Le password non corrispondono',
     ],

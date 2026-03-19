@@ -533,7 +533,7 @@ return [
         'password_info' => 'Min. 8 characters, one uppercase and one number',
         'password_info_admin' => 'Min. 6 characters, one uppercase and one number',
         'password_valid' => 'Password meets requirements',
-        'password_invalid' => 'Password does not meet the minimum requirements',
+        'password_invalid' => 'Min. 8 characters, one uppercase and one number',
         'passwords_match' => 'Passwords match',
         'passwords_no_match' => 'Passwords do not match',
     ],
