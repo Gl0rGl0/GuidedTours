@@ -83,17 +83,15 @@ class UpdateVisitStatuses extends Command
         $this->info(count($upcomingVisits) . " upcoming visits processed.");
 
         $this->info("Processing past confirmed visits to mark as complete (before {$today->toDateString()})...");
-        $pastConfirmedVisits = Visit::where('status', Visit::STATUS_CONFIRMED)
+        $count = Visit::where('status', Visit::STATUS_CONFIRMED)
             ->whereDate('visit_date', '>=', $today)
-            ->get();
+            ->update([
+                'status' => Visit::STATUS_EFFECTED,
+                'status_updated_at' => now(),
+            ]);
 
-        foreach ($pastConfirmedVisits as $visit) {
-            $visit->status = Visit::STATUS_EFFECTED;
-            $visit->save();
-            $this->line("Visit ID {$visit->visit_id} marked as effected.");
-            Log::info("Visit ID {$visit->visit_id} marked as effected.");
-        }
-        $this->info(count($pastConfirmedVisits) . " past confirmed visits marked as complete.");
+        $this->info("{$count} past confirmed visits marked as effected.");
+        Log::info("{$count} past confirmed visits marked as effected.");
 
         Log::info('UpdateVisitStatuses command finished.');
         $this->info('Visit status update process finished.');

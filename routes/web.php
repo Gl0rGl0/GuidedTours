@@ -126,6 +126,21 @@ Route::prefix('{locale}')->where(['locale' => 'en|it'])->middleware('setlocale')
     });
 }); // <---- End of Localized Route Group ---->
 
+// --- API Routes (Consolidated from api.php) ---
+Route::prefix('api')->group(function () {
+    // Public routes
+    Route::middleware('throttle:5,1')->post('/login', [App\Http\Controllers\AuthController::class, 'apiLogin']);
+
+    // Authenticated routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [App\Http\Controllers\AuthController::class, 'apiLogout']);
+        
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+    });
+});
+
 
 Route::get('/test-error', function () {
     throw new \Exception('Errore di test!');

@@ -40,7 +40,6 @@ class FruitoreController extends Controller
             $visit = $booking->visit()->with('visitType', 'registrations')->first();
 
             if (in_array($visit->status, [Visit::STATUS_CANCELLED, Visit::STATUS_CONFIRMED])) {
-                //return redirect()->route('home')->with('error_message', 'This visit is no longer available for cancellation.');
                 return back()->withErrors(['general' => __('messages.user.dashboard.cancel_unavailable')])->withInput();
             }
             $booking->delete();

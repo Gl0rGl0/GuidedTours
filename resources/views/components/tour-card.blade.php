@@ -21,7 +21,7 @@
                     data-bs-toggle="modal" 
                     data-bs-target="#cancelModal" 
                     data-action="{{ route('user.bookings.cancel', $visit->registrations->where('user_id', Auth::id())->first() ?? 0) }}">
-                    <i class="bi bi-x-circle me-1"></i> {{ __('messages.common.cancel') }}
+                    <i class="bi bi-x-circle me-1"></i> {{ __('messages.user.dashboard.cancel_btn') }}
                 </button>
             @elseif($context === 'archive')
                 <small class="text-muted">{{ \Carbon\Carbon::parse($visit->visit_date)->format('M d, Y') }}</small>

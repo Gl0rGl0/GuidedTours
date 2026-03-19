@@ -31,7 +31,6 @@
                             class="form-control pe-5 @error('password') is-invalid @enderror"
                             id="password"
                             name="password"
-                            value="password123"
                             placeholder="{{ __('messages.auth.login.password_label') }}"
                             required>
 
@@ -127,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 eValid = false;
             }
             updateSubmitStatus();
-        }, 600);
+        }, 300);
     }
 
     email.addEventListener('input', handleEmailInput);

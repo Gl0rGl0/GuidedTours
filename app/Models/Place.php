@@ -42,9 +42,9 @@ class Place extends Model
      */
     public function scopeWithinDistance($query, $lat, $lng, $radius = 10)
     {
-        $haversine = "(6371 * acos(cos(radians($lat)) * cos(radians(latitude)) * cos(radians(longitude) - radians($lng)) + sin(radians($lat)) * sin(radians(latitude))))";
-        
-        return $query->selectRaw("*, $haversine AS distance")
+        $haversine = '(6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude))))';
+
+        return $query->selectRaw("*, $haversine AS distance", [$lat, $lng, $lat])
                      ->having('distance', '<', $radius)
                      ->orderBy('distance');
     }
@@ -56,6 +56,7 @@ class Place extends Model
     {
         return $this->hasMany(VisitType::class, 'place_id', 'place_id');
     }
+
     /**
      * Use `place_id` for route-model binding.
      */

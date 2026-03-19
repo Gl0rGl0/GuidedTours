@@ -14,6 +14,7 @@
                     @if ($visit)
                         <div class="bg-light rounded-3 p-4 mb-4">
                             <h5 class="fw-bold text-dark mb-3">{{ $visit->visitType->title }}</h5>
+                            <p class="text-muted small">{{ $visit->visitType->description }}</p>
                             
                             <ul class="list-unstyled text-muted small mb-0">
                                 <li class="mb-2 d-flex">

@@ -31,7 +31,8 @@ class AuthController extends Controller
 
             $user = Auth::user();
             Auth::login($user, $request->filled('remember'));
-            return Redirect::intended(route('home'));
+
+            return redirect()->route('home')->with('status', __('messages.auth.login.login_success'));
         }
 
         return back()
@@ -79,5 +80,51 @@ class AuthController extends Controller
             Log::error("Registration failed: " . $e->getMessage());
             return back()->withInput()->withErrors(['email' => __('messages.user.dashboard.registration_failed')]);
         }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Authentication Methods (Sanctum)
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Handle an API login request.
+     */
+    public function apiLogin(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            
+            // Create a token for the user
+            $token = $user->createToken('mobile-app')->plainTextToken;
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+                'message' => 'Login successful',
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
+    }
+
+    /**
+     * Handle an API logout request.
+     */
+    public function apiLogout(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json([
+            'message' => 'Logged out successfully',
+        ]);
     }
 }
