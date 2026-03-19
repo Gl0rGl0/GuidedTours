@@ -120,7 +120,7 @@ Route::prefix('{locale}')->where(['locale' => 'en|it'])->middleware('setlocale')
             Route::get('/dashboard', [FruitoreController::class, 'dashboard'])->name('dashboard');
             // Route for cancelling a booking
             Route::delete('/bookings/{booking}', [FruitoreController::class, 'cancelBooking'])->name('bookings.cancel');
-            // Past Visits Page (fruitore)
+            // Past Visits Page (UNUSED)
             Route::get('/past-visits', [VisitController::class, 'showMyPastVisits'])->name('visits.past');
         });
     });

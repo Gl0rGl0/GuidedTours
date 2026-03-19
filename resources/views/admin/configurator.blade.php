@@ -86,19 +86,19 @@
         </div>
     </div>
 
-    <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white rounded-5 shadow-sm mb-4" id="configTabs" role="tablist" style="max-width: 600px; margin: 0 auto;">
+    <ul class="nav nav-pills nav-fill gap-2 p-1 bg-white rounded-5 shadow-sm mb-4" id="configTabs" role="tablist" style="max-width: 800px; margin: 0 auto;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active rounded-5 fw-bold" id="places-tab" data-bs-toggle="tab" data-bs-target="#places" type="button" role="tab" aria-selected="true">
+            <button class="nav-link active rounded-5 fw-bold py-2 fs-5" id="places-tab" data-bs-toggle="tab" data-bs-target="#places" type="button" role="tab" aria-selected="true">
                 <i class="bi bi-geo-alt me-2"></i>{{ __('messages.admin.configurator.tabs.places') }}
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-5 fw-bold" id="types-tab" data-bs-toggle="tab" data-bs-target="#types" type="button" role="tab" aria-selected="false">
+            <button class="nav-link rounded-5 fw-bold py-2 fs-5" id="types-tab" data-bs-toggle="tab" data-bs-target="#types" type="button" role="tab" aria-selected="false">
                 <i class="bi bi-tags me-2"></i>{{ __('messages.admin.configurator.tabs.visit_types') }}
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link rounded-5 fw-bold" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-selected="false">
+            <button class="nav-link rounded-5 fw-bold py-2 fs-5" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-selected="false">
                 <i class="bi bi-people me-2"></i>{{ __('messages.admin.configurator.tabs.users') }}
             </button>
         </li>

@@ -116,8 +116,10 @@ class VisitController extends Controller
 
     public function showAssignedVisits(): View
     {
+        $now = Carbon::now();
         $visits = Visit::with(['visitType.place', 'assignedVolunteer', 'registrations'])
             ->whereIn('status', [Visit::STATUS_PROPOSED, Visit::STATUS_COMPLETE])
+            ->whereDate('visit_date', '>', $now)
             ->where('assigned_volunteer_id', Auth::user()->user_id)
             ->orderBy('visit_date', 'desc')
             ->get();
@@ -143,8 +145,5 @@ class VisitController extends Controller
             'visits' => $visits,
         ]);
     }
-
-
-    
 
 }

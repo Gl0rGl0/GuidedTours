@@ -38,6 +38,7 @@ return [
                 'profile' => 'My Profile',
                 'admin_configurator' => 'Admin Configurator',
                 'add_place' => 'Add New Place',
+                'add_visit_type' => 'Add New Visit Type',
             ],
         ],
         'empty_state' => [
@@ -337,7 +338,7 @@ return [
             'page_title' => 'Visit Planning',
             'title' => 'Visit Planning',
             'description' => 'Overview of schedules and volunteer availability',
-            'add_btn' => 'Add New Visit',
+            'add_btn' => 'Plan New Visit',
             'planning_period' => 'Planning Period',
             'planned_visits' => 'Planned Visits',
             'week' => 'Week :number',

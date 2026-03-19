@@ -28,20 +28,30 @@
         selectedIndex: 0,
         items: [
             { id: 'home', title: '{{ __('messages.components.command_palette.items.home') }}', icon: 'bi-house', url: '{{ route('home') }}' },
-            { id: 'dash', title: '{{ __('messages.components.command_palette.items.dashboard') }}', icon: 'bi-speedometer2', url: '{{ route('user.dashboard') }}' },
-            { id: 'profile', title: '{{ __('messages.components.command_palette.items.profile') }}', icon: 'bi-person', url: '{{ route('profile') }}' },
-            @role('configurator')
-            { id: 'admin', title: '{{ __('messages.components.command_palette.items.admin_configurator') }}', icon: 'bi-gear', url: '{{ route('admin.configurator') }}' },
-            { id: 'add_place', title: '{{ __('messages.components.command_palette.items.add_place') }}', icon: 'bi-geo-alt', url: '{{ route('admin.places.create') }}' },
-            @endrole
+            @guest
+                { id: 'login', title: '{{ __('messages.app.nav.login') }}', icon: 'bi-box-arrow-in-right', url: '{{ route('login') }}' },
+                { id: 'register', title: '{{ __('messages.app.nav.register') }}', icon: 'bi-person-plus', url: '{{ route('register') }}' },
+            @endguest
+            @auth
+                @role('Customer')
+                    { id: 'dash', title: '{{ __('messages.components.command_palette.items.dashboard') }}', icon: 'bi-speedometer2', url: '{{ route('user.dashboard') }}' },
+                @endrole
+                @role('Admin')
+                    { id: 'admin', title: '{{ __('messages.app.nav.admin') }}', icon: 'bi-gear', url: '{{ route('admin.configurator') }}' },
+                    { id: 'planning', title: '{{ __('messages.app.nav.planning') }}', icon: 'bi-calendar-event', url: '{{ route('admin.visit-planning.index') }}' },
+                    { id: 'add_place', title: '{{ __('messages.components.command_palette.items.add_place') }}', icon: 'bi-geo-alt', url: '{{ route('admin.places.create') }}' },
+                    { id: 'add_visit_type', title: '{{ __('messages.components.command_palette.items.add_visit_type') }}', icon: 'bi-calendar-event', url: '{{ route('admin.visit-types.create') }}' },
+                @endrole
+                @role('Guide')
+                    { id: 'availability', title: '{{ __('messages.app.nav.availability') }}', icon: 'bi-clock-history', url: '{{ route('volunteer.availability.form') }}' },
+                    { id: 'my_visits', title: '{{ __('messages.app.nav.my_visits') }}', icon: 'bi-calendar-check', url: '{{ route('volunteer.visits.past') }}' },
+                @endrole
+                { id: 'profile', title: '{{ __('messages.components.command_palette.items.profile') }}', icon: 'bi-person', url: '{{ route('profile') }}' },
+            @endauth
         ],
         get filteredItems() {
             if (this.query === '') return this.items;
             return this.items.filter(item => item.title.toLowerCase().includes(this.query.toLowerCase()));
-        },
-        select(url) {
-            window.location.href = url;
-            this.commandOpen = false; // Access global state
         },
         focusNext() {
             if (this.selectedIndex < this.filteredItems.length - 1) {
@@ -54,6 +64,10 @@
                 this.selectedIndex--;
                 this.scrollToSelected();
             }
+        },
+        select(url) {
+            window.location.href = url;
+            this.commandOpen = false;
         },
         selectCurrent() {
             if (this.filteredItems.length > 0 && this.filteredItems[this.selectedIndex]) {
@@ -104,7 +118,7 @@
                 </div>
             </div>
             
-            <div class="list-group list-group-flush" style="max-height: 300px; overflow-y: auto;">
+            <div class="list-group list-group-flush" style="max-height: 450px; overflow-y: auto;">
                 <template x-for="(item, index) in filteredItems" :key="item.id">
                     <button 
                         @click="select(item.url)"

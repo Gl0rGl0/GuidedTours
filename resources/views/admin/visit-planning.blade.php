@@ -9,11 +9,28 @@
             <p class="text-muted mb-0">{{ __('messages.admin.visit_planning.description') }}</p>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('admin.visits.create') }}" class="btn btn-primary rounded-pill shadow-sm">
+            <a href="{{ route('admin.visits.create') }}" class="btn btn-primary btn-lg rounded-pill shadow px-4 pulsing-button">
                 <i class="bi bi-plus-lg me-2"></i> {{ __('messages.admin.visit_planning.add_btn') }}
             </a>
         </div>
     </div>
+
+    @push('styles')
+    <style>
+        @keyframes custom-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(13, 110, 253, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0); }
+        }
+        .pulsing-button {
+            animation: custom-pulse 2s infinite;
+        }
+        .pulsing-button:hover {
+            transform: scale(1.03);
+            transition: all 0.2s ease;
+        }
+    </style>
+    @endpush
 
     <!-- Date Range Info -->
     <div class="alert alert-light border shadow-sm d-flex align-items-center mb-5 rounded-4">
@@ -114,6 +131,9 @@
                 @php
                     $monthsAvail = [];
                     foreach ($volunteerAvailabilities as $date => $availOnDate) {
+                        if(\Carbon\Carbon::parse($date)->lt(\Carbon\Carbon::now())) {
+                            continue;
+                        }
                         $monthName = \Carbon\Carbon::parse($date)->format('F Y');
                         $day = (int) \Carbon\Carbon::parse($date)->day;
                         $weekIndex = $day <= 7 ? 0 : ($day <= 14 ? 1 : ($day <= 21 ? 2 : 3));

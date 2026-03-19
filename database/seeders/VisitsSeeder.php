@@ -54,15 +54,15 @@ class VisitsSeeder extends Seeder
             ]);
         }
 
-        // Generate 30 Future Visits (Proposed / Confirmed)
-        for ($i = 0; $i < 30; $i++) {
+        // Generate 15 Future Visits (Proposed)
+        for ($i = 0; $i < 15; $i++) {
             $vt = $visitTypes->random();
             $volunteers = $vt->volunteers;
             
             if ($volunteers->isEmpty()) continue;
 
             $volunteer = $volunteers->random();
-            $visitDate = $now->copy()->addDays(rand(1, 45));
+            $visitDate = $now->copy()->addDays(rand(2, 45));
 
             Visit::create([
                 'visit_type_id' => $vt->visit_type_id,
@@ -70,6 +70,26 @@ class VisitsSeeder extends Seeder
                 'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
                 'assigned_volunteer_id' => $volunteer->user_id,
                 'status' => 'proposed',
+                'status_updated_at' => $now,
+            ]);
+        }
+
+        // Generate 5 Confirmed Visits
+        for ($i = 0; $i < 5; $i++) {
+            $vt = $visitTypes->random();
+            $volunteers = $vt->volunteers;
+            
+            if ($volunteers->isEmpty()) continue;
+
+            $volunteer = $volunteers->random();
+            $visitDate = $now->copy()->addDays(rand(1, 3));
+
+            Visit::create([
+                'visit_type_id' => $vt->visit_type_id,
+                'visit_date' => $visitDate->toDateString(),
+                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
+                'assigned_volunteer_id' => $volunteer->user_id,
+                'status' => 'confirmed',
                 'status_updated_at' => $now,
             ]);
         }

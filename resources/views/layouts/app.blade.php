@@ -91,9 +91,7 @@
 <body class="d-flex flex-column min-vh-100">
 
     <!-- Global Command Palette Modal -->
-    @auth
-        <x-command-palette />
-    @endauth
+    <x-command-palette />
 
     <!-- Header / Navbar -->
     <header class="sticky-top">
@@ -108,18 +106,16 @@
                 <div class="d-flex align-items-center gap-2 ms-auto order-lg-last">
 
                     <!-- Command Palette Trigger (Desktop) -->
-                    @auth
-                        <button @click="commandOpen = true"
-                            class="btn btn-sm btn-light border rounded-pill px-3 text-muted d-none d-lg-flex align-items-center me-2 shadow-sm">
-                            <i class="bi bi-search me-2"></i> <span class="me-2">{{ __('messages.app.search_placeholder') }}</span> <kbd
-                                class="bg-body-secondary text-body border-0 small font-monospace">Ctrl K</kbd>
-                        </button>
-                        <!-- Command Palette Trigger (Mobile) -->
-                        <button @click="commandOpen = true"
-                            class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted d-lg-none me-2">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    @endauth
+                    <button @click="commandOpen = true"
+                        class="btn btn-sm btn-light border rounded-pill px-3 text-muted d-none d-lg-flex align-items-center me-2 shadow-sm">
+                        <i class="bi bi-search me-2"></i> <span class="me-2">{{ __('messages.app.search_placeholder') }}</span> <kbd
+                            class="bg-body-secondary text-body border-0 small font-monospace">Ctrl K</kbd>
+                    </button>
+                    <!-- Command Palette Trigger (Mobile) -->
+                    <button @click="commandOpen = true"
+                        class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted d-lg-none me-2">
+                        <i class="bi bi-search"></i>
+                    </button>
 
                     <!-- Theme Toggle -->
                     <button @click="toggleTheme($event)" class="btn btn-icon btn-sm btn-ghost rounded-circle text-muted"
@@ -168,24 +164,29 @@
                         @auth
                             <!-- Role Based Links -->
                             @role('Customer')
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
                                         href="{{ route('user.dashboard') }}">{{ __('messages.app.nav.bookings') }}</a></li>
                             @endrole
 
                             @role('Admin')
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.configurator') ? 'active' : '' }}"
                                         href="{{ route('admin.configurator') }}">{{ __('messages.app.nav.admin') }}</a></li>
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('admin.visit-planning.index') ? 'active' : '' }}"
                                         href="{{ route('admin.visit-planning.index') }}">{{ __('messages.app.nav.planning') }}</a></li>
                             @endrole
 
                             @role('Guide')
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.availability.form') ? 'active' : '' }}"
                                         href="{{ route('volunteer.availability.form') }}">{{ __('messages.app.nav.availability') }}</a></li>
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('volunteer.visits.past') ? 'active' : '' }}"
                                         href="{{ route('volunteer.visits.past') }}">{{ __('messages.app.nav.my_visits') }}</a></li>
@@ -219,6 +220,7 @@
                             </li>
                         @else
                             <!-- Guest Links -->
+                            <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
                             <li class="nav-item ms-lg-2">
                                 <a :class="theme === 'dark' ? 'text-white' : ''" class="nav-link"
                                     href="{{ route('login') }}">{{ __('messages.app.nav.login') }}</a>

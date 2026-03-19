@@ -40,6 +40,7 @@ return [
                 'profile' => 'Il Mio Profilo',
                 'admin_configurator' => 'Configuratore',
                 'add_place' => 'Aggiungi Nuovo Luogo',
+                'add_visit_type' => 'Aggiungi Nuovo Tipo di Visita',
             ],
         ],
         'empty_state' => [
@@ -70,8 +71,8 @@ return [
         'nav' => [
             'home' => 'Home',
             'bookings' => 'Prenotazioni',
-            'admin' => 'Pannello Admin',
-            'planning' => 'Pianificazione',
+            'admin' => 'Pannello Configurazione',
+            'planning' => 'Pianificazione Visite',
             'availability' => 'Disponibilità',
             'my_visits' => 'Le Mie Visite',
             'profile' => 'Profilo',
@@ -350,7 +351,7 @@ return [
             'page_title' => 'Pianificazione Visite',
             'title' => 'Pianificazione Visite',
             'description' => 'Panoramica della programmazione e disponibilità dei volontari',
-            'add_btn' => 'Aggiungi Nuova Visita',
+            'add_btn' => 'Pianifica Nuova Visita',
             'planning_period' => 'Periodo di Pianificazione',
             'planned_visits' => 'Visite Pianificate',
             'week' => 'Settimana :number',
