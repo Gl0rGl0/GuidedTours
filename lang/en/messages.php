@@ -73,6 +73,7 @@ return [
             'planning' => 'Planning',
             'availability' => 'Availability',
             'my_visits' => 'My Visits',
+            'history' => 'History',
             'profile' => 'Profile',
             'password' => 'Password',
             'logout' => 'Logout',

@@ -75,6 +75,7 @@ return [
             'planning' => 'Pianificazione Visite',
             'availability' => 'Disponibilità',
             'my_visits' => 'Le Mie Visite',
+            'history' => 'Storico',
             'profile' => 'Profilo',
             'password' => 'Password',
             'logout' => 'Esci',

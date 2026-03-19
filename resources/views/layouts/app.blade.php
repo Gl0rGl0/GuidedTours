@@ -168,6 +168,10 @@
                                 <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
                                         class="nav-link {{ Route::is('user.dashboard') ? 'active' : '' }}"
                                         href="{{ route('user.dashboard') }}">{{ __('messages.app.nav.bookings') }}</a></li>
+                                <li class="nav-item d-none d-lg-block text-muted opacity-25 pt-2" aria-hidden="true">|</li>
+                                <li class="nav-item"><a :class="theme === 'dark' ? 'text-white' : ''"
+                                        class="nav-link {{ Route::is('user.visits.past') ? 'active' : '' }}"
+                                        href="{{ route('user.visits.past') }}">{{ __('messages.app.nav.history') }}</a></li>
                             @endrole
 
                             @role('Admin')
