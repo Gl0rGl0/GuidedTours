@@ -233,9 +233,10 @@ return [
             'guide_instruction_2' => 'Check each participant\'s <strong>booking code</strong> before starting the tour.',
             'guide_instruction_3' => 'If a participant has a ticket requirement, verify it at the entrance.',
             'guide_instruction_4' => 'In case of issues, contact the organisation immediately.',
-            'empty_state_title' => 'No records found',
-            'empty_state_message' => 'There are no visits to display in this category.',
+            'empty_state_title' => 'No visits found',
+            'empty_state_message' => 'There are no visits assigned to you, check your availability or try again later.',
             'back_to_home' => 'Back to Home',
+            'contact_org' => 'If the problem persists, please contact the organisation for assistance.',
         ],
         'register' => [
             'page_title' => 'Register for Tour',
@@ -447,6 +448,15 @@ return [
             'sun_title' => 'Select all Sundays',
             'cancel_btn' => 'Cancel',
             'save_btn' => 'Save Availability',
+            'legend' => [
+                'available' => 'Available Day',
+                'unavailable' => 'Unavailable Day',
+                'column_select' => 'Click the header to select/deselect the entire column',
+            ],
+            'status' => [
+                'success' => 'Availability updated successfully!',
+                'error' => 'Failed to update availability.',
+            ],
         ],
     ],
     'footer' => [

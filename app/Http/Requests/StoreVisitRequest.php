@@ -13,7 +13,7 @@ class StoreVisitRequest extends BaseFormRequest
     {
         return [
             'visit_type_id' => ['required', 'integer'],
-            'visit_date'    => ['required', 'date'],
+            'visit_date'    => ['required', 'date', 'after:today'],
             'assigned_volunteer_id' => ['required', 'integer']
         ];
     }

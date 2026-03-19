@@ -21,10 +21,28 @@
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-5">
-                    <div class="text-center mb-5">
+                <div class="card-body p-4">
+                    <div class="text-center mb-3">
                         <h2 class="fw-bold text-primary mb-2">{{ __('messages.volunteer.availability.title') }}</h2>
-                        <p class="text-muted">{!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}</p>
+                        <p class="text-muted mb-4">{!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}</p>
+                    </div>
+
+                    <!-- Legend moved above calendar -->
+                    <div class="d-flex justify-content-center mb-4">
+                        <div class="row w-100 g-2" style="max-width: 800px;">
+                            <div class="col-6 col-md-4 d-flex align-items-center">
+                                <div class="calendar-day selected me-2" style="width: 20px; height: 20px; min-height: 20px; cursor: default; border-radius: 4px; padding: 0;"></div>
+                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.available') }}</span>
+                            </div>
+                            <div class="col-6 col-md-4 d-flex align-items-center">
+                                <div class="calendar-day me-2" style="width: 20px; height: 20px; min-height: 20px; cursor: default; border-radius: 4px; padding: 0;"></div>
+                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.unavailable') }}</span>
+                            </div>
+                            <div class="col-12 col-md-4 d-flex align-items-center">
+                                <div class="bg-light py-0 px-2 border rounded small fw-bold text-secondary me-2" style="cursor: default; min-width: 50px; text-align: center; font-size: 0.75rem;">{{ __('messages.volunteer.availability.days.mon') }}</div>
+                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.column_select') }}</span>
+                            </div>
+                        </div>
                     </div>
 
                     <form action="{{ route('volunteer.availability.store') }}" method="POST" id="availability-form">
@@ -82,7 +100,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center mt-4">
+                        <div class="text-center mt-3">
                              <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 me-2">{{ __('messages.volunteer.availability.cancel_btn') }}</a>
                             <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-sm">
                                 <i class="bi bi-save me-2"></i> {{ __('messages.volunteer.availability.save_btn') }}

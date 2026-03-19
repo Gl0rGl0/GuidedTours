@@ -46,6 +46,7 @@
                         actionUrl="{{ route('home') }}"
                         :card="false" 
                     />
+                    <p class="text-muted small">{!! __('messages.tours_views.customized_visits.contact_org') !!}</p>
                 </div>
             </div>
         @endforelse

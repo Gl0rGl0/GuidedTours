@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-floating mb-3">
-                            <input type="date" class="form-control @error('visit_date') is-invalid @enderror" id="visit_date" name="visit_date" value="{{ old('visit_date') }}" required>
+                            <input type="date" class="form-control @error('visit_date') is-invalid @enderror" id="visit_date" name="visit_date" value="{{ old('visit_date') }}" min="{{ date('Y-m-d', strtotime('+1 day')) }}" required>
                             <label for="visit_date">{{ __('messages.admin.visits.date_label') }}</label>
                             <div class="form-text text-muted small ms-1">{{ __('messages.admin.visits.date_help') }}</div>
                             @error('visit_date')
@@ -73,7 +73,7 @@ document.getElementById('visit_date').addEventListener('change', function () {
     // Add loading state
     volunteerSelect.disabled = true;
 
-    fetch(`/admin/volunteers/available?visit_date=${date}`)
+    fetch(`{{ route('admin.volunteers.available') }}?visit_date=${date}`)
         .then(response => response.json())
         .then(data => {
             volunteerSelect.disabled = false;

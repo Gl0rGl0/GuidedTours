@@ -246,9 +246,10 @@ return [
             'guide_instruction_2' => 'Controlla il <strong>codice di prenotazione</strong> di ogni partecipante prima di iniziare il tour.',
             'guide_instruction_3' => 'Se un partecipante ha necessità di un biglietto d\'ingresso, verificalo all\'entrata.',
             'guide_instruction_4' => 'In caso di problemi, contatta immediatamente l\'organizzazione.',
-            'empty_state_title' => 'Nessun dato trovato',
-            'empty_state_message' => 'Non ci sono visite da visualizzare in questa categoria.',
+            'empty_state_title' => 'Nessuna visita trovata',
+            'empty_state_message' => 'Non ci sono visite a cui sei stato assegnato, controlla la tua disponibilità o riprova successivamente.',
             'back_to_home' => 'Torna alla Home',
+            'contact_org' => 'Se il problema persiste, contatta l\'organizzazione per assistenza.',
         ],
         'register' => [
             'page_title' => 'Registrati per il Tour',
@@ -460,6 +461,15 @@ return [
             'sun_title' => 'Seleziona tutte le Domeniche',
             'cancel_btn' => 'Annulla',
             'save_btn' => 'Salva Disponibilità',
+            'legend' => [
+                'available' => 'Giorno Disponibile',
+                'unavailable' => 'Giorno Non Disponibile',
+                'column_select' => 'Clicca sull\'intestazione per selezionare/deselezionare l\'intera colonna',
+            ],
+            'status' => [
+                'success' => 'Disponibilità aggiornata con successo!',
+                'error' => 'Impossibile aggiornare la disponibilità.',
+            ],
         ],
     ],
     'footer' => [

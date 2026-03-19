@@ -29,7 +29,7 @@ class VolunteerController extends Controller
                                     ->flip();
 
         return view('volunteer.availability', [
-            'monthName' => $nextMonth->format('F Y'),
+            'monthName' => ucfirst($nextMonth->translatedFormat('F Y')),
             'monthYear' => $nextMonthYear,
             'daysInMonth' => $daysInNextMonth,
             'existingAvailability' => $existingAvailability,
@@ -81,13 +81,13 @@ class VolunteerController extends Controller
             // Commit transaction
             DB::commit();
 
-            return redirect()->route('volunteer.availability.form')->with('status', 'Availability updated successfully!');
+            return redirect()->route('volunteer.availability.form')->with('status', __('messages.components.volunteer_calendar.status.success'));
 
         } catch (\Exception $e) {
             // Rollback transaction on error
             DB::rollBack();
             Log::error("Failed to update availability for user {$user->user_id}: " . $e->getMessage(), ['exception' => $e]);
-            return back()->withErrors(['general' => 'Failed to update availability. Please try again.']);
+            return back()->withErrors(['general' => __('messages.components.volunteer_calendar.status.error')]);
         }
     }
 }
