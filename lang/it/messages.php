@@ -153,6 +153,7 @@ return [
             'submit' => 'Accedi',
             'register_link' => 'Registrati ora',
             'login_success' => 'Login effettuato con successo.',
+            'invalid_credentials' => 'Le credenziali fornite non sono corrette, riprova.',
         ],
         'register' => [
             'page_title' => 'Registrazione',
