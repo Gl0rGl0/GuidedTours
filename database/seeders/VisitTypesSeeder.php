@@ -134,5 +134,20 @@ class VisitTypesSeeder extends Seeder
                 'price' => 100.00
             ]
         );
+
+         VisitType::updateOrCreate(
+            ['place_id' => $place1->place_id, 'title' => 'Torre dell\'Aquila'],
+            [
+                'description' => 'Visita alla torre di vedetta del castello.',
+                'meeting_point' => 'Entrata del castello',
+                'period_start' => '2026-01-01',
+                'period_end' => '2026-12-31',
+                'start_time' => '16:00:00',
+                'duration_minutes' => 60,
+                'min_participants' => 5,
+                'max_participants' => 15,
+                'price' => 10.00
+            ]
+        );
     }
 }

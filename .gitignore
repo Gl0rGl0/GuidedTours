@@ -26,6 +26,7 @@ claude mb
 
 # py
 .venv
+/venv
 
 # macOS
 .DS_Store

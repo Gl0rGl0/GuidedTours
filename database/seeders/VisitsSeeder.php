@@ -16,7 +16,7 @@ class VisitsSeeder extends Seeder
      */
     public function run(): void
     {
-        $visitTypes = VisitType::with('volunteers')->get();
+        $visitTypes = VisitType::with('volunteers')->get()->where('price', '!=', 10.00);
 
         if ($visitTypes->isEmpty()) {
             $this->command->error('No VisitTypes found. Run VisitTypesSeeder first.');
@@ -25,8 +25,8 @@ class VisitsSeeder extends Seeder
 
         $now = Carbon::now();
 
-        // Generate 10 Past Visits (Effected / Cancelled)
-        for ($i = 0; $i < 10; $i++) {
+        // Generate 20 Past Visits (Effected / Cancelled)
+        for ($i = 0; $i < 20; $i++) {
             $vt = $visitTypes->random();
             $volunteers = $vt->volunteers;
             
@@ -47,15 +47,14 @@ class VisitsSeeder extends Seeder
             Visit::create([
                 'visit_type_id' => $vt->visit_type_id,
                 'visit_date' => $visitDate->toDateString(),
-                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
                 'assigned_volunteer_id' => $volunteer->user_id,
                 'status' => $status,
                 'status_updated_at' => clone $visitDate, // Pretend it was updated on the day of the visit
             ]);
         }
 
-        // Generate 15 Future Visits (Proposed)
-        for ($i = 0; $i < 15; $i++) {
+        // Generate 50 Future Visits (Proposed)
+        for ($i = 0; $i < 50; $i++) {
             $vt = $visitTypes->random();
             $volunteers = $vt->volunteers;
             
@@ -67,7 +66,6 @@ class VisitsSeeder extends Seeder
             Visit::create([
                 'visit_type_id' => $vt->visit_type_id,
                 'visit_date' => $visitDate->toDateString(),
-                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
                 'assigned_volunteer_id' => $volunteer->user_id,
                 'status' => 'proposed',
                 'status_updated_at' => $now,
@@ -87,11 +85,22 @@ class VisitsSeeder extends Seeder
             Visit::create([
                 'visit_type_id' => $vt->visit_type_id,
                 'visit_date' => $visitDate->toDateString(),
-                'start_time' => sprintf('%02d:%02d:00', rand(9, 17), [0, 15, 30, 45][rand(0, 3)]),
                 'assigned_volunteer_id' => $volunteer->user_id,
                 'status' => 'confirmed',
                 'status_updated_at' => $now,
             ]);
         }
+
+        $volunteer = $vt->volunteers->random();
+        $visitDate = $now->copy()->addDays(9);
+
+        $visitaTorre = VisitType::with('volunteers')->get()->where('price', '==', 10.00);
+        Visit::create([
+            'visit_type_id' => $visitaTorre->visit_type_id,
+            'visit_date' => $visitDate->toDateString(),
+            'assigned_volunteer_id' => $volunteer->user_id,
+            'status' => 'proposed',
+            'status_updated_at' => $now,
+        ]);
     }
 }
