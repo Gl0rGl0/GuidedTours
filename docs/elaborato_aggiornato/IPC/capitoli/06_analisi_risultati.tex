@@ -399,7 +399,22 @@ Le tabelle per-task mostrate nelle sezioni precedenti evidenziano miglioramenti 
 \begin{figure}[H]
     \vspace{0.8em}
     \centering
-    \includegraphics[width=1.0\textwidth]{capitoli/immagini/esiti_distribuzione.png}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=2, color={green!50, yellow!50, red!50}]{74.2/C, 22.0/CA, 3.8/NC}
+        \end{tikzpicture}
+        \caption{Versione 1}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=2, color={green!50, yellow!50}]{91.7/C, 8.3/CA}
+        \end{tikzpicture}
+        \caption{Versione 2}
+    \end{subfigure}
+    \vspace{0.5em}
     \caption{Distribuzione aggregata degli esiti (C / CA / NC) su tutti gli 11 compiti — V1 vs V2.}
     \label{fig:torta_esiti}
     \vspace{0.8em}
