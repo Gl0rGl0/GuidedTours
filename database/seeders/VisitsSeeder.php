@@ -94,7 +94,7 @@ class VisitsSeeder extends Seeder
         $volunteer = $vt->volunteers->random();
         $visitDate = $now->copy()->addDays(9);
 
-        $visitaTorre = VisitType::with('volunteers')->get()->where('price', '==', 10.00);
+        $visitaTorre = VisitType::with('volunteers')->get()->where('price', '==', 10.00)->first();
         Visit::create([
             'visit_type_id' => $visitaTorre->visit_type_id,
             'visit_date' => $visitDate->toDateString(),
