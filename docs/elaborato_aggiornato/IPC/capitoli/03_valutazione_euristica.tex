@@ -219,7 +219,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \renewcommand{\arraystretch}{1.5}
 \begin{tabularx}{\textwidth}{|l|X|}
 \hline
-\textbf{Problema} & \textbf{Mancanza personalizzazione Home Page} \\ \hline
+\textbf{\problemstep} & \textbf{Mancanza personalizzazione Home Page} \\ \hline
 \textbf{Posizione} & Home Page \\ \hline
 \textbf{Descrizione} & La pagina principale non presenta messaggi di benvenuto o contenuti differenziati in base al ruolo dell'utente loggato (Volontario o Fruitore), rendendo l'esperienza generica. \\ \hline
 \textbf{Screenshot} & 
@@ -864,8 +864,8 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 
 In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
 
-% TODO: rigenerare i 3 grafici con i dati aggiornati (41 problemi, erano 32)
-%   - grafico_severita.png  (Sev1=20, Sev2=16, Sev3=4, Sev4=1)
+% TODO: rigenerare i 3 grafici con i dati aggiornati (42 problemi, erano 32)
+%   - grafico_severita.png  (Sev1=21, Sev2=16, Sev3=4, Sev4=1)
 %   - grafico_principi.png  (P1=13, P2=8, P3=3, P4=11, P5=5, P6=5, P7=6, P8=7, P9=2, P10=1)
 %   - matrice_errori.pdf    (aggiungere colonne P33-P41)
 % Script pronto: docs/elaborato_aggiornato/IPC/grafici/rigenera_grafici_euristica.py
@@ -904,8 +904,8 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, si ottiene:
 \[ P(3) = 1 - (1 - 0.31)^3 = 1 - 0.69^3 \approx 0.67 \]
 Poiché $P(n)$ rappresenta la frazione di problemi totali individuata da $n$ valutatori, il numero totale stimato di problemi è:
-\[ N_{tot} = \frac{N_{trovati}}{P(n)} = \frac{41}{0.67} \approx 61 \]
-Il calcolo teorico indica che il sistema potrebbe ospitare circa 61 problemi di usabilità totali, di cui 41 sono stati documentati in questa analisi.
+\[ N_{tot} = \frac{N_{trovati}}{P(n)} = \frac{42}{0.67} \approx 63 \]
+Il calcolo teorico indica che il sistema potrebbe ospitare circa 63 problemi di usabilità totali, di cui 42 sono stati documentati in questa analisi.
 
 \section{Commento Finale alla Valutazione}
 L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{16 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.
