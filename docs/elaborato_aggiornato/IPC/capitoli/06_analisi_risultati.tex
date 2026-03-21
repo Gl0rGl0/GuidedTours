@@ -10,6 +10,35 @@ Un totale di 12 utenti è stato selezionato e diviso in due gruppi (A e B), cias
 \subsection{Genere}
 Il campione è composto da 6 uomini e 6 donne, perfettamente bilanciato. Nel Gruppo A la distribuzione è di 3 uomini (U01, U05, U06) e 3 donne (U02, U03, U04); nel Gruppo B si hanno parimenti 3 uomini (U07, U09, U12) e 3 donne (U08, U10, U11). La distribuzione è del tutto equa tra i gruppi.
 
+\vspace{0.5em}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={blue!40, red!40}]{50/Uomini, 50/Donne}
+        \end{tikzpicture}
+        \caption{Totale}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={blue!40, red!40}]{50/Uomini, 50/Donne}
+        \end{tikzpicture}
+        \caption{Gruppo A}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={blue!40, red!40}]{50/Uomini, 50/Donne}
+        \end{tikzpicture}
+        \caption{Gruppo B}
+    \end{subfigure}
+    \caption{Distribuzione per Genere (\%)}
+\end{figure}
+
 \subsection{Età}
 L'età dei partecipanti spazia dai 19 ai 57 anni, con due cluster demografici netti e intenzionali:
 \begin{itemize}
@@ -18,11 +47,127 @@ L'età dei partecipanti spazia dai 19 ai 57 anni, con due cluster demografici ne
 \end{itemize}
 Questa bipartizione è stata deliberata per testare l'accessibilità trasversale della piattaforma, verificando se V2 risulta migliorata sia per utenti esperti che per utenti meno avvezzi alla tecnologia.
 
+\vspace{0.5em}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!40, orange!40}]{50/Giovani, 50/Maturi}
+        \end{tikzpicture}
+        \caption{Totale}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!40, orange!40}]{50/Giovani, 50/Maturi}
+        \end{tikzpicture}
+        \caption{Gruppo A}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!40, orange!40}]{50/Giovani, 50/Maturi}
+        \end{tikzpicture}
+        \caption{Gruppo B}
+    \end{subfigure}
+    \caption{Distribuzione per Età (\%)}
+\end{figure}
+
 \subsection{Titolo di studio e Competenze Informatiche}
 Il campione presenta una distribuzione variegata: 3 partecipanti con Laurea Triennale (U04, U10, U12), 5 con Diploma (U03, U05, U06, U08, U11) e 4 con Licenza Media (U01, U02, U07, U09). Le competenze informatiche autovalutate su scala 1--5 riflettono fedelmente la bipartizione anagrafica: il cluster giovane si attesta su valori 3--5 (Media/Alta), mentre il cluster maturo registra valori 1--2 (Bassa). Entrambi i gruppi A e B includono una rappresentanza bilanciata di utenti ad alta e bassa competenza.
 
+\vspace{0.5em}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={cyan!40, purple!40, yellow!40}]{25/Laurea, 41.7/Diploma, 33.3/Licenza}
+        \end{tikzpicture}
+        \caption{Totale}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={cyan!40, purple!40, yellow!40}]{16.7/Laurea, 50/Diploma, 33.3/Licenza}
+        \end{tikzpicture}
+        \caption{Gruppo A}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={cyan!40, purple!40, yellow!40}]{33.3/Laurea, 33.3/Diploma, 33.4/Licenza}
+        \end{tikzpicture}
+        \caption{Gruppo B}
+    \end{subfigure}
+    \caption{Distribuzione per Titolo di Studio (\%)}
+\end{figure}
+
+\vspace{0.5em}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={teal!40, pink!40}]{50/Med-Alta, 50/Bassa}
+        \end{tikzpicture}
+        \caption{Totale}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={teal!40, pink!40}]{50/Med-Alta, 50/Bassa}
+        \end{tikzpicture}
+        \caption{Gruppo A}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={teal!40, pink!40}]{50/Med-Alta, 50/Bassa}
+        \end{tikzpicture}
+        \caption{Gruppo B}
+    \end{subfigure}
+    \caption{Competenze Informatiche (\%)}
+\end{figure}
+
 \subsection{Autonomia nelle prenotazioni online}
 Il questionario anagrafico includeva una domanda sull'autonomia nell'effettuare prenotazioni online (scala 0--2: mai / a volte / sempre). Il dato è particolarmente rilevante per una piattaforma di prenotazione visite: 7 partecipanti su 12 dichiarano piena autonomia (valore 2), 3 autonomia parziale (valore 1) e 2 partecipanti (U01, U02) non hanno mai effettuato prenotazioni online in autonomia. Questo garantisce la presenza di utenti "nuovi" al paradigma di prenotazione digitale, rendendo il test più significativo.
+
+\vspace{0.5em}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!50, yellow!50, red!50}]{58.3/Sempre, 25/A volte, 16.7/Mai}
+        \end{tikzpicture}
+        \caption{Totale}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!50, yellow!50, red!50}]{50/Sempre, 16.7/A volte, 33.3/Mai}
+        \end{tikzpicture}
+        \caption{Gruppo A}
+    \end{subfigure}%
+    \hfill
+    \begin{subfigure}{0.32\textwidth}
+        \centering
+        \begin{tikzpicture}
+        \pie[radius=1.3, color={green!50, yellow!50}]{66.7/Sempre, 33.3/A volte}
+        \end{tikzpicture}
+        \caption{Gruppo B}
+    \end{subfigure}
+    \caption{Autonomia nelle prenotazioni online (\%)}
+\end{figure}
 
 \subsection{Daltonismo}
 Nessun partecipante ha dichiarato di soffrire di daltonismo, tuttavia, a livello precauzionale e di standard di accessibilità, l'interfaccia V2 mantiene un rapporto di contrasto a norma WCAG e affida i feedback visivi non solo al colore ma anche a etichette esplicite (es. Status Badge azzurro per "Upcoming", grigio per "Complete").
