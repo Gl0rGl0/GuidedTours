@@ -1,17 +1,19 @@
 \chapter{Riprogettazione}
 \label{ch:riprogettazione}
 
-In questo capitolo verranno illustrate le scelte tecniche e di design adottate per la stesura della versione finale dell'applicativo "Guided Tours". Le modifiche implementate mirano a risolvere i problemi di usabilità evidenziati nel Capitolo 3 (Valutazione Euristica) tramite un approccio strutturato: dall'aggiornamento del Design System all'integrazione di meccanismi di sicurezza, fino alla personalizzazione dell'esperienza utente in base al ruolo.
+In questo capitolo verranno illustrate le scelte tecniche e di design adottate per la stesura della versione finale dell'applicativo ``Guided Tours''. Le modifiche implementate mirano a risolvere i problemi di usabilità evidenziati nel Capitolo 3 (Valutazione Euristica) tramite un approccio strutturato: dall'aggiornamento del Design System all'integrazione di meccanismi di sicurezza, fino alla personalizzazione dell'esperienza utente in base al ruolo.
 
-La priorità degli interventi è stata determinata in base al \textbf{grado di severità} assegnato nella fase di debriefing (scala Nielsen 0--4): sono stati affrontati tutti i problemi di grado \textbf{4} e la quasi totalità di quelli di grado \textbf{3}, la maggior parte di quelli di grado \textbf{2}, e un sottoinsieme di quelli di grado \textbf{1} per i quali l'impatto sull'esperienza delle \textit{personas} lo giustificasse. I problemi rimasti aperti sono documentati nella Sezione~\ref{sec:problemi_aperti}.
+La priorità degli interventi è stata determinata in base al \textbf{grado di severità} assegnato nella fase di debriefing (scala Nielsen 0--4). Sono stati affrontati tutti i problemi di grado \textbf{4} e la quasi totalità di quelli di grado \textbf{3}, la maggior parte di quelli di grado \textbf{2} e un sottoinsieme di quelli di grado \textbf{1} per i quali l'impatto sull'esperienza delle \textit{personas} lo giustificasse. I problemi rimasti aperti sono documentati nella Sezione~\ref{sec:problemi_aperti}.
 
 \vspace{1em}
-\noindent\textit{Nota Metodologica}: L'attuale riprogettazione si configura come un'implementazione correttiva guidata esclusivamente dall'ispezione euristica documentata nel Capitolo 3 e dalle best practice di dominio applicativo. L'efficacia delle soluzioni adottate e il loro reale impatto sull'usabilità saranno oggetto di validazione empirica autonoma, tramite test esplorativi con gli utenti finali, come documentato nei successivi capitoli relativi all'esperimento.
+\noindent\textit{Nota Metodologica}: L'attuale riprogettazione si configura come un'implementazione correttiva guidata esclusivamente dall'ispezione euristica documentata nel Capitolo 3 e dalle best practice di dominio applicativo. L'efficacia delle soluzioni adottate e il loro reale impatto sull'usabilità saranno oggetto di validazione empirica autonoma tramite test esplorativi con gli utenti finali, come documentato nei successivi capitoli.
 
 \section{Fase di Prototipazione (Wireframing e Mock-up)}
-La transizione tra l'evidenza empirica emersa dalla valutazione euristica e lo sviluppo effettivo del software ha richiesto una fase dedicata di prototipazione iterativa. Il team di progettazione ha inizialmente adottato un approccio a bassa fedeltà (\textit{Low-Fidelity Wireframing}), lavorando su schizzi concettuali per riorganizzare l'architettura dell'informazione. Questo step è risultato cruciale per definire preventivamente la gerarchia visiva dei contenuti sulla pagina, ottimizzando la disposizione dei filtri di ricerca e delle schede (card) dei tour e riducendo il carico cognitivo dell'interfaccia.
+La transizione tra l'evidenza empirica emersa dalla valutazione euristica e lo sviluppo effettivo del software ha richiesto una fase dedicata di prototipazione iterativa. Il team di progettazione ha inizialmente adottato un approccio a bassa fedeltà (\textit{Low-Fidelity Wireframing}), lavorando su schizzi concettuali per riorganizzare l'architettura dell'informazione. Questo step è risultato cruciale per definire la gerarchia visiva dei contenuti, ottimizzando la disposizione dei filtri di ricerca e delle schede (card) dei tour e riducendo il carico cognitivo dell'interfaccia.
 
-Successivamente, ci si è avvalsi di piattaforme di prototipazione vettoriale (in particolare Figma) per tradurre i wireframe in Mock-up ad alta fedeltà (\textit{High-Fidelity}). Tale passaggio ha consentito di concretizzare e validare la nuova identità visiva, codificando formalmente il Design System (palette cromatica, tipografia ad alto contrasto, forme dei componenti interattivi) e simulando i flussi di navigazione (\textit{User Flows}) prima della stesura del codice. Aver validato interattivamente l'interfaccia ha minimizzato il rischio di dover approntare costosi \textit{refactoring} tardivi in fase di sviluppo, garantendo al contempo l'aderenza ai principi di Human-Computer Interaction definiti nelle fasi precedenti.
+Successivamente, ci si è avvalsi di piattaforme di prototipazione vettoriale (in particolare Figma) per tradurre i wireframe in Mock-up ad alta fedeltà (\textit{High-Fidelity}). Tale passaggio ha consentito di concretizzare e validare la nuova identità visiva, codificando formalmente il Design System (palette cromatica, tipografia ad alto contrasto, forme dei componenti interattivi) e simulando i flussi di navigazione (\textit{User Flows}) prima della stesura del codice. Aver validato interattivamente l'interfaccia ha minimizzato il rischio di dover approntare costosi \textit{refactoring} tardivi in fase di sviluppo, garantendo al contempo l'aderenza ai principi di HCI (Human-Computer Interaction) definiti nelle fasi precedenti.
+
+I mock-up risultanti sono presentati nelle Figure~\ref{fig:mockup_nav}--\ref{fig:mockup_config_planning}.
 
 % ── Mockup: Navbar e Footer ─────────────────────────────────────────────────
 \begin{figure}[H]
@@ -35,11 +37,11 @@ Successivamente, ci si è avvalsi di piattaforme di prototipazione vettoriale (i
     \label{fig:mockup_footer}
 \end{figure}
 
-% ── Mockup: Home Page ────────────────────────────────────────────────────────
+% ── Mockup: Homepage ────────────────────────────────────────────────────────
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/home.pdf}
-    \caption{Mock-up della Home Page: il catalogo dei tour è presentato tramite card uniformi con immagine, titolo, luogo, data, posti residui e badge di stato. I filtri di ricerca (testo, distanza, gratuità) e l'ordinamento sono esposti in linea sopra la griglia, abbattendo il carico cognitivo necessario per individuare un tour di interesse.}
+    \caption{Mock-up della Homepage: il catalogo dei tour è presentato tramite card uniformi con immagine, titolo, luogo, data, posti residui e badge di stato. I filtri di ricerca (testo, distanza, gratuità) e l'ordinamento sono esposti in linea sopra la griglia, abbattendo il carico cognitivo necessario per individuare un tour di interesse.}
     \label{fig:mockup_home}
 \end{figure}
 
@@ -101,7 +103,7 @@ Prima di procedere alla stesura del codice (coding), i mock-up ad alta fedeltà 
 
 La prima fase, di natura interna (Esperti), è consistita in un'ispezione analitica da parte del team di sviluppo. Avvalendosi del metodo del \textit{Cognitive Walkthrough}, i progettisti hanno navigato i prototipi validando la coerenza dei flussi logici (\textit{User Flows}) interattivi e verificando accuratamente il corretto posizionamento delle \textit{affordance}.
 
-La seconda fase, di carattere esterno (Utenti finali), ha coinvolto un campione empirico ristretto di 3 individui estranei al progetto. Aderendo ai moderni dettami metodologici della \textit{Lean UX} e del \textit{Guerrilla Testing}, si è optato per una valutazione qualitativa snella. Ai partecipanti è stato chiesto di interagire liberamente con il prototipo, verbalizzando i propri ragionamenti ad alta voce secondo il celebre protocollo \textit{Think-Aloud}. La decisione di affidarsi a soli tre utenti trova solida giustificazione negli studi accademici di Jakob Nielsen, i quali dimostrano empiricamente che un campione da 3 a 5 soggetti è ampiamente sufficiente per far emergere la stragrande maggioranza delle criticità euristiche.
+La seconda fase, di carattere esterno (Utenti finali), ha coinvolto un campione empirico ristretto di 3 individui estranei al progetto. Aderendo ai dettami metodologici della \textit{Lean UX} e del \textit{Guerrilla Testing}, si è optato per una valutazione qualitativa snella. Ai partecipanti è stato chiesto di interagire liberamente con il prototipo, verbalizzando i propri ragionamenti ad alta voce secondo il protocollo \textit{Think-Aloud}. La decisione di affidarsi a soli tre utenti trova giustificazione negli studi di Jakob Nielsen, i quali dimostrano che un campione da 3 a 5 soggetti è sufficiente per far emergere la maggioranza delle criticità euristiche.
 
 Questo collaudo formativo ha permesso di correggere la rotta progettuale prima di impegnare risorse nello sviluppo software (coding), demandando la misurazione statistica e oggettiva all'esperimento sommativo finale.
 
@@ -138,20 +140,20 @@ Le scelte di layout e spaziatura adottate in \textit{Guided Tours} applicano i p
 \end{itemize}
 
 \section{Design Pattern d'Interazione (HCI)}
-L'interfaccia è stata costruita assemblando diversi Design Pattern consolidati nella Human-Computer Interaction, al fine di garantire familiarità, ridurre il carico cognitivo e accelerare la curva di apprendimento per i diversi profili utente presenti nel vario panorama del progetto:
+L'interfaccia è stata costruita assemblando diversi Design Pattern consolidati nell'HCI, al fine di garantire familiarità, ridurre il carico cognitivo e accelerare la curva di apprendimento per i diversi profili utente presenti nel vario panorama del progetto:
 \begin{itemize}
-    \item \textbf{Cards (Schede Visive)}: Impiegate massicciamente nella \textit{Home Page} per raggruppare coerentemente i metadati di ogni singolo tour (titolo, data, luogo, posti disponibili). Questo pattern astrae la complessità del database in blocchi visivi scansionabili e logicamente isolati, ideali per la fruizione mobile e per l'immediatezza cognitiva.
+    \item \textbf{Cards (Schede Visive)}: Impiegate massicciamente nella \textit{Homepage} per raggruppare coerentemente i metadati di ogni singolo tour (titolo, data, luogo, posti disponibili). Questo pattern astrae la complessità del database in blocchi visivi scansionabili e logicamente isolati, ideali per la fruizione mobile e per l'immediatezza cognitiva.
     \item \textbf{Navigation Tabs (Pannelli a schede)}: All'interno dell'area \textit{Admin Configurator}, la gestione di "Places", "Visit Types" e "Users" è organizzata in sezioni a tabulazione. Ciò elimina il \textit{page refresh} continuo e compatta le opzioni amministrative critiche in un'unica plancia, ottemperando all'euristica del design estetico minimalista senza eccessivo rumore visivo.
     \item \textbf{Global Navigation Bar (Menu Persistente)}: Una barra di navigazione fissa posta al vertice funge da àncora di salvataggio e di orientamento perpetuo per l'utente. Rende costantemente accessibili i link operativi determinanti (Home, Accesso, o Dashboard personale) prescindendo dal grado di scorrimento verticale.
-    \item \textbf{Faceted Search \& Filter Bar}: Pattern primario inserito nella \textit{Home Page} a favore del \textit{Fruitore}. Permette di modulare dinamicamente i risultati (filtro per luogo, stringa testuale, ordine temporale o scrematura dei costi), snellendo il tempo di scoperta e trasmettendo il senso di controllo e libertà d'azione.
+    \item \textbf{Faceted Search \& Filter Bar}: Pattern primario inserito nella \textit{Homepage} a favore del \textit{Fruitore}. Permette di modulare dinamicamente i risultati (filtro per luogo, stringa testuale, ordine temporale o scrematura dei costi), snellendo il tempo di scoperta e trasmettendo il senso di controllo e libertà d'azione.
     \item \textbf{Visual Status Badges (Codifica semantica a etichette)}: Guidato dalla nuova palette cromatica del sistema, l'impiego di tag "pill" compatti (come "Open", "Imminent" per le visite, oppure i tag dei ruoli amministrativi) restituisce una profilazione visiva in una frazione di secondo. Alimenta il principio di \textit{recognition rather than recall}.
     \item \textbf{Confirmation Trigger (Modali antierrore distruttivo)}: Al fine di prevenire errori di esecuzione involontari (\textit{slips}) durante le operazioni di Backoffice (es. l'annullamento di risorse storicizzate o la rimozione di un volontario), è stato introdotto un meccanismo di controllo preventivo. L'interfaccia intercetta l'azione distruttiva attraverso un "Global Delete Modal", costringendo così l'utente a validare l'azione in modo esplicito e consapevole ("This action cannot be undone").
     \item \textbf{Continuous / Asynchronous Scrolling (Load More)}: Rispetto a un'impaginazione classica tradizionale, che potrebbe frammentare l'esplorazione, l'utilizzo di un pattern asincrono incrementale per l'elenco dei tour consente una navigazione progressiva nel catalogo, mantenendo sempre visibili e accessibili l'header e il form dei filtri.
     \item \textbf{Live Input Feedback (Validazione Contestuale)}: Questo pattern è implementato nei form critici per comunicare istantaneamente il rispetto o la violazione dei vincoli strutturali (es. i requisiti di robustezza della password). Fornendo un feedback in tempo reale, si riduce la frustrazione tipicamente associata agli errori di validazione notificati solo in fase di sottomissione (Submission Postponed Errors). 
 \end{itemize}
 
-\section{Role-Based Customization: Le 4 Home Page}
-Per assecondare le diverse personas documentate in fase esplorativa, la Home Page (\texttt{home.blade.php}) agisce come smistatore univoco. Adatta infatti il suo layout e le proprie funzionalità in tempo reale basandosi sull'autenticazione tramite direttive di autorizzazione:
+\section{Role-Based Customization: Le 4 Homepage}
+Per assecondare le diverse personas documentate in fase esplorativa, la Homepage (\texttt{home.blade.php}) agisce come smistatore univoco. Adatta infatti il suo layout e le proprie funzionalità in tempo reale basandosi sull'autenticazione tramite direttive di autorizzazione:
 \begin{enumerate}
     \item \textbf{Guest (Visitatore Anonimo)}: Accolto da messaggi esplorativi con orientamento alla conversione, che invitano l'utente a registrarsi oppure a loggarsi ("Login to Book") per intraprendere un'esperienza guidata.
     \item \textbf{Customer (Fruitore)}: Visualizza pulsanti interattivi ("Browse Tours") per ispezionare istantaneamente il catalogo delle visite, unitamente ad uno shortcut persistente che rimanda alla "My Dashboard" per tenere d'occhio i biglietti.
@@ -162,7 +164,7 @@ Per assecondare le diverse personas documentate in fase esplorativa, la Home Pag
 \section{Feature Breakdown}
 
 \subsection{Sistema di Filtering e Sorting dinamico}
-Sulla Home Page pubblica, il pannello di ricerca esplorativo che correda la lista dei tour integra funzioni multiple: ricerca testuale live, filtro sulla località, vincolo sul costo ("Free Only") ed un selettore di ordinamento (temporale o alfabetico). Questa architettura è pilotata interamente in \textbf{Alpine.js}, che intercetta l'evento di sottomissione assemblando i parametri in querystring e richiedendo l'aggiornamento tramite chiamate asincrone (AJAX). Ricevuto il frammento aggiornato dal backend, il nuovo snippet HTML sostituisce unicamente la griglia dei risultati, evitando ricaricamenti completi della pagina e aggiornando contestualmente la cronologia di navigazione del browser (\texttt{pushState}).
+Sulla Homepage pubblica, il pannello di ricerca esplorativo che correda la lista dei tour integra funzioni multiple: ricerca testuale live, filtro sulla località, vincolo sul costo ("Free Only") ed un selettore di ordinamento (temporale o alfabetico). Questa architettura è pilotata interamente in \textbf{Alpine.js}, che intercetta l'evento di sottomissione assemblando i parametri in querystring e richiedendo l'aggiornamento tramite chiamate asincrone (AJAX). Ricevuto il frammento aggiornato dal backend, il nuovo snippet HTML sostituisce unicamente la griglia dei risultati, evitando ricaricamenti completi della pagina e aggiornando contestualmente la cronologia di navigazione del browser (\texttt{pushState}).
 
 \subsection{Pattern di Paginazione}
 Per ridurre il carico cognitivo derivante dall'esplorazione di liste estese, è stata adottata una soluzione ibrida di paginazione asincrona basata sul pattern "Load More". Implementata tramite Alpine.js e Vanilla JS, l'interazione con il pulsante innesca uno stato di caricamento visivo mentre viene richiesto il blocco di risultati successivo. Contestualmente, la vista è riposizionata sull'inizio del nuovo frammento tramite \texttt{scrollIntoView()}, preservando l'orientamento spaziale dell'utente.
@@ -178,7 +180,7 @@ In questa sezione vengono presentate le schermate principali dell'applicativo ne
 
 \subsection{Homepage}
 
-La Homepage rappresenta il punto di accesso principale all'applicativo. La nuova versione accoglie l'utente con un'hero section dal forte impatto visivo, un sottotitolo contestuale al ruolo dell'utente autenticato, un pannello di ricerca e filtraggio e una griglia di card tour ottimizzata.
+La Homepage rappresenta il punto di accesso principale all'applicativo. La nuova versione accoglie l'utente con un'hero section dal forte impatto visivo, un sottotitolo contestuale al ruolo dell'utente autenticato, un pannello di ricerca e filtraggio e una griglia di card tour ottimizzata (Figura~\ref{fig:v2_home}).
 
 \begin{figure}[H]
     \centering
@@ -189,7 +191,7 @@ La Homepage rappresenta il punto di accesso principale all'applicativo. La nuova
 
 \subsection{Autenticazione}
 
-Le pagine di Login e Register nella V2 sono state semplificate e arricchite di meccanismi di supporto: toggle per la visibilità della password, validazione live dei campi e link diretto al recupero delle credenziali.
+Le pagine di Login e Register nella V2 sono state semplificate e arricchite di meccanismi di supporto: toggle per la visibilità della password, validazione live dei campi e link diretto al recupero delle credenziali (Figura~\ref{fig:v2_auth}).
 
 \begin{figure}[H]
     \centering
@@ -200,7 +202,7 @@ Le pagine di Login e Register nella V2 sono state semplificate e arricchite di m
 
 \subsection{Dashboard Fruitore}
 
-La Dashboard del Customer nella V2 mostra le prenotazioni attive con il booking code in evidenza, la codifica cromatica semantica degli stati visita e il pulsante di cancellazione con modale di conferma.
+La Dashboard del Customer nella V2 mostra le prenotazioni attive con il booking code in evidenza, la codifica cromatica semantica degli stati visita e il pulsante di cancellazione con modale di conferma (Figura~\ref{fig:v2_dashboard}).
 
 \begin{figure}[H]
     \centering
@@ -211,7 +213,7 @@ La Dashboard del Customer nella V2 mostra le prenotazioni attive con il booking 
 
 \subsection{Area Amministratore}
 
-Il pannello amministrativo comprende il configuratore a schede (Places, Visit Types, Users), il pannello di Visit Planning con raggruppamento mensile e il form di creazione visite con flusso guidato step-by-step.
+Il pannello amministrativo comprende il configuratore a schede (Places, Visit Types, Users), il pannello di Visit Planning con raggruppamento mensile e il form di creazione visite con flusso guidato step-by-step (Figure~\ref{fig:v2_admin_conf} e~\ref{fig:v2_planning}).
 
 \begin{figure}[H]
     \centering
@@ -239,7 +241,7 @@ Il pannello amministrativo comprende il configuratore a schede (Places, Visit Ty
 
 \subsection{Area Volontario (Guida)}
 
-L'area riservata alle Guide presenta la pagina delle visite assegnate con banner operativo e il calendario per la dichiarazione delle disponibilità mensili.
+L'area riservata alle Guide presenta la pagina delle visite assegnate con banner operativo e il calendario per la dichiarazione delle disponibilità mensili (Figura~\ref{fig:v2_guide}).
 
 \begin{figure}[H]
     \centering

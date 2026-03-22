@@ -2,9 +2,9 @@
 \label{cap:intro}
 
 \section{Panoramica dell'Applicazione}
-Il progetto oggetto di questa relazione, denominato \textbf{Guided Tours}, consiste nella progettazione e nello sviluppo di un'applicazione web orientata alla gestione di visite guidate. Il sistema è stato concepito per rispondere alle esigenze di organizzazioni locali senza scopo di lucro che si occupano della valorizzazione del patrimonio territoriale, sia esso di natura storico-artistica che paesaggistica.
+Il progetto oggetto di questa relazione, denominato \textbf{Guided Tours}, consiste nella progettazione e nello sviluppo di un'applicazione web orientata alla gestione di visite guidate. Il sistema è stato concepito per rispondere alle esigenze di organizzazioni locali senza scopo di lucro che si occupano della valorizzazione del patrimonio territoriale, sia di natura storico-artistica che paesaggistica.
 
-L'obiettivo primario della piattaforma è la digitalizzazione del flusso organizzativo che intercorre tra la domanda, rappresentata da visitatori singoli o gruppi (scuole, turisti), e l'offerta, costituita da una rete di guide volontarie. Attualmente, tali processi sono spesso gestiti in modo frammentato e manuale; il sistema proposto mira a centralizzare le informazioni, ottimizzare l'assegnazione delle risorse umane e garantire un canale di comunicazione strutturato.
+L'obiettivo primario della piattaforma è la digitalizzazione del flusso organizzativo che intercorre tra la domanda, rappresentata da visitatori singoli o gruppi (scuole, turisti), e l'offerta, costituita da una rete di guide volontarie. Attualmente tali processi sono spesso gestiti in modo frammentato e manuale. Il sistema proposto mira a centralizzare le informazioni, ottimizzare l'assegnazione delle risorse umane e garantire un canale di comunicazione strutturato.
 
 L'architettura logica dell'applicazione prevede tre attori principali, ciascuno caratterizzato da specifici privilegi e interfacce dedicate:
 \begin{itemize}
@@ -17,8 +17,8 @@ L'architettura logica dell'applicazione prevede tre attori principali, ciascuno 
 L'interfaccia utente è stata progettata seguendo i principi di usabilità e chiarezza informativa, differenziando nettamente le aree pubbliche da quelle riservate. Di seguito viene fornita un'analisi dettagliata delle sezioni costitutive del sistema.
 
 \subsection{Landing Page e Navigazione Pubblica}
-La Home Page funge da ambiente di accoglienza e snodo direzionale primario per le diverse tipologie di utenza.
-Graficamente, il layout è dominato da una sezione introduttiva (\textit{Hero Section}) concepita per comunicare immediatamente la missione dell'organizzazione e instaurare un rapporto di fiducia.
+La Homepage funge da ambiente di accoglienza e snodo direzionale primario per le diverse tipologie di utenza.
+Graficamente, il layout è dominato da una sezione introduttiva (\textit{Hero Section}) concepita per comunicare immediatamente la missione dell'organizzazione e instaurare un rapporto di fiducia, come visibile nella Figura~\ref{fig:home}.
 La barra di navigazione superiore è un elemento persistente e offre un \textit{affordance} chiara per l'accesso rapido alle funzioni di autenticazione.
 
 Dal punto di vista dell'analisi dei task, questa vista deve assolvere simultaneamente a due obiettivi:
@@ -35,7 +35,7 @@ Dal punto di vista dell'analisi dei task, questa vista deve assolvere simultanea
 \end{figure}
 
 \subsection{Sistema di Autenticazione e Registrazione}
-La gestione degli accessi rappresenta uno snodo critico nel percorso utente. Il modulo di registrazione introduce una scelta logica dirimente sin dal primo contatto: la selezione del ruolo operativo.
+La gestione degli accessi rappresenta uno snodo critico nel percorso utente. Il modulo di registrazione, illustrato nella Figura~\ref{fig:login_register}, introduce una scelta logica dirimente sin dal primo contatto: la selezione del ruolo operativo.
 In contrasto con i pattern di registrazione generici, l'utente è chiamato a dichiarare esplicitamente se intende fruire del servizio (\textit{Fruitore}) o far parte del network organizzativo (\textit{Volontario}). Questa profilazione precoce determina in modo permanente l'architettura dell'informazione e il layout successivo, personalizzando l'esperienza utente.
 
 Il modulo richiede l'inserimento di dati obbligatori quali:
@@ -53,15 +53,14 @@ Il modulo richiede l'inserimento di dati obbligatori quali:
 \end{figure}
 
 \subsection{Modulo di Richiesta Visita (Area Fruitore)}
-A seguito dell'autenticazione, il \textit{Fruitore} interagisce con un'esplicita Call-to-Action che sblocca l'accesso all'ambiente dedicato alla schedulazione delle visite. Da un punto di vista dell'interazione, tale vista si discosta dal classico paradigma del carrello e-commerce in favore di un modulo guidato procedurale per l'inoltro di una "richiesta di servizio". 
-Tale approccio minimizza il carico cognitivo dell'operatore, vincolando l'attenzione su input sequenziali mirati e semanticamente raggruppati.
+A seguito dell'autenticazione, il \textit{Fruitore} interagisce con un'esplicita Call-to-Action che sblocca l'accesso all'ambiente dedicato alla schedulazione delle visite. Da un punto di vista dell'interazione, tale vista si discosta dal classico paradigma del carrello e-commerce in favore di un modulo guidato procedurale per l'inoltro di una ``richiesta di servizio''. Tale approccio minimizza il carico cognitivo dell'operatore, vincolando l'attenzione su input sequenziali mirati e semanticamente raggruppati.
 
 I campi principali, validati per prevenire errori accidentali di sottomissione, richiedono:
 \begin{itemize}
     \item \textbf{Dettagli Logistici:} Data preferita per la visita e numero di partecipanti (informazione cruciale per valutare la sostenibilità e il rapporto guida/visitatori).
     \item \textbf{Preferenze Context-Aware:} Selezione della lingua e campo testuale libero per documentare bisogni specifici del gruppo (es. accessibilità per disabilità motorie), promuovendo un design inclusivo.
 \end{itemize}
-Al completamento del flusso, il sistema fornisce un feedback contestuale di presa in carico, ponendo la pratica nello stato di sospeso in attesa di validazione asincrona da parte dell'amministrazione.
+Al completamento del flusso, il sistema fornisce un feedback contestuale di presa in carico, ponendo la pratica nello stato di sospeso in attesa di validazione asincrona da parte dell'amministrazione (Figura~\ref{fig:booking}).
 
 \begin{figure}[H]
     \centering
@@ -72,7 +71,7 @@ Al completamento del flusso, il sistema fornisce un feedback contestuale di pres
 
 \subsection{Gestione Disponibilità (Area Volontario)}
 Il \textit{Volontario} ha come task principale l'aggiornamento della propria dashboard operativa. La vista adotta un'interfaccia a calendario (un solido modello mentale noto all'utente tramite applicativi esterni) che consente una mappatura diretta e manipolabile (\textit{Direct Manipulation}) delle proprie ore libere.
-L'obiettivo cognitivo di questo cruscotto è agevolare l'inserimento dei dati essenziali per il futuro algoritmo organizzativo, riducendo le frizioni e promuovendo l'efficienza.
+L'obiettivo cognitivo di questo cruscotto, mostrato nella Figura~\ref{fig:availability}, è agevolare l'inserimento dei dati essenziali per il futuro algoritmo organizzativo, riducendo le frizioni e promuovendo l'efficienza.
 
 L'interazione prevede:
 \begin{enumerate}
@@ -90,7 +89,7 @@ L'interazione prevede:
 
 \subsection{Pannello di Configurazione (Area Configuratore)}
 Il ruolo direzionale (Configuratore) opera all'interno di un'area di back-office dedicata alla gestione infrastrutturale. Questa sezione è ideata come un hub di controllo per la componente statica dell'offerta turistica.
-L'interazione è modellata su griglie dati (pattern CRUD - Create, Read, Update, Delete) pensate per le performance e l'accesso rapido all'informazione:
+L'interazione è modellata su griglie dati (pattern CRUD -- Create, Read, Update, Delete) pensate per le performance e l'accesso rapido all'informazione (Figura~\ref{fig:config_panel}):
 \begin{itemize}
     \item \textbf{Luoghi (Places):} Inserimento di nuovi siti visitabili, con dettagli descrittivi.
     \item \textbf{Tipologie di Visita:} Definizione delle categorie di tour offerti (es. "Visita Storica", "Percorso Naturalistico").
@@ -105,7 +104,7 @@ L'interazione è modellata su griglie dati (pattern CRUD - Create, Read, Update,
 
 \subsection{Dashboard di Pianificazione (Visit Planning)}
 La plancia direzionale di Visit Planning costituisce il nodo focale dell'applicativo, l'ambiente dove si attua la confluenza dei macro-processi generati da Fruitori e Volontari.
-Data l'elevata densità di dati, l'interfaccia utente è calibrata specificamente per supportare il \textit{decision making} dell'amministratore, mitigando l'overload informativo.
+Data l'elevata densità di dati, l'interfaccia utente è calibrata specificamente per supportare il \textit{decision making} dell'amministratore, mitigando l'overload informativo (Figura~\ref{fig:visit_planning}).
 
 La pagina è suddivisa in aree logiche:
 \begin{itemize}
