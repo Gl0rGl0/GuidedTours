@@ -864,7 +864,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 
 In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
 
-% TODO: rigenerare i 3 grafici con i dati aggiornati (42 problemi, erano 32)
+% TODO: rigenerare i 3 grafici con i dati aggiornati (41 problemi, erano 32)
 %   - grafico_severita.png  (Sev1=21, Sev2=16, Sev3=4, Sev4=1)
 %   - grafico_principi.png  (P1=13, P2=8, P3=3, P4=11, P5=5, P6=5, P7=6, P8=7, P9=2, P10=1)
 %   - matrice_errori.pdf    (aggiungere colonne P33-P41)
@@ -873,7 +873,24 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{capitoli/immagini/grafico_severita.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        bar width=20pt,
+        enlarge x limits=0.15,
+        ylabel={Numero di Problemi},
+        xlabel={Grado di Severità},
+        symbolic x coords={0, 1, 2, 3, 4},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        width=0.8\textwidth,
+        height=6cm,
+        ymin=0
+    ]
+        \addplot[fill=orange!60] coordinates { (0,0) (1,20) (2,16) (3,4) (4,1) };
+    \end{axis}
+\end{tikzpicture}
     \caption{Distribuzione dei problemi per grado di severità (Scala Nielsen 0-4).}
     \label{fig:stat_severita}
 \end{figure}
@@ -887,14 +904,48 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{capitoli/immagini/grafico_principi.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        bar width=15pt,
+        enlarge x limits=0.1,
+        ylabel={Numero di Violazioni},
+        xlabel={Principio Euristico},
+        symbolic x coords={P1, P2, P3, P4, P5, P6, P7, P8, P9, P10},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        width=\textwidth,
+        height=6.5cm,
+        ymin=0
+    ]
+        \addplot[fill=purple!50] coordinates { (P1,13) (P2,8) (P3,3) (P4,11) (P5,5) (P6,5) (P7,6) (P8,7) (P9,2) (P10,1) };
+    \end{axis}
+\end{tikzpicture}
     \caption{Frequenza di violazione dei 10 Principi di Nielsen.}
     \label{fig:stat_principi}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{capitoli/immagini/grafico_valutatori.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        bar width=25pt,
+        enlarge x limits=0.3,
+        ylabel={Problemi Individuati},
+        xlabel={Valutatore},
+        symbolic x coords={D, G, M},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        width=0.6\textwidth,
+        height=6cm,
+        ymin=0
+    ]
+        \addplot[fill=teal!50] coordinates { (D,22) (G,27) (M,12) };
+    \end{axis}
+\end{tikzpicture}
     \caption{Contributo dei valutatori per numero di problemi individuati.}
     \label{fig:stat_valutatori}
 \end{figure}
@@ -904,8 +955,8 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 Utilizzando la formula di Nielsen per il calcolo della proporzione di problemi trovati da $n=3$ valutatori ($P(n) = 1 - (1 - L)^n$), con un valore medio di $L=0.31$, si ottiene:
 \[ P(3) = 1 - (1 - 0.31)^3 = 1 - 0.69^3 \approx 0.67 \]
 Poiché $P(n)$ rappresenta la frazione di problemi totali individuata da $n$ valutatori, il numero totale stimato di problemi è:
-\[ N_{tot} = \frac{N_{trovati}}{P(n)} = \frac{42}{0.67} \approx 63 \]
-Il calcolo teorico indica che il sistema potrebbe ospitare circa 63 problemi di usabilità totali, di cui 42 sono stati documentati in questa analisi.
+\[ N_{tot} = \frac{N_{trovati}}{P(n)} = \frac{41}{0.67} \approx 61 \]
+Il calcolo teorico indica che il sistema potrebbe ospitare circa 61 problemi di usabilità totali, di cui 41 sono stati documentati in questa analisi.
 
 \section{Commento Finale alla Valutazione}
 L'analisi euristica ha evidenziato un sistema funzionalmente completo ma caratterizzato da criticità strutturali nell'interazione e nella prevenzione dell'errore. Come si evince dai grafici, sebbene la maggior parte dei problemi sia di natura estetica (Grado 1), emerge un nucleo consistente di \textbf{16 criticità di Grado 2}. Questi problemi generano "attrito" e disorientamento, obbligando l'utente a sforzi cognitivi evitabili a causa di incongruenze cromatiche e mancanze informative nei flussi principali.

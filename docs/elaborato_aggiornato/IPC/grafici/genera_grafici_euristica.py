@@ -66,13 +66,13 @@ plt.figure(figsize=(15, 5))
 # Use pcolor or pcolormesh to draw grid
 cmap = plt.cm.get_cmap('Blues', 2)
 # Create meshgrid for exact cell alignment
-X, Y = np.meshgrid(np.arange(42), np.arange(11))
+X, Y = np.meshgrid(np.arange(41), np.arange(11))
 plt.pcolormesh(X, Y, matrix, edgecolors='lightgrey', linewidth=0.5, cmap=cmap)
 plt.gca().invert_yaxis()
 
 # Setup ticks
 plt.yticks(np.arange(0.5, 10.5, 1), [f"P{i}" for i in range(1, 11)])
-plt.xticks(np.arange(0.5, 41.5, 1), [str(i) for i in range(1, 42)], rotation=0, fontsize=9)
+plt.xticks(np.arange(0.5, 41.5, 1), [str(i) for i in range(1, 41)], rotation=0, fontsize=9)
 plt.title("Matrice dei Problemi per Principio Violato", fontsize=14)
 plt.xlabel("Numero Problema", fontsize=12)
 plt.ylabel("Principio Violato", fontsize=12)

@@ -1,0 +1,42 @@
+Problema,Principi_violati,Numero_valutatori,Chi,Grado_di_severità
+Cursore non coerente su elementi cliccabili,4,1,N/D,2
+Assenza notifica rischio annullamento visita,1,2,N/D,3
+"Semantica colore ""Proposed""","1, 2",2,"D,G",2
+"Inconsistenza cromatica ""Proposed""",4,3,tutti,2
+Chiarezza nota pagamento,"5, 7",1,G,2
+Stile nota pagamento,2,2,"D,G",2
+Ambiguità cromatica stati visita,"1, 4",3,tutti,1
+Mancanza feedback disponibilità,1,1,M,1
+"Ridondanza ""Visite confermate""",7,1,D,1
+Mancanza personalizzazione Home Page,2,1,N/D,1
+Area cliccabile limitata,5,1,G,2
+Gerarchia visiva debole,"1, 2, 4",1,D,1
+Assenza shortcut area personale,"1, 4",1,M,1
+Incoerenza linguistica,2,2,"M,G",1
+Visibilità ridotta logo,2,1,G,1
+Mancanza toggle visibilità password,7,1,M,1
+"Navigazione ambigua verso ""Register""","4, 7",1,G,1
+Ridondanza informativa Ruoli,8,1,G,1
+Feedback di errore non user-friendly,"1, 3, 5",3,tutti,1
+Assenza recupero password,"3, 9",2,"M,G",3
+Carico cognitivo posti disponibili,"1, 6",3,tutti,2
+"Navigazione ridondante verso ""Login""","4, 7",1,G,1
+Ridondanza informativa Ruoli,8,1,G,1
+Validazione tardiva input,5,1,G,2
+"Visibilità ""Booking code""","1, 6",3,tutti,1
+"Ambiguità etichetta ""Participant""","1, 6",2,"D,G",2
+"Affordance ingannevole ""My Booking""",3,1,D,2
+Stile pulsante eliminazione,4,1,G,1
+Inconsistenza terminologica,"1, 6",2,"D,G",1
+Incoerenza spaziatura Header,"4, 8",1,G,1
+Validazione tardiva aggiunta utente,5,1,G,2
+Assenza conferma eliminazione,"8, 9",3,tutti,4
+Disorganizzazione del layout,"2, 8",1,G,1
+Flusso inserimento non intuitivo,"1, 2",1,G,3
+Mancanza feedback su vincoli,"1, 8",1,G,3
+Email non cliccabili,4,3,tutti,2
+Mancanza selezione multipla nel calendario,7,1,N/D,2
+Assenza indicazioni operative per Volontari,10,1,N/D,2
+Ridondanza nome volontario nelle card,8,1,N/D,1
+Messaggio di stato vuoto senza Call to Action,6,1,N/D,2
+Colore bottone non coerente,4,3,N/D,2

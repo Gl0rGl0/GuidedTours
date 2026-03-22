@@ -254,7 +254,7 @@ Difficoltà (1-5) & 2.8 & 1.1 \\ \hline
 Origine (1 Sito -- 5 Ute) & 2.2 & 4.8 \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} La V2 vanta un layout ``stile biglietto'' per le prenotazioni. L'\textit{affordance} grafica garantita dai font monospazio e dal grasettaggio del token ha reso l'informazione saliente al primo sguardo.
+\textbf{Commenti:} La V2 vanta un layout ``stile biglietto'' per le prenotazioni. L'\textit{affordance} grafica garantita dai font monospazio e dall'evidenziazione in grassetto del token ha reso l'informazione saliente al primo sguardo.
 
 \subsection{Compito 5: Cancella prenotazione}
 \begin{table}[H]
@@ -311,7 +311,7 @@ Difficoltà (1-5) & 4.1 & 1.4 \\ \hline
 Origine (1 Sito -- 5 Ute) & 1.2 & 3.7 \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} Il task di dichiarazione disponibilità è quello con performance peggiori di tutte le task, particolarmente critico per il profilo del Volontario, che lo esegue con frequenza tipicamente mensile. In V1 l'assenza di una legenda ha reso diffcile l'intepretazione del calendario, portando a smarrimento. In V2 l'introduzione di un calendario interattivo ha ridotto il numero di click da 10 a 4 ($-$60\%) e il tempo da 155~s a 52~s ($-$66\%), portando il tasso di completamento all'83\%. Inoltre alcuni dei tester più giovani hanno potuto sfruttare la selezione multipla riducendo sia i click che il tempo medio.
+\textbf{Commenti:} Il task di dichiarazione disponibilità è quello con performance peggiori di tutte le task, particolarmente critico per il profilo del Volontario, che lo esegue con frequenza tipicamente mensile. In V1 l'assenza di una legenda ha reso difficile l'interpretazione del calendario, portando a smarrimento. In V2 l'introduzione di un calendario interattivo ha ridotto il numero di click da 10 a 4 ($-$60\%) e il tempo da 155~s a 52~s ($-$66\%), portando il tasso di completamento all'83\%. Inoltre alcuni dei tester più giovani hanno potuto sfruttare la selezione multipla riducendo sia i click che il tempo medio.
 
 \subsection{Compito 8: Switch account admin}
 \begin{table}[H]
@@ -424,14 +424,56 @@ La torta aggregata rende immediato il salto qualitativo: in V1 la netta maggiora
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_completamento.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar=0pt,
+        bar width=8pt,
+        enlarge x limits=0.08,
+        legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+        ylabel={Completamenti (C) su 12},
+        symbolic x coords={T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        every node near coord/.append style={font=\tiny},
+        width=\textwidth,
+        height=7cm,
+        ymin=0,
+        ymax=14
+    ]
+        \addplot[fill=cyan!60] coordinates { (T1,8) (T2,9) (T3,7) (T4,10) (T5,8) (T6,11) (T7,7) (T8,12) (T9,6) (T10,8) (T11,12) };
+        \addplot[fill=teal!80] coordinates { (T1,11) (T2,10) (T3,10) (T4,12) (T5,11) (T6,12) (T7,10) (T8,12) (T9,11) (T10,10) (T11,12) };
+        \legend{Versione 1, Versione 2}
+    \end{axis}
+\end{tikzpicture}
     \caption{Tasso di completamento autonomo (\%) per compito — V1 vs V2.}
     \label{fig:completamento}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_tempi.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar=0pt,
+        bar width=8pt,
+        enlarge x limits=0.08,
+        legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+        ylabel={Tempi (secondi)},
+        symbolic x coords={T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
+        width=\textwidth,
+        height=7cm,
+        ymin=0,
+        ymax=140
+    ]
+        \addplot[fill=blue!40] coordinates { (T1,55) (T2,113) (T3,80) (T4,58) (T5,17) (T6,45) (T7,78) (T8,22) (T9,113) (T10,85) (T11,50) };
+        \addplot[fill=green!40!black] coordinates { (T1,22) (T2,92) (T3,58) (T4,36) (T5,16) (T6,35) (T7,52) (T8,18) (T9,75) (T10,55) (T11,38) };
+        \legend{Versione 1, Versione 2}
+    \end{axis}
+\end{tikzpicture}
     \caption{Tempo medio di completamento (secondi) per compito — V1 vs V2.}
     \label{fig:tempi}
 \end{figure}
@@ -440,7 +482,28 @@ Il grafico dei tempi evidenzia le riduzioni più drastiche nei task di maggior f
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.0\textwidth]{capitoli/immagini/grafico_errori.png}
+    \begin{tikzpicture}
+    \begin{axis}[
+        ybar=0pt,
+        bar width=8pt,
+        enlarge x limits=0.08,
+        legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+        ylabel={Numero Medio Errori},
+        symbolic x coords={T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        every node near coord/.append style={font=\tiny, rotate=90, anchor=west},
+        width=\textwidth,
+        height=7cm,
+        ymin=0,
+        ymax=5
+    ]
+        \addplot[fill=red!40] coordinates { (T1,2.2) (T2,1.9) (T3,2.5) (T4,1.4) (T5,0.2) (T6,1.4) (T7,3.8) (T8,0.1) (T9,2.1) (T10,1.9) (T11,0.7) };
+        \addplot[fill=green!40] coordinates { (T1,0.1) (T2,0.3) (T3,0.4) (T4,0.3) (T5,0.1) (T6,0.1) (T7,1.2) (T8,0) (T9,0.5) (T10,0.2) (T11,0.1) };
+        \legend{Versione 1, Versione 2}
+    \end{axis}
+\end{tikzpicture}
     \caption{Errori medi per compito — V1 vs V2.}
     \label{fig:errori}
 \end{figure}
