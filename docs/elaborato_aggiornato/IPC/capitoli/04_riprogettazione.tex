@@ -13,11 +13,88 @@ La transizione tra l'evidenza empirica emersa dalla valutazione euristica e lo s
 
 Successivamente, ci si è avvalsi di piattaforme di prototipazione vettoriale (in particolare Figma) per tradurre i wireframe in Mock-up ad alta fedeltà (\textit{High-Fidelity}). Tale passaggio ha consentito di concretizzare e validare la nuova identità visiva, codificando formalmente il Design System (palette cromatica, tipografia ad alto contrasto, forme dei componenti interattivi) e simulando i flussi di navigazione (\textit{User Flows}) prima della stesura del codice. Aver validato interattivamente l'interfaccia ha minimizzato il rischio di dover approntare costosi \textit{refactoring} tardivi in fase di sviluppo, garantendo al contempo l'aderenza ai principi di Human-Computer Interaction definiti nelle fasi precedenti.
 
-\begin{center}
-    [INSERIRE QUI IMMAGINE MOCKUP HOME PAGE]
-    
-    [INSERIRE LINK AL PROGETTO FIGMA]
-\end{center}
+% ── Mockup: Navbar e Footer ─────────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/mockup/Nav.png}
+    \caption{Mock-up della barra di navigazione principale. La navbar espone il logo istituzionale, il menu di sezione e i controlli utente (accesso, cambio tema chiaro/scuro), garantendo un punto di orientamento costante lungo tutta la navigazione.}
+    \label{fig:mockup_nav}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/mockup/Header-2.png}
+    \caption{Mock-up dell'header nella variante con hero section: il banner di benvenuto propone il titolo dell'applicativo, una breve didascalia descrittiva e la call-to-action primaria differenziata per ruolo (cliente, guida, amministratore), in modo da ridurre il tempo di orientamento sin dal primo accesso.}
+    \label{fig:mockup_header}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/mockup/footer.png}
+    \caption{Mock-up del footer: il piede di pagina raccoglie i link istituzionali (Informazioni, Termini di servizio, Careers), i riferimenti di copyright e i link ai canali social, mantenendo coerenza linguistica e visiva col resto dell'interfaccia.}
+    \label{fig:mockup_footer}
+\end{figure}
+
+% ── Mockup: Home Page ────────────────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/home.pdf}
+    \caption{Mock-up della Home Page: il catalogo dei tour è presentato tramite card uniformi con immagine, titolo, luogo, data, posti residui e badge di stato. I filtri di ricerca (testo, distanza, gratuità) e l'ordinamento sono esposti in linea sopra la griglia, abbattendo il carico cognitivo necessario per individuare un tour di interesse.}
+    \label{fig:mockup_home}
+\end{figure}
+
+% ── Mockup: Registrazione Visita ─────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth, keepaspectratio]{capitoli/immagini/mockup/register.pdf}
+    \caption{Mock-up della schermata di prenotazione visita: il modulo riepilogativo mostra il dettaglio del tour selezionato (luogo, data, prezzo, posti disponibili) affiancato al campo di selezione del numero di partecipanti. Il feedback sui vincoli (scadenza prenotazione, posti rimasti) è esposto in linea, in anticipo rispetto all'invio del form.}
+    \label{fig:mockup_register}
+\end{figure}
+
+% ── Mockup: Dashboard Fruitore ───────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/user-booking.pdf}
+    \caption{Mock-up della dashboard del Fruitore — sezione prenotazioni attive: ogni prenotazione è presentata in una card che riporta il codice di prenotazione in font monospaziato, il numero di partecipanti, lo stato della visita e il pulsante di cancellazione con modale di conferma, risolvendo le problematiche di affordance e visibilità emerse nell'analisi euristica (P22, P24, P25).}
+    \label{fig:mockup_user_booking}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth, keepaspectratio]{capitoli/immagini/mockup/user-profile.pdf}
+    \caption{Mock-up della sezione profilo utente: il pannello consente la modifica dei dati anagrafici e il cambio password direttamente dall'area personale, con validazione live dei campi e feedback semantico immediato sullo stato del salvataggio.}
+    \label{fig:mockup_user_profile}
+\end{figure}
+
+% ── Mockup: Pannello Guide ───────────────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/vol-availability.pdf}
+    \caption{Mock-up del calendario disponibilità della Guida: la vista mensile a griglia permette di selezionare singole date o intere colonne (giorni della settimana) con un solo click, riducendo il numero di interazioni necessarie per dichiarare disponibilità ricorrenti (es. ogni sabato del mese).}
+    \label{fig:mockup_vol_availability}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/vol-panel.pdf}
+    \caption{Mock-up del pannello visite assegnate alla Guida: la lista cronologica delle visite in programma espone data, luogo, numero di iscritti e stato, affiancata da un riquadro informativo con le istruzioni operative (verifica biglietti, gestione partecipanti), rispondendo alla problematica P37 relativa all'assenza di indicazioni operative contestuali.}
+    \label{fig:mockup_vol_panel}
+\end{figure}
+
+% ── Mockup: Pannello Amministratore ─────────────────────────────────────────
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/config-panel.pdf}
+    \caption{Mock-up del pannello di configurazione amministratore: la sezione centralizza la gestione di utenti, luoghi e tipologie di visita in tab distinte. Il modale di eliminazione con richiesta di conferma esplicita risolve la problematica P29 (assenza di guardia prima della cancellazione), mentre la validazione in tempo reale dei campi password risponde alla problematica P28.}
+    \label{fig:mockup_config_panel}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth, keepaspectratio]{capitoli/immagini/mockup/config-planning.pdf}
+    \caption{Mock-up del pannello di pianificazione visite (Visit Planning): le visite sono raggruppate cronologicamente per mese e settimana, con evidenziazione cromatica dello stato (proposta, confermata, effettuata). Il flusso guidato di creazione visita — selezione tipo, data, guida disponibile — è accessibile tramite un unico pulsante contestuale, risolvendo la disorganizzazione del layout segnalata in P30 e P31.}
+    \label{fig:mockup_config_planning}
+\end{figure}
 
 \subsection{Validazione Formativa dei Prototipi (Mock-up)}
 Prima di procedere alla stesura del codice (coding), i mock-up ad alta fedeltà realizzati su Figma sono stati sottoposti a un meticoloso processo di validazione formativa. Il team ha adottato un approccio metodologico ibrido, diviso in due macro-fasi sequenziali, al fine di ottimizzare preventivamente l'esperienza utente.
