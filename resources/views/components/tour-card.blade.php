@@ -125,7 +125,7 @@
                 @if($bookingCode)
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <small class="text-muted">{{ __('messages.components.tour_card.booking_code') }}</small>
-                        <a href="{{ route('tickets.download', $bookingCode) }}" class="btn btn-sm btn-outline-dark rounded-pill shadow-sm" target="_blank" title="Download PDF Ticket">
+                        <a href="{{ route('tickets.download', $bookingCode) }}" class="btn btn-sm btn-outline-secondary rounded-pill shadow-sm" target="_blank" title="Download PDF Ticket">
                             <i class="bi bi-file-earmark-pdf me-1"></i> {{ __('messages.components.tour_card.view_ticket') }}
                         </a>
                     </div>
