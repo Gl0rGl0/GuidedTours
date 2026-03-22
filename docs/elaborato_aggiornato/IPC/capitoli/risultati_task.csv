@@ -1,23 +1,23 @@
 Task_ID,Task_Name,Versione,Completato,Tempo_Medio,Click_Medi,Errori_Medi,Difficoltà,Origine
-1,Sede organizzazione,V1,"8 (C), 3 (CA), 1 (NC)",55 s,7,2.2,2.2,2
-1,Sede organizzazione,V2,"11 (C), 1 (CA), 0 (NC)",22 s,2,0.1,1.1,2.5
-2,Registrazione e accesso,V1,"9 (C), 3 (CA), 0 (NC)",113 s,13,1.9,3.1,1.8
-2,Registrazione e accesso,V2,"10 (C), 2 (CA), 0 (NC)",92 s,10,0.3,1.3,4.2
-3,"Prenotazione a ""Torre dell'Aquila""",V1,"7 (C), 5 (CA), 0 (NC)",80 s,15,2.5,4.2,1.3
-3,"Prenotazione a ""Torre dell'Aquila""",V2,"10 (C), 2 (CA), 0 (NC)",58 s,7,0.4,1.4,4.0
-4,Trova codice prenotazione,V1,"10 (C), 2 (CA), 0 (NC)",58 s,6,1.4,2.8,2.2
-4,Trova codice prenotazione,V2,"12 (C), 0 (CA), 0 (NC)",36 s,2,0.3,1.1,4.8
-5,Cancella prenotazione,V1,"8 (C), 4 (CA), 0 (NC)",17 s,4,0.2,1.8,3.1
-5,Cancella prenotazione,V2,"11 (C), 1 (CA), 0 (NC)",16 s,3,0.1,1.5,3.8
-6,Switch account volontario,V1,"11 (C), 1 (CA), 0 (NC)",45 s,5,1.4,2.2,1.5
-6,Switch account volontario,V2,"12 (C), 0 (CA), 0 (NC)",35 s,4,0.1,1.1,4.5
-7,Imposta disponibilità,V1,"7 (C), 3 (CA), 2 (NC)",78 s,10,3.8,4.1,1.2
-7,Imposta disponibilità,V2,"10 (C), 2 (CA), 0 (NC)",52 s,4,1.2,1.4,3.7
-8,Switch account admin,V1,"12 (C), 0 (CA), 0 (NC)",22 s,4,0.1,1.2,4.5
-8,Switch account admin,V2,"12 (C), 0 (CA), 0 (NC)",18 s,4,0,1.1,4.8
-9,Creazione visita guidata,V1,"6 (C), 4 (CA), 2 (NC)",113 s,12,2.1,4.5,1.4
-9,Creazione visita guidata,V2,"11 (C), 1 (CA), 0 (NC)",75 s,7,0.5,1.8,3.5
-10,Eliminazione di un tipo di visita,V1,"8 (C), 4 (CA), 0 (NC)",85 s,7,1.9,3.1,1.8
-10,Eliminazione di un tipo di visita,V2,"10 (C), 2 (CA), 0 (NC)",55 s,5,0.2,1.3,4.2
-11,Change Password,V1,"12 (C), 0 (CA), 0 (NC)",50 s,5,0.7,1.2,3.2
-11,Change Password,V2,"12 (C), 0 (CA), 0 (NC)",38 s,3,0.1,1.1,4.8
+1,Sede organizzazione,V1,"8 (C), 3 (CA), 1 (NC)",41 s,3,1.5,2.2,2
+1,Sede organizzazione,V2,"10 (C), 2 (CA), 0 (NC)",22 s,1,0.1,1.1,2.5
+2,Registrazione e accesso,V1,"8 (C), 4 (CA), 0 (NC)",113 s,13,2.4,1.9,1.8
+2,Registrazione e accesso,V2,"10 (C), 2 (CA), 0 (NC)",92 s,10,0.7,1.3,4.2
+3,"Prenotazione a ""Torre dell'Aquila""",V1,"6 (C), 5 (CA), 1 (NC)",80 s,8,2.2,3.6,1.3
+3,"Prenotazione a ""Torre dell'Aquila""",V2,"8 (C), 4 (CA), 0 (NC)",58 s,5,1.6,2.7,2.2
+4,Trova codice prenotazione,V1,"10 (C), 2 (CA), 0 (NC)",20 s,3,0.8,1.3,2.2
+4,Trova codice prenotazione,V2,"11 (C), 1 (CA), 0 (NC)",18 s,3,0.7,1.1,4.8
+5,Cancella prenotazione,V1,"10 (C), 2 (CA), 0 (NC)",17 s,5,0.2,1.4,3.1
+5,Cancella prenotazione,V2,"11 (C), 1 (CA), 0 (NC)",19 s,4,0.4,1.5,3.8
+6,Switch account volontario,V1,"12 (C), 0 (CA), 0 (NC)",45 s,10,0.3,1.5,1.5
+6,Switch account volontario,V2,"12 (C), 0 (CA), 0 (NC)",44 s,9,0.2,1.4,4.5
+7,Imposta disponibilità,V1,"5 (C), 4 (CA), 3 (NC)",78 s,10,2.3,3.8,1.6
+7,Imposta disponibilità,V2,"5 (C), 5 (CA), 2 (NC)",75 s,9,2.1,3.5,1.9
+8,Switch account admin,V1,"11 (C), 1 (CA), 0 (NC)",40 s,8,0.1,1.2,4.5
+8,Switch account admin,V2,"11 (C), 1 (CA), 0 (NC)",39 s,7,0.1,1.1,4.8
+9,Creazione visita guidata,V1,"4 (C), 5 (CA), 3 (NC)",113 s,19,7.8,4.2,1.4
+9,Creazione visita guidata,V2,"4 (C), 6 (CA), 2 (NC)",104 s,17,6.7,3.9,1.6
+10,Eliminazione di un tipo di visita,V1,"4 (C), 7 (CA), 1 (NC)",85 s,7,3.7,4.1,1.8
+10,Eliminazione di un tipo di visita,V2,"5 (C), 6 (CA), 1 (NC)",77 s,5,3.4,3.8,4.2
+11,Change Password,V1,"9 (C), 3 (CA), 0 (NC)",50 s,5,0.7,1.2,3.2
+11,Change Password,V2,"9 (C), 3 (CA), 0 (NC)",46 s,4,0.1,1.1,4.8
