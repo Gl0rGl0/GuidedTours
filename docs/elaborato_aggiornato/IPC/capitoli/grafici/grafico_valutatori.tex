@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        bar width=25pt,
+        enlarge x limits=0.3,
+        ylabel={Problemi Individuati},
+        xlabel={Valutatore},
+        symbolic x coords={D, G, M},
+        xtick=data,
+        nodes near coords,
+        nodes near coords align={vertical},
+        width=0.6\textwidth,
+        height=6cm,
+        ymin=0
+    ]
+        \addplot[fill=teal!50] coordinates { (D,22) (G,27) (M,12) };
+    \end{axis}
+\end{tikzpicture}
