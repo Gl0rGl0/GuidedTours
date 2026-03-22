@@ -309,9 +309,9 @@
                         {{ __('messages.app.footer.contact') }}</h6>
                     <ul class="list-unstyled small">
                         <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> {{ __('messages.app.footer.address') }}</li>
-                        <p><a href="mailto:d.barbetti@unibs.studenti.it">d.barbetti@unibs.studenti.it</a></p>
-                        <p><a href="mailto:g.felappi004@unibs.studenti.it">g.felappi004@unibs.studenti.it</a></p>
-                        <p><a href="mailto:m.cesari001@unibs.studenti.it">m.cesari001@unibs.studenti.it</a></p>
+                        <p><a href="mailto:d.barbetti@studenti.unibs.it">d.barbetti@studenti.unibs.it</a></p>
+                        <p><a href="mailto:g.felappi004@studenti.unibs.it">g.felappi004@studenti.unibs.it</a></p>
+                        <p><a href="mailto:m.cesari001@studenti.unibs.it">m.cesari001@studenti.unibs.it</a></p>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 text-lg-end">
