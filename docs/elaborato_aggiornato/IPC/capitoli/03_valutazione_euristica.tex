@@ -873,24 +873,7 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        bar width=20pt,
-        enlarge x limits=0.15,
-        ylabel={Numero di Problemi},
-        xlabel={Grado di Severità},
-        symbolic x coords={0, 1, 2, 3, 4},
-        xtick=data,
-        nodes near coords,
-        nodes near coords align={vertical},
-        width=0.8\textwidth,
-        height=6cm,
-        ymin=0
-    ]
-        \addplot[fill=orange!60] coordinates { (0,0) (1,20) (2,16) (3,4) (4,1) };
-    \end{axis}
-\end{tikzpicture}
+    \input{capitoli/grafici/grafico_severita.tex}
     \caption{Distribuzione dei problemi per grado di severità (Scala Nielsen 0-4).}
     \label{fig:stat_severita}
 \end{figure}
@@ -904,48 +887,14 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        bar width=15pt,
-        enlarge x limits=0.1,
-        ylabel={Numero di Violazioni},
-        xlabel={Principio Euristico},
-        symbolic x coords={P1, P2, P3, P4, P5, P6, P7, P8, P9, P10},
-        xtick=data,
-        nodes near coords,
-        nodes near coords align={vertical},
-        width=\textwidth,
-        height=6.5cm,
-        ymin=0
-    ]
-        \addplot[fill=purple!50] coordinates { (P1,13) (P2,8) (P3,3) (P4,11) (P5,5) (P6,5) (P7,6) (P8,7) (P9,2) (P10,1) };
-    \end{axis}
-\end{tikzpicture}
+    \input{capitoli/grafici/grafico_principi.tex}
     \caption{Frequenza di violazione dei 10 Principi di Nielsen.}
     \label{fig:stat_principi}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        bar width=25pt,
-        enlarge x limits=0.3,
-        ylabel={Problemi Individuati},
-        xlabel={Valutatore},
-        symbolic x coords={D, G, M},
-        xtick=data,
-        nodes near coords,
-        nodes near coords align={vertical},
-        width=0.6\textwidth,
-        height=6cm,
-        ymin=0
-    ]
-        \addplot[fill=teal!50] coordinates { (D,22) (G,27) (M,12) };
-    \end{axis}
-\end{tikzpicture}
+    \input{capitoli/grafici/grafico_valutatori.tex}
     \caption{Contributo dei valutatori per numero di problemi individuati.}
     \label{fig:stat_valutatori}
 \end{figure}
