@@ -3,7 +3,7 @@
 % ╔═════════════════════════════════════════════════════════════════════
 %                         ISTRUZIONI PER LA COMPILAZIONE     
 %                       
-%                      usare \showimagestrue - \showimagestrue
+%                      usare \showimagesfalse - \showimagestrue
 % ╚═════════════════════════════════════════════════════════════════════
 
 \newif\ifshowimages
@@ -57,9 +57,9 @@
     columns=flexible
 }
 
-% 6. Links and URLs (Hyperref and Xurl ALWAYS last)
-\usepackage{xurl}
+% 6. Links and URLs (Hyperref ALWAYS last, Xurl extends it)
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 
 % --- Custom Formatting ---
 
@@ -72,6 +72,11 @@
 \setlength{\parindent}{0pt} 
 \setstretch{1.2}
 \setlength{\parskip}{8pt}
+
+% --- Contatore problemi euristica (usato nel Cap. 3) ---
+\newcounter{probcount}
+\setcounter{probcount}{0}
+\newcommand{\problemstep}{\stepcounter{probcount}Problema \arabic{probcount}}
 
 % --- Document Data ---
 

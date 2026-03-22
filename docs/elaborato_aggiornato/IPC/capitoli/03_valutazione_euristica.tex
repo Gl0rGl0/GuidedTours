@@ -1,8 +1,3 @@
-% --- DEFINIZIONE CONTATORE (Da mettere prima del chapter o nel preambolo) ---
-\newcounter{probcount}
-\setcounter{probcount}{0}
-\newcommand{\problemstep}{\stepcounter{probcount}Problema \arabic{probcount}}
-
 \chapter{Valutazione Euristica}
 
 \section{Fase preliminare}
@@ -34,7 +29,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_cursore.png}
 % \vspace{0.1cm}
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 4 \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 2 \\ \hline
@@ -55,7 +50,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_alert.png}
 % \vspace{0.1cm}
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 1 \\ \hline
 \textbf{Numero valutatori} & 2 \\ \hline
 \textbf{Grado di severità} & 3 \\ \hline
@@ -226,7 +221,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_home.png}
 % \vspace{0.1cm} \\ \hline
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 2 (Corrispondenza tra sistema e mondo reale) \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 1 \\ \hline
@@ -652,7 +647,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 \textbf{\problemstep} & \textbf{Validazione tardiva aggiunta utente} \\ \hline
 \textbf{Posizione} & Admin User Management \\ \hline
 \textbf{Descrizione} & La validazione della lunghezza dello username in fase di "aggiunta utente" avviene solo post-invio, rallentando il completamento del task. \\ \hline
-\textbf{Screenshot} & / \\ \hline
+\textbf{Screenshot} & \textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 5 \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 2 \\ \hline
@@ -772,7 +767,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_selezione.png}
 % \vspace{0.1cm} 
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 7 (Flessibilità ed efficienza d'uso) \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 2 \\ \hline
@@ -793,7 +788,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_assigned.png}
 % \vspace{0.1cm} \\ \hline
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 10 (Aiuto e documentazione) \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 2 \\ \hline
@@ -814,7 +809,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_ridondanza.png}
 % \vspace{0.1cm} \\ \hline
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 8 (Estetica e design minimalista) \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 1 \\ \hline
@@ -835,7 +830,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 % \vspace{0.1cm}
 % \includegraphics[width=7.8cm, height=5cm, keepaspectratio]{capitoli/immagini/screenshot_empty.png}
 % \vspace{0.1cm} \\ \hline
-/ \\ \hline
+\textit{(screenshot non disponibile)} \\ \hline
 \textbf{Principi violati} & 6 (Riconoscimento piuttosto che richiamo) \\ \hline
 \textbf{Numero valutatori} & 1 \\ \hline
 \textbf{Grado di severità} & 2 \\ \hline
@@ -864,12 +859,7 @@ Per quanto riguarda il grado di severità, è stata utilizzata la scala di Niels
 
 In questa sezione vengono sintetizzati i dati raccolti durante la valutazione euristica per fornire una panoramica quantitativa dello stato dell'interfaccia.
 
-% TODO: rigenerare i 3 grafici con i dati aggiornati (41 problemi, erano 32)
-%   - grafico_severita.png  (Sev1=21, Sev2=16, Sev3=4, Sev4=1)
-%   - grafico_principi.png  (P1=13, P2=8, P3=3, P4=11, P5=5, P6=5, P7=6, P8=7, P9=2, P10=1)
-%   - matrice_errori.pdf    (aggiungere colonne P33-P41)
-% Script pronto: docs/elaborato_aggiornato/IPC/grafici/rigenera_grafici_euristica.py
-% Copiare gli output in capitoli/immagini/ sostituendo i file esistenti.
+
 
 \begin{figure}[H]
     \centering
@@ -878,10 +868,12 @@ In questa sezione vengono sintetizzati i dati raccolti durante la valutazione eu
     \label{fig:stat_severita}
 \end{figure}
 
+La matrice dei problemi individuati da ciascun valutatore è mostrata nella Figura~\ref{fig:matrice_errori}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{capitoli/immagini/matrice_errori.pdf}
-    \caption{Matrice degli errori trovati }
+    \caption{Matrice degli errori trovati}
     \label{fig:matrice_errori}
 \end{figure}
 
