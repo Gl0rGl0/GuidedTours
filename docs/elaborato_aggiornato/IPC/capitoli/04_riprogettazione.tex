@@ -121,20 +121,20 @@ La palette cromatica estratta dal codice definisce una gerarchia visiva basata s
 \begin{itemize}
     \item \textbf{Primario (Vibrant Blue, \#0d6efd):} Impiegato per le azioni principali (\textit{call-to-action}) e le direttive di navigazione primaria. Comunica sicurezza e grande affidabilità professionale.
     \item \textbf{Secondario e Accento (Amber/Gold, \#ffc107):} Riservato per le notifiche di avviso (\textit{warning}) o per polarizzare focalmente l'attenzione visuale in contesti con alta densità informativa.
-    \item \textbf{Feedback Semantico (Success \#198754, Danger \#dc3545, Info \#0dcaf0):} Il frontend sfrutta sistematicamente questa sintassi cromatica universale per i \textit{Live Input Feedback} (es. form validation) e per marcare le alterazioni critiche dello stato (es. i \textit{Global Delete Modal} in rosso), abbattendo i tempi di ricezione cognitiva degli esiti di sistema.
-    \item \textbf{Colori Neutri e Tema Scuro:} Le variabili architetturali \texttt{--bs-body-bg} (\#121212) e \texttt{--card-bg} (\#2a2a2a) presenti nel blocco nativo del tema \textit{dark} dimostrano una stratificazione atta a sopprimere l'affaticamento oculare (\textit{eye-strain}). Viene adoperato un grigio antracite al posto del nero assoluto, esaltando otticamente il volume del componente sollevato rispetto al fondale. Vi si accavallano filtri traslucidi (\textit{glassmorphism} settato all'85\% di opacità, es. \texttt{rgba(42, 42, 42, 0.85)}) che permettono ai layer di compenetrarsi organicamente.
+    \item \textbf{Feedback Semantico (Success \#198754, Danger \#dc3545, Info \#0dcaf0):} Questi colori seguono la convenzione cromatica universale e sono utilizzati per i \textit{Live Input Feedback} (es. validazione dei form) e per segnalare i cambiamenti di stato critici (es. il \textit{Global Delete Modal} in rosso), rendendo immediatamente riconoscibile l'esito di ogni operazione.
+    \item \textbf{Colori Neutri e Tema Scuro:} Le variabili \texttt{--bs-body-bg} (\#121212) e \texttt{--card-bg} (\#2a2a2a) del tema \textit{dark} definiscono una stratificazione pensata per ridurre l'affaticamento visivo (\textit{eye-strain}). Il grigio antracite, preferito al nero assoluto, migliora la percezione di profondità tra i componenti e lo sfondo. L'effetto \textit{glassmorphism} (opacità all'85\%, es. \texttt{rgba(42, 42, 42, 0.85)}) aggiunge trasparenze parziali che creano continuità visiva tra i livelli dell'interfaccia.
 \end{itemize}
 
 \subsection{Tipografia e Leggibilità}
-Dall'ispezione della dichiarazione centrale globale (\texttt{\$font-family-sans-serif}), emerge primariamente l'utilizzo dell'innovativa famiglia tipografica \textit{Outfit} (importata via \textit{Google Fonts}) e del successivo \textit{system stack}. Si tratta di un \textit{sans-serif} geometrico assai limpido, leggibile a qualsivoglia scalatura *viewport*.
+La dichiarazione globale (\texttt{\$font-family-sans-serif}) adotta la famiglia tipografica \textit{Outfit} (importata via \textit{Google Fonts}), seguita dal \textit{system stack} di fallback. Si tratta di un \textit{sans-serif} geometrico dalla buona leggibilità a qualsiasi dimensione di \textit{viewport}.
 
-La gerarchia dei pesi è decisa sincreticamente all'adozione delle utility del framework (\texttt{display-4}, \texttt{h3}, \texttt{h5}), abbinate per la titolazione ad un peso netto e consistente (\texttt{\$headings-font-weight: 600;}). Scelte del genere irrobustiscono e incanalano efficacemente lo \textit{scanning pattern} oculare rapido (stile F-Pattern), demarcando con solida incisività il perimetro visivo della \textit{hero section} dai normali blocchi testuali più analitici di un \textit{body} classico.
+La gerarchia dei pesi è costruita attraverso le classi del framework (\texttt{display-4}, \texttt{h3}, \texttt{h5}), con un peso uniforme per i titoli (\texttt{\$headings-font-weight: 600;}). Questa impostazione favorisce lo \textit{scanning} rapido della pagina secondo il tipico F-Pattern, distinguendo chiaramente la \textit{hero section} dal corpo del contenuto testuale.
 
 \subsection{Spaziature e Principi della Gestalt}
-Le logiche strutturali CSS di \textit{Guided Tours} e i costrutti formali del layout adottati traslano in codice i fondamenti pervasivi dettati dalla psicologia della forma (\textit{Gestalt}):
+Le scelte di layout e spaziatura adottate in \textit{Guided Tours} applicano i principi della psicologia della forma (\textit{Gestalt}):
 \begin{itemize}
-    \item \textbf{Prossimità e Regione Comune:} L'impiego pervasivo di \texttt{.card} dotate di raggiature accentuate (\texttt{border-radius: 1rem}) unito a background cromaticamente scissi (\texttt{--card-bg}), delimita materialmente insiemi eterogenei in una sola "regione comune" raggruppata logicamente. La separazione visiva è amministrata da una netta abbondanza di padding regolari (\texttt{py-5}, \texttt{gap-2}) che disaccoppia entità estranee alleggerendone drasticamente la tensione di decifrazione (\textit{Legge della Prossimità}).
-    \item \textbf{Feedback Tattile Implicito (Buona Continuazione):} Le tessere (\textit{Cards}) accolgono micro-transizioni reattive (\texttt{.card-hover:hover}) che traducono un istantaneo vettore verticale di elevazione (\texttt{translateY(-8px)}), associato ad intensificazione dell'ombra (\textit{drop-shadow}). Tali riscontri tridimensionali emulano solide affordance del mondo fisico, canalizzando per implicita continuazione visiva le scelte esplorative e il rassicurante cliccaggio dei dispositivi di input dell'internauta.
+    \item \textbf{Prossimità e Regione Comune:} L'uso sistematico di \texttt{.card} con bordi arrotondati (\texttt{border-radius: 1rem}) e sfondo differenziato (\texttt{--card-bg}) raggruppa visivamente gli elementi correlati in un'unica regione comune. Le spaziature regolari tra le card (\texttt{py-5}, \texttt{gap-2}) separano i gruppi logici distinti, sfruttando la \textit{Legge della Prossimità} per ridurre lo sforzo di lettura.
+    \item \textbf{Continuità e Feedback visivo:} Le card presentano micro-transizioni al passaggio del mouse (\texttt{.card-hover:hover}): un leggero spostamento verticale (\texttt{translateY(-8px)}) accompagnato dall'intensificazione dell'ombra (\textit{drop-shadow}). Questo effetto di elevazione richiama le affordance degli oggetti fisici, suggerendo la cliccabilità dell'elemento e guidando l'esplorazione dell'utente secondo il principio di \textit{Buona Continuazione}.
 \end{itemize}
 
 \section{Design Pattern d'Interazione (HCI)}
@@ -225,15 +225,15 @@ Il pannello amministrativo comprende il configuratore a schede (Places, Visit Ty
     \begin{subfigure}[b]{0.47\textwidth}
         \centering
         \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_add_visit.png}
-        \caption{V1 (Prima)}
+        \caption{Form Add Visit}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.47\textwidth}
         \centering
         \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_admin_planning.png}
-        \caption{V2 (Dopo)}
+        \caption{Visit Planning}
     \end{subfigure}
-    \caption{V2 -- Visit Planning raggruppato per mese (sinistra) e form Add Visit con flusso guidato (destra).}
+    \caption{V2 -- Form Add Visit con flusso guidato (sinistra) e Visit Planning raggruppato per mese (destra).}
     \label{fig:v2_planning}
 \end{figure}
 
@@ -246,13 +246,13 @@ L'area riservata alle Guide presenta la pagina delle visite assegnate con banner
     \begin{subfigure}[b]{0.47\textwidth}
         \centering
         \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_visits.png}
-        \caption{V1 (Prima)}
+        \caption{My Assigned Visits}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.47\textwidth}
         \centering
         \includegraphics[width=\textwidth, keepaspectratio]{capitoli/immagini/v2/v2_guide_calendar.png}
-        \caption{V2 (Dopo)}
+        \caption{Calendario disponibilità}
     \end{subfigure}
     \caption{V2 -- "My Assigned Visits" con banner istruzioni operative (sinistra) e calendario disponibilità (destra).}
     \label{fig:v2_guide}
