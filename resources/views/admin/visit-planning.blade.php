@@ -8,11 +8,6 @@
             <h2 class="fw-bold text-primary mb-1">{{ __('messages.admin.visit_planning.title') }}</h2>
             <p class="text-muted mb-0">{{ __('messages.admin.visit_planning.description') }}</p>
         </div>
-        <div class="d-flex gap-2">
-            <a href="{{ route('admin.visits.create') }}" class="btn btn-primary btn-lg rounded-pill shadow px-4 pulsing-button">
-                <i class="bi bi-plus-lg me-2"></i> {{ __('messages.admin.visit_planning.add_btn') }}
-            </a>
-        </div>
     </div>
 
     @push('styles')
@@ -32,12 +27,18 @@
     </style>
     @endpush
 
-    <!-- Date Range Info -->
-    <div class="alert alert-light border shadow-sm d-flex align-items-center mb-5 rounded-4">
-        <i class="bi bi-calendar-range text-primary fs-4 me-3"></i>
-        <div>
-            <small class="text-muted text-uppercase fw-bold">{{ __('messages.admin.visit_planning.planning_period') }}</small>
-            <div class="fw-bold">{{ $startDate->format('M j, Y') }} — {{ $endDate->format('M j, Y') }}</div>
+    <div class="d-flex justify-content-between align-items-center gap-3 mb-5">
+        <a href="{{ route('admin.visits.create') }}" class="btn btn-primary btn-lg rounded-pill shadow px-4 pulsing-button flex-shrink-0">
+            <i class="bi bi-plus-lg me-2"></i> {{ __('messages.admin.visit_planning.add_btn') }}
+        </a>
+
+        <!-- Date Range Info -->
+        <div class="alert alert-light border shadow-sm d-flex align-items-center mb-0 rounded-4">
+            <i class="bi bi-calendar-range text-primary fs-4 me-3"></i>
+            <div>
+                <small class="text-muted text-uppercase fw-bold">{{ __('messages.admin.visit_planning.planning_period') }}</small>
+                <div class="fw-bold">{{ $startDate->format('M j, Y') }} — {{ $endDate->format('M j, Y') }}</div>
+            </div>
         </div>
     </div>
 
