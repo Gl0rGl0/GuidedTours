@@ -138,18 +138,20 @@
                                         <td class="ps-4 fw-bold text-primary">{{ $place->name }}</td>
                                         <td class="text-muted"><i class="bi bi-pin-map me-1"></i>{{ Str::limit($place->location, 30) }}</td>
                                         <td class="text-muted small">{{ Str::limit($place->description, 50) }}</td>
-                                        <td class="text-end pe-4">
-                                            <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger ms-1" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#deleteModal"
-                                                data-action="{{ route('admin.places.destroy', $place) }}"
-                                                data-item-name="{{ $place->name }}"
-                                                title="Delete">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                        <td class="pe-4">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <a href="{{ route('admin.places.edit', $place) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#deleteModal"
+                                                    data-action="{{ route('admin.places.destroy', $place) }}"
+                                                    data-item-name="{{ $place->name }}"
+                                                    title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -210,18 +212,20 @@
                                         <td class="small text-muted">
                                             <i class="bi bi-people me-1"></i> {{ $type->min_participants }}-{{ $type->max_participants }}
                                         </td>
-                                        <td class="text-end pe-4">
-                                            <a href="{{ route('admin.visit-types.edit', $type) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger ms-1" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#deleteModal"
-                                                data-action="{{ route('admin.visit-types.destroy', $type) }}"
-                                                data-item-name="{{ $type->title }}"
-                                                title="Delete">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                        <td class="pe-4">
+                                            <div class="d-flex justify-content-end gap-1">
+                                                <a href="{{ route('admin.visit-types.edit', $type) }}" class="btn btn-icon btn-light btn-sm rounded-circle text-muted" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
+                                                    data-bs-toggle="modal" 
+                                                    data-bs-target="#deleteModal"
+                                                    data-action="{{ route('admin.visit-types.destroy', $type) }}"
+                                                    data-item-name="{{ $type->title }}"
+                                                    title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
@@ -295,26 +299,28 @@
                                                     {{ $role }}
                                                 </span>
                                             </td>
-                                            <td class="text-end pe-4">
-                                                @if($role !== 'Admin' && $user->id !== Auth::id())
-                                                     <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#deleteModal"
-                                                        data-action="{{ route('admin.users.destroy', $user) }}"
-                                                        data-item-name="{{ $user->first_name }} {{ $user->last_name }}"
-                                                        title="Delete User">
-                                                        <i class="bi bi-trash"></i>
-                                                    </button>
-                                                @else
-                                                    @php
-                                                        $tooltipMessage = __('messages.admin.configurator.users.tooltip_admin_delete');
-                                                    @endphp
-                                                    <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="{{ $tooltipMessage }}">
-                                                        <button class="btn btn-icon btn-light btn-sm rounded-circle" type="button" disabled>
-                                                            <i class="bi bi-trash text-muted opacity-50"></i>
+                                            <td class="pe-4">
+                                                <div class="d-flex justify-content-end gap-1">
+                                                    @if($role !== 'Admin' && $user->id !== Auth::id())
+                                                         <button type="button" class="btn btn-icon btn-light btn-sm rounded-circle text-danger" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#deleteModal"
+                                                            data-action="{{ route('admin.users.destroy', $user) }}"
+                                                            data-item-name="{{ $user->first_name }} {{ $user->last_name }}"
+                                                            title="Delete User">
+                                                            <i class="bi bi-trash"></i>
                                                         </button>
-                                                    </span>
-                                                @endif
+                                                    @else
+                                                        @php
+                                                            $tooltipMessage = __('messages.admin.configurator.users.tooltip_admin_delete');
+                                                        @endphp
+                                                        <span class="d-inline-block" tabindex="0" data-bs-toggle="tooltip" title="{{ $tooltipMessage }}">
+                                                            <button class="btn btn-icon btn-light btn-sm rounded-circle" type="button" disabled>
+                                                                <i class="bi bi-trash text-muted opacity-50"></i>
+                                                            </button>
+                                                        </span>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
