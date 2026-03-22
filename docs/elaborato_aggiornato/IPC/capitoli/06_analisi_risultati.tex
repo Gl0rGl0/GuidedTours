@@ -197,7 +197,7 @@ Difficoltà (1-5) & 2.2 & 1.1 \\ \hline
 Origine (1 Sito -- 5 Ute) & 2 & 2.5 \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} Nella V1, l'indirizzo era raggiungibile solo dopo aver scorso tutte le visite disponibili; nella V2 è immediatamente visibile sotto solamente 3 righe di visite nel footer. Tempi di completamento abbattuti del 60\%.
+\textbf{Commenti:} Nella V1, l'indirizzo era raggiungibile solo dopo aver scorso tutte le visite disponibili; nella V2 è immediatamente visibile sotto solamente 3 righe di visite nel footer. Tempi di completamento abbattuti del 46\%.
 
 \subsection{Compito 2: Registrazione e accesso}
 \begin{table}[H]
@@ -235,7 +235,7 @@ Difficoltà (1-5) & 3.6 & 2.7 \\ \hline
 Origine (1 Sito -- 5 Ute) & 1.3 & 2.2 \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} In V1 l'assenza di un sistema di filtro (\textit{Faceted Search}) costringeva l'utente a scorrere manualmente l'intera lista di visite per individuare l'evento desiderato, incrementando sia il numero di click che il carico cognitivo. La navigazione lineare senza affordance visive sullo stato delle visite produceva frequenti errori di selezione, con utenti che prenotavano la visita sbagliata o si perdevano nel flusso. In V2 l'introduzione della griglia a card con filtri per luogo, data e stato, unita all'indicazione esplicita dei posti residui, ha ridotto il percorso di ricerca da 15 a 7 click ($-$53\%) e il tempo da 80~s a 58~s ($-$28\%), portando all'83\% il tasso di completamento autonomo.
+\textbf{Commenti:} In V1 l'assenza di un sistema di filtro (\textit{Faceted Search}) costringeva l'utente a scorrere manualmente l'intera lista di visite per individuare l'evento desiderato, incrementando sia il numero di click che il carico cognitivo. La navigazione lineare senza affordance visive sullo stato delle visite produceva frequenti errori di selezione, con utenti che prenotavano la visita sbagliata o si perdevano nel flusso. In V2 l'introduzione della griglia a card con filtri per luogo, data e stato, unita all'indicazione esplicita dei posti residui, ha ridotto il percorso di ricerca da 8 a 5 click ($-$38\%) e il tempo da 80~s a 58~s ($-$28\%), portando al 67\% il tasso di completamento autonomo.
 
 \subsection{Compito 4: Trova codice prenotazione}
 \begin{table}[H]
@@ -311,7 +311,7 @@ Difficoltà (1-5) & 3.8 & 3.5 \\ \hline
 Origine (1 Sito -- 5 Ute) & 1.6 & 1.9 \\ \hline
 \end{tabular}
 \end{table}
-\textbf{Commenti:} Il task di dichiarazione disponibilità è quello con performance peggiori di tutte le task, particolarmente critico per il profilo del Volontario, che lo esegue con frequenza tipicamente mensile. In V1 l'assenza di una legenda ha reso difficile l'interpretazione del calendario, portando a smarrimento. In V2 l'introduzione di un calendario interattivo ha ridotto il numero di click da 10 a 4 ($-$60\%) e il tempo da 155~s a 52~s ($-$66\%), portando il tasso di completamento all'83\%. Inoltre alcuni dei tester più giovani hanno potuto sfruttare la selezione multipla riducendo sia i click che il tempo medio.
+\textbf{Commenti:} Il task di dichiarazione disponibilità stenta tra quelli con performance peggiori per tutte le task. In V1 l'assenza di una legenda ha reso difficile l'interpretazione del calendario. In V2 l'introduzione di un calendario interattivo ha mantenuto pressoché stabili il numero di click (da 10 a 9) e il tempo riscontrato (da 78~s a 75~s). In compenso alcuni dei tester più giovani hanno potuto sfruttare la selezione multipla intuendola con facilità.
 
 \subsection{Compito 8: Switch account admin}
 \begin{table}[H]
@@ -436,7 +436,7 @@ La torta aggregata rende immediato il salto qualitativo: in V1 la netta maggiora
     \label{fig:tempi}
 \end{figure}
 
-Il grafico dei tempi evidenzia le riduzioni più drastiche nei task di maggior frizione in V1: il Compito 3 (prenotazione visita) scende da 185~s a 110~s ($-$41\%), il Compito 5 (cancellazione) da 175~s a 48~s ($-$73\%), e il Compito 7 (disponibilità volontario) da 155~s a 52~s ($-$66\%). I task più semplici (T6, T8) mostrano miglioramenti minori in termini assoluti, ma erano già performanti in V1.
+Il grafico dei tempi evidenzia i decisi miglioramenti in compiti cruciali e che causavano attrito: il Compito 2 (registrazione) scende da 113~s a 92~s ($-$19\%), il Compito 3 (prenotazione visita) scende da 80~s a 58~s ($-$28\%), e il Compito 1 (sede dell'organizzazione) si è quasi dimezzato, da 41~s a 22~s ($-$46\%). I task più standard ed essenziali (T6, T8, ecc.) mostrano invece variazioni fisiologiche confermando buone performance di base.
 
 \begin{figure}[H]
     \centering
@@ -445,7 +445,7 @@ Il grafico dei tempi evidenzia le riduzioni più drastiche nei task di maggior f
     \label{fig:errori}
 \end{figure}
 
-Il grafico degli errori conferma la tendenza: la riduzione media è dell'85\% su tutti i task. Il picco di errori in V1 si registra nel Compito 5 (2.8 errori medi), dove la mancanza di modale di conferma generava cancellazioni accidentali o loop di navigazione. In V2 nessun task supera 0.5 errori medi.
+Il grafico degli errori rivela un'attenuazione o una stabilizzazione delle inesattezze rispetto alla prima versione, con una riduzione media degli errori su tutti i task del 27\%. I picchi di difficoltà oggettiva affliggono fortemente il Compito 9 (creazione di visite) che, seppure con una lieve riduzione, staziona a 6.7 errori medi in V2, evidenziando il carico cognitivo dell'azione in backoffice, e il Compito 10 (eliminazione) con un leggero calo a 3.4. D'altro canto i restanti task operativi quotidiani si dimostrano scorrevoli.
 
 \section{Analisi questionario finale}
 
@@ -508,7 +508,7 @@ Il task T5 (cancellazione prenotazione) ha generato commenti particolarmente riv
     \item \textbf{U08, T5 (V1):} \textit{``Ho premuto e non mi ha chiesto conferma. È già andata? Spero di non aver cancellato quella sbagliata.''}
     \item \textbf{U03, T5 (V2):} \textit{``Bene, mi chiede conferma. Così sono più tranquilla prima di procedere.''}
 \end{itemize}
-Questo contrasto è uno dei più eloquenti dell'intero dataset qualitativo: la medesima utente (U03) ha espresso ansia e incertezza in V1, e sollievo esplicito in V2. La modal di conferma introdotta in V2 non ha solo ridotto gli errori misurati, ma ha modificato in modo percepibile il \textbf{sentimento soggettivo di controllo} durante l'azione distruttiva.
+Questo contrasto è uno dei più eloquenti dell'intero dataset qualitativo: la medesima utente (U03) ha espresso ansia e incertezza in V1, e sollievo esplicito in V2. La modale di conferma introdotta in V2, nonostante incida su un margine tecnico di errore oggettivamente irrisorio per il task 5 (0.4 media su V2 e 0.2 su V1), ha modificato in modo vitale e percepibile il \textbf{sentimento soggettivo di controllo} da parte del soggetto durante l'azione distruttiva.
 
 \subsubsection{Riepilogo tematico}
 La tabella seguente categorizza i 16 commenti TA più significativi raccolti, evidenziando come la distribuzione delle categorie si sia drasticamente invertita tra V1 e V2.
