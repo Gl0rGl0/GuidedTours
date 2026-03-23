@@ -1,0 +1,265 @@
+Utente_ID,Nome,Cognome,Gruppo,Task_ID,Task_Name,Versione,Completato,Tempo_s,Click,Errori,Difficoltà,Origine
+1,Danilo,Barbetti,A,1,Sede organizzazione,V1,CA,52,4,3,3,3
+2,Alessandra,Nodari,A,1,Sede organizzazione,V1,C,41,3,1,3,2
+3,Bruno,Cesari,A,1,Sede organizzazione,V1,CA,43,4,1,3,2
+4,Ivana,Calufetti,A,1,Sede organizzazione,V1,CA,52,5,4,4,3
+5,Monica,Gaioni,A,1,Sede organizzazione,V1,C,40,3,1,2,2
+6,Erminio,Felappi,A,1,Sede organizzazione,V1,NC,52,6,5,4,3
+7,Alessia,Duci,B,1,Sede organizzazione,V1,C,32,2,0,1,1
+8,Elena,Picinelli,B,1,Sede organizzazione,V1,C,37,2,1,1,2
+9,Gaia,Zuelli,B,1,Sede organizzazione,V1,C,40,2,1,1,2
+10,Francesco,Felappi,B,1,Sede organizzazione,V1,C,30,1,0,1,1
+11,Leonardo,Folgoni,B,1,Sede organizzazione,V1,C,31,1,0,1,1
+12,Angelo,Perego,B,1,Sede organizzazione,V1,C,41,3,1,2,2
+1,Danilo,Barbetti,A,1,Sede organizzazione,V2,C,24,2,0,1,3
+2,Alessandra,Nodari,A,1,Sede organizzazione,V2,C,22,1,0,1,3
+3,Bruno,Cesari,A,1,Sede organizzazione,V2,C,23,1,0,1,3
+4,Ivana,Calufetti,A,1,Sede organizzazione,V2,CA,29,2,0,1,4
+5,Monica,Gaioni,A,1,Sede organizzazione,V2,C,21,1,0,1,2
+6,Erminio,Felappi,A,1,Sede organizzazione,V2,CA,29,2,1,2,4
+7,Alessia,Duci,B,1,Sede organizzazione,V2,C,19,1,0,1,2
+8,Elena,Picinelli,B,1,Sede organizzazione,V2,C,20,1,0,1,2
+9,Gaia,Zuelli,B,1,Sede organizzazione,V2,C,20,1,0,1,2
+10,Francesco,Felappi,B,1,Sede organizzazione,V2,C,15,1,0,1,1
+11,Leonardo,Folgoni,B,1,Sede organizzazione,V2,C,19,1,0,1,2
+12,Angelo,Perego,B,1,Sede organizzazione,V2,C,21,1,0,1,2
+1,Danilo,Barbetti,A,2,Registrazione e accesso,V1,CA,121,17,4,3,2
+2,Alessandra,Nodari,A,2,Registrazione e accesso,V1,C,116,14,3,2,2
+3,Bruno,Cesari,A,2,Registrazione e accesso,V1,CA,118,15,3,2,2
+4,Ivana,Calufetti,A,2,Registrazione e accesso,V1,CA,122,18,4,3,2
+5,Monica,Gaioni,A,2,Registrazione e accesso,V1,C,114,12,2,2,2
+6,Erminio,Felappi,A,2,Registrazione e accesso,V1,CA,132,18,5,3,4
+7,Alessia,Duci,B,2,Registrazione e accesso,V1,C,104,9,1,1,1
+8,Elena,Picinelli,B,2,Registrazione e accesso,V1,C,105,10,1,1,1
+9,Gaia,Zuelli,B,2,Registrazione e accesso,V1,C,106,11,2,2,1
+10,Francesco,Felappi,B,2,Registrazione e accesso,V1,C,97,8,1,1,1
+11,Leonardo,Folgoni,B,2,Registrazione e accesso,V1,C,102,8,1,1,1
+12,Angelo,Perego,B,2,Registrazione e accesso,V1,C,116,13,2,2,2
+1,Danilo,Barbetti,A,2,Registrazione e accesso,V2,C,102,12,1,2,6
+2,Alessandra,Nodari,A,2,Registrazione e accesso,V2,C,99,12,1,1,4
+3,Bruno,Cesari,A,2,Registrazione e accesso,V2,C,101,12,1,2,5
+4,Ivana,Calufetti,A,2,Registrazione e accesso,V2,CA,102,12,2,2,6
+5,Monica,Gaioni,A,2,Registrazione e accesso,V2,C,93,11,0,1,4
+6,Erminio,Felappi,A,2,Registrazione e accesso,V2,CA,104,14,2,2,7
+7,Alessia,Duci,B,2,Registrazione e accesso,V2,C,81,9,0,1,2
+8,Elena,Picinelli,B,2,Registrazione e accesso,V2,C,84,9,0,1,4
+9,Gaia,Zuelli,B,2,Registrazione e accesso,V2,C,88,9,0,1,4
+10,Francesco,Felappi,B,2,Registrazione e accesso,V2,C,73,6,0,1,2
+11,Leonardo,Folgoni,B,2,Registrazione e accesso,V2,C,77,7,0,1,2
+12,Angelo,Perego,B,2,Registrazione e accesso,V2,C,96,11,1,1,4
+1,Danilo,Barbetti,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,CA,88,12,4,5,2
+2,Alessandra,Nodari,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,CA,83,9,3,5,1
+3,Bruno,Cesari,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,CA,83,11,3,5,2
+4,Ivana,Calufetti,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,CA,89,12,4,5,2
+5,Monica,Gaioni,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,78,7,2,3,1
+6,Erminio,Felappi,A,3,"Prenotazione a ""Torre dell'Aquila""",V1,NC,92,13,5,6,2
+7,Alessia,Duci,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,75,6,0,2,1
+8,Elena,Picinelli,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,77,6,1,2,1
+9,Gaia,Zuelli,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,77,7,2,2,1
+10,Francesco,Felappi,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,59,4,0,2,1
+11,Leonardo,Folgoni,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,C,75,5,0,2,1
+12,Angelo,Perego,B,3,"Prenotazione a ""Torre dell'Aquila""",V1,CA,80,7,2,4,1
+1,Danilo,Barbetti,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,CA,64,5,3,4,3
+2,Alessandra,Nodari,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,62,5,2,3,2
+3,Bruno,Cesari,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,CA,63,5,2,3,3
+4,Ivana,Calufetti,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,CA,64,7,3,5,4
+5,Monica,Gaioni,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,56,5,1,2,2
+6,Erminio,Felappi,A,3,"Prenotazione a ""Torre dell'Aquila""",V2,CA,73,7,4,5,4
+7,Alessia,Duci,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,54,3,1,2,1
+8,Elena,Picinelli,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,55,4,1,2,1
+9,Gaia,Zuelli,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,55,5,1,2,2
+10,Francesco,Felappi,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,44,2,0,1,1
+11,Leonardo,Folgoni,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,54,3,0,1,1
+12,Angelo,Perego,B,3,"Prenotazione a ""Torre dell'Aquila""",V2,C,56,5,1,2,2
+1,Danilo,Barbetti,A,4,Trova codice prenotazione,V1,C,24,4,1,2,3
+2,Alessandra,Nodari,A,4,Trova codice prenotazione,V1,C,23,4,1,1,3
+3,Bruno,Cesari,A,4,Trova codice prenotazione,V1,C,24,4,1,2,3
+4,Ivana,Calufetti,A,4,Trova codice prenotazione,V1,CA,27,5,2,2,3
+5,Monica,Gaioni,A,4,Trova codice prenotazione,V1,C,18,2,1,1,2
+6,Erminio,Felappi,A,4,Trova codice prenotazione,V1,CA,31,5,2,2,4
+7,Alessia,Duci,B,4,Trova codice prenotazione,V1,C,13,2,0,1,1
+8,Elena,Picinelli,B,4,Trova codice prenotazione,V1,C,17,2,0,1,1
+9,Gaia,Zuelli,B,4,Trova codice prenotazione,V1,C,17,2,0,1,2
+10,Francesco,Felappi,B,4,Trova codice prenotazione,V1,C,12,1,0,1,1
+11,Leonardo,Folgoni,B,4,Trova codice prenotazione,V1,C,13,1,0,1,1
+12,Angelo,Perego,B,4,Trova codice prenotazione,V1,C,22,3,1,1,2
+1,Danilo,Barbetti,A,4,Trova codice prenotazione,V2,C,22,4,1,1,7
+2,Alessandra,Nodari,A,4,Trova codice prenotazione,V2,C,18,3,1,1,5
+3,Bruno,Cesari,A,4,Trova codice prenotazione,V2,C,20,3,1,1,5
+4,Ivana,Calufetti,A,4,Trova codice prenotazione,V2,C,23,5,1,1,7
+5,Monica,Gaioni,A,4,Trova codice prenotazione,V2,C,17,3,0,1,4
+6,Erminio,Felappi,A,4,Trova codice prenotazione,V2,CA,28,5,4,2,8
+7,Alessia,Duci,B,4,Trova codice prenotazione,V2,C,14,2,0,1,3
+8,Elena,Picinelli,B,4,Trova codice prenotazione,V2,C,16,2,0,1,4
+9,Gaia,Zuelli,B,4,Trova codice prenotazione,V2,C,17,3,0,1,4
+10,Francesco,Felappi,B,4,Trova codice prenotazione,V2,C,12,1,0,1,2
+11,Leonardo,Folgoni,B,4,Trova codice prenotazione,V2,C,12,1,0,1,3
+12,Angelo,Perego,B,4,Trova codice prenotazione,V2,C,18,3,0,1,5
+1,Danilo,Barbetti,A,5,Cancella prenotazione,V1,C,20,6,0,2,4
+2,Alessandra,Nodari,A,5,Cancella prenotazione,V1,C,19,5,0,1,4
+3,Bruno,Cesari,A,5,Cancella prenotazione,V1,C,20,6,0,2,4
+4,Ivana,Calufetti,A,5,Cancella prenotazione,V1,CA,22,7,1,2,5
+5,Monica,Gaioni,A,5,Cancella prenotazione,V1,C,18,4,0,1,3
+6,Erminio,Felappi,A,5,Cancella prenotazione,V1,CA,23,9,1,3,5
+7,Alessia,Duci,B,5,Cancella prenotazione,V1,C,13,4,0,1,2
+8,Elena,Picinelli,B,5,Cancella prenotazione,V1,C,14,4,0,1,2
+9,Gaia,Zuelli,B,5,Cancella prenotazione,V1,C,16,4,0,1,2
+10,Francesco,Felappi,B,5,Cancella prenotazione,V1,C,11,2,0,1,1
+11,Leonardo,Folgoni,B,5,Cancella prenotazione,V1,C,13,3,0,1,2
+12,Angelo,Perego,B,5,Cancella prenotazione,V1,C,18,5,0,1,3
+1,Danilo,Barbetti,A,5,Cancella prenotazione,V2,C,22,5,1,2,5
+2,Alessandra,Nodari,A,5,Cancella prenotazione,V2,C,20,4,0,2,4
+3,Bruno,Cesari,A,5,Cancella prenotazione,V2,C,20,5,1,2,4
+4,Ivana,Calufetti,A,5,Cancella prenotazione,V2,C,22,6,1,2,5
+5,Monica,Gaioni,A,5,Cancella prenotazione,V2,C,19,4,0,1,4
+6,Erminio,Felappi,A,5,Cancella prenotazione,V2,CA,24,6,2,3,6
+7,Alessia,Duci,B,5,Cancella prenotazione,V2,C,17,2,0,1,3
+8,Elena,Picinelli,B,5,Cancella prenotazione,V2,C,18,3,0,1,3
+9,Gaia,Zuelli,B,5,Cancella prenotazione,V2,C,19,3,0,1,3
+10,Francesco,Felappi,B,5,Cancella prenotazione,V2,C,11,1,0,1,2
+11,Leonardo,Folgoni,B,5,Cancella prenotazione,V2,C,15,1,0,1,2
+12,Angelo,Perego,B,5,Cancella prenotazione,V2,C,20,4,0,1,4
+1,Danilo,Barbetti,A,6,Switch account volontario,V1,C,49,11,0,2,2
+2,Alessandra,Nodari,A,6,Switch account volontario,V1,C,46,9,0,2,1
+3,Bruno,Cesari,A,6,Switch account volontario,V1,C,48,10,0,2,2
+4,Ivana,Calufetti,A,6,Switch account volontario,V1,C,51,12,2,2,3
+5,Monica,Gaioni,A,6,Switch account volontario,V1,C,44,9,0,1,1
+6,Erminio,Felappi,A,6,Switch account volontario,V1,C,54,19,2,3,3
+7,Alessia,Duci,B,6,Switch account volontario,V1,C,42,8,0,1,1
+8,Elena,Picinelli,B,6,Switch account volontario,V1,C,43,8,0,1,1
+9,Gaia,Zuelli,B,6,Switch account volontario,V1,C,43,8,0,1,1
+10,Francesco,Felappi,B,6,Switch account volontario,V1,C,36,6,0,1,1
+11,Leonardo,Folgoni,B,6,Switch account volontario,V1,C,38,7,0,1,1
+12,Angelo,Perego,B,6,Switch account volontario,V1,C,45,9,0,1,1
+1,Danilo,Barbetti,A,6,Switch account volontario,V2,C,51,10,0,2,5
+2,Alessandra,Nodari,A,6,Switch account volontario,V2,C,46,9,0,1,5
+3,Bruno,Cesari,A,6,Switch account volontario,V2,C,47,10,0,2,5
+4,Ivana,Calufetti,A,6,Switch account volontario,V2,C,51,10,1,2,8
+5,Monica,Gaioni,A,6,Switch account volontario,V2,C,41,9,0,1,4
+6,Erminio,Felappi,A,6,Switch account volontario,V2,C,60,16,1,3,8
+7,Alessia,Duci,B,6,Switch account volontario,V2,C,39,8,0,1,3
+8,Elena,Picinelli,B,6,Switch account volontario,V2,C,39,8,0,1,3
+9,Gaia,Zuelli,B,6,Switch account volontario,V2,C,41,8,0,1,4
+10,Francesco,Felappi,B,6,Switch account volontario,V2,C,34,5,0,1,2
+11,Leonardo,Folgoni,B,6,Switch account volontario,V2,C,36,5,0,1,3
+12,Angelo,Perego,B,6,Switch account volontario,V2,C,43,9,0,1,4
+1,Danilo,Barbetti,A,7,Imposta disponibilità,V1,NC,89,12,3,4,2
+2,Alessandra,Nodari,A,7,Imposta disponibilità,V1,CA,79,11,3,4,2
+3,Bruno,Cesari,A,7,Imposta disponibilità,V1,CA,83,12,3,4,2
+4,Ivana,Calufetti,A,7,Imposta disponibilità,V1,NC,89,12,4,5,2
+5,Monica,Gaioni,A,7,Imposta disponibilità,V1,CA,74,9,2,4,1
+6,Erminio,Felappi,A,7,Imposta disponibilità,V1,NC,90,17,4,5,4
+7,Alessia,Duci,B,7,Imposta disponibilità,V1,C,71,8,1,3,1
+8,Elena,Picinelli,B,7,Imposta disponibilità,V1,C,72,9,2,4,1
+9,Gaia,Zuelli,B,7,Imposta disponibilità,V1,C,74,9,2,4,1
+10,Francesco,Felappi,B,7,Imposta disponibilità,V1,C,64,5,1,2,1
+11,Leonardo,Folgoni,B,7,Imposta disponibilità,V1,C,69,5,1,2,1
+12,Angelo,Perego,B,7,Imposta disponibilità,V1,CA,76,10,2,4,1
+1,Danilo,Barbetti,A,7,Imposta disponibilità,V2,CA,82,11,2,5,3
+2,Alessandra,Nodari,A,7,Imposta disponibilità,V2,CA,78,10,2,4,2
+3,Bruno,Cesari,A,7,Imposta disponibilità,V2,CA,80,10,2,5,3
+4,Ivana,Calufetti,A,7,Imposta disponibilità,V2,NC,82,13,3,5,3
+5,Monica,Gaioni,A,7,Imposta disponibilità,V2,CA,76,8,2,4,2
+6,Erminio,Felappi,A,7,Imposta disponibilità,V2,NC,83,16,5,5,3
+7,Alessia,Duci,B,7,Imposta disponibilità,V2,C,71,7,1,2,1
+8,Elena,Picinelli,B,7,Imposta disponibilità,V2,C,74,8,2,2,1
+9,Gaia,Zuelli,B,7,Imposta disponibilità,V2,C,76,8,2,3,1
+10,Francesco,Felappi,B,7,Imposta disponibilità,V2,C,56,6,1,1,1
+11,Leonardo,Folgoni,B,7,Imposta disponibilità,V2,C,64,7,1,2,1
+12,Angelo,Perego,B,7,Imposta disponibilità,V2,CA,77,9,2,4,2
+1,Danilo,Barbetti,A,8,Switch account admin,V1,C,46,10,0,1,6
+2,Alessandra,Nodari,A,8,Switch account admin,V1,C,43,9,0,1,6
+3,Bruno,Cesari,A,8,Switch account admin,V1,C,45,10,0,1,6
+4,Ivana,Calufetti,A,8,Switch account admin,V1,C,46,11,0,2,6
+5,Monica,Gaioni,A,8,Switch account admin,V1,C,38,8,0,1,4
+6,Erminio,Felappi,A,8,Switch account admin,V1,CA,51,12,1,2,7
+7,Alessia,Duci,B,8,Switch account admin,V1,C,34,6,0,1,3
+8,Elena,Picinelli,B,8,Switch account admin,V1,C,37,7,0,1,3
+9,Gaia,Zuelli,B,8,Switch account admin,V1,C,37,8,0,1,4
+10,Francesco,Felappi,B,8,Switch account admin,V1,C,29,5,0,1,2
+11,Leonardo,Folgoni,B,8,Switch account admin,V1,C,31,6,0,1,2
+12,Angelo,Perego,B,8,Switch account admin,V1,C,40,8,0,1,5
+1,Danilo,Barbetti,A,8,Switch account admin,V2,C,44,9,0,1,6
+2,Alessandra,Nodari,A,8,Switch account admin,V2,C,41,8,0,1,6
+3,Bruno,Cesari,A,8,Switch account admin,V2,C,44,9,0,1,6
+4,Ivana,Calufetti,A,8,Switch account admin,V2,C,46,9,0,1,7
+5,Monica,Gaioni,A,8,Switch account admin,V2,C,40,7,0,1,5
+6,Erminio,Felappi,A,8,Switch account admin,V2,CA,53,10,1,2,7
+7,Alessia,Duci,B,8,Switch account admin,V2,C,31,5,0,1,3
+8,Elena,Picinelli,B,8,Switch account admin,V2,C,35,6,0,1,4
+9,Gaia,Zuelli,B,8,Switch account admin,V2,C,37,6,0,1,4
+10,Francesco,Felappi,B,8,Switch account admin,V2,C,27,4,0,1,1
+11,Leonardo,Folgoni,B,8,Switch account admin,V2,C,28,5,0,1,2
+12,Angelo,Perego,B,8,Switch account admin,V2,C,41,8,0,1,6
+1,Danilo,Barbetti,A,9,Creazione visita guidata,V1,NC,121,21,9,6,2
+2,Alessandra,Nodari,A,9,Creazione visita guidata,V1,CA,117,18,9,4,1
+3,Bruno,Cesari,A,9,Creazione visita guidata,V1,CA,120,18,9,6,2
+4,Ivana,Calufetti,A,9,Creazione visita guidata,V1,NC,131,21,10,6,2
+5,Monica,Gaioni,A,9,Creazione visita guidata,V1,CA,111,18,8,3,1
+6,Erminio,Felappi,A,9,Creazione visita guidata,V1,NC,134,31,11,8,3
+7,Alessia,Duci,B,9,Creazione visita guidata,V1,C,104,16,6,3,1
+8,Elena,Picinelli,B,9,Creazione visita guidata,V1,C,105,16,6,3,1
+9,Gaia,Zuelli,B,9,Creazione visita guidata,V1,CA,111,17,7,3,1
+10,Francesco,Felappi,B,9,Creazione visita guidata,V1,C,88,14,5,2,1
+11,Leonardo,Folgoni,B,9,Creazione visita guidata,V1,C,100,16,5,2,1
+12,Angelo,Perego,B,9,Creazione visita guidata,V1,CA,114,18,8,4,1
+1,Danilo,Barbetti,A,9,Creazione visita guidata,V2,CA,110,21,9,5,2
+2,Alessandra,Nodari,A,9,Creazione visita guidata,V2,CA,105,19,8,4,2
+3,Bruno,Cesari,A,9,Creazione visita guidata,V2,CA,105,19,9,4,2
+4,Ivana,Calufetti,A,9,Creazione visita guidata,V2,NC,111,23,9,5,3
+5,Monica,Gaioni,A,9,Creazione visita guidata,V2,CA,104,16,7,4,1
+6,Erminio,Felappi,A,9,Creazione visita guidata,V2,NC,126,24,10,6,3
+7,Alessia,Duci,B,9,Creazione visita guidata,V2,C,94,13,4,3,1
+8,Elena,Picinelli,B,9,Creazione visita guidata,V2,C,98,16,4,4,1
+9,Gaia,Zuelli,B,9,Creazione visita guidata,V2,CA,104,16,6,4,1
+10,Francesco,Felappi,B,9,Creazione visita guidata,V2,C,91,9,3,2,1
+11,Leonardo,Folgoni,B,9,Creazione visita guidata,V2,C,91,13,3,2,1
+12,Angelo,Perego,B,9,Creazione visita guidata,V2,CA,105,18,8,4,1
+1,Danilo,Barbetti,A,10,Eliminazione di un tipo di visita,V1,CA,89,10,6,6,3
+2,Alessandra,Nodari,A,10,Eliminazione di un tipo di visita,V1,CA,86,9,4,4,2
+3,Bruno,Cesari,A,10,Eliminazione di un tipo di visita,V1,CA,88,9,5,4,2
+4,Ivana,Calufetti,A,10,Eliminazione di un tipo di visita,V1,CA,95,10,6,6,3
+5,Monica,Gaioni,A,10,Eliminazione di un tipo di visita,V1,CA,86,7,3,4,1
+6,Erminio,Felappi,A,10,Eliminazione di un tipo di visita,V1,NC,101,11,7,7,3
+7,Alessia,Duci,B,10,Eliminazione di un tipo di visita,V1,C,83,4,1,3,1
+8,Elena,Picinelli,B,10,Eliminazione di un tipo di visita,V1,C,83,6,3,3,1
+9,Gaia,Zuelli,B,10,Eliminazione di un tipo di visita,V1,CA,85,6,3,4,1
+10,Francesco,Felappi,B,10,Eliminazione di un tipo di visita,V1,C,66,3,1,2,1
+11,Leonardo,Folgoni,B,10,Eliminazione di un tipo di visita,V1,C,71,4,1,2,1
+12,Angelo,Perego,B,10,Eliminazione di un tipo di visita,V1,CA,86,7,4,4,2
+1,Danilo,Barbetti,A,10,Eliminazione di un tipo di visita,V2,CA,83,7,4,5,7
+2,Alessandra,Nodari,A,10,Eliminazione di un tipo di visita,V2,CA,78,7,4,4,5
+3,Bruno,Cesari,A,10,Eliminazione di un tipo di visita,V2,CA,79,7,4,4,6
+4,Ivana,Calufetti,A,10,Eliminazione di un tipo di visita,V2,CA,91,8,6,6,7
+5,Monica,Gaioni,A,10,Eliminazione di un tipo di visita,V2,CA,77,5,3,4,4
+6,Erminio,Felappi,A,10,Eliminazione di un tipo di visita,V2,NC,94,9,6,8,8
+7,Alessia,Duci,B,10,Eliminazione di un tipo di visita,V2,C,70,4,2,2,1
+8,Elena,Picinelli,B,10,Eliminazione di un tipo di visita,V2,C,73,5,3,2,3
+9,Gaia,Zuelli,B,10,Eliminazione di un tipo di visita,V2,C,73,5,3,3,3
+10,Francesco,Felappi,B,10,Eliminazione di un tipo di visita,V2,C,62,1,1,1,1
+11,Leonardo,Folgoni,B,10,Eliminazione di un tipo di visita,V2,C,67,2,1,2,1
+12,Angelo,Perego,B,10,Eliminazione di un tipo di visita,V2,CA,78,6,4,4,4
+1,Danilo,Barbetti,A,11,Change Password,V1,CA,54,7,1,1,4
+2,Alessandra,Nodari,A,11,Change Password,V1,C,54,5,1,1,4
+3,Bruno,Cesari,A,11,Change Password,V1,C,54,6,1,1,4
+4,Ivana,Calufetti,A,11,Change Password,V1,CA,55,9,1,2,4
+5,Monica,Gaioni,A,11,Change Password,V1,C,50,4,1,1,3
+6,Erminio,Felappi,A,11,Change Password,V1,CA,57,11,2,2,5
+7,Alessia,Duci,B,11,Change Password,V1,C,46,3,0,1,2
+8,Elena,Picinelli,B,11,Change Password,V1,C,47,3,0,1,2
+9,Gaia,Zuelli,B,11,Change Password,V1,C,49,3,0,1,3
+10,Francesco,Felappi,B,11,Change Password,V1,C,44,2,0,1,2
+11,Leonardo,Folgoni,B,11,Change Password,V1,C,44,2,0,1,2
+12,Angelo,Perego,B,11,Change Password,V1,C,50,4,1,1,3
+1,Danilo,Barbetti,A,11,Change Password,V2,CA,49,6,0,1,6
+2,Alessandra,Nodari,A,11,Change Password,V2,C,48,4,0,1,5
+3,Bruno,Cesari,A,11,Change Password,V2,C,49,5,0,1,6
+4,Ivana,Calufetti,A,11,Change Password,V2,CA,49,7,0,1,7
+5,Monica,Gaioni,A,11,Change Password,V2,C,46,4,0,1,5
+6,Erminio,Felappi,A,11,Change Password,V2,CA,53,8,1,2,7
+7,Alessia,Duci,B,11,Change Password,V2,C,42,2,0,1,4
+8,Elena,Picinelli,B,11,Change Password,V2,C,42,3,0,1,4
+9,Gaia,Zuelli,B,11,Change Password,V2,C,45,4,0,1,5
+10,Francesco,Felappi,B,11,Change Password,V2,C,41,1,0,1,1
+11,Leonardo,Folgoni,B,11,Change Password,V2,C,42,2,0,1,2
+12,Angelo,Perego,B,11,Change Password,V2,C,47,4,0,1,5
