@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riassunto IPC — Esame Orale</title>
+<style>
+  :root {
+    --blue: #0f4c81;
+    --light-blue: #edf5fc;
+    --accent: #d9622b;
+    --green: #2f7a5f;
+    --light-green: #e3f4ec;
+    --yellow: #fff4d8;
+    --red: #b23a33;
+    --gray: #f5f7fb;
+    --text: #142133;
+    --muted: #5a6679;
+    --border: #d8e0ec;
+    --paper: #fffdf9;
+    --shadow-soft: 0 10px 28px rgba(13, 36, 61, 0.08);
+    --shadow-card: 0 8px 22px rgba(12, 28, 48, 0.07);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Avenir Next", "IBM Plex Sans", "Trebuchet MS", sans-serif;
+    font-size: 15.5px;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 8% -6%, rgba(47, 122, 95, 0.14), transparent 32%),
+      radial-gradient(circle at 96% 2%, rgba(15, 76, 129, 0.16), transparent 34%),
+      linear-gradient(170deg, #f5f7fb 0%, #f8fafc 42%, #f7f3ec 100%);
+    line-height: 1.7;
+  }
+
+  /* LAYOUT */
+  #toc {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 252px;
+    height: calc(100vh - 24px);
+    overflow-y: auto;
+    background: linear-gradient(175deg, #0f2139 0%, #152f4d 100%);
+    color: #c8d8f0;
+    font-size: 13px;
+    padding: 12px 0;
+    z-index: 100;
+    border: 1px solid rgba(183, 203, 230, 0.25);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 40px rgba(7, 16, 29, 0.35);
+  }
+  #toc h2 {
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 16px 8px;
+    border-bottom: 1px solid rgba(130, 160, 197, 0.35);
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  #toc a {
+    display: block;
+    padding: 5px 16px;
+    color: #b1c8e3;
+    text-decoration: none;
+    line-height: 1.45;
+    border-left: 2px solid transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, padding-left 0.2s ease;
+  }
+  #toc a:hover {
+    background: rgba(106, 141, 183, 0.24);
+    color: #ffffff;
+    border-color: #8eb5df;
+    padding-left: 18px;
+  }
+  #toc .toc-sub { padding-left: 28px; font-size: 12px; color: #7fa2c9; }
+  main {
+    margin: 26px 24px 30px 280px;
+    padding: 32px 40px 84px;
+    max-width: 1120px;
+    background: rgba(255, 253, 249, 0.9);
+    border: 1px solid rgba(196, 208, 224, 0.55);
+    border-radius: calc(var(--radius) + 2px);
+    box-shadow: var(--shadow-soft);
+    animation: fade-lift 0.55s ease-out both;
+    backdrop-filter: blur(3px);
+  }
+
+  /* HEADERS */
+  h1 {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 2.25em;
+    color: var(--blue);
+    border-bottom: 3px solid #8eb5df;
+    padding-bottom: 10px;
+    margin-bottom: 8px;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+  }
+  h2 {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 1.5em;
+    color: var(--blue);
+    margin: 42px 0 14px;
+    padding: 12px 18px;
+    background: linear-gradient(90deg, #e9f2fb 0%, #eef5ff 70%, rgba(238, 245, 255, 0) 100%);
+    border-left: 5px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+  }
+  h3 { font-size: 1.2em; color: #1f4378; margin: 26px 0 10px; }
+  h4 { font-size: 1em; color: var(--accent); margin: 16px 0 8px; letter-spacing: 0.01em; }
+  .subtitle { color: var(--muted); font-size: 1.02em; margin-bottom: 34px; }
+
+  /* CONTENT */
+  p { margin: 6px 0 11px; }
+  ul, ol { margin: 8px 0 12px 24px; }
+  li { margin-bottom: 5px; }
+  strong { color: #1a1a1a; }
+  em { color: var(--muted); }
+  code {
+    background: #ebf0f7;
+    border-radius: 5px;
+    border: 1px solid #d9e2ef;
+    padding: 2px 6px;
+    font-size: 0.9em;
+  }
+  blockquote {
+    background: #f2f7ff;
+    border-radius: 0 10px 10px 0;
+  }
+
+  /* BOXES */
+  .box {
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+  .box-blue { background: linear-gradient(180deg, #edf5fc 0%, #f7fbff 100%); border-left: 4px solid var(--blue); }
+  .box-green { background: linear-gradient(180deg, #e3f4ec 0%, #f5fcf8 100%); border-left: 4px solid var(--green); }
+  .box-yellow { background: linear-gradient(180deg, #fff4d8 0%, #fff9ec 100%); border-left: 4px solid #da9b1b; }
+  .box-red { background: linear-gradient(180deg, #fcecec 0%, #fff7f7 100%); border-left: 4px solid var(--red); }
+  .box-gray { background: linear-gradient(180deg, #f3f6fa 0%, #fafcff 100%); border-left: 4px solid #8797ac; }
+  .definition { font-style: italic; color: #2a2a60; font-size: 1.05em; }
+  .key { color: var(--accent); font-weight: bold; }
+  .tag {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 10px;
+    font-size: 0.8em;
+    margin: 2px;
+    box-shadow: 0 2px 8px rgba(15, 76, 129, 0.25);
+  }
+
+  /* TABLES */
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 14px 0;
+    font-size: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    background: #fff;
+  }
+  th {
+    background: linear-gradient(180deg, #0f4c81 0%, #134f86 100%);
+    color: #fff;
+    padding: 9px 12px;
+    text-align: left;
+    letter-spacing: 0.01em;
+  }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f7fafd; }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .card {
+    background: linear-gradient(160deg, #f6f9fd 0%, #ffffff 100%);
+    border-radius: 12px;
+    padding: 14px;
+    border: 1px solid #d9e3f0;
+    border-top: 3px solid var(--blue);
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(13, 37, 64, 0.12);
+  }
+
+  /* SVG */
+  .svg-wrap { margin: 20px 0; text-align: center; }
+  .svg-wrap svg {
+    max-width: 100%;
+    background: #fff;
+    border: 1px solid #d6e0ed;
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+  }
+  .svg-caption { font-size: 12px; color: #6a7485; margin-top: 8px; }
+
+  /* SECTION ANCHORS */
+  section { margin-bottom: 60px; }
+  .back-top {
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: var(--blue);
+    text-decoration: none;
+    margin-top: 10px;
+    transition: color 0.2s ease;
+  }
+  .back-top:hover { color: #0a3860; text-decoration: underline; }
+
+  /* NUMMER BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #e57a49 0%, var(--accent) 75%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.85em;
+    margin-right: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(217, 98, 43, 0.35);
+  }
+  .heuristic {
+    display: flex;
+    align-items: flex-start;
+    margin: 9px 0;
+    padding: 6px 8px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+  }
+  .heuristic:hover { background: #f2f7ff; }
+  .heuristic-text { flex: 1; }
+
+  @keyframes fade-lift {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    #toc { display: none; }
+    main {
+      margin: 10px;
+      padding: 20px 14px 40px;
+      border-radius: 12px;
+    }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+    h1 { font-size: 1.9em; }
+    h2 { font-size: 1.35em; }
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 15px; }
+    main { padding: 18px 12px 34px; }
+    table { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TABLE OF CONTENTS -->
+<nav id="toc">
+  <h2>📚 IPC — Riassunto</h2>
+  <a href="#intro">1. Introduzione</a>
+  <a href="#modelli" class="toc-sub">2. Modelli di Interazione</a>
+  <a href="#utente" class="toc-sub">3. L'Utente</a>
+  <a href="#stili" class="toc-sub">4. Stili di Interazione</a>
+  <a href="#usabilita">5. Usabilità &amp; Nielsen</a>
+  <a href="#valutazione">6. Valutazione</a>
+  <a href="#ciclovita" class="toc-sub">  a) Ciclo di Vita</a>
+  <a href="#euristica" class="toc-sub">  b) Val. Euristica</a>
+  <a href="#walkthrough" class="toc-sub">  c) Walkthrough</a>
+  <a href="#kla" class="toc-sub">  d) KLA</a>
+  <a href="#progettazione">7. Progettazione</a>
+  <a href="#pact" class="toc-sub">  a) PACT &amp; HTA</a>
+  <a href="#concettuale" class="toc-sub">  b) Concettuale</a>
+  <a href="#pattern" class="toc-sub">  c) Design Pattern</a>
+  <a href="#fisica" class="toc-sub">  d) Fisica (Layout)</a>
+  <a href="#colore" class="toc-sub">  e) Colore</a>
+  <a href="#esperimento">8. Esperimento</a>
+  <a href="#statistica" class="toc-sub">  a) Statistica</a>
+  <a href="#dati" class="toc-sub">  b) Raccolta Dati</a>
+  <a href="#accessibilita">9. Accessibilità</a>
+  <a href="#hcai">10. HCI &amp; AI</a>
+</nav>
+
+<main>
+
+<h1>Interazione Persona-Calcolatore</h1>
+<p class="subtitle">Riassunto completo per l'esame orale — Prof.ssa Daniela Fogli, UniBS</p>
+
+<!-- ============================= 1. INTRODUZIONE ============================= -->
+<section id="intro">
+<h2>1. Introduzione all'HCI</h2>
+
+<div class="box box-blue">
+<p class="definition">"L'HCI è la disciplina che studia la progettazione, la valutazione e l'implementazione di sistemi informatici interattivi per l'uso umano, e i fenomeni principali che li circondano." (ACM SIGCHI)</p>
+</div>
+
+<h3>Obiettivo</h3>
+<p>Progettare sistemi <strong>usabili</strong> che si adattino alle capacità e ai bisogni degli utenti, non il contrario. L'HCI è interdisciplinare: informatica, psicologia cognitiva, ergonomia, design, sociologia.</p>
+
+<h3>Il ciclo di interazione — Modello di Norman</h3>
+<div class="svg-wrap">
+<svg width="700" height="320" viewBox="0 0 700 320">
+  <!-- Utente box -->
+  <rect x="260" y="20" width="180" height="60" rx="8" fill="#1a56a0" />
+  <text x="350" y="48" text-anchor="middle" fill="white" font-weight="bold" font-size="15">UTENTE</text>
+  <text x="350" y="66" text-anchor="middle" fill="#c8d8f0" font-size="12">Goal / Intenzione</text>
+  <!-- Sistema box -->
+  <rect x="260" y="240" width="180" height="60" rx="8" fill="#e85d04" />
+  <text x="350" y="268" text-anchor="middle" fill="white" font-weight="bold" font-size="15">SISTEMA</text>
+  <text x="350" y="286" text-anchor="middle" fill="#ffd0b0" font-size="12">Stato / Output</text>
+  <!-- Golfo esecuzione -->
+  <rect x="30" y="120" width="160" height="80" rx="8" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="110" y="148" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Golfo</text>
+  <text x="110" y="165" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">dell'Esecuzione</text>
+  <text x="110" y="185" text-anchor="middle" fill="#555" font-size="11">Utente → Azione</text>
+  <!-- Golfo valutazione -->
+  <rect x="510" y="120" width="160" height="80" rx="8" fill="#fde8e8" stroke="#c0392b" stroke-width="2"/>
+  <text x="590" y="148" text-anchor="middle" fill="#c0392b" font-weight="bold" font-size="13">Golfo della</text>
+  <text x="590" y="165" text-anchor="middle" fill="#c0392b" font-weight="bold" font-size="13">Valutazione</text>
+  <text x="590" y="185" text-anchor="middle" fill="#555" font-size="11">Utente interpreta</text>
+  <!-- Arrows execution side -->
+  <line x1="280" y1="75" x2="190" y2="130" stroke="#2d6a4f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="190" y1="200" x2="280" y2="245" stroke="#2d6a4f" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Arrows evaluation side -->
+  <line x1="420" y1="75" x2="510" y2="130" stroke="#c0392b" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="510" y1="200" x2="420" y2="245" stroke="#c0392b" stroke-width="2" marker-end="url(#arrow)"/>
+  <!-- Labels on arrows -->
+  <text x="205" y="108" fill="#2d6a4f" font-size="11">Esecuzione</text>
+  <text x="205" y="230" fill="#2d6a4f" font-size="11">Azione fisica</text>
+  <text x="440" y="108" fill="#c0392b" font-size="11">Percezione</text>
+  <text x="440" y="230" fill="#c0392b" font-size="11">Feedback</text>
+  <!-- Distanze labels -->
+  <text x="145" y="115" fill="#2d6a4f" font-size="10" font-style="italic">dist. semantica</text>
+  <text x="145" y="215" fill="#2d6a4f" font-size="10" font-style="italic">dist. articolatoria</text>
+  <text x="460" y="115" fill="#c0392b" font-size="10" font-style="italic">dist. semantica</text>
+  <text x="460" y="215" fill="#c0392b" font-size="10" font-style="italic">dist. articolatoria</text>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#555"/>
+    </marker>
+  </defs>
+</svg>
+<p class="svg-caption">Modello di Hutchins, Hollan &amp; Norman — Golfi e Distanze</p>
+</div>
+
+<div class="grid2">
+<div class="box box-green">
+<h4>Golfo dell'Esecuzione</h4>
+<p>Difficoltà nel <strong>formulare e eseguire</strong> un'azione. Ridotto se l'interfaccia rende chiaro cosa si può fare.</p>
+<ul>
+  <li><strong>Distanza semantica:</strong> quanto le azioni disponibili corrispondono alle intenzioni</li>
+  <li><strong>Distanza articolatoria:</strong> quanto è difficile fisicamente eseguire l'azione</li>
+</ul>
+</div>
+<div class="box box-red">
+<h4>Golfo della Valutazione</h4>
+<p>Difficoltà nell'<strong>interpretare lo stato del sistema</strong>. Ridotto se il feedback è chiaro.</p>
+<ul>
+  <li><strong>Distanza semantica:</strong> quanto l'output corrisponde alle aspettative</li>
+  <li><strong>Distanza articolatoria:</strong> quanto è difficile percepire l'output</li>
+</ul>
+</div>
+</div>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 2. MODELLI ============================= -->
+<section id="modelli">
+<h2>2. Modelli di Interazione</h2>
+
+<h3>Human Processor Model (Card, Moran &amp; Newell, 1983)</h3>
+<div class="svg-wrap">
+<svg width="680" height="200" viewBox="0 0 680 200">
+  <!-- Perceptual -->
+  <rect x="10" y="40" width="150" height="120" rx="8" fill="#e8f0fb" stroke="#1a56a0" stroke-width="2"/>
+  <text x="85" y="70" text-anchor="middle" fill="#1a56a0" font-weight="bold" font-size="13">Processore</text>
+  <text x="85" y="88" text-anchor="middle" fill="#1a56a0" font-weight="bold" font-size="13">Percettivo</text>
+  <text x="85" y="112" text-anchor="middle" fill="#555" font-size="11">~100ms</text>
+  <text x="85" y="128" text-anchor="middle" fill="#555" font-size="11">Memoria</text>
+  <text x="85" y="143" text-anchor="middle" fill="#555" font-size="11">sensoriale</text>
+  <!-- Cognitive -->
+  <rect x="265" y="40" width="150" height="120" rx="8" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="340" y="70" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Processore</text>
+  <text x="340" y="88" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Cognitivo</text>
+  <text x="340" y="112" text-anchor="middle" fill="#555" font-size="11">~70ms</text>
+  <text x="340" y="128" text-anchor="middle" fill="#555" font-size="11">STM: 7±2 chunk</text>
+  <text x="340" y="143" text-anchor="middle" fill="#555" font-size="11">LTM: illimitata</text>
+  <!-- Motor -->
+  <rect x="520" y="40" width="150" height="120" rx="8" fill="#fde8e8" stroke="#c0392b" stroke-width="2"/>
+  <text x="595" y="70" text-anchor="middle" fill="#c0392b" font-weight="bold" font-size="13">Processore</text>
+  <text x="595" y="88" text-anchor="middle" fill="#c0392b" font-weight="bold" font-size="13">Motorio</text>
+  <text x="595" y="112" text-anchor="middle" fill="#555" font-size="11">~70ms</text>
+  <text x="595" y="128" text-anchor="middle" fill="#555" font-size="11">Esecuzione</text>
+  <text x="595" y="143" text-anchor="middle" fill="#555" font-size="11">movimenti</text>
+  <!-- Arrows -->
+  <line x1="160" y1="100" x2="265" y2="100" stroke="#888" stroke-width="2" marker-end="url(#a2)"/>
+  <line x1="415" y1="100" x2="520" y2="100" stroke="#888" stroke-width="2" marker-end="url(#a2)"/>
+  <!-- Input/Output labels -->
+  <text x="85" y="25" text-anchor="middle" fill="#1a56a0" font-size="11">INPUT</text>
+  <text x="595" y="25" text-anchor="middle" fill="#c0392b" font-size="11">OUTPUT</text>
+  <line x1="85" y1="28" x2="85" y2="40" stroke="#1a56a0" stroke-width="1.5" marker-end="url(#a2)"/>
+  <defs>
+    <marker id="a2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#888"/>
+    </marker>
+  </defs>
+</svg>
+<p class="svg-caption">Human Processor Model — tre processori paralleli</p>
+</div>
+
+<div class="grid2">
+<div class="box box-blue">
+<h4>Memoria a Breve Termine (STM / Working Memory)</h4>
+<ul>
+  <li>Capacità: <strong>7 ± 2 chunk</strong> (Miller, 1956)</li>
+  <li>Durata senza ripasso: ~15-30 secondi</li>
+  <li>Chunk: unità significativa (parola, numero familiare)</li>
+  <li>Design: non sovraccaricare la STM → non richiedere di ricordare numeri tra schermi diversi</li>
+</ul>
+</div>
+<div class="box box-green">
+<h4>Memoria a Lungo Termine (LTM)</h4>
+<ul>
+  <li>Capacità praticamente illimitata</li>
+  <li><strong>Dichiarativa</strong> (fatti, episodi) vs <strong>Procedurale</strong> (come fare le cose)</li>
+  <li>Recupero per attivazione: riconoscimento più facile del ricordo attivo</li>
+  <li>Design: meglio <em>riconoscere</em> che <em>ricordare</em> (euristica Nielsen)</li>
+</ul>
+</div>
+</div>
+
+<h3>Affordance</h3>
+<div class="grid2">
+<div class="box box-gray">
+<strong>Affordance (Gibson)</strong><br>
+Proprietà reale e percepibile di un oggetto che suggerisce come può essere usato. Esiste nella relazione tra l'oggetto e l'agente.
+</div>
+<div class="box box-yellow">
+<strong>Perceived Affordance (Norman)</strong><br>
+Ciò che l'utente <em>percepisce</em> come possibile (indipendentemente dalla realtà). Importante per l'HCI: conta la percezione, non la realtà.
+</div>
+</div>
+
+<h3>Leggi della Gestalt — Percezione visiva</h3>
+<div class="svg-wrap">
+<svg width="680" height="160" viewBox="0 0 680 160">
+  <!-- Prossimità -->
+  <g transform="translate(10,10)">
+    <rect width="100" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="50" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Prossimità</text>
+    <circle cx="25" cy="60" r="8" fill="#1a56a0" opacity="0.7"/>
+    <circle cx="45" cy="60" r="8" fill="#1a56a0" opacity="0.7"/>
+    <circle cx="75" cy="60" r="8" fill="#e85d04" opacity="0.7"/>
+    <circle cx="25" cy="80" r="8" fill="#1a56a0" opacity="0.7"/>
+    <circle cx="45" cy="80" r="8" fill="#1a56a0" opacity="0.7"/>
+    <circle cx="75" cy="80" r="8" fill="#e85d04" opacity="0.7"/>
+    <text x="50" y="120" text-anchor="middle" font-size="10" fill="#555">Vicini = gruppo</text>
+  </g>
+  <!-- Similarità -->
+  <g transform="translate(120,10)">
+    <rect width="100" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="50" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Similarità</text>
+    <circle cx="25" cy="60" r="8" fill="#1a56a0"/>
+    <rect x="37" y="52" width="16" height="16" fill="#e85d04"/>
+    <circle cx="75" cy="60" r="8" fill="#1a56a0"/>
+    <rect x="17" y="72" width="16" height="16" fill="#e85d04"/>
+    <circle cx="65" cy="80" r="8" fill="#1a56a0"/>
+    <rect x="77" y="72" width="16" height="16" fill="#e85d04"/>
+    <text x="50" y="120" text-anchor="middle" font-size="10" fill="#555">Simili = gruppo</text>
+  </g>
+  <!-- Chiusura -->
+  <g transform="translate(230,10)">
+    <rect width="100" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="50" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Chiusura</text>
+    <path d="M20,55 L50,40 L80,55 L80,90 L50,105 L20,90 Z" stroke="#1a56a0" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+    <text x="50" y="120" text-anchor="middle" font-size="10" fill="#555">Figura chiusa</text>
+  </g>
+  <!-- Continuità -->
+  <g transform="translate(340,10)">
+    <rect width="100" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="50" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Continuità</text>
+    <path d="M10,80 Q50,30 90,80" stroke="#1a56a0" stroke-width="2" fill="none"/>
+    <path d="M10,80 Q50,130 90,80" stroke="#e85d04" stroke-width="2" fill="none"/>
+    <text x="50" y="120" text-anchor="middle" font-size="10" fill="#555">Linee continue</text>
+  </g>
+  <!-- Figura/Sfondo -->
+  <g transform="translate(450,10)">
+    <rect width="100" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="50" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Figura/Sfondo</text>
+    <rect x="10" y="40" width="80" height="60" fill="#1a56a0" rx="4"/>
+    <circle cx="50" cy="70" r="22" fill="#f4f4f4"/>
+    <text x="50" y="120" text-anchor="middle" font-size="10" fill="#555">Separazione</text>
+  </g>
+  <!-- Simmetria -->
+  <g transform="translate(560,10)">
+    <rect width="110" height="140" rx="6" fill="#f4f4f4" stroke="#ccc"/>
+    <text x="55" y="20" text-anchor="middle" font-size="11" fill="#1a56a0" font-weight="bold">Simmetria</text>
+    <path d="M55,35 L55,105" stroke="#aaa" stroke-width="1" stroke-dasharray="3,3"/>
+    <path d="M25,45 L25,95 L55,70 Z" fill="#1a56a0" opacity="0.7"/>
+    <path d="M85,45 L85,95 L55,70 Z" fill="#1a56a0" opacity="0.7"/>
+    <text x="55" y="125" text-anchor="middle" font-size="10" fill="#555">Gruppi simmetrici</text>
+  </g>
+</svg>
+<p class="svg-caption">Principali leggi della Gestalt applicate all'interfaccia</p>
+</div>
+
+<h3>Modelli Mentali</h3>
+<p>Rappresentazione interna che l'utente si costruisce del sistema. Deve essere <strong>coerente</strong> con il modello del progettista. Discrepanze causano errori.</p>
+<ul>
+  <li><strong>Errori di slip:</strong> intenzione corretta, azione sbagliata (automatismi)</li>
+  <li><strong>Errori di mistake:</strong> intenzione sbagliata (modello mentale errato)</li>
+</ul>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 3. UTENTE ============================= -->
+<section id="utente">
+<h2>3. L'Utente — Fattori Umani</h2>
+
+<h3>Percezione e Attenzione</h3>
+<ul>
+  <li><strong>Visione:</strong> dominante. Fovea (acuità alta) vs periferia. Pop-out visivo: caratteristiche di basso livello (colore, orientamento) captate pre-attentivamente</li>
+  <li><strong>Attenzione selettiva:</strong> filtra l'informazione. Effetto cocktail party. Inattentional blindness</li>
+  <li><strong>Change blindness:</strong> difficoltà a rilevare cambiamenti non aspettati</li>
+</ul>
+
+<h3>Legge di Fitts</h3>
+<div class="box box-blue">
+<p><strong>T = a + b · log₂(D/W + 1)</strong></p>
+<p>T = tempo di puntamento, D = distanza, W = larghezza del target</p>
+<p>→ Target grandi e vicini sono più facili da raggiungere. <strong>Implicazione:</strong> bottoni importanti devono essere grandi e raggiungibili facilmente (bordi e angoli schermo = target infiniti)</p>
+</div>
+
+<h3>Legge di Hick</h3>
+<div class="box box-blue">
+<p><strong>T = b · log₂(n + 1)</strong></p>
+<p>T = tempo di scelta, n = numero di alternative</p>
+<p>→ Più opzioni = più tempo per decidere. <strong>Implicazione:</strong> limitare menu, usare classificazioni gerarchiche</p>
+</div>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 4. STILI ============================= -->
+<section id="stili">
+<h2>4. Stili di Interazione</h2>
+
+<table>
+  <tr><th>Stile</th><th>Descrizione</th><th>Pro</th><th>Contro</th></tr>
+  <tr><td><strong>CLI</strong> (Command Line)</td><td>Comandi testuali</td><td>Veloce, potente, scriptabile</td><td>Curva di apprendimento alta</td></tr>
+  <tr><td><strong>Menu</strong></td><td>Selezione da lista</td><td>Non richiede memorizzazione</td><td>Lento per utenti esperti</td></tr>
+  <tr><td><strong>Form</strong></td><td>Compilazione campi</td><td>Strutturato, validabile</td><td>Rigido</td></tr>
+  <tr><td><strong>WIMP / GUI</strong></td><td>Windows, Icons, Menus, Pointer</td><td>Intuitivo, diretto, WYSIWYG</td><td>Richiede metafore chiare</td></tr>
+  <tr><td><strong>Linguaggio naturale</strong></td><td>Testo o voce</td><td>Nessun apprendimento richiesto</td><td>Ambiguità, incomprensioni</td></tr>
+  <tr><td><strong>Manipolazione diretta</strong></td><td>Drag &amp; drop, gesture</td><td>Intuitivo, visuale</td><td>Difficile su dispositivi diversi</td></tr>
+  <tr><td><strong>Multimodale</strong></td><td>Combina più canali</td><td>Flessibile, adattivo</td><td>Complesso da progettare</td></tr>
+</table>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 5. USABILITÀ ============================= -->
+<section id="usabilita">
+<h2>5. Usabilità &amp; Principi di Nielsen</h2>
+
+<h3>Definizione ISO 9241-11</h3>
+<div class="box box-blue">
+<p class="definition">L'usabilità è il grado in cui un prodotto può essere usato da utenti specificati per raggiungere obiettivi specificati con <strong>efficacia</strong>, <strong>efficienza</strong> e <strong>soddisfazione</strong> in uno specifico contesto d'uso.</p>
+</div>
+
+<div class="grid3">
+<div class="card">
+  <strong>Efficacia</strong>
+  <p>Completezza e accuratezza con cui gli utenti raggiungono gli obiettivi</p>
+</div>
+<div class="card">
+  <strong>Efficienza</strong>
+  <p>Risorse (tempo, sforzo) impiegate in relazione agli obiettivi raggiunti</p>
+</div>
+<div class="card">
+  <strong>Soddisfazione</strong>
+  <p>Benessere e atteggiamento positivo verso il sistema</p>
+</div>
+</div>
+
+<h3 id="nielsen10">10 Euristiche di Nielsen</h3>
+<div class="box box-yellow">
+<p>Le euristiche di Nielsen (1994) sono 10 principi generali per valutare l'usabilità di un'interfaccia.</p>
+</div>
+
+<div class="heuristic"><span class="badge">1</span><div class="heuristic-text"><strong>Visibilità dello stato del sistema</strong> — Il sistema deve sempre informare l'utente su cosa sta succedendo (feedback adeguato e tempestivo).</div></div>
+<div class="heuristic"><span class="badge">2</span><div class="heuristic-text"><strong>Corrispondenza sistema/mondo reale</strong> — Usare parole, frasi e concetti familiari all'utente; seguire le convenzioni del mondo reale.</div></div>
+<div class="heuristic"><span class="badge">3</span><div class="heuristic-text"><strong>Controllo e libertà dell'utente</strong> — L'utente deve poter uscire dagli stati indesiderati (undo, redo, cancel).</div></div>
+<div class="heuristic"><span class="badge">4</span><div class="heuristic-text"><strong>Consistenza e standard</strong> — Stesse parole, situazioni e azioni devono significare la stessa cosa. Seguire le convenzioni della piattaforma.</div></div>
+<div class="heuristic"><span class="badge">5</span><div class="heuristic-text"><strong>Prevenzione degli errori</strong> — Meglio prevenire gli errori che correggerli. Eliminare condizioni che portano all'errore o chiedere conferma.</div></div>
+<div class="heuristic"><span class="badge">6</span><div class="heuristic-text"><strong>Riconoscimento piuttosto che ricordo</strong> — Minimizzare il carico sulla memoria. Rendere visibili oggetti, azioni e opzioni. (→ STM 7±2)</div></div>
+<div class="heuristic"><span class="badge">7</span><div class="heuristic-text"><strong>Flessibilità ed efficienza d'uso</strong> — Acceleratori per utenti esperti (scorciatoie da tastiera, macro). Il sistema deve funzionare sia per novizi che per esperti.</div></div>
+<div class="heuristic"><span class="badge">8</span><div class="heuristic-text"><strong>Design estetico e minimale</strong> — Non mostrare informazioni irrilevanti o rare. Ogni informazione in più compete con quella rilevante.</div></div>
+<div class="heuristic"><span class="badge">9</span><div class="heuristic-text"><strong>Aiuto nel riconoscere, diagnosticare e recuperare dagli errori</strong> — Messaggi di errore in linguaggio semplice, senza codici; devono indicare il problema e suggerire la soluzione.</div></div>
+<div class="heuristic"><span class="badge">10</span><div class="heuristic-text"><strong>Help e documentazione</strong> — Anche se meglio usare senza doc, potrebbe essere necessario fornire aiuto; orientato al task, non troppo lungo.</div></div>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 6. VALUTAZIONE ============================= -->
+<section id="valutazione">
+<h2>6. Metodi di Valutazione</h2>
+
+<div class="svg-wrap">
+<svg width="680" height="120" viewBox="0 0 680 120">
+  <rect x="10" y="20" width="150" height="80" rx="8" fill="#1a56a0"/>
+  <text x="85" y="52" text-anchor="middle" fill="white" font-weight="bold" font-size="13">Valutazione</text>
+  <text x="85" y="70" text-anchor="middle" fill="#c8d8f0" font-size="11">Senza utenti</text>
+  <text x="85" y="86" text-anchor="middle" fill="#c8d8f0" font-size="11">(analitica)</text>
+  <rect x="200" y="20" width="150" height="80" rx="8" fill="#2d6a4f"/>
+  <text x="275" y="52" text-anchor="middle" fill="white" font-weight="bold" font-size="13">Valutazione</text>
+  <text x="275" y="70" text-anchor="middle" fill="#d8f3dc" font-size="11">Con utenti</text>
+  <text x="275" y="86" text-anchor="middle" fill="#d8f3dc" font-size="11">(empirica)</text>
+  <text x="420" y="35" fill="#1a56a0" font-size="12">• Valutazione euristica</text>
+  <text x="420" y="52" fill="#1a56a0" font-size="12">• Walkthrough cognitivo</text>
+  <text x="420" y="69" fill="#1a56a0" font-size="12">• KLA / GOMS</text>
+  <text x="420" y="86" fill="#2d6a4f" font-size="12">• Test di usabilità (usability study)</text>
+  <text x="420" y="103" fill="#2d6a4f" font-size="12">• Esperimento controllato</text>
+</svg>
+</div>
+
+<h3 id="euristica">Valutazione Euristica</h3>
+<div class="box box-blue">
+<p><strong>Def:</strong> ispezione dell'interfaccia eseguita da <strong>3-5 esperti</strong> che valutano la conformità alle euristiche (Nielsen).</p>
+</div>
+
+<p><strong>Processo:</strong></p>
+<ol>
+  <li>Ogni valutatore ispeziona l'interfaccia <em>individualmente</em></li>
+  <li>Nota i problemi e li mappa sulle euristiche</li>
+  <li>I valutatori si confrontano e aggregano i risultati</li>
+  <li>Assegnano un <strong>severity rating</strong></li>
+</ol>
+
+<h4>Severity Rating (0–4)</h4>
+<table>
+  <tr><th>Punteggio</th><th>Significato</th></tr>
+  <tr><td>0</td><td>Non è un problema di usabilità</td></tr>
+  <tr><td>1</td><td>Problema cosmetico — solo se c'è tempo</td></tr>
+  <tr><td>2</td><td>Problema minore — bassa priorità</td></tr>
+  <tr><td>3</td><td>Problema importante — alta priorità</td></tr>
+  <tr><td>4</td><td>Catastrofico — deve essere risolto prima del rilascio</td></tr>
+</table>
+
+<div class="box box-yellow">
+<strong>Numero ottimale di valutatori:</strong> 3-5. Con 5 si trova ~75% dei problemi. Un solo valutatore trova solo ~35%.
+</div>
+
+<h3 id="walkthrough">Walkthrough Cognitivo</h3>
+<div class="box box-green">
+<p>Valuta la <strong>facilità di apprendimento</strong> simulando l'esperienza di un utente alle prime armi che tenta di completare un task passo per passo.</p>
+</div>
+
+<p>Per ogni azione del task il valutatore risponde a <strong>4 domande:</strong></p>
+<div class="grid2">
+<div class="box box-gray">
+  <strong>Q1.</strong> L'utente cercherà di raggiungere l'effetto corretto? (sa cosa vuole fare?)
+</div>
+<div class="box box-gray">
+  <strong>Q2.</strong> L'utente noterà che il controllo corretto è disponibile? (vede come farlo?)
+</div>
+<div class="box box-gray">
+  <strong>Q3.</strong> L'utente capirà che il controllo porta all'effetto desiderato? (capisce il collegamento?)
+</div>
+<div class="box box-gray">
+  <strong>Q4.</strong> Dopo l'azione, l'utente capirà che ha fatto progressi verso il goal? (vede il feedback?)
+</div>
+</div>
+
+<h3 id="kla">Keystroke Level Analysis (KLA / KLM)</h3>
+<div class="box box-blue">
+<p>Metodo analitico quantitativo per <strong>prevedere il tempo</strong> di esecuzione di un task da parte di un utente esperto.</p>
+</div>
+
+<p><strong>Operatori:</strong></p>
+<table>
+  <tr><th>Operatore</th><th>Descrizione</th><th>Tempo approx.</th></tr>
+  <tr><td><code>K</code></td><td>Keystroke (tasto)</td><td>~0.2s</td></tr>
+  <tr><td><code>P</code></td><td>Pointing (puntare con mouse)</td><td>~1.1s</td></tr>
+  <tr><td><code>H</code></td><td>Homing (spostamento mano tra tastiera e mouse)</td><td>~0.4s</td></tr>
+  <tr><td><code>D</code></td><td>Drawing (disegno)</td><td>variabile</td></tr>
+  <tr><td><code>M</code></td><td>Mental preparation (preparazione mentale)</td><td>~1.35s</td></tr>
+  <tr><td><code>R(t)</code></td><td>Response time (attesa sistema)</td><td>variabile</td></tr>
+</table>
+
+<p><strong>Tempo totale =</strong> somma dei tempi di tutti gli operatori nella sequenza del task.</p>
+<p><strong>Limiti:</strong> solo utenti esperti, non considera errori né apprendimento.</p>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 7. PROGETTAZIONE ============================= -->
+<section id="progettazione">
+<h2>7. Ciclo di Vita &amp; Progettazione</h2>
+
+<section id="ciclovita">
+<h3>Human-Centered Design (HCD) — ISO 13407 / ISO 9241-210</h3>
+
+<div class="svg-wrap">
+<svg width="620" height="280" viewBox="0 0 620 280">
+  <!-- Ciclo HCD -->
+  <circle cx="310" cy="140" r="60" fill="#1a56a0" opacity="0.1" stroke="#1a56a0" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="310" y="135" text-anchor="middle" fill="#1a56a0" font-weight="bold" font-size="13">HCD</text>
+  <text x="310" y="152" text-anchor="middle" fill="#1a56a0" font-size="11">Iterativo</text>
+  <!-- Fase 1: Pianifica -->
+  <rect x="230" y="15" width="160" height="50" rx="8" fill="#1a56a0"/>
+  <text x="310" y="36" text-anchor="middle" fill="white" font-weight="bold" font-size="12">1. Pianifica</text>
+  <text x="310" y="52" text-anchor="middle" fill="#c8d8f0" font-size="10">processo HCD</text>
+  <!-- Fase 2: Comprendi utente -->
+  <rect x="430" y="80" width="180" height="60" rx="8" fill="#2d6a4f"/>
+  <text x="520" y="105" text-anchor="middle" fill="white" font-weight="bold" font-size="12">2. Comprendi</text>
+  <text x="520" y="120" text-anchor="middle" fill="#d8f3dc" font-size="10">contesto d'uso</text>
+  <!-- Fase 3: Specifica requisiti -->
+  <rect x="430" y="180" width="180" height="60" rx="8" fill="#e85d04"/>
+  <text x="520" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="12">3. Specifica</text>
+  <text x="520" y="220" text-anchor="middle" fill="#ffd0b0" font-size="10">requisiti utente</text>
+  <!-- Fase 4: Produce soluzioni -->
+  <rect x="130" y="180" width="160" height="60" rx="8" fill="#7b2d8b"/>
+  <text x="210" y="205" text-anchor="middle" fill="white" font-weight="bold" font-size="12">4. Produce</text>
+  <text x="210" y="220" text-anchor="middle" fill="#e8c0f0" font-size="10">soluzioni di design</text>
+  <!-- Fase 5: Valuta -->
+  <rect x="10" y="80" width="160" height="60" rx="8" fill="#c0392b"/>
+  <text x="90" y="105" text-anchor="middle" fill="white" font-weight="bold" font-size="12">5. Valuta</text>
+  <text x="90" y="120" text-anchor="middle" fill="#fde8e8" font-size="10">rispetto ai requisiti</text>
+  <!-- Arrows -->
+  <path d="M310,65 L430,100" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a3)"/>
+  <path d="M520,140 L520,180" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a3)"/>
+  <path d="M430,210 L290,210" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a3)"/>
+  <path d="M130,200 L90,140" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a3)"/>
+  <path d="M90,80 L250,40" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#a3)"/>
+  <!-- "Sistema OK" label -->
+  <text x="310" y="265" text-anchor="middle" fill="#2d6a4f" font-size="11" font-style="italic">→ Il sistema soddisfa i requisiti</text>
+  <defs>
+    <marker id="a3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#555"/>
+    </marker>
+  </defs>
+</svg>
+<p class="svg-caption">Ciclo di vita Human-Centered Design (ISO 9241-210)</p>
+</div>
+
+<h4>Ciclo di Vita a Stella (Hartson &amp; Hix)</h4>
+<p>Simile all'HCD ma ancora più flessibile: si può iniziare da qualsiasi fase. La <strong>valutazione</strong> è al centro e collega tutte le fasi.</p>
+
+<h4>Livelli di Maturità della Progettazione (1–4)</h4>
+<table>
+  <tr><th>Livello</th><th>Descrizione</th></tr>
+  <tr><td>1</td><td>Nessuna attenzione all'utente (design guidato dalla tecnologia)</td></tr>
+  <tr><td>2</td><td>Qualche attenzione: test informali con utenti a fine ciclo</td></tr>
+  <tr><td>3</td><td>User-centered: utenti coinvolti in tutto il processo</td></tr>
+  <tr><td>4</td><td>Sistematico: metodi validati, UX misurata, cultura aziendale orientata all'utente</td></tr>
+</table>
+</section>
+
+<section id="pact">
+<h3>PACT Framework (Benyon)</h3>
+<div class="grid2">
+<div class="box box-blue"><strong>P — People</strong><br>Chi sono gli utenti? Caratteristiche fisiche, cognitive, sociali. Novizi vs esperti.</div>
+<div class="box box-green"><strong>A — Activities</strong><br>Cosa devono fare? Frequenza, complessità, errori, cooperazione.</div>
+<div class="box box-yellow"><strong>C — Contexts</strong><br>Dove usano il sistema? Fisico, sociale, organizzativo.</div>
+<div class="box box-red"><strong>T — Technologies</strong><br>Input/output, rete, piattaforme. Vincoli tecnologici.</div>
+</div>
+
+<h3>Analisi dei Requisiti</h3>
+<div class="grid2">
+<div class="box box-gray">
+<strong>Requisiti Funzionali</strong>
+<p>Cosa il sistema DEVE fare (funzionalità, comportamenti)</p>
+</div>
+<div class="box box-gray">
+<strong>Requisiti Non-Funzionali</strong>
+<p>Come deve farlo (prestazioni, usabilità, sicurezza, accessibilità)</p>
+</div>
+</div>
+
+<h3>HTA — Hierarchical Task Analysis</h3>
+<div class="box box-blue">
+<p>Tecnica per analizzare i task utente scomponendoli in sotto-task gerarchicamente organizzati. Si rappresenta come albero. Include <strong>piani</strong> che specificano l'ordine di esecuzione (es. "fai 1, poi 2, poi 3").</p>
+</div>
+
+<h3>Tecniche di Raccolta Dati</h3>
+<table>
+  <tr><th>Tecnica</th><th>Tipo dato</th><th>Quando usare</th></tr>
+  <tr><td>Intervista strutturata</td><td>Qualitativo</td><td>Esplorare opinioni, bisogni</td></tr>
+  <tr><td>Intervista non strutturata</td><td>Qualitativo</td><td>Esplorare in profondità</td></tr>
+  <tr><td>Focus group</td><td>Qualitativo</td><td>Reazioni di gruppo, consenso</td></tr>
+  <tr><td>Questionario</td><td>Quantitativo</td><td>Misurare su molti utenti</td></tr>
+  <tr><td>Osservazione diretta</td><td>Qualitativo</td><td>Capire il contesto reale d'uso</td></tr>
+  <tr><td>Analisi competitiva</td><td>Misto</td><td>Confronto con competitor</td></tr>
+  <tr><td>Analisi SWOT</td><td>Strutturato</td><td>Punti forza/debolezza/opp/minacce</td></tr>
+</table>
+</section>
+
+<section id="concettuale">
+<h3>Progettazione Concettuale</h3>
+<p>Definisce <em>cosa</em> il sistema farà (non come). Si produce un <strong>modello concettuale</strong>:</p>
+<ul>
+  <li>Metafora dell'interfaccia (es. desktop, shopping cart)</li>
+  <li>Concetti che gli utenti manipolano</li>
+  <li>Relazioni tra i concetti</li>
+  <li>Mappature tra dominio del problema e sistema</li>
+</ul>
+
+<h3>Prototipazione</h3>
+<div class="svg-wrap">
+<svg width="680" height="140" viewBox="0 0 680 140">
+  <!-- Throwaway -->
+  <rect x="10" y="15" width="310" height="110" rx="8" fill="#fde8e8" stroke="#c0392b" stroke-width="2"/>
+  <text x="165" y="38" text-anchor="middle" fill="#c0392b" font-weight="bold" font-size="13">Throwaway (Esplorativo)</text>
+  <text x="30" y="62" fill="#444" font-size="12">• Prototipo bassa fedeltà</text>
+  <text x="30" y="80" fill="#444" font-size="12">• Storyboard, paper prototype</text>
+  <text x="30" y="98" fill="#444" font-size="12">• Scartato dopo la valutazione</text>
+  <text x="30" y="116" fill="#444" font-size="12">• Usato nelle prime fasi</text>
+  <!-- Evolutionary -->
+  <rect x="360" y="15" width="310" height="110" rx="8" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="515" y="38" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Evolutionary (Incrementale)</text>
+  <text x="380" y="62" fill="#444" font-size="12">• Prototipo alta fedeltà</text>
+  <text x="380" y="80" fill="#444" font-size="12">• Mock-up digitale / interattivo</text>
+  <text x="380" y="98" fill="#444" font-size="12">• Diventa il prodotto finale</text>
+  <text x="380" y="116" fill="#444" font-size="12">• Rischio: design subottimale</text>
+</svg>
+</div>
+
+<table>
+  <tr><th>Tipo</th><th>Fedeltà</th><th>Cosa copre</th></tr>
+  <tr><td>Storyboard</td><td>Bassa</td><td>Scenario d'uso narrativo</td></tr>
+  <tr><td>Paper prototype</td><td>Bassa</td><td>Layout su carta, rapido</td></tr>
+  <tr><td>Digital mock-up</td><td>Media</td><td>Aspetto visivo (wireframe)</td></tr>
+  <tr><td>Prototipo interattivo</td><td>Alta</td><td>Navigazione, funzionalità</td></tr>
+  <tr><td>Fisico (per IoT/hardware)</td><td>Alta</td><td>Form factor, interazione fisica</td></tr>
+</table>
+
+<div class="grid2">
+<div class="box box-gray"><strong>Prototipo Orizzontale</strong><br>Copre molte funzionalità superficialmente (breadth). Buono per testare la navigazione.</div>
+<div class="box box-gray"><strong>Prototipo Verticale</strong><br>Copre poche funzionalità ma in profondità (depth). Buono per testare workflow specifici.</div>
+</div>
+
+<h4>Progettazione Universale — 7 Principi (Ron Mace)</h4>
+<ol>
+  <li>Uso equo</li>
+  <li>Flessibilità d'uso</li>
+  <li>Uso semplice e intuitivo</li>
+  <li>Informazione percettibile</li>
+  <li>Tolleranza all'errore</li>
+  <li>Basso sforzo fisico</li>
+  <li>Dimensioni e spazio per l'uso e l'avvicinamento</li>
+</ol>
+</section>
+
+<section id="pattern">
+<h3>Design Pattern HCI (Tidwell)</h3>
+<div class="box box-blue">
+<p><strong>Pattern HCI vs Pattern SE:</strong> nei pattern HCI si descrive un <strong>comportamento visibile e percepibile</strong> (non il codice). Struttura: <em>What / Use when / Why / How / Examples</em>.</p>
+<p>Fonte principale: Jenifer Tidwell, "Designing Interfaces" (O'Reilly)</p>
+</div>
+
+<h4>Behavioral Patterns (comportamenti utente da supportare)</h4>
+<div class="grid3">
+<div class="card"><strong>Safe Exploration</strong><br>Permettere di esplorare senza conseguenze gravi</div>
+<div class="card"><strong>Instant Gratification</strong><br>Dare feedback immediato alle azioni</div>
+<div class="card"><strong>Satisficing</strong><br>L'utente accetta la prima soluzione "abbastanza buona"</div>
+<div class="card"><strong>Deferred Choices</strong><br>Non forzare decisioni difficili subito</div>
+<div class="card"><strong>Incremental Construction</strong><br>Costruire l'oggetto pezzo per pezzo</div>
+<div class="card"><strong>Spatial Memory</strong><br>L'utente ricorda dove si trova qualcosa sullo schermo</div>
+<div class="card"><strong>Streamlined Repetition</strong><br>Facilitare azioni ripetitive</div>
+<div class="card"><strong>Keyboard Only</strong><br>Permettere operatività solo da tastiera</div>
+<div class="card"><strong>Social Proof</strong><br>Mostrare cosa fanno gli altri utenti</div>
+</div>
+
+<h4>Pattern di Navigazione e Layout (selezione)</h4>
+<table>
+  <tr><th>Pattern</th><th>Scopo</th></tr>
+  <tr><td>Breadcrumbs</td><td>Mostrare percorso di navigazione</td></tr>
+  <tr><td>Wizard</td><td>Guidare l'utente passo per passo in task complessi</td></tr>
+  <tr><td>Two-Panel Selector</td><td>Lista a sinistra, dettaglio a destra</td></tr>
+  <tr><td>Center Stage</td><td>Contenuto principale al centro, navigazione ai lati</td></tr>
+  <tr><td>Grid of Equals</td><td>Item equivalenti in griglia (es. galleria)</td></tr>
+  <tr><td>Many Workspaces</td><td>Più documenti/tab aperti contemporaneamente</td></tr>
+  <tr><td>Feature Search Browse</td><td>Combinare ricerca e navigazione</td></tr>
+  <tr><td>Input Prompt</td><td>Testo suggerimento nel campo vuoto (placeholder)</td></tr>
+  <tr><td>Datatips</td><td>Tooltip che appaiono su hover</td></tr>
+  <tr><td>Go Back One Step</td><td>Pulsante undo/back facilmente raggiungibile</td></tr>
+  <tr><td>Clear Entry Points</td><td>Punti di ingresso chiari e visibili</td></tr>
+</table>
+</section>
+
+<section id="fisica">
+<h3>Progettazione Fisica — Layout</h3>
+
+<div class="box box-blue">
+<p><strong>Visual Design:</strong> secondo lo Stanford Web Credibility Project, l'<strong>apparenza è il fattore più importante</strong> per la credibilità percepita di un sito. Il visual design influenza: comprensibilità, usabilità, gradevolezza, originalità, emozione.</p>
+</div>
+
+<h4>Sistemi di Griglia</h4>
+<div class="grid3">
+<div class="card">
+  <strong>Column Grid</strong><br>
+  12 colonne su desktop. Base del responsive design. Bootstrap, Material Design.
+</div>
+<div class="card">
+  <strong>Modular Grid</strong><br>
+  Righe + colonne. Ideale per e-commerce, cataloghi di prodotti.
+</div>
+<div class="card">
+  <strong>Hierarchical Grid</strong><br>
+  Organizza per importanza del contenuto. Giornali, dashboard.
+</div>
+</div>
+
+<p><strong>Vantaggi delle griglie:</strong> allineamento degli elementi, struttura visivamente percepibile, facilita responsive design.</p>
+
+<h4>Wireframe</h4>
+<p>Rappresentazione schematica del layout senza colori o immagini. Serve a definire la struttura prima del visual design.</p>
+
+<h4>Flusso Logico</h4>
+<p>In culture occidentali si legge da sinistra a destra, dall'alto al basso. Il layout deve seguire questo pattern. Elementi importanti vanno in alto a sinistra.</p>
+</section>
+
+<section id="colore">
+<h3>Progettazione Fisica — Colore</h3>
+
+<h4>Funzioni del colore nell'UI</h4>
+<ul>
+  <li>Attirare l'attenzione su elementi importanti</li>
+  <li>Indicare lo stato del sistema</li>
+  <li>Codificare l'informazione (encoding)</li>
+  <li>Organizzare elementi correlati</li>
+  <li>Estetica e gradevolezza</li>
+</ul>
+
+<h4>Proprietà del colore</h4>
+<div class="grid3">
+<div class="card"><strong>Tinta (Hue)</strong><br>Il colore vero (rosso, blu, verde…)</div>
+<div class="card"><strong>Saturazione</strong><br>Intensità del colore (vivo vs desaturato)</div>
+<div class="card"><strong>Luminosità (Brightness/Value)</strong><br>Chiaro vs scuro</div>
+</div>
+
+<h4>Connotazioni dei colori (Gotz, 1998)</h4>
+<table>
+  <tr><th>Colore</th><th>Connotazioni psicologiche</th></tr>
+  <tr><td>Rosso</td><td>Attivo, eccitante, pericolo (Occidente) / felicità (Cina)</td></tr>
+  <tr><td>Blu</td><td>Fiducioso, intellettuale, calmo</td></tr>
+  <tr><td>Verde</td><td>Natura, salute, ottimismo</td></tr>
+  <tr><td>Giallo</td><td>Gioioso, attenzione</td></tr>
+  <tr><td>Arancione</td><td>Comunicativo, energetico</td></tr>
+  <tr><td>Viola</td><td>Serio, regale, misterioso</td></tr>
+  <tr><td>Bianco</td><td>Purezza (Occidente) / lutto (Asia orientale)</td></tr>
+</table>
+
+<div class="box box-yellow">
+<strong>Regola 60-30-10:</strong> 60% colore primario (background), 30% colore secondario (card, sezioni), 10% colore accento (call-to-action, highlight).
+</div>
+
+<h4>Contrasto e Accessibilità</h4>
+<ul>
+  <li><strong>Polarità positiva</strong> (light mode): testo scuro su sfondo chiaro — migliore leggibilità in ambienti luminosi</li>
+  <li><strong>Polarità negativa</strong> (dark mode): testo chiaro su sfondo scuro — riduce affaticamento in ambienti bui</li>
+  <li><strong>Cromostereopsis:</strong> colori di diverse lunghezze d'onda sembrano a profondità diverse — effetto vibrazione (rosso/blu vicini)</li>
+  <li><strong>Daltonismo:</strong> ~7% uomini, 0.4% donne — non usare solo colore come unico canale informativo</li>
+</ul>
+
+<h4>Luminosità intrinseca (ordine decrescente)</h4>
+<p>Bianco > Giallo > Arancione > Rosso / Verde > Viola > Blu > Nero</p>
+
+<h4>Processo scelta colori</h4>
+<p>Selezione → Mappatura → Applicazione → Revisione</p>
+<p>Tool: Adobe Color, Coolors, Colormind, Canva</p>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+</section>
+
+<!-- ============================= 8. ESPERIMENTO ============================= -->
+<section id="esperimento">
+<h2>8. Esperimento con gli Utenti</h2>
+
+<div class="grid2">
+<div class="box box-blue">
+<strong>Usability Study (Test di Usabilità)</strong>
+<ul>
+  <li>Scopo: trovare problemi di usabilità</li>
+  <li>Pochi utenti: <strong>5-10</strong></li>
+  <li>Dati: qualitativi + tempo/errori</li>
+  <li>Nielsen: 5 utenti = 85% dei problemi</li>
+  <li>Risultati per gli sviluppatori</li>
+</ul>
+</div>
+<div class="box box-green">
+<strong>Esperimento Controllato</strong>
+<ul>
+  <li>Scopo: evidenza empirica su ipotesi</li>
+  <li>Molti utenti: ≥10 (within) o ≥20 (between)</li>
+  <li>Dati: quantitativi, validati statisticamente</li>
+  <li>Ogni esperimento richiede un <strong>confronto</strong></li>
+  <li>Risultati per la comunità scientifica</li>
+</ul>
+</div>
+</div>
+
+<div class="svg-wrap">
+<svg width="600" height="100" viewBox="0 0 600 100">
+  <text x="300" y="20" text-anchor="middle" fill="#1a56a0" font-weight="bold" font-size="14">Curva di Nielsen — Usability Study</text>
+  <!-- Axes -->
+  <line x1="40" y1="80" x2="580" y2="80" stroke="#555" stroke-width="1.5"/>
+  <line x1="40" y1="80" x2="40" y2="30" stroke="#555" stroke-width="1.5"/>
+  <!-- Curve (logarithmic approx) -->
+  <path d="M40,80 C100,45 180,35 260,32 S380,30 580,30" stroke="#c0392b" stroke-width="2.5" fill="none"/>
+  <!-- Labels -->
+  <text x="310" y="94" text-anchor="middle" fill="#555" font-size="10">Numero utenti</text>
+  <text x="25" y="55" fill="#555" font-size="9" transform="rotate(-90,25,55)">Problemi</text>
+  <text x="110" y="55" fill="#1a56a0" font-size="10">5 utenti → 85%</text>
+  <text x="460" y="42" fill="#2d6a4f" font-size="10">15 → ~100%</text>
+  <line x1="110" y1="58" x2="110" y2="80" stroke="#1a56a0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="460" y1="45" x2="460" y2="80" stroke="#2d6a4f" stroke-width="1" stroke-dasharray="3,3"/>
+</svg>
+</div>
+
+<h3>Variabili dell'Esperimento</h3>
+<table>
+  <tr><th>Tipo variabile</th><th>Descrizione</th><th>Esempio</th></tr>
+  <tr><td><strong>Indipendente</strong></td><td>Quella che il ricercatore manipola (condizione sperimentale)</td><td>Stile interfaccia A vs B</td></tr>
+  <tr><td><strong>Dipendente</strong></td><td>Quella che si misura</td><td>Tempo di esecuzione, errori</td></tr>
+  <tr><td><strong>Controllo</strong></td><td>Quelle tenute costanti</td><td>Hardware, luminosità stanza</td></tr>
+</table>
+
+<div class="grid2">
+<div class="box box-blue">
+<strong>Validità Interna</strong><br>
+I risultati sono dovuti <em>solo</em> alle condizioni sperimentali. Minacce: effetti di apprendimento, ordine, differenze tra soggetti.
+</div>
+<div class="box box-green">
+<strong>Validità Esterna</strong><br>
+I risultati sono <em>generalizzabili</em> ad altre popolazioni/contesti. Trade-off: migliorare una tende a peggiorare l'altra.
+</div>
+</div>
+
+<h3>Design Sperimentale</h3>
+<div class="grid2">
+<div class="box box-yellow">
+<strong>Between Subjects</strong>
+<ul>
+  <li>Ogni soggetto prova <em>una sola</em> condizione</li>
+  <li>Nessun learning effect tra condizioni</li>
+  <li>Servono più partecipanti (≥20 con 2 condizioni)</li>
+  <li>Maggiore variabilità inter-soggetto</li>
+</ul>
+</div>
+<div class="box box-yellow">
+<strong>Within Subjects</strong>
+<ul>
+  <li>Ogni soggetto prova <em>tutte</em> le condizioni</li>
+  <li>Meno partecipanti (≥10)</li>
+  <li>Rischio: <strong>learning effect</strong> e <strong>carry-over</strong></li>
+  <li>Soluzione: <strong>counterbalancing</strong></li>
+</ul>
+</div>
+</div>
+
+<h4>Counterbalancing — Latin Square</h4>
+<div class="box box-blue">
+<p>Tabella n×n dove ogni simbolo compare esattamente una volta per riga e per colonna. Distribuisce l'ordine delle condizioni tra i soggetti per neutralizzare l'effetto dell'ordine.</p>
+<table style="width:auto; margin:8px 0">
+  <tr><th>Soggetto</th><th>Trial 1</th><th>Trial 2</th><th>Trial 3</th></tr>
+  <tr><td>Gruppo 1</td><td>A</td><td>B</td><td>C</td></tr>
+  <tr><td>Gruppo 2</td><td>B</td><td>C</td><td>A</td></tr>
+  <tr><td>Gruppo 3</td><td>C</td><td>A</td><td>B</td></tr>
+</table>
+</div>
+
+<h3>Etica della Ricerca</h3>
+<ul>
+  <li>Si testa il <strong>sistema</strong>, non l'utente</li>
+  <li>Rispetto degli utenti: consenso informato</li>
+  <li>Riservatezza dei dati</li>
+  <li>Utenti liberi di abbandonare l'esperimento</li>
+</ul>
+
+<h3>Fasi dell'Esperimento</h3>
+<ol>
+  <li><strong>Preparazione:</strong> materiali, script, training degli sperimentatori</li>
+  <li><strong>Introduzione:</strong> spiegare il task (non il sistema), firma consenso</li>
+  <li><strong>Esecuzione test:</strong> 1 facilitatore + 1 osservatore; non aiutare l'utente</li>
+  <li><strong>Debriefing:</strong> spiegare il vero scopo, raccogliere opinioni</li>
+</ol>
+
+<section id="statistica">
+<h3>Analisi Statistica dei Risultati</h3>
+
+<h4>Procedura di Statistica Inferenziale (9 passi)</h4>
+<ol>
+  <li>Definire l'<strong>ipotesi di ricerca</strong> (es. "il nuovo stile migliora l'efficienza")</li>
+  <li>Operazionalizzare: definire le <strong>variabili</strong> da misurare (es. tempo)</li>
+  <li>Formulare <strong>H₀</strong> (ipotesi nulla: nessuna differenza) e <strong>H₁</strong> (ipotesi alternativa)</li>
+  <li>Impostare il <strong>livello di significatività α</strong> (solitamente 5% o 1%)</li>
+  <li>Scegliere predizione <strong>one-tailed</strong> (differenza in un verso preciso) o <strong>two-tailed</strong> (qualsiasi verso)</li>
+  <li>Verificare la <strong>normalità</strong> della distribuzione</li>
+  <li>Selezionare il <strong>test statistico</strong> appropriato</li>
+  <li>Eseguire il test e interpretare il <strong>p-value</strong></li>
+  <li>Rigettare o non rigettare H₀</li>
+</ol>
+
+<div class="box box-red">
+<strong>Interpretazione p-value:</strong> Se p-value &lt; α (es. 0.05) → si rigetta H₀ → le differenze sono statisticamente significative. α è la probabilità di commettere un <em>errore del tipo I</em> (falso positivo).
+</div>
+
+<h4>Test Statistici in HCI</h4>
+<table>
+  <tr><th>Tipo variabile</th><th>Statistica descrittiva</th><th>Test (campioni indipendenti)</th><th>Test (campioni appaiati)</th></tr>
+  <tr><td><strong>Scalare</strong> (tempo, click)</td><td>Media, Deviazione Standard</td><td>t-test (2 cond.) / ANOVA (n cond.)</td><td>t-test paired</td></tr>
+  <tr><td><strong>Ordinale</strong> (Likert)</td><td>Mediana, Moda</td><td>Mann-Whitney test</td><td>Wilcoxon signed-rank test</td></tr>
+  <tr><td><strong>Nominale</strong> (preferenze)</td><td>Frequenza</td><td>Chi-Square test</td><td>—</td></tr>
+</table>
+
+<div class="box box-yellow">
+<strong>Note importanti:</strong>
+<ul>
+  <li>t-test e ANOVA sono <em>parametrici</em> (richiedono distribuzione normale)</li>
+  <li>Mann-Whitney e Wilcoxon sono <em>non parametrici</em> (meno potenti)</li>
+  <li>Anche le stesse medie con SD diversa danno risultati diversi!</li>
+</ul>
+</div>
+</section>
+
+<section id="dati">
+<h3>Metodi di Raccolta Dati</h3>
+
+<h4>Think-Aloud Protocol</h4>
+<div class="box box-green">
+<p>L'utente verbalizza in tempo reale tutto ciò che pensa mentre esegue un task. Produce dati qualitativi preziosi ma ha un <em>carico cognitivo aggiuntivo</em>. Alternativa: <strong>Post-Event Protocol</strong> (commenti a posteriori).</p>
+</div>
+
+<div class="box box-red">
+<strong>Effetto Hawthorne:</strong> quando si sentono osservati, gli utenti si comportano diversamente dal solito. Da considerare nell'interpretazione dei dati.
+</div>
+
+<h4>Questionari</h4>
+<div class="grid2">
+<div class="box box-gray">
+<strong>Scala Likert</strong><br>
+7 punti: da "Completamente in disaccordo" (-3) a "Completamente d'accordo" (+3). Variabile ordinale → usare mediana e test non parametrici.
+</div>
+<div class="box box-gray">
+<strong>Differenziale Semantico</strong><br>
+Scala bipolare tra aggettivi opposti (es. facile/difficile). Utile per misurare attitudini.
+</div>
+</div>
+
+<h4>Questionari Standardizzati di Usabilità</h4>
+<table>
+  <tr><th>Questionario</th><th>Autore</th><th>Domande</th><th>Note</th></tr>
+  <tr><td><strong>SUS</strong> (System Usability Scale)</td><td>Brooke, 1986</td><td>10</td><td>Punteggio 0-100. &gt;68 = usabile. Molto diffuso.</td></tr>
+  <tr><td><strong>PSSUQ/CSUQ</strong></td><td>Lewis, 1995</td><td>16</td><td>Post-Study System Usability Questionnaire</td></tr>
+</table>
+
+<div class="box box-yellow">
+<strong>Test pilota:</strong> prima di distribuire il questionario, testarlo con 2-3 persone per ridurre ambiguità. Essenziale per questionari di ricerca.
+</div>
+</section>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 9. ACCESSIBILITÀ ============================= -->
+<section id="accessibilita">
+<h2>9. Accessibilità</h2>
+
+<div class="box box-blue">
+<p class="definition">"Capacità di un sistema di essere fruibile efficacemente da tutti gli utenti a cui si rivolge a prescindere da eventuali loro disabilità fisiche e/o cognitive e limiti legati alle tecnologie hardware/software a loro disposizione."</p>
+</div>
+
+<blockquote style="border-left:4px solid #1a56a0; padding:8px 16px; margin:12px 0; color:#444; font-style:italic">"The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect." — Tim Berners-Lee, W3C</blockquote>
+
+<h3>4 Dimensioni dell'Accessibilità Web</h3>
+<div class="svg-wrap">
+<svg width="400" height="280" viewBox="0 0 400 280">
+  <rect x="140" y="120" width="120" height="50" rx="6" fill="#1a56a0"/>
+  <text x="200" y="142" text-anchor="middle" fill="white" font-weight="bold" font-size="12">DIMENSIONI</text>
+  <text x="200" y="158" text-anchor="middle" fill="#c8d8f0" font-size="10">ACCESSIBILITÀ</text>
+  <!-- 4 directions -->
+  <text x="200" y="40" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Tempo</text>
+  <text x="350" y="155" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Spazio</text>
+  <text x="50" y="235" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Utenti</text>
+  <text x="350" y="235" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="13">Strumenti</text>
+  <line x1="200" y1="120" x2="200" y2="60" stroke="#aaa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="260" y1="145" x2="330" y2="145" stroke="#aaa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="160" y1="165" x2="80" y2="220" stroke="#aaa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <line x1="240" y1="165" x2="320" y2="220" stroke="#aaa" stroke-width="1.5" marker-end="url(#a4)"/>
+  <defs>
+    <marker id="a4" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#aaa"/>
+    </marker>
+  </defs>
+</svg>
+</div>
+
+<p><strong>Domande chiave per la valutazione:</strong></p>
+<ul>
+  <li>a) Le prestazioni di accesso sono adeguate?</li>
+  <li>b) Il sito è facile da trovare (reperibilità)?</li>
+  <li>c) Il sito è indipendente dal browser usato?</li>
+  <li>d) Il sito è accessibile a utenti con disabilità?</li>
+</ul>
+
+<h3>Disabilità</h3>
+<div class="box box-yellow">
+<strong>OMS/ICF (2001):</strong> la disabilità <em>non è un attributo dell'individuo</em> ma un "fenomeno multidimensionale risultante dall'interazione tra persona e ambiente fisico/sociale". Una persona normodotata in un contesto sfavorevole può diventare disabile.
+</div>
+
+<div class="grid2">
+<div>
+<h4>Tipi di disabilità rispetto alle tecnologie</h4>
+<ul>
+  <li><strong>Visiva:</strong> non vedenti, ipovedenti, daltonici</li>
+  <li><strong>Uditiva:</strong> non udenti, ipoudenti</li>
+  <li><strong>Motoria:</strong> limitazioni nel controllo motorio</li>
+  <li><strong>Cognitiva:</strong> difficoltà di apprendimento, memoria, attenzione</li>
+</ul>
+</div>
+<div>
+<h4>Numeri (ISTAT 2019)</h4>
+<ul>
+  <li>10% popolazione mondiale è disabile</li>
+  <li>37 milioni di disabili nell'UE</li>
+  <li>3.150.000 italiani con limitazioni gravi (5,2%)</li>
+  <li>12 milioni con limitazioni totali (21,3%)</li>
+</ul>
+</div>
+</div>
+
+<h3>Tecnologie Assistive</h3>
+<div class="box box-gray">
+"Strumenti e soluzioni tecniche, hardware/software, che permettono alla persona disabile di accedere alle informazioni e ai servizi erogati dai sistemi informatici" [Parlamento Italiano, 2004]
+</div>
+<ul>
+  <li>Lettori di schermo (Microsoft Narrator, Google TalkBack, Apple VoiceOver)</li>
+  <li>Barra Braille</li>
+  <li>Ingranditori di schermo</li>
+  <li>Tastiere speciali</li>
+  <li>Riconoscimento del parlato</li>
+  <li>Dispositivi di puntamento speciali</li>
+  <li>Dispositivi a scansione</li>
+</ul>
+
+<h3>Normativa sull'Accessibilità</h3>
+<table>
+  <tr><th>Legge/Standard</th><th>Dove</th><th>Anno</th><th>Contenuto</th></tr>
+  <tr><td><strong>Section 508</strong></td><td>USA</td><td>1998</td><td>Accessibilità per siti governativi</td></tr>
+  <tr><td><strong>Legge Stanca</strong> (L. n.4)</td><td>Italia</td><td>2004</td><td>Accesso soggetti disabili a strumenti informatici PA</td></tr>
+  <tr><td><strong>Direttiva UE 2016/2102</strong></td><td>Europa</td><td>2016 (rec. 2018)</td><td>Accessibilità siti web e app mobile enti pubblici</td></tr>
+  <tr><td><strong>UNI 301549:2021</strong></td><td>Europa</td><td>2021</td><td>Requisiti accessibilità prodotti e servizi ICT</td></tr>
+</table>
+
+<h3>W3C &amp; WAI</h3>
+<div class="grid2">
+<div class="box box-blue">
+<strong>W3C (World Wide Web Consortium)</strong><br>
+Fondato da Tim Berners-Lee nel 1994. Supervisiona l'evoluzione tecnica del Web. Processo: Working Draft → Candidate Recommendation → Proposed Recommendation → <strong>W3C Recommendation</strong>.
+</div>
+<div class="box box-green">
+<strong>WAI (Web Accessibility Initiative)</strong><br>
+Progetto W3C che produce: <strong>WCAG</strong> (Web Content), <strong>UAAG</strong> (User Agent / browser), <strong>ATAG</strong> (Authoring Tools). Coinvolge imprese, governi, associazioni per disabilità.
+</div>
+</div>
+
+<h3>WCAG — Web Content Accessibility Guidelines</h3>
+<div class="grid2">
+<div class="box box-gray">
+<strong>WCAG 1.0 (1999)</strong>
+<ul>
+  <li>Siti statici</li>
+  <li>Solo HTML</li>
+  <li>Poca attenzione alle tecnologie assistive</li>
+</ul>
+</div>
+<div class="box box-blue">
+<strong>WCAG 2.0/2.1 (2008/2018)</strong>
+<ul>
+  <li>Siti dinamici</li>
+  <li>Indipendente dalla tecnologia</li>
+  <li>Alta attenzione alle tecnologie assistive</li>
+  <li>WCAG 2.1 estende 2.0 (backward compatible)</li>
+</ul>
+</div>
+</div>
+
+<h4>Principi WCAG 2.x — POUR</h4>
+<div class="grid2">
+<div class="card"><strong>Perceivable</strong><br>Le informazioni devono essere presentabili in modi percepibili (alt text, sottotitoli)</div>
+<div class="card"><strong>Operable</strong><br>I componenti UI devono essere operabili (tastiera, no seizure, navigazione)</div>
+<div class="card"><strong>Understandable</strong><br>Il contenuto deve essere comprensibile (lingua, consistenza, suggerimenti errore)</div>
+<div class="card"><strong>Robust</strong><br>Il contenuto deve essere interpretabile da tecnologie assistive attuali e future</div>
+</div>
+
+<h4>Livelli di conformità</h4>
+<ul>
+  <li><strong>Livello A:</strong> requisiti minimi</li>
+  <li><strong>Livello AA:</strong> richiesto dalla maggior parte delle normative (inclusa UE)</li>
+  <li><strong>Livello AAA:</strong> massimo livello di accessibilità</li>
+</ul>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- ============================= 10. HCI & AI ============================= -->
+<section id="hcai">
+<h2>10. HCI e Intelligenza Artificiale</h2>
+
+<h3>Cambi di Prospettiva</h3>
+<div class="grid3">
+<div class="card">AI → <strong>Human-Centered AI (HCAI)</strong></div>
+<div class="card">HCD tradizionale → <strong>HCD con l'aiuto dell'AI</strong></div>
+<div class="card">HCI → <strong>Human-AI Interaction</strong></div>
+</div>
+
+<h3>Human-Centered Artificial Intelligence (HCAI)</h3>
+<div class="box box-blue">
+<p><strong>Ben Shneiderman:</strong> "Computer scientists should build devices to enhance and empower—not replace—humans."</p>
+<p>HCAI mira a <strong>amplify, augment, enhance, empower</strong> gli utenti aumentando le loro prestazioni.</p>
+</div>
+
+<div class="svg-wrap">
+<svg width="560" height="200" viewBox="0 0 560 200">
+  <!-- Old paradigm: AI al centro -->
+  <circle cx="120" cy="100" r="60" fill="#1a56a0" opacity="0.15" stroke="#1a56a0" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <circle cx="120" cy="100" r="35" fill="#f0a500" opacity="0.6"/>
+  <text x="120" y="96" text-anchor="middle" fill="white" font-weight="bold" font-size="11">Algorithms</text>
+  <text x="120" y="110" text-anchor="middle" fill="white" font-size="10">&amp; AI</text>
+  <circle cx="65" cy="60" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="65" y="64" text-anchor="middle" fill="white" font-size="9">H</text>
+  <circle cx="175" cy="60" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="175" y="64" text-anchor="middle" fill="white" font-size="9">H</text>
+  <circle cx="65" cy="140" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="65" y="144" text-anchor="middle" fill="white" font-size="9">H</text>
+  <text x="120" y="185" text-anchor="middle" fill="#555" font-size="11">AI tradizionale</text>
+  <!-- Arrow -->
+  <text x="230" y="105" text-anchor="middle" fill="#555" font-size="24">→</text>
+  <!-- New paradigm: Humans al centro -->
+  <circle cx="380" cy="100" r="60" fill="#2d6a4f" opacity="0.15" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <circle cx="380" cy="100" r="35" fill="#f0a500" opacity="0.6"/>
+  <text x="380" y="104" text-anchor="middle" fill="white" font-weight="bold" font-size="12">Humans</text>
+  <circle cx="325" cy="60" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="325" y="64" text-anchor="middle" fill="white" font-size="9">AI</text>
+  <circle cx="435" cy="60" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="435" y="64" text-anchor="middle" fill="white" font-size="9">AI</text>
+  <circle cx="325" cy="140" r="14" fill="#1a56a0" opacity="0.7"/>
+  <text x="325" y="144" text-anchor="middle" fill="white" font-size="9">AI</text>
+  <text x="380" y="185" text-anchor="middle" fill="#555" font-size="11">HCAI (Shneiderman, 2020)</text>
+</svg>
+</div>
+
+<h4>Due aspetti chiave di HCAI</h4>
+<div class="grid2">
+<div class="box box-blue">
+<strong>Processo:</strong> HCAI si basa sui metodi HCI: user research, usability testing, processo iterativo, valutazione continua
+</div>
+<div class="box box-green">
+<strong>Prodotto:</strong> sistemi progettati come <em>supertool</em> che amplificano, aumentano, potenziano e migliorano le prestazioni umane
+</div>
+</div>
+
+<h3>Framework HCAI 2D (Shneiderman, 2020)</h3>
+<div class="svg-wrap">
+<svg width="400" height="350" viewBox="0 0 400 350">
+  <!-- Quadrant background -->
+  <rect x="60" y="30" width="320" height="280" rx="4" fill="#f0f0f0"/>
+  <!-- Green quadrant (high human + high computer) -->
+  <rect x="200" y="30" width="180" height="140" rx="4" fill="#2d6a4f" opacity="0.3"/>
+  <!-- Legend -->
+  <rect x="200" y="30" width="180" height="140" fill="none" stroke="#2d6a4f" stroke-width="1.5"/>
+  <text x="290" y="90" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="12">Reliable,</text>
+  <text x="290" y="106" text-anchor="middle" fill="#2d6a4f" font-weight="bold" font-size="12">Safe &amp; Trustworthy</text>
+  <text x="290" y="126" text-anchor="middle" fill="#1a56a0" font-size="24">▲</text>
+  <!-- Axes -->
+  <line x1="200" y1="30" x2="200" y2="310" stroke="#888" stroke-width="1.5"/>
+  <line x1="60" y1="170" x2="380" y2="170" stroke="#888" stroke-width="1.5"/>
+  <!-- Axis labels -->
+  <text x="310" y="20" text-anchor="middle" fill="#1a56a0" font-weight="bold" font-size="11">Human Control</text>
+  <line x1="310" y1="22" x2="310" y2="30" stroke="#1a56a0" stroke-width="1.5" marker-end="url(#a5)"/>
+  <text x="390" y="175" fill="#e85d04" font-weight="bold" font-size="11">Computer</text>
+  <text x="390" y="188" fill="#e85d04" font-weight="bold" font-size="11">Automation</text>
+  <line x1="380" y1="170" x2="388" y2="170" stroke="#e85d04" stroke-width="1.5" marker-end="url(#a5o)"/>
+  <!-- Quadrant labels -->
+  <text x="130" y="100" text-anchor="middle" fill="#555" font-size="11">Human</text>
+  <text x="130" y="114" text-anchor="middle" fill="#555" font-size="11">Mastery</text>
+  <text x="130" y="240" text-anchor="middle" fill="#999" font-size="11">Low</text>
+  <text x="130" y="254" text-anchor="middle" fill="#999" font-size="11">control/auto</text>
+  <text x="290" y="240" text-anchor="middle" fill="#888" font-size="11">Computer</text>
+  <text x="290" y="254" text-anchor="middle" fill="#888" font-size="11">Control</text>
+  <!-- High/Low labels on axes -->
+  <text x="55" y="48" fill="#555" font-size="10">High</text>
+  <text x="55" y="300" fill="#555" font-size="10">Low</text>
+  <text x="75" y="325" fill="#555" font-size="10">Low</text>
+  <text x="340" y="325" fill="#555" font-size="10">High</text>
+  <defs>
+    <marker id="a5" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#1a56a0"/>
+    </marker>
+    <marker id="a5o" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L0,8 L8,4 z" fill="#e85d04"/>
+    </marker>
+  </defs>
+</svg>
+<p class="svg-caption">Framework HCAI 2D: asse Human Control vs Computer Automation. La zona verde in alto a destra è quella desiderabile: alta automazione + alto controllo umano.</p>
+</div>
+
+<div class="grid3">
+<div class="box box-green"><strong>Reliable</strong><br>Produce risposte attese e corrette</div>
+<div class="box box-blue"><strong>Safe</strong><br>Previene conseguenze catastrofiche; evita controllo umano o automazione eccessivi</div>
+<div class="box box-yellow"><strong>Trustworthy</strong><br>Valutato da un ente di supervisione indipendente e autorevole</div>
+</div>
+
+<h3>AI vs Intelligence Augmentation (IA)</h3>
+<table>
+  <tr><th>Automation è utile quando…</th><th>Augmentation è meglio quando…</th></tr>
+  <tr><td>Le persone non sanno come fare una cosa</td><td>Le persone si divertono a fare quel compito</td></tr>
+  <tr><td>Le persone non possono fare una cosa</td><td>Situazioni ad alto rischio (supervisione umana necessaria)</td></tr>
+  <tr><td>Il compito è noioso, ripetitivo, pericoloso</td><td>Preferenze personali complesse</td></tr>
+</table>
+
+<h3>AI nel Ciclo di Vita HCD</h3>
+<table>
+  <tr><th>Fase HCD</th><th>Come l'AI può aiutare</th></tr>
+  <tr><td>Comprendi il contesto</td><td>AI-driven cultural insights, AI contextual scenario, AI user behavior analysis</td></tr>
+  <tr><td>Specifica requisiti</td><td>AI-informed user requirements, automated personas/scenarios, AI in user needs assessment</td></tr>
+  <tr><td>Produce soluzioni</td><td>AI-accelerated prototypes, AI-assisted design ideation, AI-driven content creation (Figma Make)</td></tr>
+  <tr><td>Valuta rispetto ai requisiti</td><td>Big Data analysis, AI usability testing, Synthetic Users (utenti simulati)</td></tr>
+</table>
+
+<h4>Synthetic Evaluation — Pro e Contro</h4>
+<div class="grid2">
+<div class="box box-green">
+<strong>Pro:</strong>
+<ul>
+  <li>Risparmio di tempo</li>
+  <li>Testing a più vasta scala</li>
+  <li>Simulare diversi tipi di partecipanti (inclusione)</li>
+  <li>Valutare sistemi safety-critical in sicurezza</li>
+</ul>
+</div>
+<div class="box box-red">
+<strong>Contro:</strong>
+<ul>
+  <li>Possono simulare solo certi gruppi (bias WEIRD)</li>
+  <li>AI non ha intuizione, empatia, comprensione degli utenti</li>
+  <li>Problemi di dipendenza non emergono in laboratorio</li>
+</ul>
+</div>
+</div>
+
+<h3>Interaction con Sistemi AI-based</h3>
+<ul>
+  <li><strong>Interazioni implicite:</strong> locazione, gesti, espressioni facciali, biometria</li>
+  <li><strong>Dati:</strong> storia interazioni, preferenze utente/gruppo</li>
+  <li><strong>Interazioni esplicite multi-modali:</strong> comandi vocali, testo, disegni</li>
+  <li>Per <strong>personalizzare</strong> i sistemi → sistemi adattivi</li>
+  <li><strong>Trade-off:</strong> personalizzazione (apprendibilità, accessibilità) vs problemi sociali (filter bubbles, privacy)</li>
+</ul>
+
+<h3>Sistemi AI e i Golfi (Norman)</h3>
+<div class="grid2">
+<div class="box box-blue">
+<strong>Golfo dell'Esecuzione con AI:</strong><br>
+Far capire all'utente cosa si può fare con il sistema AI. La parola "intelligenza" può indurre un modello mentale errato (anthropomorphism).
+</div>
+<div class="box box-green">
+<strong>Golfo della Valutazione con AI:</strong><br>
+Capire se il sistema ha completato il task correttamente. Richiede un certo livello di <em>AI literacy</em>.
+</div>
+</div>
+
+<h3>Rischi dell'Antropomorfismo</h3>
+<ul>
+  <li>Agenti che parlano in linguaggio naturale tramite avatar → <strong>overtrust</strong></li>
+  <li>Difficile studiare effetti a lungo termine in laboratorio</li>
+  <li>Impatto su vulnerabili: bambini, anziani, persone con disabilità cognitive</li>
+</ul>
+
+<h3>Responsible AI</h3>
+<div class="box box-yellow">
+<p>AI basata sui metodi HCI e UX da impiegare lungo tutto il ciclo di vita adottando una <strong>prospettiva socio-tecnica</strong>. I rischi AI emergono dall'interplay di aspetti tecnici e fattori sociali.</p>
+<p>Per il principio di <strong>explainability</strong>: creare spiegazioni comprensibili (testo, grafica), ridurre information overload, permettere accesso progressivo ai dettagli. → "Question-Driven Design Process for Explainability" [Liao et al., 2021]</p>
+</div>
+
+<a href="#" class="back-top">↑ Torna su</a>
+</section>
+
+<!-- INDICE RAPIDO -->
+<section>
+<h2>Concetti Chiave — Indice Rapido</h2>
+<div class="grid3">
+<div class="card">
+<strong>Golfo esecuzione/valutazione</strong><br>
+Difficoltà eseguire azioni / interpretare output. Ridurre le distanze semantica e articolatoria.
+</div>
+<div class="card">
+<strong>STM 7±2 chunk</strong><br>
+Miller 1956. Non sovraccaricare la memoria a breve termine nell'interfaccia.
+</div>
+<div class="card">
+<strong>Affordance percepita</strong><br>
+Norman: conta cosa l'utente percepisce come possibile, non la realtà oggettiva.
+</div>
+<div class="card">
+<strong>10 euristiche Nielsen</strong><br>
+Feedback, corrispondenza reale, undo, consistenza, prevenzione errori, riconoscimento, flessibilità, minimalismo, recovery, help.
+</div>
+<div class="card">
+<strong>Severity Rating 0-4</strong><br>
+0=non è problema, 1=cosmetico, 2=minore, 3=importante, 4=catastrofico.
+</div>
+<div class="card">
+<strong>Walkthrough cognitivo</strong><br>
+4 domande per azione: vede l'effetto? Vede il controllo? Capisce il collegamento? Capisce il feedback?
+</div>
+<div class="card">
+<strong>KLA operatori</strong><br>
+K=keystroke, P=pointing, H=homing, D=drawing, M=mental, R=response.
+</div>
+<div class="card">
+<strong>Between vs Within subjects</strong><br>
+Between: una condizione/soggetto, no learning effect. Within: tutte le condizioni, counterbalancing con Latin Square.
+</div>
+<div class="card">
+<strong>p-value</strong><br>
+Se p &lt; α (5%): differenza significativa, si rigetta H₀.
+</div>
+<div class="card">
+<strong>SUS</strong><br>
+10 domande, punteggio 0-100. &gt;68 = accettabile. Brooke 1986.
+</div>
+<div class="card">
+<strong>WCAG 2.x — POUR</strong><br>
+Perceivable, Operable, Understandable, Robust. Livelli A, AA, AAA.
+</div>
+<div class="card">
+<strong>HCAI</strong><br>
+Shneiderman: umani al centro. Reliable + Safe + Trustworthy. AI amplifica l'umano, non lo sostituisce.
+</div>
+<div class="card">
+<strong>Regola 60-30-10</strong><br>
+60% colore primario, 30% secondario, 10% accento.
+</div>
+<div class="card">
+<strong>HTA</strong><br>
+Hierarchical Task Analysis: scompone task in sotto-task con piani d'esecuzione.
+</div>
+<div class="card">
+<strong>PACT</strong><br>
+People, Activities, Contexts, Technologies: framework analisi contesto d'uso.
+</div>
+</div>
+</section>
+
+</main>
+</body>
+</html>
