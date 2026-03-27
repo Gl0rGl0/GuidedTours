@@ -463,9 +463,10 @@ return [
             'cancel_btn' => 'Annulla',
             'save_btn' => 'Salva Disponibilità',
             'legend' => [
-                'available' => 'Giorno Disponibile',
-                'unavailable' => 'Giorno Non Disponibile',
+                'available' => 'Reperibile',
+                'unavailable' => 'Non Reperibile',
                 'column_select' => 'Clicca sull\'intestazione per selezionare/deselezionare l\'intera colonna',
+                'unsaved_changes' => 'I giorni segnati con * sono modifiche non ancora salvate',
             ],
             'status' => [
                 'success' => 'Disponibilità aggiornata con successo!',

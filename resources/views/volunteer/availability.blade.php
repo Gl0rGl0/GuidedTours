@@ -17,41 +17,47 @@
         #availability-title {
             scroll-margin-top: 110px;
         }
+        /* Nuovi stili per una legenda più pulita */
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .legend-dot.available {
+            background-color: var(--bs-primary, #0d6efd); 
+        }
+        .legend-dot.unavailable {
+            background-color: #e9ecef; border: 1px solid #dee2e6;
+        }
     </style>
 @endpush
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <div class="card shadow-sm border-0 rounded-4">
-                <div class="card-body p-4">
-                    <div class="text-center mb-3">
-                        <h2 id="availability-title" class="fw-bold text-primary mb-2">{{ __('messages.volunteer.availability.title') }}</h2>
-                        <p class="text-muted mb-4">{!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}</p>
-                    </div>
-
-                    <!-- Legend moved above calendar -->
-                    <div class="d-flex justify-content-center mb-4">
-                        <div class="row w-100 g-2" style="max-width: 800px;">
-                            <div class="col-6 col-md-4 d-flex align-items-center">
-                                <div class="calendar-day selected me-2" style="width: 20px; height: 20px; min-height: 20px; cursor: default; border-radius: 4px; padding: 0;"></div>
-                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.available') }}</span>
-                            </div>
-                            <div class="col-6 col-md-4 d-flex align-items-center">
-                                <div class="calendar-day me-2" style="width: 20px; height: 20px; min-height: 20px; cursor: default; border-radius: 4px; padding: 0;"></div>
-                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.unavailable') }}</span>
-                            </div>
-                            <div class="col-12 col-md-4 d-flex align-items-center">
-                                <div class="bg-light py-0 px-2 border rounded small fw-bold text-secondary me-2" style="cursor: default; min-width: 50px; text-align: center; font-size: 0.75rem;">{{ __('messages.volunteer.availability.days.mon') }}</div>
-                                <span class="small text-muted">{{ __('messages.volunteer.availability.legend.column_select') }}</span>
-                            </div>
-                        </div>
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="text-center mb-4">
+                        <h2 id="availability-title" class="fw-bold text-primary mb-2">
+                            {{ __('messages.volunteer.availability.title') }}
+                        </h2>
+                        <p class="text-muted fs-5">
+                            {!! __('messages.volunteer.availability.description', ['monthName' => $monthName]) !!}
+                        </p>
                     </div>
 
                     <form action="{{ route('volunteer.availability.store') }}" method="POST" id="availability-form">
                         @csrf
                         
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex flex-column align-items-center">
+                            
+                            <div class="alert alert-light border-0 text-muted small py-2 px-3 mb-3 text-center rounded-pill" role="alert">
+                                <i class="bi bi-info-circle me-1"></i> 
+                                {{ __('messages.volunteer.availability.legend.column_select') }}
+                            </div>
+
                             <div class="calendar-wrapper shadow-sm rounded-3 overflow-hidden border mb-4" style="max-width: 800px; width: 100%;">
                                 <div class="calendar-grid">
                                     <div class="calendar-header clickable bg-light py-2 fw-bold text-secondary" data-day-index="0" title="{{ __('messages.volunteer.availability.mon_title') }}">{{ __('messages.volunteer.availability.days.mon') }}</div>
@@ -78,15 +84,10 @@
                                         @endphp
                                         <div class="calendar-day {{ $isSelected ? 'selected' : '' }}" data-day="{{ $day }}">
                                             <span class="day-number">{{ $day }}</span>
-                                            <input class="form-check-input d-none"
-                                                type="checkbox"
-                                                name="available_days[]"
-                                                value="{{ $day }}"
-                                                id="day_{{ $day }}"
-                                                {{ $isSelected ? 'checked' : '' }}>
+                                            <input class="form-check-input d-none" type="checkbox" name="available_days[]" value="{{ $day }}" id="day_{{ $day }}" {{ $isSelected ? 'checked' : '' }}>
                                             
-                                            @if($isSelected)
-                                                <div class="check-indicator"><i class="bi bi-check-circle-fill text-white"></i></div>
+                                            @if(!$isSelected)
+                                                <div class="check-indicator">*</div>
                                             @endif
                                         </div>
                                     @endfor
@@ -98,16 +99,33 @@
                                     @for ($i = 0; $i < $remainingCells; $i++)
                                         <div class="calendar-day other-month bg-light opacity-50"></div>
                                     @endfor
-
                                 </div>
                             </div>
+
+                            <div class="d-flex justify-content-center gap-4 mb-4">
+                                <div class="d-flex align-items-center">
+                                    <span class="legend-dot available me-2"></span>
+                                    <span class="small text-muted">{{ __('messages.volunteer.availability.legend.available') }}</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="legend-dot unavailable me-2"></span>
+                                    <span class="small text-muted">{{ __('messages.volunteer.availability.legend.unavailable') }}</span>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="text-center mt-3">
-                             <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 me-2">{{ __('messages.volunteer.availability.cancel_btn') }}</a>
-                            <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-sm">
-                                <i class="bi bi-save me-2"></i> {{ __('messages.volunteer.availability.save_btn') }}
-                            </button>
+                        <div class="d-flex justify-content-between align-items-center border-top pt-4 mt-2">
+                            <div class="text-danger small fw-medium">
+                                <i class="bi bi-asterisk me-1"></i> {{ __('messages.volunteer.availability.legend.unsaved_changes') }}
+                            </div>
+                            
+                            <div class="d-flex">
+                                <a href="{{ route('home') }}" class="btn btn-outline-secondary rounded-pill px-4 me-3">{{ __('messages.volunteer.availability.cancel_btn') }}</a>
+                                <button type="submit" class="btn btn-primary rounded-pill px-4 shadow-sm">
+                                    <i class="bi bi-save me-2"></i> {{ __('messages.volunteer.availability.save_btn') }}
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -129,9 +147,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (checkbox) {
                 checkbox.checked = !checkbox.checked;
                 dayCell.classList.toggle('selected', checkbox.checked);
-                
-                // Toggle visual indicator if we want to be fancy, or just rely on CSS class
-                // Ideally CSS handles the .selected state appearance
             }
         }
         
@@ -170,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (title) {
             title.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    }, 500); // Balanced delay for standard page load
+    }, 500); 
 });
 </script>
 @endpush

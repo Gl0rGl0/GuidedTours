@@ -452,6 +452,7 @@ return [
                 'available' => 'Available Day',
                 'unavailable' => 'Unavailable Day',
                 'column_select' => 'Click the header to select/deselect the entire column',
+                'unsaved_changes' => 'Days marked with * are unsaved changes',
             ],
             'status' => [
                 'success' => 'Availability updated successfully!',

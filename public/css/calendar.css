@@ -1,48 +1,124 @@
 /* resources/css/calendar.css */
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    max-width: 700px;
-    margin: 20px auto;
+    gap: 8px;
+    /* Leggermente aumentato per far sembrare le celle dei pulsanti indipendenti */
+    padding: 15px;
+    /* Spazio tra le celle e il bordo del contenitore */
+    background-color: #fff;
 }
-.calendar-day {
-    border: 1px solid #ddd;
-    padding: 8px;
+
+/* Stili per le intestazioni dei giorni */
+.calendar-header {
     text-align: center;
-    min-height: 60px;
-    background-color: #f9f9f9;
+    border-radius: 6px;
+    /* Il padding e i colori sono gestiti dalle classi Bootstrap nel Blade */
+}
+
+/* Stile base delle celle dei giorni */
+.calendar-day {
+    border: 2px solid transparent;
+    /* Bordo trasparente di base per evitare "salti" al click */
+    border-radius: 8px;
+    /* Angoli arrotondati e moderni */
+    padding: 10px 5px;
+    text-align: center;
+    min-height: 70px;
+    background-color: #f8f9fa;
+    /* Grigio chiarissimo di base */
     position: relative;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
+
+/* Effetto Hover */
 .calendar-day:hover {
-    background-color: #e9ecef;
+    background-color: #e2e6ea;
+    transform: translateY(-1px);
+    /* Leggero effetto "sollevamento" al passaggio del mouse */
 }
+
+/* Stato Selezionato (Disponibile) */
 .calendar-day.selected {
-    background-color: #cfe2ff;
-    border-color: #9ec5fe;
+    background-color: #e7f1ff;
+    /* Azzurro chiaro */
+    border-color: #568fe6;
+    /* Bordo blu primary */
+    color: #084298;
+    /* Testo leggermente più scuro per contrasto */
 }
+
 .calendar-day .day-number {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin: 0;
+    z-index: 2;
 }
-/* Hide the actual checkbox */
+
+/* Nasconde la checkbox reale */
 .calendar-day .form-check-input {
-   display: none;
+    display: none;
 }
-.calendar-header {
-    font-weight: bold;
-    text-align: center;
-    padding: 5px;
-    background-color: #eee;
+
+/* --- NUOVO: Stile per la spunta (Icona) --- */
+.check-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.9rem;
+    color: #bb291f;
+    /* Blu primary. NB: Rimuovi 'text-white' dal Blade se usi questo! */
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Effetto "rimbalzo" carino */
 }
+
+/* Mostra l'indicatore quando il giorno è selezionato */
+.calendar-day.selected .check-indicator {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Giorni del mese precedente/successivo */
 .calendar-day.other-month {
-    background-color: #e9ecef;
+    background-color: transparent;
+    border-color: transparent;
     color: #adb5bd;
-    cursor: default; /* Not clickable */
+    cursor: default;
 }
+
 .calendar-day.other-month:hover {
-    background-color: #e9ecef; /* No hover effect */
+    background-color: transparent;
+    transform: none;
+    /* Disabilita l'effetto sollevamento */
+}
+
+/* --- NUOVO: Ottimizzazione per Mobile (Smartphone) --- */
+@media (max-width: 768px) {
+    .calendar-grid {
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .calendar-day {
+        min-height: 55px;
+        border-radius: 6px;
+    }
+
+    .calendar-day .day-number {
+        font-size: 1rem;
+    }
+
+    .check-indicator {
+        bottom: 2px;
+        right: 4px;
+        font-size: 0.75rem;
+    }
 }
