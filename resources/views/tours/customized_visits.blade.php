@@ -36,12 +36,26 @@
                 <x-tour-card :visit="$visit" context="archive" />
             </div>
         @empty
+            @if($user->hasRole('Customer'))
             <div class="col-12 text-center py-5 card border-0 shadow-sm rounded-4">
                 <div class="card-body">
                     <x-empty-state 
                         icon="bi-clock-history" 
                         :title="__('messages.tours_views.customized_visits.empty_state_title')" 
-                        :message="__('messages.tours_views.customized_visits.empty_state_message')" 
+                        :message="__('messages.tours_views.customized_visits.empty_state_message_customer')" 
+                        :actionText="__('messages.tours_views.customized_visits.back_to_home')"
+                        actionUrl="{{ route('home') }}"
+                        :card="false" 
+                    />
+                </div>
+            </div>
+            @else
+            <div class="col-12 text-center py-5 card border-0 shadow-sm rounded-4">
+                <div class="card-body">
+                    <x-empty-state 
+                        icon="bi-clock-history" 
+                        :title="__('messages.tours_views.customized_visits.empty_state_title')" 
+                        :message="__('messages.tours_views.customized_visits.empty_state_message_guide')" 
                         :actionText="__('messages.tours_views.customized_visits.back_to_home')"
                         actionUrl="{{ route('home') }}"
                         :card="false" 
@@ -49,6 +63,7 @@
                     <p class="text-muted small">{!! __('messages.tours_views.customized_visits.contact_org') !!}</p>
                 </div>
             </div>
+            @endif
         @endforelse
     </div>
 @endsection

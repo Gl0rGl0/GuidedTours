@@ -59,6 +59,11 @@
                                 <input type="number" id="num_participants" name="num_participants" class="form-control" placeholder="{{ __('messages.tours_views.register.participants_placeholder') }}" min="1" value="1" required>
                                 <label for="num_participants">{{ __('messages.tours_views.register.num_participants_label') }} ({{ $visit->getSpotsRemainingAttribute()}} {{ __('messages.tours_views.register.spots_remaining') }})</label>
                             </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" placeholder="Note" id="notes" style="height: 100px"></textarea>
+                                <label for="notes">Note</label>
+                            </div>
                             
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
